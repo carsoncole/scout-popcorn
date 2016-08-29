@@ -25,7 +25,7 @@ class StocksController < ApplicationController
   # POST /stocks
   # POST /stocks.json
   def create
-    @stock = @active_event.stocks.build(stock_params)
+    @stock = @unit.stocks.build(stock_params)
 
     if @stock.save
       redirect_to stocks_path, notice: 'Stock was successfully created.'

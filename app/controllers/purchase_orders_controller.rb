@@ -3,14 +3,14 @@ class PurchaseOrdersController < ApplicationController
 
   def index
     @purchase_orders = PurchaseOrder.order(created_at: :desc)
-    @purchase_orders = @purchase_orders.where(event_id: @event) if @event
+    @purchase_orders = @purchase_orders.where(event_id: @active_event) if @active_event
   end
 
   def show
     @page_title = 'Purchase Order'
     @take_orders = @purchase_order.take_orders
-    if @event
-      @products = @event.products.order(:name)
+    if @active_event
+      @products = @active_event.products.order(:name)
     else
       @products = Product.order(:name)
     end

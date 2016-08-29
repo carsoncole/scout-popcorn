@@ -6,21 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-
 Product.create([
-  {name: 'Classic Caramel Popcorn', retail_price: 10, quantity: 1, url: 'classic-caramel-corn.png'},
-  {name: 'Popping Corn', retail_price: 10, quantity: 1, url: 'popping-corn.png'},
-  {name: 'White Cheddar Cheese', retail_price: 25, quantity: 1, url: 'white-cheddar-cheese.png'},
+  {name: 'Chocolatey Caramel Crunch', retail_price: 25, quantity: 1, url: 'chocolatey-caramel-crunch.png'},
   {name: 'White Chocolatey Pretzels', retail_price: 25, quantity: 1, url: 'white-chocolatey-pretzels.png'},
   {name: 'Seattle Seahawks Tin', retail_price: 25, quantity: 1, url: 'seattle-seahawks-tin.jpg'},
+  {name: 'Premium Caramel Corn', retail_price: 20, quantity: 1, url: 'premium-caramel-corn.png'},
+  {name: 'Jalapeno Cheddar Cheese', retail_price: 15, quantity: 1, url: 'jalapeno-cheddar-cheese.jpg'},
+  {name: 'White Cheddar Cheese Corn', retail_price: 15, quantity: 1, url: 'white-cheddar-cheese.png'},
+  {name: 'Classic Caramel Corn', retail_price: 10, quantity: 1, url: 'classic-caramel-corn.png'},
+  {name: 'Popping Corn', retail_price: 10, quantity: 1, url: 'popping-corn.png'},
   {name: 'Kettle Corn Microwave', retail_price: 20, quantity: 1, url: 'kettle-corn-microwave.jpg'},
-  {name: 'Butter Light Microwave', retail_price: 20, quantity: 1, url: 'butter-light-microwave.jpg'},
   {name: 'Unbelievable Butter Microwave', retail_price: 20, quantity: 1, url: 'unbelievable-butter-microwave.jpg'},
-  {name: 'White Cheddar Cheese', retail_price: 15, quantity: 1, url: 'white-cheddar-cheese.png'},
-  {name: 'Chocolatey Caramel Crunch', retail_price: 25, quantity: 1, url: 'chocolatey-caramel-crunch.png'},
-  {name: 'Premium Caramel Corn', retail_price: 25, quantity: 1, url: 'premium-caramel-corn.png'},
-  {name: 'Jalapeno Cheddar Cheese', retail_price: 15, quantity: 1, url: 'jalapeno-cheddar-cheese.jpg'}
-  ])
+  {name: 'Butter Light Microwave', retail_price: 20, quantity: 1, url: 'butter-light-microwave.jpg'},
+  {name: 'Sweet & Savory Collection', retail_price: 40, quantity: 1},
+  {name: "Cheese Lover's Collection", retail_price: 30, quantity: 1, url: 'jalapeno-cheddar-cheese.jpg'},
+  {name: "Chocolate Lover's Collection", retail_price: 60, quantity: 1}])
 
 Prize.create([
   {name: 'Patch', amount: 25},
@@ -83,3 +83,21 @@ ScoutSiteSale.create ([
   {scout_id: 1, site_sale_id: 1, hours_worked: 6},
   {scout_id: 2, site_sale_id:1, hours_worked: 4}
   ])
+
+Stock.create ([
+  {unit_id: 1, product_id: 1, quantity: 36},
+  {unit_id: 1, product_id: 2, quantity: 24}, 
+  {unit_id: 1, product_id: 3, quantity: 30},
+  {unit_id: 1, product_id: 4, quantity: 108},
+  {unit_id: 1, product_id: 5, quantity: 24},
+  {unit_id: 1, product_id: 6, quantity: 108},
+  {unit_id: 1, product_id: 7, quantity: 288},
+  {unit_id: 1, product_id: 8, quantity: 108},
+  {unit_id: 1, product_id: 9, quantity: 12},
+  {unit_id: 1, product_id: 10, quantity: 12},
+  {unit_id: 1, product_id: 11, quantity: 12},
+  {unit_id: 1, product_id: 12, quantity: 6},
+  {unit_id: 1, product_id: 13, quantity: 4}, 
+  {unit_id: 1, product_id: 14, quantity: 0},  
+  ])
+

@@ -12,6 +12,7 @@
               %th Name
               %th Hours Worked
               - if current_scout.is_admin?
+                %th
                 %th Total Hours Worked
                 %th Total Sales
               %th Credited Sales
@@ -22,6 +23,7 @@
 
           %tbody
             - total = 0
+            - total_sales = 0
             - @site_sales.each do |site_sale|
               %tr
                 - if current_scout.is_admin?
@@ -31,7 +33,9 @@
                 - if current_scout.is_admin?
                   %td= link_to "Scout Hours", event_scout_site_sales_path(site_sale.event)
                   %td= site_sale.scout_site_sales.sum(:hours_worked)
-                  %td= number_to_currency(site_sale.total_sales)
+                  %td
+                    - total_sales += site_sale.total_sales
+                    = number_to_currency(site_sale.total_sales)
                 %td
                   - total += (site_sale.credited_sales(current_scout) || 0)
                   = number_to_currency(site_sale.credited_sales(current_scout))
@@ -47,7 +51,7 @@
               - if current_scout.is_admin?
                 %td
                 %td
-                %td
+                %td= number_to_currency(total_sales)
               %td= number_to_currency(total)
               - if current_scout.is_admin?
                 %td

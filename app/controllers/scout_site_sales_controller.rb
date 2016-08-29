@@ -4,7 +4,7 @@ class ScoutSiteSalesController < ApplicationController
   # GET /scout_site_sales
   # GET /scout_site_sales.json
   def index
-    @scout_site_sales = @event.scout_site_sales.order('site_sales.name')
+    @scout_site_sales = @active_event.scout_site_sales.order('site_sales.name')
     @scout_site_sales = @site_sales.where(scout_id: current_scout) unless current_scout.is_admin?
   end
 
