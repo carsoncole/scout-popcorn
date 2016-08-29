@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Scout:
+  = @scout_site_sale.scout_id
+%p
+  %b Site sale:
+  = @scout_site_sale.site_sale_id
+%p
+  %b Hours worked:
+  = @scout_site_sale.hours_worked
+
+= link_to 'Edit', edit_scout_site_sale_path(@scout_site_sale)
+\|
+= link_to 'Back', scout_site_sales_path

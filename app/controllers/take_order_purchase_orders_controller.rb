@@ -1,0 +1,2 @@
+class TakeOrderPurchaseOrdersController < PurchaseOrdersController
+end

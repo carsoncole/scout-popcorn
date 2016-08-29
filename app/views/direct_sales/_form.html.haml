@@ -1,0 +1,27 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        = form_for @direct_sale do |f|
+          - if @direct_sale.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@direct_sale.errors.count, "error")} prohibited this direct_sale from being saved:"
+              %ul
+                - @direct_sale.errors.full_messages.each do |msg|
+                  %li= msg
+
+          - if current_scout.is_admin?
+            .form-group
+              = f.label :scout
+              = f.collection_select :scout_id, @unit.scouts.order(:first_name), :id, :first_name
+          .form-group
+            = f.label :product
+            = f.collection_select :product_id, @active_event.products.order(:name), :id, :name, { class: 'form-control'}
+          .form-group
+            = f.label :quantity
+            = f.number_field :quantity, class: 'form-control'
+          / .form-group
+          /   = f.label :amount
+          /   = f.text_field :amount, class: 'form-control'
+          .actions
+            = f.submit 'Save'

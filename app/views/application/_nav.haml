@@ -1,0 +1,34 @@
+%nav.navbar.navbar-fixed-top.navbar-dark(style='background-color:#003F87')
+  %button.navbar-toggler.hidden-sm-up(type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation")
+    &#9776;
+  .collapse.navbar-toggleable-xs#exCollapsingNavbar2
+    .navbar-brand
+      Popcorn Buddy
+      / - if @unit && !@unit.new_record?
+      /   = '| '
+      /   = link_to @unit.name, unit_path(@unit)
+      / =  '| '
+      / = link_to current_scout.first_name, scout_path(current_scout)
+
+    %ul.nav.navbar-nav
+      %li.nav-item= link_to "Home", home_index_path, class: "nav-link #{'active' if controller_name == 'home'}"
+      %li.nav-item.btn-group
+        = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales', 'site_sales'].include?(controller_name)}", 'type': 'button', "data-toggle": "dropdown", 'role': "button" do
+          Sales
+          %span.caret
+        %ul.dropdown-menu
+          %li= link_to "Take Orders", take_orders_path, class: "dropdown-item #{'active' if controller_name == 'take_orders'}"
+          %li= link_to "Site Sales", site_sales_path, class: "dropdown-item #{'active' if controller_name == 'site_sales'}"
+          %li= link_to "Direct Sales", direct_sales_path, class: "dropdown-item #{'active' if controller_name == 'direct_sales'}"
+      %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
+      %li.nav-item= link_to "Prizes", prizes_path, class: "nav-link #{'active' if controller_name == 'prizes'}"
+      - if @unit
+        %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
+      - if current_scout.try(:is_admin?)
+        %li.nav-item= link_to "Events", events_path, class: "nav-link #{'active' if controller_name == 'events'}"
+        %li.nav-item= link_to "Units", units_path, class: "nav-link #{'active' if controller_name == 'units'}"
+        %li.nav-item= link_to "Scouts", scouts_path, class: "nav-link #{'active' if controller_name == 'scouts'}"
+        %li.nav-item= link_to "Purchase Orders", purchase_orders_path, class: "nav-link #{'active' if controller_name =='purchase_orders'}"
+      - if @unit && current_scout.try(:is_admin?)
+        %li.nav-item= link_to "Stock", stocks_path, class: "nav-link #{'active' if controller_name == 'stocks'}"
+      %li.nav-item= link_to "Log out", destroy_scout_session_path, method: :delete, class: "nav-link"

@@ -1,0 +1,47 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .row
+          .col-md-6
+            .card-title
+              %h3
+                = @direct_sale.scout.name  
+          .col-md-6
+            %h3.text-xs-right
+              %span.tag.tag-info= @direct_sale.status.capitalize
+
+        %table.table
+          %thead
+            %tr
+              %th Product
+              %th Quantity
+              %th Price
+              %th Total
+              %th
+          %tbody
+            %tr
+              %td= link_to @direct_sale.product.name, product_path(@direct_sale.product)
+              %td= @direct_sale.quantity
+              %td= number_to_currency( @direct_sale.price )
+              %td= number_to_currency( @direct_sale.amount )
+              %td
+                - if @direct_sale.status == 'open'
+                  = link_to direct_sale_path(@direct_sale), method: :delete do
+                    %i.fa.fa-trash.fa-lg
+
+          - if @direct_sale.status == 'open'
+            %tr
+              %td
+                = link_to new_direct_sale_path do
+                  %i.fa.fa-plus.fa-lg
+
+              %td
+              %td
+              %td
+              %td
+              %td
+
+        - if current_scout.is_admin? && @direct_sale.status == 'open'
+          = button_to 'PAID', direct_sale_path(paid: true), method: :patch, class: 'btn btn-default'
+

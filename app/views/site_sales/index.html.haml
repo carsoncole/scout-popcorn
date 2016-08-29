@@ -1,0 +1,62 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h1.h1 Site Sales
+        %table.table
+          %thead
+            %tr
+              - if current_scout.is_admin?
+                %th Event
+              %th Name
+              %th Hours Worked
+              - if current_scout.is_admin?
+                %th Total Hours Worked
+                %th Total Sales
+              %th Credited Sales
+              - if current_scout.is_admin?
+                %th
+                %th
+                %th
+
+          %tbody
+            - total = 0
+            - @site_sales.each do |site_sale|
+              %tr
+                - if current_scout.is_admin?
+                  %td= site_sale.event.name
+                %td= site_sale.name   
+                %td= site_sale.hours_worked(current_scout)
+                - if current_scout.is_admin?
+                  %td= link_to "Scout Hours", event_scout_site_sales_path(site_sale.event)
+                  %td= site_sale.scout_site_sales.sum(:hours_worked)
+                  %td= number_to_currency(site_sale.total_sales)
+                %td
+                  - total += (site_sale.credited_sales(current_scout) || 0)
+                  = number_to_currency(site_sale.credited_sales(current_scout))
+                - if current_scout.is_admin?
+                  %td= link_to 'Show', site_sale
+                  %td= link_to 'Edit', edit_site_sale_path(site_sale)
+                  %td= link_to 'Destroy', site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' }
+            %tr
+              - if current_scout.is_admin?
+                %td
+              %td
+              %td
+              - if current_scout.is_admin?
+                %td
+                %td
+                %td
+              %td= number_to_currency(total)
+              - if current_scout.is_admin?
+                %td
+                %td
+                %td
+                
+
+
+        = paginate @site_sales
+        %br
+        = link_to 'New Site sale', new_site_sale_path if current_scout.is_admin?
+

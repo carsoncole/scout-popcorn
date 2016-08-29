@@ -1,0 +1,15 @@
+%e
+
+%p
+  %b Unit:
+  = @stock.unit_id
+%p
+  %b Product:
+  = @stock.product_id
+%p
+  %b Quantity:
+  = @stock.quantity
+
+= link_to 'Edit', edit_stock_path(@stock)
+\|
+= link_to 'Back', stocks_path

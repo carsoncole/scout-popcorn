@@ -1,0 +1,27 @@
+= form_for @scout do |f|
+  - if @scout.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@scout.errors.count, "error")} prohibited this scout from being saved:"
+      %ul
+        - @scout.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :unit_id
+    = f.collection_select :unit_id, Unit.all, :id, :name
+  .field
+    = f.label :first_name
+    = f.text_field :first_name
+  .field
+    = f.label :last_name
+    = f.text_field :last_name
+  
+  .field
+    = f.label :event
+    = f.collection_select :default_event_id, @unit.events.order(:name), :id, :name, {:include_blank => "Please select"}
+
+  .field
+    = f.label :email
+    = f.text_field :email
+  .actions
+    = f.submit 'Save'

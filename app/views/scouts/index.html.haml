@@ -1,0 +1,42 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h4 Scouts
+        %table.table.card-text
+          %thead
+            %tr
+              - unless @unit
+                %th Unit
+              %th Name
+              %th
+              %th
+              %th Last Sign In
+              %th
+              %th
+              %th
+
+          %tbody
+            - @scouts.each do |scout|
+              %tr
+                - unless @unit
+                  %td= scout.unit.name
+                %td= link_to scout.name, scout_path(scout)
+                %td= link_to "Take Orders", take_orders_path(scout_id: scout.id)
+                %td= link_to "Site Sales"
+                / %td= number_to_currency(scout.total_sales)
+                %td= scout.last_sign_in_at
+                %td
+                  = link_to scout do
+                    %span.fa.fa-eye.fa-lg
+                %td
+                  = link_to edit_scout_path(scout) do
+                    %span.fa.fa-pencil.fa-lg
+                %td
+                  = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                    %span.fa.fa-trash.fa-lg
+
+%br
+
+= link_to 'New Scout', new_scout_path

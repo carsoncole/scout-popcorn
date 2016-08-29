@@ -1,0 +1,22 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        = form_for @stock do |f|
+          - if @stock.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@stock.errors.count, "error")} prohibited this stock from being saved:"
+              %ul
+                - @stock.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .form-group
+            .field
+              = f.label :product
+              = f.collection_select :product_id, @products, :id, :name, {prompt: "Select a Product"}, {class: 'form-control'}
+          .form-group
+            .field
+              = f.label :quantity
+              = f.number_field :quantity, class: 'form-control'
+          .actions
+            = f.submit 'Save'

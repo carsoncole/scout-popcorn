@@ -1,0 +1,19 @@
+= form_for @scout_site_sale do |f|
+  - if @scout_site_sale.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@scout_site_sale.errors.count, "error")} prohibited this scout_site_sale from being saved:"
+      %ul
+        - @scout_site_sale.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :scout
+    = f.collection_select :scout_id, @unit.scouts.order(:first_name), :id, :name
+  .field
+    = f.label :site_sale
+    = f.collection_select :site_sale_id, @active_event.site_sales.order(:name), :id, :name
+  .field
+    = f.label :hours_worked
+    = f.text_field :hours_worked
+  .actions
+    = f.submit 'Save'

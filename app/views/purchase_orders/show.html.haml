@@ -1,0 +1,79 @@
+%h2.text-xs-center
+  = @purchase_order.event.name
+  Purchase Order
+
+
+%h3
+  %span.tag.tag-info= @purchase_order.status.capitalize 
+
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h3 Product Quantities
+        %table.table
+          %thead
+            %tr
+              %th Product
+              %th Quantity
+              %th Price
+              %th Value
+          %tbody
+            - total_value = 0
+            - @products.each do |product|
+              - quantity = PurchaseOrder.joins(take_orders: [:line_items]).where("purchase_orders.id = ? AND line_items.product_id = ?", @purchase_order.id, product.id).sum("line_items.quantity")
+              - if quantity != 0
+                %tr
+                  %td= product.name
+                  %td
+
+                    = quantity
+                  %td= number_to_currency(product.retail_price)
+                  %td
+                    - value = product.retail_price * quantity
+                    - total_value += value
+                    = number_to_currency( value )
+
+            %tr
+              %td
+              %td
+              %td
+              %td= number_to_currency( total_value )
+
+        - if @purchase_order.status == 'open'
+          = button_to 'Ordered', purchase_order_path(@purchase_order, ordered: true), method: :patch, class: 'btn btn-default'
+
+
+
+
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h3 Take Orders
+        %table.table
+          %thead
+            %tr
+              %th Scout
+              %th 
+              %td Value
+              %td Added
+          - total_value = 0
+          - @take_orders.each do |to|
+            %tr
+              %td= to.scout.name
+              %td
+                = link_to take_order_path(to) do
+                  %i.fa.fa-eye.fa-lg
+              %td
+                - total_value += to.value
+                = number_to_currency(to.value)
+              %td= to.updated_at
+
+          %tr
+            %td
+            %td
+            %td= number_to_currency(total_value)
+            %td

@@ -1,0 +1,2 @@
+class TakeOrderPurchaseOrder < PurchaseOrder
+end

@@ -1,0 +1,1 @@
+json.array! @take_orders, partial: 'orders/order', as: :order

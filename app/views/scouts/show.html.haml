@@ -1,0 +1,18 @@
+.row
+  .col-md-4
+    .card
+      .card-block
+        .card-title
+          %h3
+            = @scout.name
+
+      %ul.list-group.list-group-flush
+      %li.list-group-item
+        Unit:
+        = @scout.unit.name
+      %li.list-group-item
+        Event:
+        = @scout.default_event.name if @scout.default_event
+        = link_to edit_scout_path do
+          = "Set Event" unless @scout.default_event
+          %i.fa.fa-pencil

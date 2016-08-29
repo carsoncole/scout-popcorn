@@ -1,0 +1,15 @@
+%e
+
+%p
+  %b Order:
+  = @line_item.order_id
+%p
+  %b Product:
+  = @line_item.product_id
+%p
+  %b Quantity:
+  = @line_item.quantity
+
+= link_to 'Edit', edit_line_item_path(@line_item)
+\|
+= link_to 'Back', line_items_path

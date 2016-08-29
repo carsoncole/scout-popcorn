@@ -1,0 +1,2 @@
+module TakeOrdersHelper
+end

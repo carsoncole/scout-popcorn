@@ -1,0 +1,10 @@
+!!!
+%html
+  = render 'head'
+  
+  %body
+    =render 'nav' if scout_signed_in?
+    .container
+      = render 'flash'
+      = yield
+      / = render 'debugging'

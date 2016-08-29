@@ -1,0 +1,33 @@
+.row
+  .col-md-3
+  .col-md-6
+    .card
+      .card-block
+        %h1.display-4.text-xs-center Popcorn Buddy
+        %h3.text-xs-center Cub Scout Pack 4496
+        .text-xs-center= image_tag "kettle-corn-microwave.jpg", class: 'img-fluid m-x-auto'
+
+        = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          .form-group
+            .field
+              = f.label :email
+              %br
+              = f.email_field :email, autofocus: true, class: 'form-control'
+          .form-group
+            .field
+              = f.label :password
+              %br
+              = f.password_field :password, autocomplete: "off", class: 'form-control'
+
+          / - if devise_mapping.rememberable? 
+          /   .field
+          /     = f.check_box :remember_me
+          /     = f.label :remember_me
+            
+     
+
+          .actions
+            = f.submit "Log in", class: 'btn btn-success'
+          
+        %br
+        = render "devise/shared/links"

@@ -1,0 +1,55 @@
+.row
+  .col-md-12
+    .card.card-block
+      .card-title
+        %h1.h1 Take Orders
+      %table.table.card-text
+        %thead
+          %tr
+            - if current_scout.is_admin? || current_scout.is_super_admin?
+              %th Scout
+            %th Customer
+            %th Address
+            %th Amount
+            %th Status
+            %th
+            %th
+
+
+        %tbody
+          - total = 0
+          - @take_orders.each do |take_order|
+            %tr
+              - if current_scout.is_admin? || current_scout.is_super_admin?
+                %td= take_order.scout.name if take_order.scout
+              %td= take_order.customer_name
+              %td= take_order.customer_address
+              %td
+                - total += take_order.value
+                = number_to_currency(take_order.value)
+              %td
+                - if take_order.status
+                  %span.tag.tag-info= take_order.status.capitalize
+              %td= link_to 'Show', take_order
+              %td= link_to 'Destroy', take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } if take_order.status == 'open'
+          %tr
+            %td
+              = link_to new_take_order_path do
+                %i.fa.fa-plus.fa-lg
+            %td
+            %td
+            %td
+            %td
+            %td
+            %td
+          %tr
+            - if current_scout.is_admin? || current_scout.is_super_admin?
+              %td
+            %td
+            %td
+            %td= number_to_currency(total)
+            %td
+            %td
+            %td
+
+      = paginate @take_orders

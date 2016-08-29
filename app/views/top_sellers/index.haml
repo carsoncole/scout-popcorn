@@ -1,0 +1,19 @@
+.row
+  .col-md-3
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h2.text-xs-center Top 15 Sellers
+          %h4.text-xs-center= @active_event.name
+
+        - if @top_sellers_hash.any?
+          
+          %table.table
+            - @top_sellers_hash.reverse[0..15].each do |top_seller_hash|
+              - top_seller = Scout.find(top_seller_hash[0])
+              %tr
+                %th= top_seller.name
+                %td.text-xs-right= number_to_currency(top_seller_hash[1])
+        - else
+          %p.text-xs-center No sales posted yet.

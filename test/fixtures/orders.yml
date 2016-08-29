@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  scout_id: 1
+  status_id: 1
+
+two:
+  scout_id: 1
+  status_id: 1

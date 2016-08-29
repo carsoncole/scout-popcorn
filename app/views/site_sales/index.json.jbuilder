@@ -1,0 +1,1 @@
+json.array! @site_sales, partial: 'site_sales/site_sale', as: :site_sale

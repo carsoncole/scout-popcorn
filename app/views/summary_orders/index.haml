@@ -1,0 +1,28 @@
+.row
+  .col-md-12
+    %table.table
+      %thead
+        %tr
+          %th Product
+          %th Quantity
+          %th Price
+          %th Value
+      %tbody
+        - total_value = 0
+        - @products.each do |product|
+          %tr
+            %td= product.name
+            %td
+              - quantity = product.line_items.sum(:quantity)
+              = quantity
+            %td= number_to_currency(product.retail_price)
+            %td
+              - value = product.retail_price * quantity
+              - total_value += value
+              = number_to_currency( value )
+
+        %tr
+          %td
+          %td
+          %td
+          %td= number_to_currency( total_value )

@@ -1,0 +1,19 @@
+%br
+%br
+.row
+  .col-md-4
+  .col-md-4
+    .card
+      .card-header
+        DEBUGGING
+      .card-block
+        %table.table
+          %tr
+            %th.text-xs-right Event:
+            %td.text-xs-left= @active_event.name if @active_event
+          %tr
+            %th.text-xs-right Unit:
+            %td.text-xs-left= @unit.name if @unit
+          %tr
+            %th.text-xs-right Current Scout:
+            %td.text-xs-left= current_scout.name if current_scout

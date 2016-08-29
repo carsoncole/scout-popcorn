@@ -1,0 +1,25 @@
+.row
+  .col-md-3
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h3
+            Event
+
+        = form_for @event do |f|
+          - if @event.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@event.errors.count, "error")} prohibited this event from being saved:"
+              %ul
+                - @event.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control'
+          .form-group
+            = f.label :is_active
+            = f.check_box :is_active, class: 'form-control'
+          .actions
+            = f.submit 'Save', class: 'btn btn-default'

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Event:
+  = @site_sale.event_id
+%p
+  %b Name:
+  = @site_sale.name
+
+= link_to 'Edit', edit_site_sale_path(@site_sale)
+\|
+= link_to 'Back', site_sales_path

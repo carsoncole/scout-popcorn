@@ -1,0 +1,21 @@
+.row
+  - @units.each do |unit|
+    .col-md-4
+      .card
+        .card-block
+          .card-title
+            %h4= unit.name
+          %p
+            = unit.city
+            = unit.state_postal_code
+            = unit.zip_code
+          %p
+            Scouts:
+            = unit.scouts.count
+          = link_to 'Show', unit
+          = link_to 'Edit', edit_unit_path(unit)
+          = link_to 'Destroy', unit, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+      %br
+
+  = link_to 'New Unit', new_unit_path

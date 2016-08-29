@@ -1,0 +1,31 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        = form_for @take_order do |f|
+          - if @take_order.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@take_order.errors.count, "error")} prohibited this take order from being saved:"
+              %ul
+                - @take_order.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .form-group
+            .field
+              = f.collection_select:scout_id, Scout.all, :id, :first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
+          .form-group
+            .field
+              %label= f.label :customer_name
+              = f.text_field :customer_name, class: 'form-control', placeholder: 'Name'
+          .form-group
+            .field
+              %label= f.label :customer_address
+              = f.text_field :customer_address, class: 'form-control', placeholder: 'Address'
+          .form-group
+            .field
+              %label
+                = f.label :customer_email
+              = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
+            %br
+            .actions
+              = f.submit 'Save', class: 'btn btn-primary'

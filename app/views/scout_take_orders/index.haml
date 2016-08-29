@@ -1,0 +1,19 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        %table.table
+          %thead
+            %tr
+              %th ID
+              %th Value
+              %th Customer
+              %th Address
+              %th Email
+          - @scout_take_orders.each do |scout_take_order|
+            %tr 
+              %td= scout_take_order.id
+              %td= number_to_currency(scout_take_order.value)
+              %td= scout_take_order.customer_name
+              %td= scout_take_order.customer_address
+              %td= scout_take_order.customer_email

@@ -1,0 +1,12 @@
+%e
+
+%p
+  %b Name:
+  = @prize.name
+%p
+  %b Amount:
+  = @prize.amount
+
+= link_to 'Edit', edit_prize_path(@prize)
+\|
+= link_to 'Back', prizes_path

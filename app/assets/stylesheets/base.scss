@@ -1,0 +1,13 @@
+body {
+  margin-top: 5em;
+  background-color: #ddd;
+}
+.page-title {
+  margin-bottom: 1.5em;
+}
+a {
+  color: #FCD116;
+  &:visited {
+    color: #FCD116;
+  }
+}

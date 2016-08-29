@@ -1,0 +1,62 @@
+.row
+  .col-md-12
+    .card.card-block
+      .card-title
+        %h1.h1 Direct Sales
+      %table.table.card-text
+        %thead
+          %tr
+            - if current_scout.is_admin? || current_scout.is_super_admin?
+              %th Scout
+            %th Product
+            %th Quantity
+            %th Price
+            %th Amount
+            %th Status
+            %th
+            %th
+
+
+        %tbody
+          - total = 0
+          - @direct_sales.each do |direct_sale|
+            %tr
+              - if current_scout.is_admin? || current_scout.is_super_admin?
+                %td= direct_sale.scout.name if direct_sale.scout
+              %th= direct_sale.product.name
+              %th= direct_sale.quantity
+              %th= direct_sale.price
+              %td
+                - total += direct_sale.amount
+                = number_to_currency(direct_sale.amount)
+              %td
+                - if direct_sale.status
+                  %span.tag.tag-info= direct_sale.status.capitalize
+
+              %td
+                - if current_scout.is_admin? && direct_sale.status == 'open'
+                
+                  = button_to 'PAID', direct_sale_path(direct_sale, paid: true), method: :patch, class: 'btn btn-default'
+              %td= link_to 'Edit', direct_sale
+              %td= link_to 'Destroy', direct_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } unless direct_sale.status == 'open' 
+          %tr
+            %td
+              = link_to new_direct_sale_path do
+                %i.fa.fa-plus.fa-lg
+            %td
+            %td
+            %td
+            %td
+          %tr
+            - if current_scout.is_admin? || current_scout.is_super_admin?
+              %td
+            %td
+            %td
+            %td
+            %td= number_to_currency(total)
+            %td
+            %td
+            %td
+
+
+      = paginate @direct_sales
