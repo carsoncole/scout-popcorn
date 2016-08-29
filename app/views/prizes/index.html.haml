@@ -1,21 +1,24 @@
-- if @prizes_grouped_by_source
+- if @prizes
   .row
-    - @prizes_grouped_by_source.each do |prize_source|
-      - @event.prizes.where(source: prize_source.source).each do |prize|
-        .col-md-3
-          .card
-            .card-block
-              .card-title
-                %h4= prize.name
-              .text-xs-center
-                %i.fa.fa-pencil.fa-4x
-                %br
-                = number_to_currency(prize.amount)
-                %br
-                - unless prize.event_id
-                  Default
-                %br
-                %br
+    - @prizes.each do |prize|
+      .col-md-3
+        .card
+          .card-block
+            .card-title
+              %h4= prize.name
+            .text-xs-center
+              %br
+              = number_to_currency(prize.amount)
+              %br
+              - unless prize.event_id
+                Default
+              = prize.source_id
+              %br
+              %br
+            - if current_scout.is_admin?
               = link_to 'Show', prize
               = link_to 'Edit', edit_prize_path(prize)
               = link_to 'Destroy', prize, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+
+= link_to 'New Prize', new_prize_path if current_scout.is_admin?

@@ -10,25 +10,26 @@
             .text-xs-center= image_tag product.url, height: 200
             %br
           
-          = product.quantity
-          = number_to_currency(product.retail_price)
-          = link_to 'Show', product
-          = link_to 'Edit', edit_product_path(product)
-          = link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          %h5.text-xs-center= number_to_currency(product.retail_price)
+          - if current_scout.is_admin?
+            = link_to 'Show', product
+            = link_to 'Edit', edit_product_path(product)
+            = link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-  .col-md-4
-    .card.card-block.text-xs-center
-      %br
-      %br
-      %br
-      %br
-      %br
-      %br
-      = link_to new_product_path do
-        %fa.fa.fa-plus.fa-lg
-      %br
-      %br
-      %br
-      %br
-      %br
-      %br
+  - if current_scout.is_admin?
+    .col-md-4
+      .card.card-block.text-xs-center
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
+        = link_to new_product_path do
+          %fa.fa.fa-plus.fa-lg
+        %br
+        %br
+        %br
+        %br
+        %br
+        %br
