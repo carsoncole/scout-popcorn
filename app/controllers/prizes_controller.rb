@@ -4,8 +4,8 @@ class PrizesController < ApplicationController
   # GET /prizes
   # GET /prizes.json
   def index
-    @prizes = Prize.order(:amount)
-    @prizes = @prizes.where(event_id: @active_event) if @active_event
+    @prizes_grouped_by_source = @event.prizes.group(:source) if @event
+
   end
 
   # GET /prizes/1

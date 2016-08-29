@@ -1,4 +1,23 @@
 .row
+  .col-md-4
+  .col-md-4
+    .card
+      .card-block
+        .card-title
+          %h3
+            = current_scout.name
+
+      %ul.list-group.list-group-flush
+      %li.list-group-item
+        Unit:
+        = current_scout.unit.name
+      %li.list-group-item
+        Event:
+        = current_scout.default_event.name if current_scout.default_event
+        = link_to edit_scout_path(current_scout) do
+          = "Set Event" unless current_scout.default_event
+          %i.fa.fa-pencil
+.row
   %br
   - @events.each do |event|
     .row
@@ -42,3 +61,4 @@
                 %th Total Sales
                 %td.text-xs-right
                   = number_to_currency(grand_total)
+

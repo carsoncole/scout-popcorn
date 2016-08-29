@@ -53,7 +53,7 @@ class Event < ApplicationRecord
 
   def add_default_prizes!
     Prize.default.each do |prize|
-      self.prizes.where(name: prize.name).first_or_create(name: prize.name, amount: prize.amount, url: prize.url)
+      self.prizes.where(name: prize.name).first_or_create(name: prize.name, amount: prize.amount, url: prize.url, source: prize.source, source_id: prize.source_id, is_by_level: prize.is_by_level, description: prize.description)
     end   
   end
 
