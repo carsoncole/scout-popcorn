@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root "home#index"
-  devise_for :scouts, :controllers => { registrations: 'registrations' }
+  devise_for :scouts, :controllers => { registrations: 'registrations' } do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+  end
   resources :units
   resources :scouts
   resources :site_sales
