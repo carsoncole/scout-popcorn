@@ -23,10 +23,29 @@ Product.create([
   {name: "Chocolate Lover's Collection", retail_price: 60, quantity: 1}])
 
 Prize.create([
-  {name: 'Patch', amount: 25},
-  {name: 'Watergun', amount: 150},
-  {name: 'X-Box One', amount: 2000},
-  {name: 'Slingshot', amount: 300}
+  {name: 'Participation Patch', amount: 25, source: 'bsa', source_id: '633893', source_description: 'Prize Level 1'},
+  {name: 'Marshmallow Straight Shooter', amount: 350, source: 'bsa', source_id: '634181', source_description: 'Prize Level 2'},
+  {name: 'Luci Solar Lantern', amount: 350, source: 'bsa', source_id: '633896', source_description: 'Prize Level 2'},
+  {name: 'Slime Lab Science Kit', amount: 350, source: 'bsa', source_id: '7406', source_description: 'Prize Level 2'},
+  {name: 'Cub Scout Utility Knife', amount: 350, source: 'bsa', source_id: '615777', source_description: 'Prize Level 2'},
+
+  {name: 'HEXBUG Aquabot Jellyfish', amount: 450, source: 'bsa', source_id: '634191', source_description: 'Prize Level 3'},
+  {name: 'Spy Science Kit', amount: 450, source: 'bsa', source_id: '627343', source_description: 'Prize Level 3'},
+  {name: 'Nite Ize Flashlight', amount: 450, source: 'bsa', source_id: '624334', source_description: 'Prize Level 3'},
+  {name: 'Green Rubber Lock Back Knife', amount: 450, source: 'bsa', source_id: '615774', source_description: 'Prize Level 3'},
+
+  {name: 'Voice Changer', amount: 650, source: 'bsa', source_id: '633898', source_description: 'Prize Level 4'},
+  {name: 'Binoculars 8 x 22', amount: 650, source: 'bsa', source_id: '611050', source_description: 'Prize Level 4'},
+  {name: 'Landsailer Kit', amount: 650, source: 'bsa', source_id: '621406', source_description: 'Prize Level 4'},
+  {name: 'Lego Onuna Unifier Kit', amount: 650, source: 'bsa', source_id: '634414', source_description: 'Prize Level 4'},
+
+  {name: 'Marshmallow Blaster', amount: 850, source: 'bsa', source_id: '634182', source_description: 'Prize Level 5'},
+  {name: 'Smithsonian 30x Telescope', amount: 850, source: 'bsa', source_id: '621346', source_description: 'Prize Level 5'},
+  {name: '4" BSA Multi Tool', amount: 850, source: 'bsa', source_id: '615781', source_description: 'Prize Level 5'},
+  {name: 'RC Helicopter', amount: 850, source: 'bsa', source_id: '618984', source_description: 'Prize Level 5'},
+
+  {name: '$600 Bonus Level', amount: 600, source: 'bsa-bonus', source_id: '988100313', description: 'Two Tickets to the Mariners Scout Day Experience', is_by_level: true},
+  {name: '$1,500 Bonus Level', amount: 1500, source: 'bsa-bonus', source_id: '', description: 'Invitation to party (to be announced)', is_by_level: true}
   ])
 
 Unit.create([
