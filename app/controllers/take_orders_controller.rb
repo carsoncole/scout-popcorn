@@ -34,6 +34,9 @@ class TakeOrdersController < ApplicationController
   # POST /orders.json
   def create
     @take_order = TakeOrder.new(take_order_params)
+    unless current_scout.is_admin?
+      @take_order.scout_id = current_scout.id
+    end
     @take_order.event_id = @active_event.id if @active_event
 
     respond_to do |format|

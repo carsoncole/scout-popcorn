@@ -2,6 +2,9 @@
   .col-md-12
     .card
       .card-block
+        .card-title 
+          %h2 Direct Sale
+
         = form_for @direct_sale do |f|
           - if @direct_sale.errors.any?
             #error_explanation
@@ -16,12 +19,15 @@
               = f.collection_select :scout_id, @unit.scouts.order(:first_name), :id, :first_name
           .form-group
             = f.label :product
+            %br
             = f.collection_select :product_id, @active_event.products.order(:name), :id, :name, { class: 'form-control'}
-          .form-group
-            = f.label :quantity
-            = f.number_field :quantity, class: 'form-control'
+          .row
+            .col-md-2
+              .form-group
+                = f.label :quantity
+                = f.number_field :quantity, class: 'form-control'
           / .form-group
           /   = f.label :amount
           /   = f.text_field :amount, class: 'form-control'
           .actions
-            = f.submit 'Save'
+            = f.submit 'Save', class: 'btn btn-success'

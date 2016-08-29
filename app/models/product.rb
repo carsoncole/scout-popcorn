@@ -10,6 +10,6 @@ class Product < ApplicationRecord
   end
 
   def self.left(take_order)
-    Product.all.reject{ |p| take_order.products.include? p}
+    Product.where(event_id: @event_id).order(:name).reject{ |p| take_order.products.include? p}
   end
 end

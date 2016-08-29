@@ -2,6 +2,8 @@
   .col-md-12
     .card
       .card-block
+        .card-title
+          %h2 Take Order
         = form_for @take_order do |f|
           - if @take_order.errors.any?
             #error_explanation
@@ -10,9 +12,10 @@
                 - @take_order.errors.full_messages.each do |msg|
                   %li= msg
 
-          .form-group
-            .field
-              = f.collection_select:scout_id, Scout.all, :id, :first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
+          - if current_scout.is_admin?
+            .form-group
+              .field
+                = f.collection_select:scout_id, Scout.all, :id, :first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
           .form-group
             .field
               %label= f.label :customer_name
@@ -28,4 +31,4 @@
               = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
             %br
             .actions
-              = f.submit 'Save', class: 'btn btn-primary'
+              = f.submit 'Save', class: 'btn btn-success'

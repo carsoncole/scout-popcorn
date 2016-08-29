@@ -4,7 +4,7 @@
       .card-block
         .card-title
           %h1.h1 Site Sales
-        %table.table
+        %table.table.card-text
           %thead
             %tr
               - if current_scout.is_admin?
@@ -61,6 +61,7 @@
 
 
         = paginate @site_sales
-        %br
-        = link_to 'New Site sale', new_site_sale_path if current_scout.is_admin?
+        - if current_scout.is_admin?
+          %br
+          = link_to 'New Site sale', new_site_sale_path 
 

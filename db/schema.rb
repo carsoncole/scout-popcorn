@@ -44,10 +44,15 @@ ActiveRecord::Schema.define(version: 20160828201730) do
   create_table "prizes", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
-    t.decimal  "amount",     precision: 5, scale: 2
+    t.decimal  "amount",             precision: 5, scale: 2
+    t.string   "description"
+    t.string   "source"
+    t.string   "source_description"
+    t.string   "source_id"
+    t.boolean  "is_by_level"
     t.string   "url"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "products", force: :cascade do |t|
