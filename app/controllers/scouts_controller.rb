@@ -30,6 +30,7 @@ class ScoutsController < ApplicationController
   # POST /scouts.json
   def create
     @scout = @unit.scouts.build(scout_params)
+    @scout.unit_id = 1
 
     respond_to do |format|
       if @scout.save

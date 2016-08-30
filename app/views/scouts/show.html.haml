@@ -4,15 +4,17 @@
       .card-block
         .card-title
           %h3
-            = @scout.name
+            = current_scout.name
+            = link_to edit_scout_path(current_scout) do
+              = "Set Event" unless current_scout.default_event
+              %i.fa.fa-pencil
 
       %ul.list-group.list-group-flush
       %li.list-group-item
         Unit:
-        = @scout.unit.name
+        = current_scout.unit.name
       %li.list-group-item
         Event:
-        = @scout.default_event.name if @scout.default_event
-        = link_to edit_scout_path do
-          = "Set Event" unless @scout.default_event
-          %i.fa.fa-pencil
+        = current_scout.default_event.name if current_scout.default_event
+      %li.list-group-item
+        = current_scout.email

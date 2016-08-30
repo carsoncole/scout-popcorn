@@ -12,7 +12,6 @@ class Scout < ApplicationRecord
 
   validates :first_name, :last_name, presence: true
   before_save :fix_name!
-  before_save :set_unit!
   after_create :set_default_event!
   after_create :set_if_admin!
 
@@ -40,10 +39,6 @@ class Scout < ApplicationRecord
   end
 
   private
-
-  def set_unit!
-    self.unit_id = 1
-  end
 
   def fix_name!
     self.first_name = first_name.capitalize if first_name

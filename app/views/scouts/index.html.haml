@@ -3,12 +3,10 @@
     .card
       .card-block
         .card-title
-          %h4 Scouts
+          %h1 Scouts
         %table.table.card-text
           %thead
             %tr
-              - unless @unit
-                %th Unit
               %th Name
               %th
               %th
@@ -20,8 +18,6 @@
           %tbody
             - @scouts.each do |scout|
               %tr
-                - unless @unit
-                  %td= scout.unit.name
                 %td= link_to scout.name, scout_path(scout)
                 %td= link_to "Take Orders", take_orders_path(scout_id: scout.id)
                 %td= link_to "Site Sales"

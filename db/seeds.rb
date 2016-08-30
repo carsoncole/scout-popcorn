@@ -50,35 +50,33 @@ Prize.create([
 
 Unit.create([
   {name: 'Pack 4496', street_address_1: '425 Rolling Bay Road', city: 'Bainbridge Island', state_postal_code: 'WA', zip_code: '98110'},
-  {name: 'Pack 440', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'},
-  {name: 'Pack 545', street_address_1: '425 Rolling Bay Road', city: 'Seattle', state_postal_code: 'WA', zip_code: '98110'}
+  {name: 'Pack 9999', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'}
   ])
 
 Event.create([
   { unit_id: 1, name: 'Popcorn Sales 2016'},
-  { unit_id: 2, name: 'Tacoma Popcorn Sales 2016'},
-  { unit_id: 3, name: 'Seattle Popcorn Sales 2016'},
-  { unit_id: 1, name: 'Popcorn Sales 2017', is_active: false}
+  { unit_id: 2, name: 'Test Popcorn Sales 2016'},
+  { unit_id: 2, name: 'Popcorn Sales 2017', is_active: false}
   ])
 
 Scout.create([
-  {first_name: 'Aidan', last_name: 'Cole', email: 'aidan@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1},
-  {first_name: 'Teo', last_name: 'Pinzon', email: 'keripinzon+Teo@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1},
-  {first_name: 'Porter', last_name: 'Daniels', email: 'kevindaniels@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1},
+  {first_name: 'Aidan', last_name: 'Cole', email: 'aidan@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
+  {first_name: 'Teo', last_name: 'Pinzon', email: 'keripinzon+Teo@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
+  {first_name: 'Porter', last_name: 'Daniels', email: 'kevindaniels@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
   {first_name: 'John', last_name: 'Wills', email: 'john@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
-  {first_name: 'Luke', last_name: 'Ball', email: 'jack@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 3},
-  {first_name: 'Admin', last_name: 'Cole', email: 'admin@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1, is_admin: true},
-  {first_name: 'Carson', last_name: 'Cole', email: 'carson@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1, is_admin: true},
-  {first_name: 'Super', last_name: 'Cole', email: 'carson@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1, is_admin: true, is_super_admin: true}
+  {first_name: 'Luke', last_name: 'Ball', email: 'jack@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
+  {first_name: 'Admin', last_name: 'Cole', email: 'admin@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true},
+  {first_name: 'Carson', last_name: 'Cole', email: 'carson@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true},
+  {first_name: 'Super', last_name: 'Cole', email: 'carson@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true, is_super_admin: true}
   ])
 
 TakeOrder.create([
-  {scout_id: 1, event_id: 1, customer_name: 'Mary Jones', customer_address: '123 Main Street', customer_email: 'maryjones@example.com'},
-  {scout_id: 1, event_id: 1, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
-  {scout_id: 2, event_id: 1, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
-  {scout_id: 2, event_id: 1, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
-  {scout_id: 3, event_id: 1, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
-  {scout_id: 4, event_id: 1, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'}
+  {scout_id: 1, event_id: 2, customer_name: 'Mary Jones', customer_address: '123 Main Street', customer_email: 'maryjones@example.com'},
+  {scout_id: 1, event_id: 2, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
+  {scout_id: 2, event_id: 2, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
+  {scout_id: 2, event_id: 2, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
+  {scout_id: 3, event_id: 2, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'},
+  {scout_id: 4, event_id: 2, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'}
   ])
 
 LineItem.create([
@@ -117,6 +115,20 @@ Stock.create ([
   {unit_id: 1, product_id: 11, quantity: 12},
   {unit_id: 1, product_id: 12, quantity: 6},
   {unit_id: 1, product_id: 13, quantity: 4}, 
-  {unit_id: 1, product_id: 14, quantity: 0},  
+  {unit_id: 1, product_id: 14, quantity: 0}, 
+  {unit_id: 2, product_id: 1, quantity: 36},
+  {unit_id: 2, product_id: 2, quantity: 24}, 
+  {unit_id: 2, product_id: 3, quantity: 30},
+  {unit_id: 2, product_id: 4, quantity: 108},
+  {unit_id: 2, product_id: 5, quantity: 24},
+  {unit_id: 2, product_id: 6, quantity: 108},
+  {unit_id: 2, product_id: 7, quantity: 288},
+  {unit_id: 2, product_id: 8, quantity: 108},
+  {unit_id: 2, product_id: 9, quantity: 12},
+  {unit_id: 2, product_id: 10, quantity: 12},
+  {unit_id: 2, product_id: 11, quantity: 12},
+  {unit_id: 2, product_id: 12, quantity: 6},
+  {unit_id: 2, product_id: 13, quantity: 4}, 
+  {unit_id: 2, product_id: 14, quantity: 0} 
   ])
 

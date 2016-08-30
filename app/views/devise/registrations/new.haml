@@ -4,10 +4,10 @@
     .card
       .card-block
         .card-title
-          %h2 Sign up
+          %h2 Pack 4496 Corn Cub Sign Up
 
         %p.card-text
-          %em Parents: Enter your Scout's name here and any email address (no email is sent).
+          %em Parents: Enter your Scout's name here and your email address.
 
         = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
           = devise_error_messages!
@@ -24,10 +24,10 @@
             = f.label :last_name
             = f.text_field :last_name, class: 'form-control'  
 
-          .form-group
-            = f.label :unit
-            %br
-            = f.collection_select :unit_id, Unit.all, :id, :name, { class: 'form-control'}, disabled: true
+          / .form-group
+          /   = f.label :unit
+          /   %br
+          /   = f.collection_select :unit_id, Unit.all, :id, :name, { class: 'form-control'}, disabled: true
 
           .form-group
             = f.label :password
