@@ -10,6 +10,7 @@
             %tr
               %th Product
               %th Quantity
+              %th Location
               %th Retail Price
               %th Retail Value
               %th
@@ -20,6 +21,7 @@
               %tr
                 %td= stock.product.name
                 %td= stock.quantity
+                %td= stock.location.titleize if stock.location
                 %td= number_to_currency(stock.product.retail_price)
                 %td
                   - total += stock.quantity * stock.product.retail_price
@@ -29,6 +31,7 @@
               %td
                 = link_to new_stock_path do
                   %i.fa.fa-plus.fa-lg
+              %td
               %td
               %td
               %td= number_to_currency(total)

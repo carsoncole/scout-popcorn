@@ -1,0 +1,17 @@
+.row
+  .col-md-2
+  .col-md-8
+    .card
+      .card-block
+        .card-title
+          %h1 
+            Hello
+            = succeed("!") do
+              = current_scout.first_name
+            Welcome to Cub Corn for Pack 4496.
+        %p.card-text
+          You can now manage all of your door-to-door sales, and see the credit you from the hours you volunteer for selling in front of stores, such as Ace and Rite Aid.
+
+        %p.card-text
+          On this Home page, you can see the summary of how you are doing for all types of sales.
+          %i.fa.fa-arrow-down.fa-lg

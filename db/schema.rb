@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20160828201730) do
     t.integer  "unit_id"
     t.integer  "product_id"
     t.integer  "quantity"
+    t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -126,13 +127,15 @@ ActiveRecord::Schema.define(version: 20160828201730) do
     t.integer  "scout_id"
     t.integer  "event_id"
     t.integer  "purchase_order_id"
-    t.string   "status",            default: "open", null: false
+    t.string   "status",               default: "open", null: false
     t.string   "customer_name"
     t.string   "customer_address"
     t.string   "customer_email"
     t.decimal  "total_value"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.integer  "money_received_by_id"
+    t.datetime "money_received_at"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "units", force: :cascade do |t|

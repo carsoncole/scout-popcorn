@@ -8,6 +8,10 @@ class DirectSale < ApplicationRecord
   before_save :calculate_amount!
   after_save :debit_stock!
 
+  def self.sales_by_scout_and_event(event)
+    event.direct_sales.group(:scout_id).sum(:amount)
+  end
+
   private
 
   def calculate_amount!

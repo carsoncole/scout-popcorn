@@ -26,6 +26,14 @@ class TakeOrder < ApplicationRecord
     where(status: 'open')
   end
 
+  def self.sales_by_scout_and_event(event)
+    event.take_orders.joins(:line_items).group(:scout_id).sum(:value)
+  end
+
+  def money_received_by
+    Scout.find(money_received_by_id).name unless money_received_by_id.blank?
+  end
+
 
   private
 

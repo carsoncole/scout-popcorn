@@ -4,6 +4,8 @@
       .card-block
         .card-title
           %h2 Take Order
+        %p.card-text
+          Enter each door-to-door take-order sale you make that will need to be delivered.
         = form_for @take_order do |f|
           - if @take_order.errors.any?
             #error_explanation
@@ -24,11 +26,11 @@
             .field
               %label= f.label :customer_address
               = f.text_field :customer_address, class: 'form-control', placeholder: 'Address'
-          .form-group
-            .field
-              %label
-                = f.label :customer_email
-              = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
-            %br
-            .actions
-              = f.submit 'Save', class: 'btn btn-success'
+          / .form-group
+          /   .field
+          /     %label
+          /       = f.label :customer_email
+          /     = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
+          %br
+          .actions
+            = f.submit 'Save', class: 'btn btn-success'

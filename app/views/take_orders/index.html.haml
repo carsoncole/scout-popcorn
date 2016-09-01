@@ -3,6 +3,10 @@
     .card.card-block
       .card-title
         %h1.h1 Take Orders
+
+      %p.card-text
+        Take Orders are all orders for popcorn in which you have received money and will deliver
+
       %table.table.card-text
         %thead
           %tr
@@ -36,6 +40,7 @@
             %td
               = link_to new_take_order_path do
                 %i.fa.fa-plus.fa-lg
+                Enter a Take Order
             %td
             %td
             %td
@@ -53,3 +58,5 @@
             %td
 
       = paginate @take_orders
+      %br
+      %em * The Status will change to "PAID" when you have turned in money for a Take Order.

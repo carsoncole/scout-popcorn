@@ -8,6 +8,10 @@ class SiteSale < ApplicationRecord
     end
   end
 
+  def self.sales_by_scout_and_event(event)
+    event.site_sales.group(:scout_id).sum(:total_sales)
+  end
+
   def hours_worked(scout)
     if scout_site_sales.where(scout_id: scout.id).first
       scout_site_sales.where(scout_id: scout.id).first.hours_worked

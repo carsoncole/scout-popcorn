@@ -18,5 +18,8 @@
             .field
               = f.label :quantity
               = f.number_field :quantity, class: 'form-control'
+          .form-group
+            = f.label :location
+            = f.select :location, options_for_select(Stock::LOCATIONS)
           .actions
             = f.submit 'Save'

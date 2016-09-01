@@ -24,14 +24,22 @@
       %li.nav-item= link_to "Prizes", prizes_path, class: "nav-link #{'active' if controller_name == 'prizes'}"
       - if @unit
         %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
-      - if current_scout.try(:is_admin?)
-        %li.nav-item= link_to "Events", events_path, class: "nav-link #{'active' if controller_name == 'events'}"
-        - if current_scout.is_super_admin?
-          %li.nav-item= link_to "Units", units_path, class: "nav-link #{'active' if controller_name == 'units'}"
-        %li.nav-item= link_to "Scouts", scouts_path, class: "nav-link #{'active' if controller_name == 'scouts' && action_name != 'show' }"
-        %li.nav-item= link_to "Purchase Orders", purchase_orders_path, class: "nav-link #{'active' if controller_name =='purchase_orders'}"
-      - if @unit && current_scout.try(:is_admin?)
-        %li.nav-item= link_to "Stock", stocks_path, class: "nav-link #{'active' if controller_name == 'stocks'}"
+      %li.nav-item.btn-group
+        = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales', 'site_sales'].include?(controller_name)}", 'type': 'button', "data-toggle": "dropdown", 'role': "button" do
+          Admin
+          %span.caret
+        - if current_scout.try(:is_admin?)
+          %ul.dropdown-menu
+            - if current_scout.is_super_admin?
+              %li= link_to "Units", units_path, class: "dropdown-item #{'active' if controller_name == 'units'}"
+            %li= link_to "Stock", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks'}"
+            %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
+            %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
+            %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
+      %li.nav-item= link_to "Help", help_index_path, class: "nav-link #{'active' if controller_name == 'help'}"
+
+
+
     %ul.nav.navbar-nav.pull-sm-right
       %li.nav-item= link_to "Log out", destroy_scout_session_path, method: :delete, class: "nav-link"
       %li.nav-item= link_to current_scout.first_name, scout_path(current_scout), class: "nav-link #{'active' if controller_name == 'scouts' && action_name == 'show'}"

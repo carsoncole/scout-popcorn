@@ -58,6 +58,8 @@
                 %td
                   = link_to new_take_order_line_item_path(@take_order) do
                     %i.fa.fa-plus.fa-lg
+                    Enter items sold to
+                    = @take_order.customer_name
 
                 %td
                 %td
@@ -75,4 +77,14 @@
 
         - if current_scout.is_admin? && @take_order.status == 'open' && @take_order.line_items.any?
           = button_to 'PAID', take_order_path(@take_order, paid: true), method: :patch, class: 'btn btn-default'
+        - if @take_order.money_received_by
+          %p
+            Money received by:
+            = @take_order.money_received_by
+            = surround("(",")") do
+              = @take_order.money_received_at
+.row
+  .col-md-2
+    %br
+    = link_to "Back to Take Orders", take_orders_path
 

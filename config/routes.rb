@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'help/index'
+
   root "home#index"
   devise_for :scouts, :controllers => { registrations: 'registrations' }
   resources :units

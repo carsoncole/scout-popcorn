@@ -4,7 +4,7 @@ class StocksController < ApplicationController
   # GET /stocks
   # GET /stocks.json
   def index
-    @stocks = @unit.stocks
+    @stocks = @unit.stocks.order(:location)
   end
 
   # GET /stocks/1
@@ -67,6 +67,6 @@ class StocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params
-      params.require(:stock).permit(:unit_id, :product_id, :quantity)
+      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location)
     end
 end

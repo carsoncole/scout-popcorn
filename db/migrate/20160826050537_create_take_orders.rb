@@ -9,6 +9,8 @@ class CreateTakeOrders < ActiveRecord::Migration[5.0]
       t.string :customer_address
       t.string :customer_email
       t.decimal :total_value
+      t.integer :money_received_by_id
+      t.datetime :money_received_at
       t.timestamps
     end
   end

@@ -4,10 +4,12 @@ class ScoutsController < ApplicationController
   # GET /scouts
   # GET /scouts.json
   def index
-    if @unit
-      @scouts = @unit.scouts.order(:first_name)
-    else
-      @scouts = Scout.order(:first_name)
+    if current_scout.is_admin?
+      if @unit
+        @scouts = @unit.scouts.order(:first_name)
+      else
+        @scouts = Scout.order(:first_name)
+      end
     end
   end
 

@@ -53,8 +53,8 @@ class TakeOrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
-    if params[:paid]
-      @take_order.update(status: :paid)
+    if params[:paid] && current_scout.is_admin?
+      @take_order.update(status: :paid, money_received_by_id: current_scout.id, money_received_at: Time.now)
     else 
       @take_order.update(take_order_params)
     end
