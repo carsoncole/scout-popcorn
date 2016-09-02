@@ -11,6 +11,7 @@ class TakeOrder < ApplicationRecord
       { :status => :open, :name => 'Open' },
       { :status => :setup, :name => 'Paid' },
       { :status => :ordered, :name => 'Ordered' },
+      { :status => :deliver, name: 'Deliver'},
       { :status => :delivered, :name => 'Delivered' }
     ]
 

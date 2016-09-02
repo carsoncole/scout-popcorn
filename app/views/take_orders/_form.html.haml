@@ -26,11 +26,11 @@
             .field
               %label= f.label :customer_address
               = f.text_field :customer_address, class: 'form-control', placeholder: 'Address'
-          / .form-group
-          /   .field
-          /     %label
-          /       = f.label :customer_email
-          /     = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
+          .form-group
+            .field
+              %label
+                = f.label :customer_email
+              = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
           %br
           .actions
             = f.submit 'Save', class: 'btn btn-success'

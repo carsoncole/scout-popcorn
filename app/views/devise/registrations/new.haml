@@ -1,50 +1,56 @@
 .row
-  .col-md-3
-  .col-md-6
-    .card
-      .card-block
-        .card-title
-          %h2 Pack 4496 Corn Cub Sign Up
+  .col-md-12
+    .alert.alert-danger
+      Sorry, but Corn Cub has not gone live yet. As soon as its up, we'll send out an email!
 
-        %p.card-text
-          %em Parents: Enter your Scout's name here and your email address.
 
-        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-          = devise_error_messages!
+/ .row
+/   .col-md-3
+/   .col-md-6
+/     .card
+/       .card-block
+/         .card-title
+/           %h2 Pack 4496 Corn Cub Sign Up
 
-          .form-group
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: 'form-control'
+/         %p.card-text
+/           %em Parents: Enter your Scout's name here and your email address.
 
-          .form-group
-            = f.label :first_name
-            = f.text_field :first_name, class: 'form-control'
+/         = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+/           = devise_error_messages!
 
-          .form-group
-            = f.label :last_name
-            = f.text_field :last_name, class: 'form-control'  
+/           .form-group
+/             = f.label :email
+/             = f.email_field :email, autofocus: true, class: 'form-control'
 
-          / .form-group
-          /   = f.label :unit
-          /   %br
-          /   = f.collection_select :unit_id, Unit.all, :id, :name, { class: 'form-control'}, disabled: true
+/           .form-group
+/             = f.label :first_name
+/             = f.text_field :first_name, class: 'form-control'
 
-          .form-group
-            = f.label :password
-            - if @minimum_password_length
-              %em
-                = surround("(", ")") do
-                  = @minimum_password_length
-                  characters minimum.
+/           .form-group
+/             = f.label :last_name
+/             = f.text_field :last_name, class: 'form-control'  
 
-            = f.password_field :password, autocomplete: "off",class: 'form-control'
+/           / .form-group
+/           /   = f.label :unit
+/           /   %br
+/           /   = f.collection_select :unit_id, Unit.all, :id, :name, { class: 'form-control'}, disabled: true
 
-          .form-group
-            = f.label :password_confirmation
-            = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+/           .form-group
+/             = f.label :password
+/             - if @minimum_password_length
+/               %em
+/                 = surround("(", ")") do
+/                   = @minimum_password_length
+/                   characters minimum.
 
-          .actions
-            = f.submit "Sign up", class: 'btn btn-success'
+/             = f.password_field :password, autocomplete: "off",class: 'form-control'
 
-        %br
-        = render "devise/shared/links"
+/           .form-group
+/             = f.label :password_confirmation
+/             = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+
+/           .actions
+/             = f.submit "Sign up", class: 'btn btn-success'
+
+/         %br
+/         = render "devise/shared/links"

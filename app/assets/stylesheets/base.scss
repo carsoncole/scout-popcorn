@@ -1,6 +1,6 @@
 body {
   margin-top: 5em;
-  background-color: #ddd;
+  background-color: #efefef;
 }
 .page-title {
   margin-bottom: 1.5em;
@@ -10,4 +10,7 @@ a.kill {
   &:visited {
     color: #FCD116;
   }
+}
+.navbar-toggler {
+  color: #ffffff;
 }

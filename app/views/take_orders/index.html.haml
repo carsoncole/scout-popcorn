@@ -4,8 +4,8 @@
       .card-title
         %h1.h1 Take Orders
 
-      %p.card-text
-        Take Orders are all orders for popcorn in which you have received money and will deliver
+      %p.card-text.hidden-print
+        Enter all of your door-to-door take orders that you get. 
 
       %table.table.card-text
         %thead
@@ -15,9 +15,11 @@
             %th Customer
             %th Address
             %th Amount
-            %th Status
-            %th
-            %th
+            %th Product
+            %th.hidden Status
+            %th.visible-print-block Delivered
+            %th.hidden-print
+            %th.hidden-print
 
 
         %tbody
@@ -32,11 +34,19 @@
                 - total += take_order.value
                 = number_to_currency(take_order.value)
               %td
+                - take_order.line_items.each do |line_item|
+                  = line_item.product.name
+                  = surround("(", ")") do
+                    = line_item.quantity
+                  %br
+              %td
                 - if take_order.status
                   %span.tag.tag-info= take_order.status.capitalize
-              %td= link_to 'Show', take_order
-              %td= link_to 'Destroy', take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } if take_order.status == 'open'
-          %tr
+              %td.visible-print-block
+                %i.fa.fa-square-o.fa-2x
+              %td.hidden-print= link_to 'Show', take_order
+              %td.hidden-print= link_to 'Destroy', take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } if take_order.status == 'open'
+          %tr.hidden-print
             %td
               = link_to new_take_order_path do
                 %i.fa.fa-plus.fa-lg
@@ -45,8 +55,8 @@
             %td
             %td
             %td
-            %td
-            %td
+            %td.hidden-print
+            %td.hidden-print
           %tr
             - if current_scout.is_admin? || current_scout.is_super_admin?
               %td
@@ -54,9 +64,9 @@
             %td
             %td= number_to_currency(total)
             %td
-            %td
-            %td
+            %td.hidden-print
+            %td.hidden-print
 
       = paginate @take_orders
-      %br
-      %em * The Status will change to "PAID" when you have turned in money for a Take Order.
+      %br.hidden-print
+      %em.hidden-print * The Status will change to "PAID" when you have turned in money for a Take Order.
