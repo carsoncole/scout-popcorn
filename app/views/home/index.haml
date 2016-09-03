@@ -1,7 +1,5 @@
-- if current_scout.last_sign_in_at.blank?
+- if current_scout.sign_in_count < 5
   = render 'welcome'
-
-
 
 .row
   %br
@@ -10,11 +8,11 @@
       .card
         .card-block
           .card-title
-            %h4.text-xs-center
+            %h2
               - unless current_scout.is_admin?
                 = current_scout.name
-                %br
-              = event.name
+
+            %p.lead= event.name
           - grand_total = 0
           %table.table
             %tr
@@ -58,5 +56,17 @@
               %th Total Sales
               %td.text-xs-right
                 = number_to_currency(grand_total, precision: 0)
+
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h2 Resources
+
+        %ul
+          %li= link_to "Site Sale Signup Sheet", "https://docs.google.com/spreadsheets/d/1yO7KX0E3OBasg2bCso0RZa74kTxiG-glYkt9b7PW5MY/edit?ts=57bf7d5d#gid=0", target: "_blank"
+          %li= link_to "BSA Prize Sheet", "chief-seattle-popcorn-prizes.pdf", target: "_blank"
+          %li= link_to "Order Form (Printable)", "order-form-2016.pdf", target: "_blank"
+          %li= link_to "Popcorn Product Display Page (Printable)", "popcorn-product-2016.pdf", target: "_blank"
 
 

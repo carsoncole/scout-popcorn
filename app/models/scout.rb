@@ -16,7 +16,7 @@ class Scout < ApplicationRecord
   after_create :set_default_event!
   after_create :set_if_admin!
 
-  ADMINS = ['nathan.oestreich@gmail.com', 'coie80@hotmail.com', 'carson.cole@gmail.com', 'cluckman@gmail.com']
+  ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'], ['charlotte', 'boulind-yeung'], ['kevin', 'daniels'],['lisa', 'cass'], ['keri', 'pinzon']]
 
   def name
     first_name + ' ' + last_name
@@ -24,7 +24,7 @@ class Scout < ApplicationRecord
 
   def total_sales
     total = 0
-    take_orders.submitted.each do |to|
+    take_orders.each do |to|
       total += to.value
     end
     total
@@ -50,7 +50,9 @@ class Scout < ApplicationRecord
   end
 
   def set_if_admin!
-    update(is_admin: true) if ADMINS.include? email
+    if ADMINS.include? [first_name.downcase, last_name.downcase] 
+      update(is_admin: true) 
+    end
   end
 
 end

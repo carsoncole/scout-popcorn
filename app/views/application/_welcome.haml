@@ -9,9 +9,23 @@
             = succeed("!") do
               = current_scout.first_name
             Welcome to Cub Corn for Pack 4496.
-        %p.card-text
-          You can now manage all of your door-to-door sales, and see the credit you from the hours you volunteer for selling in front of stores, such as Ace and Rite Aid.
+        
+        - if current_scout.is_admin?
+          %p
+            We've identified you as a Pack Committee Member and designated your account as an
+            %span.tag.tag-danger
+              Administrator
+            so you can see all sales, inventory...basically everything. 
 
-        %p.card-text
-          On this Home page, you can see the summary of how you are doing for all types of sales.
-          %i.fa.fa-arrow-down.fa-lg
+          %p
+            %b
+              Please create a separate account for your Scout
+            , which will be tailored for just them. You will need a different email address for them, but it should be your own email (Suggestion: If you use Gmail, you can simply add to your email '+anything@gmail.com', so for me I can add 'carson.cole+anything@gmail.com' and I'll still get the email!)
+
+        - unless current_scout.is_admin?
+          %p.card-text
+            You can now manage all of your door-to-door sales, and see the credit you from the hours you volunteer for selling in front of stores, such as Ace and Rite Aid.
+
+          %p.card-text
+            On this Home page, you can see the summary of how you are doing for all types of sales.
+            %i.fa.fa-arrow-down.fa-lg

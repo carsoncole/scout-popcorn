@@ -47,7 +47,7 @@ Prize.create([
   {name: 'Smithsonian 30x Telescope', amount: 850, source: 'bsa', source_id: '621346', source_description: 'Prize Level 5'},
   {name: '4" BSA Multi Tool', amount: 850, source: 'bsa', source_id: '615781', source_description: 'Prize Level 5'},
   {name: 'RC Helicopter', amount: 850, source: 'bsa', source_id: '618984', source_description: 'Prize Level 5'},
-
+  {name: 'Playstation 4', amount: 5500, source: 'bsa', source_id: '634165', source_description: 'Prize Level 12', url: 'prize-ps4.png'},
   {name: '$600 Bonus Level', amount: 600, source: 'bsa-bonus', source_id: '988100313', description: 'Two Tickets to the Mariners Scout Day Experience', is_by_level: true},
   {name: '$1,500 Bonus Level', amount: 1500, source: 'bsa-bonus', source_id: '', description: 'Invitation to party (to be announced)', is_by_level: true}
   ])

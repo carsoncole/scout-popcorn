@@ -5,7 +5,7 @@ class TakeOrder < ApplicationRecord
   has_many :products, through: :take_order_line_items
   has_many :take_order_line_items, dependent: :destroy
   validates :scout_id, :event_id, :customer_name, presence: true
-  validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
 
