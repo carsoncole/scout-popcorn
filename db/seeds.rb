@@ -18,12 +18,12 @@ Product.create([
   {name: 'Kettle Corn Microwave', retail_price: 20, quantity: 1, url: 'kettle-corn-microwave.jpg'},
   {name: 'Unbelievable Butter Microwave', retail_price: 20, quantity: 1, url: 'unbelievable-butter-microwave.jpg'},
   {name: 'Butter Light Microwave', retail_price: 20, quantity: 1, url: 'butter-light-microwave.jpg'},
-  {name: 'Sweet & Savory Collection', retail_price: 40, quantity: 1},
-  {name: "Cheese Lover's Collection", retail_price: 30, quantity: 1, url: 'jalapeno-cheddar-cheese.jpg'},
-  {name: "Chocolate Lover's Collection", retail_price: 60, quantity: 1},
-  {name: "Popcorn for our Troops Gold Donation", retail_price: 50, quantity: 1},
-  {name: "Popcorn for our Troops Silver Donation", retail_price: 30, quantity: 1},
-  {name: "Pack Donation", retail_price: 1, quantity: 1}
+  {name: 'Sweet & Savory Collection', retail_price: 40, quantity: 1, url: 'sweet-and-savory.jpg'},
+  {name: "Cheese Lover's Collection", retail_price: 30, quantity: 1, url: 'cheese-lovers-collection.jpg'},
+  {name: "Chocolate Lover's Collection", retail_price: 60, quantity: 1, url: 'chocolate-lovers-collection.png'},
+  {name: "Popcorn for our Troops Gold Donation", retail_price: 50, quantity: 1, url: 'popcorn-for-troops-50.jpg'},
+  {name: "Popcorn for our Troops Silver Donation", retail_price: 30, quantity: 1, url: 'popcorn-for-troops-30.jpg'},
+  {name: "Pack Donation", retail_price: 1, quantity: 1, url: 'pack-donation.png'}
   ])
 
 Prize.create([
