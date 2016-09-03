@@ -28,7 +28,7 @@ Product.create([
 
 Prize.create([
   {name: 'Participation Patch', amount: 25, source: 'bsa', source_id: '633893', source_description: 'Prize Level 1'},
-  {name: 'Marshmallow Straight Shooter', amount: 350, source: 'bsa', source_id: '634181', source_description: 'Prize Level 2'},
+  {name: 'Marshmallow Straight Shooter', amount: 350, source: 'bsa', source_id: '634181', source_description: 'Prize Level 2', url: 'prize-marshmallow-straight-shooter.jpg'},
   {name: 'Luci Solar Lantern', amount: 350, source: 'bsa', source_id: '633896', source_description: 'Prize Level 2'},
   {name: 'Slime Lab Science Kit', amount: 350, source: 'bsa', source_id: '7406', source_description: 'Prize Level 2'},
   {name: 'Cub Scout Utility Knife', amount: 350, source: 'bsa', source_id: '615777', source_description: 'Prize Level 2'},
