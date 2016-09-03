@@ -50,12 +50,8 @@ class TakeOrder < ApplicationRecord
 
   def debit_stock!
     take_order_line_items.each do |line_item|
-      available_stock = scout.unit.stocks.where(product_id: line_item.product_id, location: 'take orders').first
-      if available_stock
-        available_stock.update(quantity: available_stock.quantity - line_item.quantity, location: 'take orders')
-      else
-        scout.unit.stocks.create(product_id: line_item.product_id, quantity: - line_item.quantity, location: 'take orders')
-      end
+      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, description: "Take order #{line_item.take_order_id}", created_by: 999)
+      new_stock_entry.save
     end
   end
 

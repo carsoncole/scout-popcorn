@@ -21,6 +21,7 @@
               - product = Product.find(key[0])
               - location = key[1]
               - quantity = value
+              - next if quantity == 0
               %tr
                 %td= product.name
                 %td= quantity

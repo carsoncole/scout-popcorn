@@ -22,7 +22,11 @@
                 %td= stock.quantity
                 %td= stock.location
                 %td= stock.created_at
-                %td= Scout.find(stock.created_by).name
+                %td
+                  - if stock.created_by == 999
+                    System
+                  - else
+                    = Scout.find(stock.created_by).name
 
             %tr
               %td                

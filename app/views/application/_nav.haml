@@ -16,7 +16,7 @@
         %ul.nav.navbar-nav
           %li.nav-item= link_to "Home", home_index_path, class: "nav-link #{'active' if controller_name == 'home'}"
           %li.nav-item.btn-group
-            = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales', 'site_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
+            = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
               Door-to-Door
               %span.caret
             %ul.dropdown-menu
@@ -36,7 +36,8 @@
                 %ul.dropdown-menu
                   - if current_scout.is_super_admin?
                     %li= link_to "Units", units_path, class: "dropdown-item #{'active' if controller_name == 'units'}"
-                  %li= link_to "Stock", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks'}"
+                  %li= link_to "Stock Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name != 'ledger'}"
+                  %li= link_to "Stock Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
                   %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
                   %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
                   %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
