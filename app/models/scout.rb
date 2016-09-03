@@ -10,13 +10,13 @@ class Scout < ApplicationRecord
   has_many :scout_site_sales
   has_many :direct_sales
 
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :email, presence: true
   before_save :fix_name!
+  after_create :set_unit!
   after_create :set_default_event!
   after_create :set_if_admin!
 
   ADMINS = ['nathan.oestreich@gmail.com', 'coie80@hotmail.com', 'carson.cole@gmail.com', 'cluckman@gmail.com']
-
 
   def name
     first_name + ' ' + last_name
@@ -35,10 +35,14 @@ class Scout < ApplicationRecord
   end
 
   def set_default_event!
-    update(default_event_id: unit.events.active.last.id) if unit.events.active.last
+    update(default_event_id: unit.events.active.last.id) if unit.events
   end
 
   private
+
+  def set_unit!
+    self.update(unit_id: 1)
+  end
 
   def fix_name!
     self.first_name = first_name.capitalize if first_name
