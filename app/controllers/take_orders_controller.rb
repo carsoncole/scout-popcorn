@@ -18,7 +18,7 @@ class TakeOrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @take_order = TakeOrder.find(params[:id])
-    @line_items = @take_order.line_items
+    @line_items = @take_order.take_order_line_items
   end
 
   # GET /orders/new
@@ -53,8 +53,8 @@ class TakeOrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
-    if params[:paid] && current_scout.is_admin?
-      @take_order.update(status: :paid, money_received_by_id: current_scout.id, money_received_at: Time.now)
+    if params[:submitted] && current_scout.is_admin?
+      @take_order.update(status: :submitted, money_received_by_id: current_scout.id, money_received_at: Time.now)
     else 
       @take_order.update(take_order_params)
     end
@@ -83,6 +83,6 @@ class TakeOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def take_order_params
-      params.require(:take_order).permit(:scout_id, :paid, :status_id, :customer_name, :customer_address, :customer_email)
+      params.require(:take_order).permit(:scout_id, :submitted, :status_id, :customer_name, :customer_address, :customer_email)
     end
 end

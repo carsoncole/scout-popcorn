@@ -7,7 +7,7 @@ class CreateDirectSales < ActiveRecord::Migration[5.0]
       t.decimal :price, precision: 5, scale: 2, default: 0, null: false
       t.integer :quantity, default: 0, null: false
       t.decimal :amount, precision: 5, scale: 2, default: 0, null: false
-      t.string :status, default: 'open', null: false
+      t.string :status, default: 'delivered', null: false
       t.timestamps
     end
   end

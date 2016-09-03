@@ -2,6 +2,8 @@
   .col-md-12
     .card
       .card-block
+        .card-title
+          %h3 Stock Movement
         = form_for @stock do |f|
           - if @stock.errors.any?
             #error_explanation
@@ -20,6 +22,10 @@
               = f.number_field :quantity, class: 'form-control'
           .form-group
             = f.label :location
-            = f.select :location, options_for_select(Stock::LOCATIONS)
+            %br
+            = f.select :location, options_for_select(Stock::LOCATIONS), {}, class: 'form-control'
+          .form-group
+            = f.label :description
+            = f.text_field :description, class: 'form-control'
           .actions
             = f.submit 'Save'

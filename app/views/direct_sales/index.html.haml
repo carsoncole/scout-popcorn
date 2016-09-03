@@ -37,8 +37,13 @@
                 - if current_scout.is_admin? && direct_sale.status == 'open'
                 
                   = button_to 'PAID', direct_sale_path(direct_sale, paid: true), method: :patch, class: 'btn btn-default'
-              %td= link_to 'Edit', direct_sale
-              %td= link_to 'Destroy', direct_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } unless direct_sale.status == 'open' 
+              %td
+                = link_to edit_direct_sale_path(direct_sale) do
+                  %i.fa.fa-pencil.fa-lg
+              %td
+                - unless direct_sale.status == 'open' 
+                  = link_to direct_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                    %i.fa.fa-trash.fa-lg                  
           %tr
             %td
               = link_to new_direct_sale_path do

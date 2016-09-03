@@ -27,7 +27,7 @@
                   - query = current_scout.take_orders.where(event_id: event.id)
                 - query.each do |take_order|
                   - total += take_order.value
-                = number_to_currency(total)
+                = number_to_currency(total, precision: 0)
                 - grand_total += total
 
             %tr
@@ -40,23 +40,23 @@
                   - query = current_scout.direct_sales.where(event_id: event.id)
                 - query.each do |direct_sale|
                   - total += direct_sale.amount
-                = number_to_currency(total)  
+                = number_to_currency(total, precision: 0)  
                 - grand_total += total
 
             %tr
               %th Site Sales
               %td.text-xs-right
                 - if current_scout.is_admin?
-                  - amount = @active_event.site_sales.sum(:total_sales)
+                  - amount = @active_event.site_sales.joins(:site_sale_line_items).sum(:value)
                 - else
                   - amount = @active_event.total_site_sales(current_scout) 
-                = number_to_currency(amount)
+                = number_to_currency(amount, precision: 0)
                 - grand_total += amount           
 
         
             %tr
               %th Total Sales
               %td.text-xs-right
-                = number_to_currency(grand_total)
+                = number_to_currency(grand_total, precision: 0)
 
 

@@ -24,7 +24,7 @@ class Scout < ApplicationRecord
 
   def total_sales
     total = 0
-    take_orders.paid.each do |to|
+    take_orders.submitted.each do |to|
       total += to.value
     end
     total

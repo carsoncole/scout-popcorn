@@ -1,0 +1,35 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h2 Stocks Ledger
+        %table.table.table-sm
+          %thead
+            %tr
+              %th Product
+              %td Desc
+              %th Qty
+              %th Location
+              %th Created
+              %th Created by
+
+          %tbody
+            - @stocks.each do |stock|
+              %tr
+                %td= stock.product.name
+                %td= stock.description
+                %td= stock.quantity
+                %td= stock.location
+                %td= stock.created_at
+                %td= Scout.find(stock.created_by).name
+
+            %tr
+              %td                
+                = link_to new_stock_path do
+                  %i.fa.fa-plus.fa-lg
+              %td
+              %td
+              %td
+              %td
+        = paginate @stocks

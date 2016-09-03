@@ -8,24 +8,21 @@ class SiteSalesController < ApplicationController
     @site_sales = @site_sales.where(event_id: @active_event) if @active_event
   end
 
-  # GET /site_sales/1
-  # GET /site_sales/1.json
   def show
+    @line_items = @site_sale.site_sale_line_items.order(created_at: :desc)
+    @scout_site_sales = @site_sale.scout_site_sales.joins(:scout).order("scouts.first_name ASC")
+    @total_sales = @site_sale.site_sale_line_items.sum(:value)
   end
 
-  # GET /site_sales/new
   def new
-    @site_sale = SiteSale.new
+    @site_sale = @active_event.site_sales.new
   end
 
-  # GET /site_sales/1/edit
   def edit
   end
 
-  # POST /site_sales
-  # POST /site_sales.json
   def create
-    @site_sale = SiteSale.new(site_sale_params)
+    @site_sale = @active_event.site_sales.build(site_sale_params)
 
     respond_to do |format|
       if @site_sale.save
@@ -38,22 +35,15 @@ class SiteSalesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /site_sales/1
-  # PATCH/PUT /site_sales/1.json
   def update
-    respond_to do |format|
-      if @site_sale.update(site_sale_params)
-        format.html { redirect_to @active_event.site_sales, notice: 'Site sale was successfully updated.' }
-        format.json { render :show, status: :ok, location: @site_sale }
-      else
-        format.html { render :edit }
-        format.json { render json: @site_sale.errors, status: :unprocessable_entity }
-      end
+    if params[:closed] && current_scout.is_admin?
+      @site_sale.update(status: :closed)
+    else 
+      @site_sale.update(site_sale_params)
     end
+    redirect_to @site_sale, notice: 'Take Order was successfully updated.'
   end
 
-  # DELETE /site_sales/1
-  # DELETE /site_sales/1.json
   def destroy
     @site_sale.destroy
     respond_to do |format|

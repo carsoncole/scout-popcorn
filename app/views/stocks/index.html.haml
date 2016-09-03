@@ -4,8 +4,8 @@
       .card-block
         .card-title
           %h1 Stock
-
-        %table.table
+        %p= link_to "Ledger", stocks_ledger_path
+        %table.table.table-sm
           %thead
             %tr
               %th Product
@@ -13,20 +13,23 @@
               %th Location
               %th Retail Price
               %th Retail Value
-              %th
+              / %th
 
           %tbody
             - total = 0
-            - @stocks.each do |stock|
+            - @stocks_hash.each do |key, value|
+              - product = Product.find(key[0])
+              - location = key[1]
+              - quantity = value
               %tr
-                %td= stock.product.name
-                %td= stock.quantity
-                %td= stock.location.titleize if stock.location
-                %td= number_to_currency(stock.product.retail_price)
+                %td= product.name
+                %td= quantity
+                %td= location.titleize if location
+                %td= number_to_currency(product.retail_price)
                 %td
-                  - total += stock.quantity * stock.product.retail_price
-                  = number_to_currency(stock.quantity * stock.product.retail_price)
-                %td= link_to 'Destroy', stock, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                  - total += quantity * product.retail_price
+                  = number_to_currency(quantity * product.retail_price)
+                / %td= link_to 'Destroy', stock, :method => :delete, :data => { :confirm => 'Are you sure?' }
             %tr
               %td
                 = link_to new_stock_path do
@@ -35,5 +38,5 @@
               %td
               %td
               %td= number_to_currency(total)
-              %td
+              / %td
 

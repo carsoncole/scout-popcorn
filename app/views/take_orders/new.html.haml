@@ -1,6 +1,8 @@
 = render 'form'
 
 .row
-  .col-md-2
+  .col-md-5
     %br
-    = link_to "Back to Take Orders", take_orders_path
+    = link_to take_orders_path do
+      %i.fa.fa-arrow-left.fa-lg
+      Back to Take Orders

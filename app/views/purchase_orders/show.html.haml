@@ -1,17 +1,15 @@
-%h2.text-xs-center
-  = @purchase_order.event.name
-  Purchase Order
-
-
-%h3
-  %span.tag.tag-info= @purchase_order.status.capitalize 
-
 .row
   .col-md-12
     .card
       .card-block
         .card-title
-          %h3 Product Quantities
+          %h2
+            Purchase Order
+            = '-'
+            = @purchase_order.event.name
+
+          %h3
+            %span.tag.tag-info= @purchase_order.status.capitalize 
         %table.table
           %thead
             %tr
@@ -22,19 +20,16 @@
           %tbody
             - total_value = 0
             - @products.each do |product|
-              - quantity = PurchaseOrder.joins(take_orders: [:line_items]).where("purchase_orders.id = ? AND line_items.product_id = ?", @purchase_order.id, product.id).sum("line_items.quantity")
+              - quantity = TakeOrderPurchaseOrder.joins(take_orders: [:line_items]).where("purchase_orders.id = ? AND line_items.product_id = ?", @purchase_order.id, product.id).sum("line_items.quantity")
               - if quantity != 0
                 %tr
                   %td= product.name
-                  %td
-
-                    = quantity
+                  %td= quantity
                   %td= number_to_currency(product.retail_price)
                   %td
                     - value = product.retail_price * quantity
                     - total_value += value
                     = number_to_currency( value )
-
             %tr
               %td
               %td

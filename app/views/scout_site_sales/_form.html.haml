@@ -13,9 +13,9 @@
           .form-group
             = f.label :scout
             = f.collection_select :scout_id, @unit.scouts.order(:first_name), :id, :name, class: 'form-control'
-          .form-group
+          
             = f.label :site_sale
-            = f.collection_select :site_sale_id, @active_event.site_sales.order(:name), :id, :name, class: 'form-control'
+            = f.hidden_field :site_sale_id
           .form-group
             = f.label :hours_worked
             = f.text_field :hours_worked, class: 'form-control'

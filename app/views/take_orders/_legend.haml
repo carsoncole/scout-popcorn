@@ -1,0 +1,12 @@
+.row
+  .col-md-6
+    .card
+      .card-block
+        .card-text.small
+          %table.table-sm
+            - TakeOrder::STATUSES.each do |key, value|
+              .tag.tag-primary 
+                = value[:name]
+              = precede("= ") do
+                = value[:description]
+              %br

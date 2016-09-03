@@ -1,8 +1,7 @@
-class LineItem < ApplicationRecord
-  belongs_to :take_order
+class SiteSaleLineItem < ApplicationRecord
+  belongs_to :site_sale
   belongs_to :product
-  validates :take_order_id, :product_id, :quantity, presence: true
-
+  validates :product_id, :quantity, presence: true
   before_save :update_value!
 
   private

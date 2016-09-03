@@ -5,6 +5,8 @@ class CreateStocks < ActiveRecord::Migration[5.0]
       t.integer :product_id
       t.integer :quantity
       t.string :location
+      t.string :description
+      t.integer :created_by
       t.timestamps
     end
   end

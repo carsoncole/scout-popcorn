@@ -27,7 +27,7 @@ class DirectSalesController < ApplicationController
   def create
     @direct_sale = @active_event.direct_sales.build(direct_sale_params)
     @direct_sale.scout_id = current_scout.id unless current_scout.is_admin?
-    @direct_sale.price = @direct_sale.product.retail_price
+    @direct_sale.price = @direct_sale.product.retail_price if @direct_sale.product
 
     respond_to do |format|
       if @direct_sale.save
@@ -43,10 +43,10 @@ class DirectSalesController < ApplicationController
   # PATCH/PUT /direct_sales/1
   # PATCH/PUT /direct_sales/1.json
   def update
-    if params[:paid]
-      @direct_sale.update(status: :paid)
+    if params[:submitted]
+      @direct_sale.update(status: :submitted)
     else 
-      @direct_sale.update(direct_order_params)
+      @direct_sale.update(direct_sale_params)
     end
     redirect_to direct_sales_path, notice: 'Direct sale was successfully updated.'
   end

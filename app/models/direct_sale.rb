@@ -19,11 +19,11 @@ class DirectSale < ApplicationRecord
   end
 
   def debit_stock!
-    available_stock = scout.unit.stocks.where(product_id: product_id).first
+    available_stock = scout.unit.stocks.where(product_id: product_id, location: 'distribution boxes').first
     if available_stock
-      available_stock.update(quantity: available_stock.quantity - quantity)
+      available_stock.update(quantity: available_stock.quantity - quantity, location: 'distribution boxes')
     else
-      scout.unit.stocks.create(product_id: product.id, quantity: -quantity)
+      scout.unit.stocks.create(product_id: product.id, quantity: -quantity, location: 'distribution boxes')
     end
   end
 end

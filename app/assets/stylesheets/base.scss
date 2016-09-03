@@ -14,3 +14,31 @@ a.kill {
 .navbar-toggler {
   color: #ffffff;
 }
+
+#error_explanation {
+  margin-bottom: 2em;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h4 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#error_explanation ul {
+  margin: 0.5em 0 0 0;
+  li {
+    margin-top: 0.25em;
+    list-style: square;
+  }
+}

@@ -1,0 +1,24 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h2
+            Site Sale
+        = form_for [@site_sale, @line_item] do |f|
+          = render 'errors', target: @line_item
+
+          .form-group
+            = f.label :product
+            %br
+            = f.collection_select :product_id, Product.site_sale_left(@site_sale), :id, :name, {:include_blank => "Select a product"}, class: 'form-control'
+          .row
+            .col-md-4
+              .form-group
+                = f.label 'Quantity sold'
+                %br
+                = f.number_field :quantity,class: 'form-control'
+          .actions
+            = f.submit 'Save', class: 'btn btn-success'
+        %br
+        = link_to "< Back to Site Sale", site_sale_path(@site_sale) 

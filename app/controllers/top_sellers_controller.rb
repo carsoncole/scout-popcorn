@@ -7,9 +7,8 @@ class TopSellersController < ApplicationController
     site_sales_totals = SiteSale.sales_by_scout_and_event(@active_event)
 
     @scout_hash = {}
-    [take_order_sales_totals, direct_sales_totals].each do |sales_total|
+    [take_order_sales_totals, direct_sales_totals, site_sales_totals].each do |sales_total|
       sales_total.each do |scout, amount|
-        puts scout.to_s + '/' + amount.to_s
         if @scout_hash[scout]
           @scout_hash[scout] += amount
         else
@@ -18,9 +17,9 @@ class TopSellersController < ApplicationController
       end
     end
 
-
-    top_sellers_hash = @active_event.take_orders.paid.joins(:line_items, :scout).group(:scout_id).sum(:value)
-    @top_sellers_hash = top_sellers_hash.sort_by {|id, value| value }
+    @top_sellers = @scout_hash.sort{|a,b| a[1] <=> b[1]}.reverse
+    # top_sellers_hash = @active_event.take_orders.submitted.joins(:take_order_line_items, :scout).group(:scout_id).sum(:value)
+    # @top_sellers_hash = top_sellers_hash.sort_by {|id, value| value }
   end
 
 end

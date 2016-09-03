@@ -6,12 +6,7 @@
           %h2 Direct Sale
 
         = form_for @direct_sale do |f|
-          - if @direct_sale.errors.any?
-            #error_explanation
-              %h2= "#{pluralize(@direct_sale.errors.count, "error")} prohibited this direct_sale from being saved:"
-              %ul
-                - @direct_sale.errors.full_messages.each do |msg|
-                  %li= msg
+          = render 'errors', target: @direct_sale
 
           - if current_scout.is_admin?
             .form-group
@@ -20,12 +15,13 @@
           .form-group
             = f.label :product
             %br
-            = f.collection_select :product_id, @active_event.products.order(:name), :id, :name, { class: 'form-control'}
+            = f.collection_select :product_id, @active_event.products.order(:name), :id, :name, {:include_blank => "Select a product"}, class: 'form-control'
           .row
-            .col-md-2
+            .col-md-4
               .form-group
-                = f.label :quantity
-                = f.number_field :quantity, class: 'form-control'
+                = f.label 'Enter quantity sold'
+                = f.number_field :quantity,class: 'form-control'
+                / = f.select :quantity, options_for_select(['1','2','3','4','5','6','7','8','9','10'], selected: f.object.quantity),{:include_blank => "Select a quantity"},class: 'form-control'
           / .form-group
           /   = f.label :amount
           /   = f.text_field :amount, class: 'form-control'

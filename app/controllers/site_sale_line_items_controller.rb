@@ -1,11 +1,11 @@
-class LineItemsController < ApplicationController
-  before_action :set_take_order
+class SiteSaleLineItemsController < ApplicationController
+  before_action :set_site_sale
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
   # GET /line_items
   # GET /line_items.json
   def index
-    @line_items = @take_order.line_items
+    @line_items = @site_sale.site_sale_line_items
   end
 
   # GET /line_items/1
@@ -15,7 +15,7 @@ class LineItemsController < ApplicationController
 
   # GET /line_items/new
   def new
-    @line_item = LineItem.new
+    @line_item = @site_sale.site_sale_line_items.new
   end
 
   # GET /line_items/1/edit
@@ -25,11 +25,11 @@ class LineItemsController < ApplicationController
   # POST /line_items
   # POST /line_items.json
   def create
-    @line_item = @take_order.line_items.build(line_item_params)
+    @line_item = @site_sale.site_sale_line_items.build(site_sale_line_item_params)
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @take_order, notice: 'Line item was successfully created.' }
+        format.html { redirect_to @site_sale, notice: 'Line item was successfully created.' }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -42,8 +42,8 @@ class LineItemsController < ApplicationController
   # PATCH/PUT /line_items/1.json
   def update
     respond_to do |format|
-      if @line_item.update(line_item_params)
-        format.html { redirect_to @take_order, notice: 'Line item was successfully updated.' }
+      if @line_item.update(site_sale_line_item_params)
+        format.html { redirect_to @site_sale, notice: 'Line item was successfully updated.' }
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class LineItemsController < ApplicationController
   def destroy
     @line_item.destroy
     respond_to do |format|
-      format.html { redirect_to order_url(@take_order), notice: 'Line item was successfully destroyed.' }
+      format.html { redirect_to order_url(@site_sale), notice: 'Line item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -65,15 +65,15 @@ class LineItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_line_item
-      @line_item = @take_order.line_items.find(params[:id])
+      @line_item = @site_sale.site_sale_line_items.find(params[:id])
     end
 
-    def set_take_order
-      @take_order = TakeOrder.find(params[:take_order_id])
+    def set_site_sale
+      @site_sale = SiteSale.find(params[:site_sale_id]) if params[:site_sale_id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def line_item_params
-      params.require(:line_item).permit(:take_order_id, :product_id, :quantity)
+    def site_sale_line_item_params
+      params.require(:site_sale_line_item).permit(:site_sale_id, :product_id, :quantity)
     end
 end

@@ -15,7 +15,7 @@ class ScoutSiteSalesController < ApplicationController
 
   # GET /scout_site_sales/new
   def new
-    @scout_site_sale = ScoutSiteSale.new
+    @scout_site_sale = ScoutSiteSale.new(site_sale_id: params[:site_sale_id])
   end
 
   # GET /scout_site_sales/1/edit
@@ -29,7 +29,7 @@ class ScoutSiteSalesController < ApplicationController
 
     respond_to do |format|
       if @scout_site_sale.save
-        format.html { redirect_to @scout_site_sale, notice: 'Scout site sale was successfully created.' }
+        format.html { redirect_to site_sale_path(@scout_site_sale.site_sale_id), notice: 'Scout site sale was successfully created.' }
         format.json { render :show, status: :created, location: @scout_site_sale }
       else
         format.html { render :new }

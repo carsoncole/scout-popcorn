@@ -2,6 +2,8 @@
   .col-md-12
     .card
       .card-block
+        .card-title
+          %h1 Site Sales
         = form_for @site_sale do |f|
           - if @site_sale.errors.any?
             #error_explanation
@@ -10,17 +12,22 @@
                 - @site_sale.errors.full_messages.each do |msg|
                   %li= msg
 
+          / .form-group
+          /   = f.label :event
+          /   %br
+          /   = f.collection_select :event_id, @unit.events.order(:name), :id, :name, {}, class: 'form-control'
           .form-group
-            = f.label :event
-            %br
-            = f.collection_select :event_id, @unit.events.order(:name), :id, :name, {}, class: 'form-control'
-          .form-group
-            = f.label :name
-            = f.text_field :name, class: 'form-control'
+            = f.label :location_name
+            = f.text_field :name, placeholder: 'Name of location', class: 'form-control'
 
           .form-group
-            = f.label :total_sales
-            = f.text_field :total_sales, class: 'form-control'
+            = f.label :date
+            %br
+            = f.date_select :date, {}
+
+          / .form-group
+          /   = f.label :total_sales
+          /   = f.text_field :total_sales, class: 'form-control'
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

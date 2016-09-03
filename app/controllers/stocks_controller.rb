@@ -4,7 +4,7 @@ class StocksController < ApplicationController
   # GET /stocks
   # GET /stocks.json
   def index
-    @stocks = @unit.stocks.order(:location)
+    @stocks_hash = @unit.stocks.joins(:product).order(:location, 'products.name').group(:product_id, :location).sum(:quantity)
   end
 
   # GET /stocks/1
@@ -22,13 +22,18 @@ class StocksController < ApplicationController
   def edit
   end
 
+  def ledger
+    @stocks = @unit.stocks.order(:created_at).page(params[:page]).per(50)
+  end
+
   # POST /stocks
   # POST /stocks.json
   def create
     @stock = @unit.stocks.build(stock_params)
+    @stock.created_by = current_scout.id
 
     if @stock.save
-      redirect_to stocks_path, notice: 'Stock was successfully created.'
+      redirect_to stocks_ledger_path, notice: 'Stock was successfully created.'
     else
       @products = @active_event.products.order(:name)
       render :new
@@ -67,6 +72,6 @@ class StocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params
-      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location)
+      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description)
     end
 end

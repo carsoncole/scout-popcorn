@@ -20,7 +20,11 @@ Product.create([
   {name: 'Butter Light Microwave', retail_price: 20, quantity: 1, url: 'butter-light-microwave.jpg'},
   {name: 'Sweet & Savory Collection', retail_price: 40, quantity: 1},
   {name: "Cheese Lover's Collection", retail_price: 30, quantity: 1, url: 'jalapeno-cheddar-cheese.jpg'},
-  {name: "Chocolate Lover's Collection", retail_price: 60, quantity: 1}])
+  {name: "Chocolate Lover's Collection", retail_price: 60, quantity: 1},
+  {name: "Popcorn for our Troops Gold Donation", retail_price: 50, quantity: 1},
+  {name: "Popcorn for our Troops Silver Donation", retail_price: 30, quantity: 1},
+  {name: "Pack Donation", retail_price: 1, quantity: 1}
+  ])
 
 Prize.create([
   {name: 'Participation Patch', amount: 25, source: 'bsa', source_id: '633893', source_description: 'Prize Level 1'},
@@ -55,8 +59,7 @@ Unit.create([
 
 Event.create([
   { unit_id: 1, name: 'Popcorn Sales 2016'},
-  { unit_id: 2, name: 'Test Popcorn Sales 2016'},
-  { unit_id: 2, name: 'Popcorn Sales 2017', is_active: false}
+  { unit_id: 2, name: 'Popcorn Sales 2016'}
   ])
 
 Scout.create([
@@ -79,56 +82,29 @@ TakeOrder.create([
   {scout_id: 4, event_id: 2, customer_name: 'Bob White', customer_address: '12 Acme Avenue', customer_email: 'bobwhite@example.com'}
   ])
 
-LineItem.create([
-  {take_order_id: 1, product_id: Event.first.products.first.id, quantity: 2},
-  {take_order_id: 1, product_id: Event.first.products[1].id, quantity: 3},
-  {take_order_id: 2, product_id: Event.first.products[3].id, quantity: 5},
-  {take_order_id: 3, product_id: Event.first.products[2].id, quantity: 5},
-  {take_order_id: 3, product_id: Event.first.products[3].id, quantity: 5},
-  {take_order_id: 4, product_id: Event.first.products[4].id, quantity: 5},
-  {take_order_id: 4, product_id: Event.first.products[1].id, quantity: 5},
-  {take_order_id: 5, product_id: Event.first.products[0].id, quantity: 5},
-  {take_order_id: 5, product_id: Event.first.products[3].id, quantity: 5}
+TakeOrderLineItem.create([
+  {take_order_id: 1, product_id: Unit.find(2).events.first.products.first.id, quantity: 2},
+  {take_order_id: 1, product_id: Unit.find(2).events.first.products[1].id, quantity: 3},
+  {take_order_id: 2, product_id: Unit.find(2).events.first.products[3].id, quantity: 5},
+  {take_order_id: 3, product_id: Unit.find(2).events.first.products[2].id, quantity: 5},
+  {take_order_id: 3, product_id: Unit.find(2).events.first.products[3].id, quantity: 5},
+  {take_order_id: 4, product_id: Unit.find(2).events.first.products[4].id, quantity: 5},
+  {take_order_id: 4, product_id: Unit.find(2).events.first.products[1].id, quantity: 5},
+  {take_order_id: 5, product_id: Unit.find(2).events.first.products[0].id, quantity: 5},
+  {take_order_id: 5, product_id: Unit.find(2).events.first.products[3].id, quantity: 5}
 ])
 
 SiteSale.create ([
-  {event_id: 1, name: 'Rite Aid Sep 9-10', total_sales: 1500.50},
-  {event_id: 1, name: 'Ace Hardward Sep 16-17'}
+  {event_id: 2, name: 'Ace Hardware', date: '2016-09-10'},
+  {event_id: 2, name: 'Rite Aid', date: '2016-09-11'},
+  {event_id: 2, name: 'Rite Aid', date: '2016-09-17'},
+  {event_id: 2, name: 'Ace Hardware', date: '2016-09-18'},
+  {event_id: 2, name: 'Town & Country', date: '2016-10-01'},
+  {event_id: 2, name: 'Town & Country', date: '2016-10-02'}
   ])
 
 ScoutSiteSale.create ([
   {scout_id: 1, site_sale_id: 1, hours_worked: 6},
   {scout_id: 2, site_sale_id:1, hours_worked: 4}
-  ])
-
-Stock.create ([
-  {unit_id: 1, product_id: 1, location: 'warehouse', quantity: 36},
-  {unit_id: 1, product_id: 2, location: 'warehouse', quantity: 24}, 
-  {unit_id: 1, product_id: 3, location: 'warehouse', quantity: 30},
-  {unit_id: 1, product_id: 4, location: 'warehouse', quantity: 108},
-  {unit_id: 1, product_id: 5, location: 'warehouse', quantity: 24},
-  {unit_id: 1, product_id: 6, location: 'warehouse', quantity: 108},
-  {unit_id: 1, product_id: 7, location: 'warehouse', quantity: 288},
-  {unit_id: 1, product_id: 8, location: 'warehouse', quantity: 108},
-  {unit_id: 1, product_id: 9, location: 'warehouse', quantity: 12},
-  {unit_id: 1, product_id: 10, location: 'warehouse', quantity: 12},
-  {unit_id: 1, product_id: 11, location: 'warehouse', quantity: 12},
-  {unit_id: 1, product_id: 12, location: 'warehouse', quantity: 6},
-  {unit_id: 1, product_id: 13, location: 'warehouse', quantity: 4}, 
-  {unit_id: 1, product_id: 14, location: 'warehouse', quantity: 0}, 
-  {unit_id: 2, product_id: 1, location: 'warehouse', quantity: 36},
-  {unit_id: 2, product_id: 2, location: 'warehouse', quantity: 24}, 
-  {unit_id: 2, product_id: 3, location: 'warehouse', quantity: 30},
-  {unit_id: 2, product_id: 4, location: 'warehouse', quantity: 108},
-  {unit_id: 2, product_id: 5, location: 'warehouse', quantity: 24},
-  {unit_id: 2, product_id: 6, location: 'warehouse', quantity: 108},
-  {unit_id: 2, product_id: 7, location: 'warehouse', quantity: 288},
-  {unit_id: 2, product_id: 8, location: 'warehouse', quantity: 108},
-  {unit_id: 2, product_id: 9, location: 'warehouse', quantity: 12},
-  {unit_id: 2, product_id: 10, location: 'warehouse', quantity: 12},
-  {unit_id: 2, product_id: 11, location: 'warehouse', quantity: 12},
-  {unit_id: 2, product_id: 12, location: 'warehouse', quantity: 6},
-  {unit_id: 2, product_id: 13, location: 'warehouse', quantity: 4}, 
-  {unit_id: 2, product_id: 14, location: 'warehouse', quantity: 0} 
   ])
 

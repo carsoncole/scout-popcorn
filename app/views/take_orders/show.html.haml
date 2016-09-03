@@ -9,7 +9,7 @@
                 = @take_order.scout.name  
           .col-md-6
             %h3.text-xs-right
-              %span.tag.tag-info= @take_order.status.capitalize
+              %span.tag.tag-primary= @take_order.status.capitalize
             %p.text-xs-right
               = @take_order.customer_name
               %br
@@ -20,7 +20,7 @@
         - if @take_order.purchase_order && current_scout.is_admin?
           %p
             PURCHASE ORDER:
-            = link_to @take_order.purchase_order.id, take_order_path(@take_order)
+            = link_to @take_order.purchase_order.id, purchase_order_path(@take_order.purchase_order_id)
         %table.table
           %thead
             %tr
@@ -35,48 +35,39 @@
 
               %tr
                 %td= link_to line_item.product.name, product_path(line_item.product)
-                - if @take_order.status == 'open'
+                - if @take_order.received?
                   = form_for [@take_order, line_item] do |f|
                     .form-group
                       %td
-                        = f.number_field :quantity, value: line_item.quantity, class: 'form-control'
+                        = f.select :quantity, options_for_select(['1','2','3','4','5','6','7','8','9','10'], selected: f.object.quantity),{}, class: 'form-control'
                       %td
-                        = f.submit 'Update', class: 'btn btn-default'
+                        = f.submit 'Update', class: 'btn btn-success'
                 - else
                   %td= line_item.quantity
                   %td
-                %td= number_to_currency( line_item.product.retail_price )
+                %td= number_to_currency( line_item.product.retail_price, precision: 0 )
                 %td
-                  = number_to_currency( line_item.value )
+                  = number_to_currency( line_item.value, precision: 0 )
                 %td
-                  - if @take_order.status == 'open'
-                    = link_to take_order_line_item_path(@take_order, line_item), method: :delete do
+                  - if @take_order.received?
+                    = link_to take_order_take_order_line_item_path(@take_order, line_item), method: :delete do
                       %i.fa.fa-trash.fa-lg
 
-            - if @take_order.status == 'open'
+            - if @take_order.received?
               %tr
                 %td
-                  = link_to new_take_order_line_item_path(@take_order) do
+                  = link_to new_take_order_take_order_line_item_path(@take_order) do
                     %i.fa.fa-plus.fa-lg
-                    Enter items sold to
-                    = @take_order.customer_name
 
                 %td
                 %td
                 %td
-                %td
+                %td= number_to_currency( @take_order.value, precision: 0 )
                 %td
 
-            %tr
-              %td
-              %td
-              %td
-              %td
-              %td= number_to_currency( @take_order.value )
-              %td
 
-        - if current_scout.is_admin? && @take_order.status == 'open' && @take_order.line_items.any?
-          = button_to 'PAID', take_order_path(@take_order, paid: true), method: :patch, class: 'btn btn-default'
+        - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
+          = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
         - if @take_order.money_received_by
           %p
             Money received by:
@@ -84,7 +75,10 @@
             = surround("(",")") do
               = @take_order.money_received_at
 .row
-  .col-md-2
+  .col-md-4
     %br
-    = link_to "Back to Take Orders", take_orders_path
-
+    = link_to take_orders_path do
+      %i.fa.fa-arrow-left.fa-lg
+      Back to Take Orders
+%br
+= render 'legend'

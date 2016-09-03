@@ -1,10 +1,10 @@
 class Stock < ApplicationRecord
   belongs_to :product
-  validates :product_id, uniqueness: { scope: :unit_id }
-  validates :location, presence: true
+  validates :product_id, :location, :created_by, presence: true
 
   LOCATIONS = [
-    'Warehouse',
-    'Site Sale',
+    'warehouse',
+    'site sale',
+    'distribution boxes'
     ]
 end

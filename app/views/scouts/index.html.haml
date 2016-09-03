@@ -12,6 +12,7 @@
               %th
               %th Take Orders
               %th Site Sales
+              %th Direct Sales
               %th Last Sign In
               %th Sign In Count
               %th
@@ -25,6 +26,7 @@
                 %td= link_to "Take Orders", take_orders_path(scout_id: scout.id)
                 %td= link_to "Site Sales"
                 / %td= number_to_currency(scout.total_sales)
+                %td
                 %td
                 %td
                 %td= scout.last_sign_in_at

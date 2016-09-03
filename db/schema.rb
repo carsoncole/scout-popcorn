@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 20160828201730) do
     t.integer  "scout_id"
     t.integer  "event_id"
     t.integer  "product_id"
-    t.decimal  "price",      precision: 5, scale: 2, default: "0.0",  null: false
-    t.integer  "quantity",                           default: 0,      null: false
-    t.decimal  "amount",     precision: 5, scale: 2, default: "0.0",  null: false
-    t.string   "status",                             default: "open", null: false
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.decimal  "price",      precision: 5, scale: 2, default: "0.0",       null: false
+    t.integer  "quantity",                           default: 0,           null: false
+    t.decimal  "amount",     precision: 5, scale: 2, default: "0.0",       null: false
+    t.string   "status",                             default: "delivered", null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
   end
 
   create_table "events", force: :cascade do |t|
@@ -30,15 +30,6 @@ ActiveRecord::Schema.define(version: 20160828201730) do
     t.boolean  "is_active",  default: true, null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-  end
-
-  create_table "line_items", force: :cascade do |t|
-    t.integer  "take_order_id"
-    t.integer  "product_id"
-    t.integer  "quantity"
-    t.decimal  "value",         precision: 5, scale: 2
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
   end
 
   create_table "prizes", force: :cascade do |t|
@@ -106,12 +97,22 @@ ActiveRecord::Schema.define(version: 20160828201730) do
     t.index ["reset_password_token"], name: "index_scouts_on_reset_password_token", unique: true
   end
 
+  create_table "site_sale_line_items", force: :cascade do |t|
+    t.integer  "site_sale_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.decimal  "value",        precision: 5, scale: 2
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
   create_table "site_sales", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
-    t.decimal  "total_sales", precision: 5, scale: 2, default: "0.0", null: false
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.date     "date"
+    t.string   "status",     default: "open", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "stocks", force: :cascade do |t|
@@ -119,23 +120,34 @@ ActiveRecord::Schema.define(version: 20160828201730) do
     t.integer  "product_id"
     t.integer  "quantity"
     t.string   "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.integer  "created_by"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "take_order_line_items", force: :cascade do |t|
+    t.integer  "take_order_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.decimal  "value",         precision: 5, scale: 2
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "take_orders", force: :cascade do |t|
     t.integer  "scout_id"
     t.integer  "event_id"
     t.integer  "purchase_order_id"
-    t.string   "status",               default: "open", null: false
+    t.string   "status",                                       default: "received", null: false
     t.string   "customer_name"
     t.string   "customer_address"
     t.string   "customer_email"
-    t.decimal  "total_value"
+    t.decimal  "total_value",          precision: 5, scale: 2
     t.integer  "money_received_by_id"
     t.datetime "money_received_at"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                                        null: false
+    t.datetime "updated_at",                                                        null: false
   end
 
   create_table "units", force: :cascade do |t|
