@@ -25,6 +25,8 @@
                 %td
                   - if stock.created_by == 999
                     System
+                  - elsif stock.created_by.blank?
+                    =""
                   - else
                     = Scout.find(stock.created_by).name
 
