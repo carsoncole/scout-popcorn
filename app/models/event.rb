@@ -10,6 +10,7 @@ class Event < ApplicationRecord
   has_many :scout_site_sales, through: :site_sales
   has_many :take_order_purchase_orders
   has_many :purchase_orders, dependent: :destroy
+  has_many :online_sales, dependent: :destroy
 
   validates :name, presence: true
 

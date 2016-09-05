@@ -42,3 +42,8 @@ a.kill {
     list-style: square;
   }
 }
+
+.prize-eligible {
+  background-color: lighten(green, 20%);
+  color: #fff;
+}

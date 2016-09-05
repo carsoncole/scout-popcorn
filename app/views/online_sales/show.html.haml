@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Scout:
+  = @online_sale.scout_id
+%p
+  %b Event:
+  = @online_sale.event_id
+%p
+  %b Order date:
+  = @online_sale.order_date
+%p
+  %b Customer name:
+  = @online_sale.customer_name
+%p
+  %b Description:
+  = @online_sale.description
+%p
+  %b Amount:
+  = @online_sale.amount
+
+= link_to 'Edit', edit_online_sale_path(@online_sale)
+\|
+= link_to 'Back', online_sales_path

@@ -80,6 +80,6 @@ class ScoutsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scout_params
-      params.require(:scout).permit(:first_name, :last_name, :email, :password, :default_event_id)
+      params.require(:scout).permit(:first_name, :last_name, :email, :parent_first_name, :parent_last_name, :password, :password_confirmation, :default_event_id)
     end
 end

@@ -1,6 +1,6 @@
 class Stock < ApplicationRecord
   belongs_to :product
-  validates :product_id, :location, :created_by, presence: true
+  validates :product_id, :location, presence: true
 
   LOCATIONS = [
     'warehouse',
