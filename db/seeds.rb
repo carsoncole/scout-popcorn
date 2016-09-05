@@ -94,14 +94,7 @@ Event.create([
   ])
 
 Scout.create([
-  {first_name: 'Aidan', last_name: 'Cole', email: 'aidan@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
-  {first_name: 'Teo', last_name: 'Pinzon', email: 'keripinzon+Teo@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
-  {first_name: 'Porter', last_name: 'Daniels', email: 'kevindaniels@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
-  {first_name: 'John', last_name: 'Wills', email: 'john@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
-  {first_name: 'Luke', last_name: 'Ball', email: 'jack@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
-  {first_name: 'Admin', last_name: 'Cole', email: 'admin@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true},
-  {first_name: 'Carson', last_name: 'Cole', email: 'carson.cole@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1, is_admin: true},
-  {first_name: 'Super', last_name: 'Cole', email: 'carson@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true, is_super_admin: true}
+  {first_name: 'Carson', last_name: 'Cole', email: 'carson.cole@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1, is_admin: true}
   ])
 
 TakeOrder.create([
