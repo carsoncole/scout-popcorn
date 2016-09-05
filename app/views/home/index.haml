@@ -18,7 +18,8 @@
           - grand_total = 0
           %table.table
             %tr
-              %th Take Orders
+              %th
+                = link_to "Take Orders", take_orders_path
               %td.text-xs-right
                 - total = 0
                 - if current_scout.is_admin?
@@ -31,7 +32,8 @@
                 - grand_total += total
 
             %tr
-              %th Direct Sales
+              %th
+                = link_to "Direct Sales", direct_sales_path
               %td.text-xs-right
                 - total = 0
                 - if current_scout.is_admin?
@@ -44,7 +46,8 @@
                 - grand_total += total
 
             %tr
-              %th Site Sales
+              %th
+                = link_to "Site Sales", site_sales_path
               %td.text-xs-right
                 - if current_scout.is_admin?
                   - amount = @active_event.site_sales.joins(:site_sale_line_items).sum(:value)
