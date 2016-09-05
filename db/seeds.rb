@@ -56,7 +56,7 @@ Prize.create([
   {name: 'Ice Cream Ball', amount: 1500, source: 'bsa', source_id: '624097', source_description: 'Prize Level 7', url:'prize-ice-cream-ball.png'},
   {name: 'Vibrobot Kit', amount: 1500, source: 'bsa', source_id: '621590', source_description: 'Prize Level 7', url:'prize-vibrobot-kit.jpg'},
   {name: 'Osprey Daylight Pack', amount: 1500, source: 'bsa', source_id: '620925', source_description: 'Prize Level 7', url:'prize-osprey-daylight-pack.jpg'},
-  {name: 'Helicopter Copperhead', amount: 1500, source: 'bsa', source_id: '621461', source_description: 'Prize Level 7', url:'prize-helicopter-copperhead'},
+  {name: 'Helicopter Copperhead', amount: 1500, source: 'bsa', source_id: '621461', source_description: 'Prize Level 7', url:'prize-helicopter-copperhead.jpg'},
 
   {name: 'Coleman 4-person Dome Test', amount: 2000, source: 'bsa', source_id: '627762', source_description: 'Prize Level 8', url: 'prize-coleman-4-person-dome.jpg'},
   {name: 'Midland 2-way Radio Set', amount: 2000, source: 'bsa', source_id: '625617', source_description: 'Prize Level 8', url:'prize-midland-radio.png'},
