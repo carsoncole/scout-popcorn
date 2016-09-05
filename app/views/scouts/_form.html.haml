@@ -23,6 +23,14 @@
           .form-group
             = f.label :last_name
             = f.text_field :last_name, class: 'form-control'
+
+          .form-group
+            = f.label :password
+            = f.password_field :password, class: 'form-control'
+          .form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, class: 'form-control'
+
           
           .form-group
             = f.label :event
