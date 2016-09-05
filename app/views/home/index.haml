@@ -42,6 +42,19 @@
                 - grand_total += total
 
             %tr
+              %th Online Sales
+              %td.text-xs-right
+                - total = 0
+                - if current_scout.is_admin?
+                  - query = OnlineSale.where(event_id: event.id)
+                - else
+                  - query = current_scout.online_sales.where(event_id: event.id)
+                - query.each do |online_sale|
+                  - total += direct_sale.amount
+                = number_to_currency(total, precision: 0)  
+                - grand_total += total
+
+            %tr
               %th Site Sales
               %td.text-xs-right
                 - if current_scout.is_admin?

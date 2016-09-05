@@ -1,0 +1,2 @@
+module OnlineSalesHelper
+end

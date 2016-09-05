@@ -9,6 +9,7 @@ class Scout < ApplicationRecord
   has_many :site_sales, through: :scout_site_sales
   has_many :scout_site_sales
   has_many :direct_sales
+  has_many :online_sales
 
   validates :first_name, :last_name, :email, presence: true
   before_save :fix_name!
