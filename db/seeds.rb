@@ -57,7 +57,6 @@ Prize.create([
   {name: 'Vibrobot Kit', amount: 1500, source: 'bsa', source_id: '621590', source_description: 'Prize Level 7', url:'prize-vibrobot-kit.jpg'},
   {name: 'Osprey Daylight Pack', amount: 1500, source: 'bsa', source_id: '620925', source_description: 'Prize Level 7', url:'prize-osprey-daylight-pack.jpg'},
   {name: 'Helicopter Copperhead', amount: 1500, source: 'bsa', source_id: '621461', source_description: 'Prize Level 7', url:'prize-helicopter-copperhead.jpg'},
-
   {name: 'Coleman 4-person Dome Test', amount: 2000, source: 'bsa', source_id: '627762', source_description: 'Prize Level 8', url: 'prize-coleman-4-person-dome.jpg'},
   {name: 'Midland 2-way Radio Set', amount: 2000, source: 'bsa', source_id: '625617', source_description: 'Prize Level 8', url:'prize-midland-radio.png'},
   {name: 'ENO Camping Hammock', amount: 2000, source: 'bsa', source_id: '616406', source_description: 'Prize Level 8', url:'prize-eno-camping-hammock.png'},
@@ -101,7 +100,7 @@ Scout.create([
   {first_name: 'John', last_name: 'Wills', email: 'john@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
   {first_name: 'Luke', last_name: 'Ball', email: 'jack@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2},
   {first_name: 'Admin', last_name: 'Cole', email: 'admin@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true},
-  {first_name: 'Carson', last_name: 'Cole', email: 'carson.cole@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true},
+  {first_name: 'Carson', last_name: 'Cole', email: 'carson.cole@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 1, is_admin: true},
   {first_name: 'Super', last_name: 'Cole', email: 'carson@gmail.com', password: 'robert', password_confirmation: 'robert', unit_id: 2, is_admin: true, is_super_admin: true}
   ])
 
