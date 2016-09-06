@@ -1,16 +1,34 @@
-= form_for @prize do |f|
-  - if @prize.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@prize.errors.count, "error")} prohibited this prize from being saved:"
-      %ul
-        - @prize.errors.full_messages.each do |msg|
-          %li= msg
+.row
+  .col-md-12
+    .card
+      .card-block
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :amount
-    = f.text_field :amount
-  .actions
-    = f.submit 'Save'
+
+        = form_for @prize do |f|
+          - if @prize.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@prize.errors.count, "error")} prohibited this prize from being saved:"
+              %ul
+                - @prize.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control'
+          .form-group
+            = f.label :amount
+            = f.text_field :amount, class: 'form-control'
+          .form-group
+            = f.label :source
+            = f.text_field :source, class: 'form-control'
+          .form-group
+            = f.label :source_id
+            = f.text_field :source_id, class: 'form-control'
+          .form-group
+            = f.label :source_description
+            = f.text_field :source_description, class: 'form-control'
+          .form-group
+            = f.label :image_url
+            = f.text_field :url, class: 'form-control'
+          .actions
+            = f.submit 'Save'

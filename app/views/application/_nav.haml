@@ -24,8 +24,8 @@
               %li= link_to "Direct Sales", direct_sales_path, class: "dropdown-item #{'active' if controller_name == 'direct_sales'}"
           %li.nav-item= link_to "Site Sales", site_sales_path, class: "nav-link #{'active' if controller_name == 'site_sales'}"
           %li.nav-item= link_to "Online Sales", online_sales_path, class: "nav-link #{'active' if controller_name == 'online_sales'}"
-          %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
           %li.nav-item= link_to "Prizes", prizes_path, class: "nav-link #{'active' if controller_name == 'prizes'}"
+          %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
           - if @unit
             %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
           - if current_scout.is_admin?

@@ -44,6 +44,5 @@ a.kill {
 }
 
 .prize-eligible {
-  background-color: lighten(green, 20%);
-  color: #fff;
+  border: 10px solid lighten(#FCD116, 20%);
 }
