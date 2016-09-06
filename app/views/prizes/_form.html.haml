@@ -13,16 +13,24 @@
                   %li= msg
 
           .form-group
+            = f.label :event
+            %br
+            = f.collection_select :event_id, @unit.events.order(:name), :id, :name, {}, class: 'form-control'
+
+          .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control'
           .form-group
             = f.label :amount
             = f.text_field :amount, class: 'form-control'
           .form-group
+            = f.label :description
+            = f.text_field :description, class: 'form-control'
+          .form-group
             = f.label :source
             = f.text_field :source, class: 'form-control'
           .form-group
-            = f.label :source_id
+            = f.label "Source ID"
             = f.text_field :source_id, class: 'form-control'
           .form-group
             = f.label :source_description

@@ -4,7 +4,8 @@ class PrizesController < ApplicationController
   # GET /prizes
   # GET /prizes.json
   def index
-    @prizes = @active_event.prizes if @active_event
+    @bsa_prizes = @active_event.prizes.order(:amount) if @active_event
+    @pack_prizes = @active_event.prizes.pack.order(:amount)
   end
 
   # GET /prizes/1
@@ -24,7 +25,7 @@ class PrizesController < ApplicationController
   # POST /prizes
   # POST /prizes.json
   def create
-    @prize = Prize.new(prize_params)
+    @prize = @unit.prizes.new(prize_params)
 
     respond_to do |format|
       if @prize.save
@@ -69,6 +70,6 @@ class PrizesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def prize_params
-      params.require(:prize).permit(:name, :amount)
+      params.require(:prize).permit(:name, :amount, :event_id, :source, :source_id, :source_description, :is_by_level, :url, :description)
     end
 end

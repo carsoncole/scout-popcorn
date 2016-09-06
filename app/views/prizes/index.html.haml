@@ -8,9 +8,9 @@
     .alert.alert-info
       As you earn your sales credits, the prizes that you are eligible for will be highlighted.
 
-- if @prizes
+- if @bsa_prizes
   .row
-    - @prizes.each do |prize|
+    - @bsa_prizes.each do |prize|
       .col-md-3
         .card
           .card-block{class: current_scout.total_sales > prize.amount ? 'prize-eligible' : nil }
@@ -32,6 +32,32 @@
               = link_to 'Edit', edit_prize_path(prize)
               = link_to 'Destroy', prize, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
+/ - if @pack_prizes
+/   .row
+/     - @pack_prizes.each do |prize|
+/       .col-md-3
+/         .card
+/           .card-block{class: current_scout.total_sales > prize.amount ? 'prize-eligible' : nil }
+/             .card-title
+/               .small
+/                 = prize.source.capitalize
+/                 award
+/               %h4= prize.name
+            
+/             .text-xs-center
+/               = image_tag(prize.url, width: 200) if prize.url
+/               %br
+/               %h4
+/                 = number_to_currency(prize.amount)
+/               - unless prize.description.blank?
+/                 = prize.description
+/               - unless prize.event_id
+/                 Default
+/               .small= prize.source_id
+/               %br
+/             - if current_scout.is_admin?
+/               = link_to 'Edit', edit_prize_path(prize)
+/               = link_to 'Destroy', prize, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 
 = link_to 'New Prize', new_prize_path if current_scout.is_admin?
