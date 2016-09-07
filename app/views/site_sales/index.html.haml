@@ -4,7 +4,8 @@
       .card-block
         .card-title
           %h1.h1 Site Sales
-        %p All your hours worked at Site Sales will be shown here, with the sales credit you get based on all Site Sales so far.
+        - unless current_scout.is_admin?
+          %p All your hours worked at Site Sales will be shown here, with the sales credit you get based on all Site Sales so far.
         %table.table.card-text
           %thead
             %tr

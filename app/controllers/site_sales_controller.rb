@@ -60,6 +60,6 @@ class SiteSalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def site_sale_params
-      params.require(:site_sale).permit(:event_id, :name, :total_sales)
+      params.require(:site_sale).permit(:event_id, :name, :date, :status)
     end
 end

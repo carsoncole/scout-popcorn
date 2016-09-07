@@ -29,7 +29,7 @@
                 %td
                 %td
                 %td
-                %td= scout.last_sign_in_at
+                %td= scout.last_sign_in_at.strftime("%m/%d/%Y %I:%M%p")
                 %td= scout.sign_in_count
                 %td
                   = link_to scout do

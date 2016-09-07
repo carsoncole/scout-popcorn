@@ -24,6 +24,6 @@ class PurchaseOrder < ApplicationRecord
   end
 
   def update_ordered_at!
-    self.ordered_at = Time.now
+    self.ordered_at = Time.current
   end
 end
