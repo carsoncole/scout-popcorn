@@ -14,7 +14,9 @@
           / = link_to current_scout.first_name, scout_path(current_scout)
 
         %ul.nav.navbar-nav
-          %li.nav-item= link_to "Home", home_index_path, class: "nav-link #{'active' if controller_name == 'home'}"
+          %li.nav-item
+            = link_to home_index_path, class: "nav-link #{'active' if controller_name == 'home'}" do
+              %i.fa.fa-home.fa-lg
           %li.nav-item.btn-group
             = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
               Door-to-Door
@@ -42,7 +44,9 @@
                   %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
                   %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
                   %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
-          %li.nav-item= link_to "Help", help_index_path, class: "nav-link #{'active' if controller_name == 'help'}"
+          %li.nav-item
+            = link_to help_index_path, class: "nav-link #{'active' if controller_name == 'help'}" do
+              %i.fa.fa-question.fa-lg
 
 
 

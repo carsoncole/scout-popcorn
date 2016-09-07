@@ -3,26 +3,40 @@
     .card
       .card-block
         .card-title
-          %h3
-            = @scout.name
+          .pull-right
             = link_to edit_scout_path(@scout) do
               = "Set Event" unless @scout.default_event
               %i.fa.fa-pencil
+          %h3
+            = @scout.name
+
 
       %ul.list-group.list-group-flush
-      %li.list-group-item
-        Unit:
-        = @scout.unit.name
-      %li.list-group-item
-        Event:
-        = @scout.default_event.name if @scout.default_event
-      %li.list-group-item
-        = @scout.email
-
-      - if @scout.parent_first_name
         %li.list-group-item
-          = @scout.parent_name
-
-      - if @scout.is_admin?
+          %i.fa.fa-child.fa-lg
+          &nbsp;
+          = @scout.name
+        - if @scout.parent_first_name
+          %li.list-group-item
+            %i.fa.fa-male.fa-lg
+            &nbsp;
+            = @scout.parent_name
         %li.list-group-item
-          Administrator
+          %i.fa.fa-users.fa-lg
+          &nbsp;
+          = @scout.unit.name
+        %li.list-group-item
+          %i.fa.fa-calendar.fa-lg
+          &nbsp;
+          = @scout.default_event.name if @scout.default_event
+        %li.list-group-item
+          %i.fa.fa-envelope.fa-lg
+          &nbsp;
+          = @scout.email
+
+        - if @scout.is_admin?
+          %li.list-group-item
+            Administrator
+
+        %li.list-group-item
+          = link_to "Change password", edit_scout_path(@scout)
