@@ -1,0 +1,22 @@
+!!!
+%html
+  %head
+    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
+  %body
+    %h1{style: 'text-align:center'}
+      Corn Cub Registration
+    %p The following Scout was registered:
+
+    %ul
+      %li
+        Scout:
+        = @scout.name
+      %li
+        Parent:
+        = @scout.parent_name
+      %li
+        Unit:
+        = @scout.unit.name
+      %li
+        Email:
+        = @scout.email

@@ -16,6 +16,7 @@ class Scout < ApplicationRecord
   after_create :set_unit!
   after_create :set_default_event!
   after_create :set_if_admin!
+  after_create :send_registration_email!
 
   ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'], ['charlotte', 'boulind-yeung'], ['kevin', 'daniels'],['lisa', 'cass'], ['keri', 'pinzon']]
 
@@ -58,6 +59,10 @@ class Scout < ApplicationRecord
     if ADMINS.include? [first_name.downcase, last_name.downcase] 
       update(is_admin: true) 
     end
+  end
+
+  def send_registration_email!
+    ScoutMailer.registration(self).deliver_later
   end
 
 end
