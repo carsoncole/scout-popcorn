@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
+  %body
+    %h1{style: 'text-align:center'}
+      Thank You
+
+    %p Pack 4496 on Bainbridge Island thanks you for your support and in helping a Scout earn his way to Summer Camp.
+
+    %p We have received your order and expect to deliver it by October 20, 2016.
+
+    %h2 Your Order
+    %ul
+      - @take_order.take_order_line_items.each do |line_item|
+        %li
+          = line_item.product.name
+          = surround("(", ")") do
+            = line_item.quantity
+
+    %p
+      If you have any questions, you can reach us at
+      = mail_to("pack4496@gmail.com")

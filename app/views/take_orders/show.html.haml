@@ -68,12 +68,19 @@
 
         - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
           = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
-        - if @take_order.money_received_by
-          %p
-            Money received by:
-            = @take_order.money_received_by
-            = surround("(",")") do
-              = @take_order.money_received_at
+        %br
+        Created at:
+        = nice_date_time(@take_order.created_at)
+        - if @take_order.money_received_by  
+          %br
+          Money received by:
+          = @take_order.money_received_by
+          = surround("(",")") do
+            = nice_date_time(@take_order.money_received_at)
+        - if @take_order.receipt_sent_at
+          %br
+          Receipt emailed at:
+          = nice_date_time(@take_order.receipt_sent_at)
 .row
   .col-md-4
     %br

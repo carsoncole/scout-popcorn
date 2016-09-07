@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905145315) do
+ActiveRecord::Schema.define(version: 20160907042216) do
 
   create_table "direct_sales", force: :cascade do |t|
     t.integer  "scout_id"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20160905145315) do
     t.datetime "money_received_at"
     t.datetime "created_at",                                                        null: false
     t.datetime "updated_at",                                                        null: false
+    t.datetime "receipt_sent_at"
   end
 
   create_table "units", force: :cascade do |t|

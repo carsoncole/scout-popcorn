@@ -8,6 +8,7 @@ class TakeOrder < ApplicationRecord
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  after_save :send_receipt!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
 
   STATUSES = { 
       received: { :status => :received, :name => 'Received', description: "Orders received by Scout, money not turned in"},
@@ -53,6 +54,11 @@ class TakeOrder < ApplicationRecord
       new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, description: "Take order #{line_item.take_order_id}", created_by: 999)
       new_stock_entry.save
     end
+  end
+
+  def send_receipt!
+    TakeOrderMailer.receipt(self).deliver_now
+    self.update(receipt_sent_at: Time.current)
   end
 
 end

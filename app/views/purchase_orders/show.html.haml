@@ -20,7 +20,7 @@
           %tbody
             - total_value = 0
             - @products.each do |product|
-              - quantity = TakeOrderPurchaseOrder.joins(take_orders: [:line_items]).where("purchase_orders.id = ? AND line_items.product_id = ?", @purchase_order.id, product.id).sum("line_items.quantity")
+              - quantity = TakeOrderPurchaseOrder.joins(take_orders: [:take_order_line_items]).where("purchase_orders.id = ? AND take_order_line_items.product_id = ?", @purchase_order.id, product.id).sum("take_order_line_items.quantity")
               - if quantity != 0
                 %tr
                   %td= product.name
