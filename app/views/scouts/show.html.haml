@@ -19,10 +19,10 @@
       %li.list-group-item
         = @scout.email
 
-      - if current_scout.parent_first_name
+      - if @scout.parent_first_name
         %li.list-group-item
-          = @scout.parent_name       
+          = @scout.parent_name
 
-      - if current_scout.is_admin?
+      - if @scout.is_admin?
         %li.list-group-item
           Administrator
