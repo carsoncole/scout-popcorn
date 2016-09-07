@@ -30,7 +30,7 @@ class SiteSale < ApplicationRecord
   end
 
   def full_name
-    name + " (" + date.strftime('%D') + ')'
+    name + " (" + date.strftime('%a %b %e') + ')'
   end
 
   def scouts_that_worked
