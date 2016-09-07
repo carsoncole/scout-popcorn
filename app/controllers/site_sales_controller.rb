@@ -4,7 +4,7 @@ class SiteSalesController < ApplicationController
   # GET /site_sales
   # GET /site_sales.json
   def index
-    @site_sales = SiteSale.order(:name).page(params[:page])
+    @site_sales = SiteSale.order(:date).page(params[:page])
     @site_sales = @site_sales.where(event_id: @active_event) if @active_event
   end
 
