@@ -65,7 +65,6 @@
               %td
               %td
               - if current_scout.is_admin?
-
                 %td= number_to_currency(total_sales, precision: 0)
                 - unless current_scout.is_admin?
                   %td= number_to_currency(total, precision: 0)
