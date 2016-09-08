@@ -53,6 +53,11 @@ class SiteSalesController < ApplicationController
     end
   end
 
+  def tracking_sheet
+    @site_sale = SiteSale.find(params[:site_sale_id])
+    @products = @site_sale.event.products.order(:name)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_site_sale

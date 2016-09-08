@@ -7,4 +7,8 @@ class Stock < ApplicationRecord
     'site sale',
     'distribution boxes'
     ]
+
+  def self.site_sales
+    where(location: 'site sales')
+  end
 end

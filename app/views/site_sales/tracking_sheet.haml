@@ -1,0 +1,42 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h3
+            Site Sale Transactions -
+            = @site_sale.full_name
+
+        .row
+          .col-md-12
+            %table
+              %tr
+                %td
+                  %b 
+                    Scout workers:
+                    &nbsp;
+                %td.worker_names
+                %td
+                  %b
+                    &nbsp;
+                    Session Time:
+                    &nbsp;
+                %td.worker_names
+        %br
+        %table.table.table-sm
+          %thead
+            %tr
+              %th Product
+              %th.text-xs-center Retail Price
+              %th
+              %th Enter '|' if Sold
+
+          %tbody
+            - total = 0
+            - @products.each do |product|
+              %tr
+                %td= product.name
+                %td.text-xs-center= number_to_currency(product.retail_price)
+                %td
+                %td.cell-bordered
+
