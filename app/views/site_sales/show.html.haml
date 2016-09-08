@@ -8,6 +8,9 @@
               %h3
                 Site Sale: 
                 = @site_sale.full_name
+                %span.lead
+                  = link_to edit_site_sale_path(@site_sale) do
+                    %i.fa.fa-pencil
           .col-md-6
             %h3.text-xs-right
               %span.tag.tag-primary= @site_sale.status.capitalize
@@ -17,10 +20,8 @@
             %tr
               %th Product
               %th Quantity
-              %th
               %th Price
               %th Total
-              %th
           %tbody
             - @line_items.each do |line_item|
 
@@ -28,14 +29,14 @@
                 %td= link_to line_item.product.name, product_path(line_item.product)
                 - if @site_sale.open?
                   = form_for [@site_sale, line_item] do |f|
-                    .form-group
+                    .form-group  
                       %td
                         = f.number_field :quantity, class: 'form-control'
                       %td
                         = f.submit 'Update', class: 'btn btn-success'
                 - else
-                  %td= line_item.quantity
                   %td
+                    = line_item.quantity
                 %td= number_to_currency( line_item.product.retail_price, precision: 0 )
                 %td
                   = number_to_currency( line_item.value, precision: 0 )
@@ -53,9 +54,7 @@
 
               %td
               %td
-              %td
               %td= number_to_currency( @total_sales, precision: 0 )
-              %td
 
 
         - if current_scout.is_admin? && @site_sale.open? && @site_sale.site_sale_line_items.any?
@@ -89,12 +88,18 @@
                   - credited_sales = @site_sale.credited_sales(scout_site_sale.scout)
                   - total_credited_sales += credited_sales
                   = number_to_currency(credited_sales, precision: 0)
+                - if current_scout.is_admin?
+                  %td
+                    = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do
+                      %i.fa.fa-trash.fa-lg
             %tr
               %td
-                = link_to new_event_scout_site_sale_path(@active_event, site_sale_id: @site_sale.id) do
-                  %i.fa.fa-plus.fa-lg
+                - if current_scout.is_admin?
+                  = link_to new_site_sale_scout_site_sale_path(@site_sale) do
+                    %i.fa.fa-plus.fa-lg
               %td
               %td= number_to_currency(total_credited_sales, precision: 0)
+
 
 .row
   .col-md-4

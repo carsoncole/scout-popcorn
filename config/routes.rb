@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :scouts
   resources :site_sales do
     resources :site_sale_line_items
+    resources :scout_site_sales
   end
   resources :direct_sales
   resources :online_sales

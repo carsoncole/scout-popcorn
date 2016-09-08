@@ -4,11 +4,18 @@
       .card-block
         .card-title
           %h2 Stocks Ledger
+        %ul.nav.nav-tabs.hidden-print
+          %li.nav-item
+            = link_to "All", stocks_path, class: "nav-link #{!params[:location] ? 'active' : nil}"          
+          - @locations.each do |location|
+            %li.nav-item
+              = link_to location.location.titleize, stocks_ledger_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
+        %br
         %table.table.table-sm
           %thead
             %tr
               %th Product
-              %td Desc
+              %th Desc
               %th Qty
               %th Location
               %th Created
@@ -20,7 +27,7 @@
                 %td= stock.product.name
                 %td= stock.description
                 %td= stock.quantity
-                %td= stock.location
+                %td= stock.location.titleize if stock.location
                 %td= stock.created_at
                 %td
                   - if stock.created_by == 999

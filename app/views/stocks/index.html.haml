@@ -3,17 +3,29 @@
     .card
       .card-block
         .card-title
-          %h1 Stock
-        %p= link_to "Ledger", stocks_ledger_path
+          %h1
+            Stock
+
+            .visible-print-inline
+              = "-"
+              = params[:location].titleize if params[:location]
+        %ul.nav.nav-tabs.hidden-print
+          %li.nav-item
+            = link_to "All", stocks_path, class: "nav-link #{!params[:location] ? 'active' : nil}"
+          - @locations.each do |location|
+            %li.nav-item
+              = link_to location.location.titleize, stocks_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
+          
+        %br
         %table.table.table-sm
           %thead
             %tr
               %th Product
-              %th Quantity
+              %th.text-xs-center Quantity
               %th Location
               %th Retail Price
-              %th Retail Value
-              / %th
+              %th.text-xs-right Retail Value
+              %th.visible-print-block Change
 
           %tbody
             - total = 0
@@ -24,20 +36,21 @@
               - next if quantity == 0
               %tr
                 %td= product.name
-                %td= quantity
+                %td.text-xs-center= quantity
                 %td= location.titleize if location
                 %td= number_to_currency(product.retail_price)
-                %td
+                %td.text-xs-right
                   - total += quantity * product.retail_price
                   = number_to_currency(quantity * product.retail_price)
-                / %td= link_to 'Destroy', stock, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                %td.visible-print-block.cell-bordered
+                  
             %tr
               %td
-                = link_to new_stock_path do
+                = link_to new_stock_path, class: 'hidden-print' do
                   %i.fa.fa-plus.fa-lg
               %td
               %td
               %td
-              %td= number_to_currency(total)
-              / %td
+              %td.text-xs-right= number_to_currency(total)
+              %td.visible-print-block
 

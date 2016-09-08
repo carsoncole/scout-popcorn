@@ -2,7 +2,7 @@
   .col-md-5
     .card
       .card-block
-        = form_for @scout_site_sale do |f|
+        = form_for [@site_sale, @scout_site_sale] do |f|
           - if @scout_site_sale.errors.any?
             #error_explanation
               %h2= "#{pluralize(@scout_site_sale.errors.count, "error")} prohibited this scout_site_sale from being saved:"
@@ -12,10 +12,8 @@
 
           .form-group
             = f.label :scout
-            = f.collection_select :scout_id, @unit.scouts.order(:first_name), :id, :name, class: 'form-control'
-          
-            = f.label :site_sale
-            = f.hidden_field :site_sale_id
+            %br
+            = f.collection_select :scout_id, @site_sale_open_scouts, :id, :name, {},class: 'form-control'
           .form-group
             = f.label :hours_worked
             = f.text_field :hours_worked, class: 'form-control'

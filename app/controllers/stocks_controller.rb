@@ -4,7 +4,10 @@ class StocksController < ApplicationController
   # GET /stocks
   # GET /stocks.json
   def index
-    @stocks_hash = @unit.stocks.joins(:product).order(:location, 'products.name').group(:product_id, :location).sum(:quantity)
+    @stocks_query = @unit.stocks.joins(:product).order(:location, 'products.name')
+    @stocks_query = @stocks_query.where(location: params[:location]) if params[:location]
+    @stocks_hash = @stocks_query.group(:product_id, :location).sum(:quantity)
+    @locations = @unit.stocks.group(:location)
   end
 
   # GET /stocks/1
@@ -24,6 +27,8 @@ class StocksController < ApplicationController
 
   def ledger
     @stocks = @unit.stocks.order(:created_at).page(params[:page]).per(50)
+    @stocks = @stocks.where(location: params[:location]) if params[:location]
+    @locations = @unit.stocks.group(:location)
   end
 
   # POST /stocks

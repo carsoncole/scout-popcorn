@@ -24,7 +24,6 @@
                 %th Status
                 %th
                 %th
-                %th
 
           %tbody
             - total = 0
@@ -33,7 +32,11 @@
               %tr
                 - if current_scout.is_super_admin?
                   %td= site_sale.event.name
-                %td= site_sale.full_name
+                %td
+                  - if current_scout.is_admin?
+                    = link_to site_sale.full_name, site_sale_path(site_sale)
+                  - else
+                    = site_sale.full_name
                 %td= site_sale.hours_worked(current_scout)
                 - if current_scout.is_admin?
                   %td= site_sale.scout_site_sales.sum(:hours_worked)
@@ -52,9 +55,6 @@
                     = link_to site_sale do
                       %i.fa.fa-folder-open.fa-lg
                   %td
-                    = link_to edit_site_sale_path(site_sale) do
-                      %i.fa.fa-pencil.fa-lg
-                  %td
                     = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                       %i.fa.fa-trash.fa-lg
             %tr
@@ -70,7 +70,6 @@
                   %td= number_to_currency(total, precision: 0)
               %td
               - if current_scout.is_admin?
-                %td
                 %td
                 %td
                 

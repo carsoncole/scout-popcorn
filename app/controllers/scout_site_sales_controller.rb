@@ -1,5 +1,6 @@
 class ScoutSiteSalesController < ApplicationController
   before_action :set_scout_site_sale, only: [:show, :edit, :update, :destroy]
+  before_action :set_site_sale
 
   # GET /scout_site_sales
   # GET /scout_site_sales.json
@@ -16,6 +17,12 @@ class ScoutSiteSalesController < ApplicationController
   # GET /scout_site_sales/new
   def new
     @scout_site_sale = ScoutSiteSale.new(site_sale_id: params[:site_sale_id])
+    @scouts_in_site_sale = @site_sale.scout_site_sales.map{|ss| ss.scout_id}
+    puts "*"*80
+    puts @scouts_in_site_sale = @site_sale.scout_site_sales.map{|ss| ss.scout_id}
+    puts @scouts_in_site_sale.class
+    @site_sale_open_scouts = @unit.scouts.where.not(id: @scouts_in_site_sale).where(is_admin: nil)
+    puts @site_sale_open_scouts
   end
 
   # GET /scout_site_sales/1/edit
@@ -25,11 +32,11 @@ class ScoutSiteSalesController < ApplicationController
   # POST /scout_site_sales
   # POST /scout_site_sales.json
   def create
-    @scout_site_sale = ScoutSiteSale.new(scout_site_sale_params)
+    @scout_site_sale = @site_sale.scout_site_sales.build(scout_site_sale_params)
 
     respond_to do |format|
       if @scout_site_sale.save
-        format.html { redirect_to site_sale_path(@scout_site_sale.site_sale_id), notice: 'Scout site sale was successfully created.' }
+        format.html { redirect_to @site_sale, notice: 'Scout site sale was successfully created.' }
         format.json { render :show, status: :created, location: @scout_site_sale }
       else
         format.html { render :new }
@@ -43,7 +50,7 @@ class ScoutSiteSalesController < ApplicationController
   def update
     respond_to do |format|
       if @scout_site_sale.update(scout_site_sale_params)
-        format.html { redirect_to @scout_site_sale, notice: 'Scout site sale was successfully updated.' }
+        format.html { redirect_to @site_sale, notice: 'Scout site sale was successfully updated.' }
         format.json { render :show, status: :ok, location: @scout_site_sale }
       else
         format.html { render :edit }
@@ -57,13 +64,17 @@ class ScoutSiteSalesController < ApplicationController
   def destroy
     @scout_site_sale.destroy
     respond_to do |format|
-      format.html { redirect_to scout_site_sales_url, notice: 'Scout site sale was successfully destroyed.' }
+      format.html { redirect_to @site_sale, notice: 'Scout site sale was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_site_sale
+      @site_sale = SiteSale.find(params[:site_sale_id]) if params[:site_sale_id]
+    end
+
     def set_scout_site_sale
       @scout_site_sale = ScoutSiteSale.find(params[:id])
     end
