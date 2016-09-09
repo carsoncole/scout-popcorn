@@ -19,7 +19,6 @@
               - if current_scout.is_admin?
                 %th
                 %th
-                %th
 
           %tbody
             - @online_sales.each do |online_sale|
@@ -32,10 +31,15 @@
                 %td= online_sale.description
                 - if current_scout.is_admin?
                   %td= online_sale.amount
-                  %td= link_to 'Show', online_sale
-                  %td= link_to 'Edit', edit_online_sale_path(online_sale)
-                  %td= link_to 'Destroy', online_sale, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                  %td
+                    = link_to edit_online_sale_path(online_sale) do
+                      %i.fa.fa-pencil.fa-lg
+                  %td
+                    = link_to online_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                      %i.fa.fa-trash.fa-lg
 
         %br
 
-        = link_to 'New Online sale', new_online_sale_path if current_scout.is_admin?
+        - if current_scout.is_admin?
+          = link_to new_online_sale_path do
+            %i.fa.fa-plus.fa-lg

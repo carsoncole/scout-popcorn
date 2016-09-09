@@ -3,12 +3,15 @@ class TakeOrder < ApplicationRecord
   belongs_to :event
   belongs_to :purchase_order, optional: true
   has_many :products, through: :take_order_line_items
+  before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
   has_many :take_order_line_items, dependent: :destroy
   validates :scout_id, :event_id, :customer_name, presence: true
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-  after_save :send_receipt!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
+  after_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
+  
+
 
   STATUSES = { 
       received: { :status => :received, :name => 'Received', description: "Orders received by Scout, money not turned in"},
@@ -24,6 +27,10 @@ class TakeOrder < ApplicationRecord
 
   def self.submitted
     where.not(status: 'received')
+  end
+
+  def submitted?
+    status == 'submitted'
   end
 
   def self.received
@@ -51,7 +58,14 @@ class TakeOrder < ApplicationRecord
 
   def debit_stock!
     take_order_line_items.each do |line_item|
-      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, description: "Take order #{line_item.take_order_id}", created_by: 999)
+      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", created_by: 999)
+      new_stock_entry.save
+    end
+  end
+
+  def credit_stock!
+    take_order_line_items.each do |line_item|
+      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id} credited back", created_by: 999)
       new_stock_entry.save
     end
   end

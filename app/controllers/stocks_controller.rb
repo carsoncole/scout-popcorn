@@ -26,7 +26,7 @@ class StocksController < ApplicationController
   end
 
   def ledger
-    @stocks = @unit.stocks.order(:created_at).page(params[:page]).per(50)
+    @stocks = @unit.stocks.order(created_at: :desc).page(params[:page]).per(50)
     @stocks = @stocks.where(location: params[:location]) if params[:location]
     @locations = @unit.stocks.group(:location)
   end

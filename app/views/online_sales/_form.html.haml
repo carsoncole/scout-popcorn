@@ -1,28 +1,32 @@
-= form_for @online_sale do |f|
-  - if @online_sale.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@online_sale.errors.count, "error")} prohibited this online_sale from being saved:"
-      %ul
-        - @online_sale.errors.full_messages.each do |msg|
-          %li= msg
+.row
+  .card
+    .card-block
+      .card-title
+        %h1 Online Sale
 
-  .field
-    = f.label :scout_id
-    = f.number_field :scout_id
-  .field
-    = f.label :event_id
-    = f.number_field :event_id
-  .field
-    = f.label :order_date
-    = f.date_select :order_date
-  .field
-    = f.label :customer_name
-    = f.text_field :customer_name
-  .field
-    = f.label :description
-    = f.text_field :description
-  .field
-    = f.label :amount
-    = f.text_field :amount
-  .actions
-    = f.submit 'Save'
+      = form_for @online_sale do |f|
+        - if @online_sale.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@online_sale.errors.count, "error")} prohibited this online_sale from being saved:"
+            %ul
+              - @online_sale.errors.full_messages.each do |msg|
+                %li= msg
+
+        .form-group
+          = f.label :scout
+          = f.collection_select :scout_id, Scout.not_admin, :id, :name, {},class: 'form-control'
+        .form-group
+          = f.label :order_date
+          %br
+          = f.date_select :order_date, {}, class: 'form-control'
+        .form-group
+          = f.label :customer_name
+          = f.text_field :customer_name, class: 'form-control'
+        .form-group
+          = f.label :description
+          = f.text_field :description, class: 'form-control'
+        .form-group
+          = f.label :amount
+          = f.text_field :amount, class: 'form-control'
+        .actions
+          = f.submit 'Save', class: 'btn btn-success'

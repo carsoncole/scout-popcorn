@@ -1,5 +1,7 @@
 class Stock < ApplicationRecord
   belongs_to :product
+  belongs_to :take_order
+  belongs_to :direct_sale
   validates :product_id, :location, presence: true
 
   LOCATIONS = [

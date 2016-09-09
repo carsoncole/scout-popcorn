@@ -13,7 +13,7 @@
     - @bsa_prizes.each do |prize|
       .col-md-3
         .card
-          .card-block{class: current_scout.total_sales > prize.amount ? 'prize-eligible' : nil }
+          .card-block{class: current_scout.total_sales(@active_event) > prize.amount ? 'prize-eligible' : nil }
             .card-title
               .small
                 = prize.source.capitalize

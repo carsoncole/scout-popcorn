@@ -16,6 +16,7 @@
             %tr
               %th Product
               %th Desc
+              %th 
               %th Qty
               %th Location
               %th Created
@@ -26,9 +27,14 @@
               %tr
                 %td= stock.product.name
                 %td= stock.description
+                %td
+                  - if stock.take_order_id
+                    = link_to "Take Order", take_order_path(stock.take_order_id) if stock.take_order
+                  - elsif stock.direct_sale_id
+                    = link_to "Direct Sale", direct_sale_path(stock.direct_sale_id) if stock.direct_sale
                 %td= stock.quantity
                 %td= stock.location.titleize if stock.location
-                %td= stock.created_at
+                %td= nice_date_time(stock.created_at)
                 %td
                   - if stock.created_by == 999
                     System

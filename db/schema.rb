@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907042216) do
+ActiveRecord::Schema.define(version: 20160909045438) do
 
   create_table "direct_sales", force: :cascade do |t|
     t.integer  "scout_id"
@@ -135,8 +135,10 @@ ActiveRecord::Schema.define(version: 20160907042216) do
     t.string   "location"
     t.string   "description"
     t.integer  "created_by"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "take_order_id"
+    t.integer  "direct_sale_id"
   end
 
   create_table "take_order_line_items", force: :cascade do |t|

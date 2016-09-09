@@ -24,13 +24,17 @@ class Scout < ApplicationRecord
     first_name + ' ' + last_name
   end
 
+  def self.not_admin
+    where(is_admin: nil)
+  end
+
   def parent_name
     (parent_first_name||'') + ' ' + (parent_last_name||'')
   end
 
-  def total_sales
+  def total_sales(event)
     total = 0
-    take_orders.each do |to|
+    take_orders.where(event_id: event).each do |to|
       total += to.value
     end
     total

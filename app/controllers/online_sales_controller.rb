@@ -14,7 +14,7 @@ class OnlineSalesController < ApplicationController
 
   # GET /online_sales/new
   def new
-    @online_sale = OnlineSale.new
+    @online_sale = @active_event.online_sales.build
   end
 
   # GET /online_sales/1/edit
@@ -24,11 +24,11 @@ class OnlineSalesController < ApplicationController
   # POST /online_sales
   # POST /online_sales.json
   def create
-    @online_sale = OnlineSale.new(online_sale_params)
+    @online_sale = @active_event.online_sales.build(online_sale_params)
 
     respond_to do |format|
       if @online_sale.save
-        format.html { redirect_to @online_sale, notice: 'Online sale was successfully created.' }
+        format.html { redirect_to online_sales_path, notice: 'Online sale was successfully created.' }
         format.json { render :show, status: :created, location: @online_sale }
       else
         format.html { render :new }
