@@ -27,5 +27,9 @@
           .form-group
             = f.label :description
             = f.text_field :description, class: 'form-control'
+          .form-group
+            = f.label :movement_with_warehouse
+            %p.small Check her if this a movement with the warehouse
+            = f.check_box :movement_with_warehouse,  class: 'form-control'
           .actions
-            = f.submit 'Save'
+            = f.submit 'Save', class: 'btn btn-green'

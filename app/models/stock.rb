@@ -4,6 +4,8 @@ class Stock < ApplicationRecord
   belongs_to :direct_sale
   validates :product_id, :location, presence: true
 
+  attr_accessor :movement_with_warehouse
+
   LOCATIONS = [
     'warehouse',
     'site sale',

@@ -38,14 +38,28 @@ class StocksController < ApplicationController
   # POST /stocks
   # POST /stocks.json
   def create
-    @stock = @unit.stocks.build(stock_params)
-    @stock.created_by = current_scout.id
-
-    if @stock.save
-      redirect_to stocks_ledger_path, notice: 'Stock was successfully created.'
+    if stock_params[:movement_with_warehouse] && stock_params[:location] == 'warehouse'
+      redirect_to stocks_ledger_path, notice: "Location needs to be different than -warehouse-"
     else
-      @products = @active_event.products.order(:name)
-      render :new
+      if stock_params[:movement_with_warehouse]
+        movement_with_warehouse = true
+        stock_params.delete :movement_with_warehouse
+        @corresponding_stock = @unit.stocks.build(stock_params)
+        @corresponding_stock.quantity = - @corresponding_stock.quantity
+        @corresponding_stock.location = 'warehouse'
+        @corresponding_stock.created_by = current_scout.id
+        @corresponding_stock.save
+      end
+
+      @stock = @unit.stocks.build(stock_params)
+      @stock.created_by = current_scout.id
+
+      if @stock.save
+        redirect_to stocks_ledger_path, notice: 'Stock was successfully created.'
+      else
+        @products = @active_event.products.order(:name)
+        render :new
+      end
     end
   end 
 
@@ -81,6 +95,6 @@ class StocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params
-      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description)
+      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :movement_with_warehouse)
     end
 end

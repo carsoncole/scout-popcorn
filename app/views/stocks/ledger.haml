@@ -9,6 +9,10 @@
             = link_to stock_movement_path do
               %i.fa.fa-print.fa-lg
               Stock Movement
+            %span
+              = link_to new_stock_path, class: 'hidden-print' do
+                &nbsp;
+                %i.fa.fa-plus.fa-lg
 
         %ul.nav.nav-tabs.hidden-print
           %li.nav-item
