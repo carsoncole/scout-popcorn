@@ -5,15 +5,24 @@
   %body
     %h1{style: 'text-align:center'}
       Welcome to Pack 4496's Corn Cub!
-    %p We will be updating Site Sale contributions after each Site Sale so your Scout can check back and see what they get towards their sales total. It will change over time as we will be taking the total Site Sales and proportionately dividing the sales up based on hours volunteered.
+    %p
+      We will be updating Site Sale contributions after each Site Sale so
+      = @scout.first_name
+      can check back and see what they get towards their sales total. It will change over time as we will be taking the total Site Sales and proportionately dividing the sales up based on hours volunteered.
 
-    %p Also, by turning in door-to-door Take Order order forms and collection envelopes at any Site Sale, all of your Scout's customer info will be entered and the total will be shown in Corn Cub. It will also show all the info they need for ultimately delivering the product.
+    %p
+      Also, by turning in door-to-door Take Order order forms and collection envelopes at any Site Sale, all of 
+      = @scout.first_name + "'s"
+      customer info will be entered and the total will be shown in Corn Cub. It will also show all the info they need for ultimately delivering the product.
 
     %p
       %b Need another order form/collection enveloper?
       Visit any Site Sale and you will be able to pick up both.
 
-    %p If your Scout has collected an email address on their order form, a thank-you and receipt will also automatically be sent.
+    %p 
+      If
+      = @scout.first_name
+      Scout has collected an email address on their order form, a thank-you and receipt will also automatically be sent.
 
     %p Yours in Scouting,
 
