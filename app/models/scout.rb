@@ -17,6 +17,7 @@ class Scout < ApplicationRecord
   after_create :set_default_event!
   after_create :set_if_admin!
   after_create :send_registration_email!
+  after_create :send_you_are_registered_email!
 
   ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'], ['charlotte', 'boulind-yeung'], ['kevin', 'daniels'],['lisa', 'cass'], ['keri', 'pinzon']]
 
@@ -66,6 +67,10 @@ class Scout < ApplicationRecord
   end
 
   def send_registration_email!
+    ScoutMailer.registration(self).deliver_later
+  end
+
+  def send_you_are_registered_email!
     ScoutMailer.registration(self).deliver_later
   end
 
