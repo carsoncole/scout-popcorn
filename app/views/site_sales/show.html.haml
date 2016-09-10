@@ -11,6 +11,14 @@
                 %span.lead
                   = link_to edit_site_sale_path(@site_sale) do
                     %i.fa.fa-pencil
+
+            - if current_scout.is_admin? && @site_sale.open? 
+              %p
+                =link_to site_sale_tracking_sheet_path(@site_sale) do
+                  %i.fa.fa-print.fa-lg
+                  Site Sale Transaction Sheet
+
+
           .col-md-6
             %h3.text-xs-right
               %span.tag.tag-primary= @site_sale.status.capitalize
@@ -59,9 +67,7 @@
 
         - if current_scout.is_admin? && @site_sale.open? && @site_sale.site_sale_line_items.any?
           = button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-default'
-        - if current_scout.is_admin? && @site_sale.open? 
-          %p=link_to "Site Sale Transaction Sheet", site_sale_tracking_sheet_path(@site_sale)
-.row
+.row    
   .col-md-12
     .card
       .card-block

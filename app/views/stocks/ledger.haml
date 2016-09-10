@@ -4,6 +4,12 @@
       .card-block
         .card-title
           %h2 Stocks Ledger
+        - if current_scout.is_admin?
+          %p
+            = link_to stock_movement_path do
+              %i.fa.fa-print.fa-lg
+              Stock Movement
+
         %ul.nav.nav-tabs.hidden-print
           %li.nav-item
             = link_to "All", stocks_path, class: "nav-link #{!params[:location] ? 'active' : nil}"          

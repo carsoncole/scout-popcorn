@@ -44,6 +44,11 @@
                   %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
                   %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
                   %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
+                  %li
+                    = link_to stock_movement_path, class: 'dropdown-item' do
+                      %i.fa.fa-print.fa-lg
+                      Stock Movement
+
           %li.nav-item
             = link_to help_index_path, class: "nav-link #{'active' if controller_name == 'help'}" do
               %i.fa.fa-question.fa-lg

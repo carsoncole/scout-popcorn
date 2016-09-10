@@ -11,7 +11,7 @@
           - if current_scout.is_admin?
             .form-group
               = f.label :scout
-              = f.collection_select :scout_id, @unit.scouts.order(:first_name), :id, :first_name
+              = f.collection_select :scout_id, @unit.scouts.not_admin.order(:first_name), :id, :first_name
           .form-group
             = f.label :product
             %br

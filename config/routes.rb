@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
   resources :scout_site_sales
   get "stocks/ledger" => "stocks#ledger", as: 'stocks_ledger'
+  get "stocks/stock-movement" => "stocks#stock_movement", as: 'stock_movement'
   resources :stocks
   resources :events do
     resources :scout_site_sales

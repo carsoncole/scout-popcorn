@@ -1,0 +1,35 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h3
+            Warehouse Stock Movement
+        %table.table.table-sm
+          %thead
+            %tr
+              %th Product
+              %th.text-xs-center Retail Price
+              %th Quantity
+
+          %tbody
+            - total = 0
+            - @products.each do |product|
+              %tr
+                %td= product.name
+                %td.text-xs-center= number_to_currency(product.retail_price)
+                %td.cell-bordered
+
+        .row
+          .col-md-12
+            %table.table
+              %tr
+                %th Date:
+                %td
+                %td
+                %td
+              %tr
+                %th Received by:
+                %td
+                %th Signature:
+                %td

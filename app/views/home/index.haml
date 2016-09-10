@@ -55,7 +55,7 @@
                 - else
                   - query = current_scout.online_sales.where(event_id: event.id)
                 - query.each do |online_sale|
-                  - total += direct_sale.amount
+                  - total += online_sale.amount
                 = number_to_currency(total, precision: 0)  
                 - grand_total += total
 

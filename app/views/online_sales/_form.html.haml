@@ -14,7 +14,7 @@
 
         .form-group
           = f.label :scout
-          = f.collection_select :scout_id, Scout.not_admin, :id, :name, {},class: 'form-control'
+          = f.collection_select :scout_id, @unit.scouts.not_admin.order(:first_name), :id, :name, {},class: 'form-control'
         .form-group
           = f.label :order_date
           %br
