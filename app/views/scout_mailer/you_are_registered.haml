@@ -5,6 +5,12 @@
   %body
     %h1{style: 'text-align:center'}
       Welcome to Pack 4496's Corn Cub!
+    
+    - if @scout.parent_first_name
+      %p 
+        Hello
+        - succeed(",") do
+          = @scout.parent_first_name.capitalize
     %p
       We will be updating Site Sale contributions after each Site Sale so
       = @scout.first_name
@@ -12,7 +18,7 @@
 
     %p
       Also, by turning in door-to-door Take Order order forms and collection envelopes at any Site Sale, all of 
-      = @scout.first_name + "'s"
+      = @scout.first_name.capitalize + "'s"
       customer info will be entered and the total will be shown in Corn Cub. It will also show all the info they need for ultimately delivering the product.
 
     %p
@@ -21,8 +27,8 @@
 
     %p 
       If
-      = @scout.first_name
-      Scout has collected an email address on their order form, a thank-you and receipt will also automatically be sent.
+      = @scout.first_name.capitalize
+      has collected an email address on their order form, a thank-you and receipt will also automatically be sent.
 
     %p Yours in Scouting,
 
