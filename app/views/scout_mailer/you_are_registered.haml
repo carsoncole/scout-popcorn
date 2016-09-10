@@ -9,7 +9,7 @@
     - if @scout.parent_first_name
       %p 
         Hello
-        - succeed(",") do
+        = succeed(",") do
           = @scout.parent_first_name.capitalize
     %p
       We will be updating Site Sale contributions after each Site Sale so
