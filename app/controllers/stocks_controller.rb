@@ -41,7 +41,7 @@ class StocksController < ApplicationController
     if stock_params[:movement_with_warehouse] && stock_params[:location] == 'warehouse'
       redirect_to stocks_ledger_path, notice: "Location needs to be different than -warehouse-"
     else
-      if stock_params[:movement_with_warehouse]
+      if stock_params[:movement_with_warehouse] == "1"
         movement_with_warehouse = true
         stock_params.delete :movement_with_warehouse
         @corresponding_stock = @unit.stocks.build(stock_params)
