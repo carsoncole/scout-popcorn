@@ -18,6 +18,10 @@ class PrizesController < ApplicationController
     @prize = Prize.new
   end
 
+  def name_with_id
+    name + " (" + id.to+s + ")" 
+  end
+
   # GET /prizes/1/edit
   def edit
   end
