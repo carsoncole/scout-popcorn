@@ -12,7 +12,7 @@ class Product < ApplicationRecord
   end
 
   def name_with_id
-    name + " (" + id.to+s + ")" 
+    name + " (" + id.to_s + ")" 
   end
 
 
