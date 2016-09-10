@@ -6,4 +6,10 @@ class ScoutMailer < ApplicationMailer
     @scout = scout
     mail(subject: "Corn Cub registration by: #{scout.name}")
   end
+
+  def you_are_registered(scout)
+    @scout = scout
+    mail(subject: "Welcome to Pack 4496's Corn Cub")
+  end
+
 end
