@@ -55,7 +55,7 @@ class SiteSalesController < ApplicationController
 
   def tracking_sheet
     @site_sale = SiteSale.find(params[:site_sale_id])
-    @products = @site_sale.event.products.order(:name)
+    @products = @active_end.products.order(:name)
   end
 
   private
