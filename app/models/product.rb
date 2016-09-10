@@ -11,6 +11,11 @@ class Product < ApplicationRecord
     where(event_id: nil)
   end
 
+  def name_with_id
+    name + " (" + id.to+s + ")" 
+  end
+
+
   def self.take_order_left(take_order)
     Product.where(event_id: take_order.event_id).order(:name).reject{ |p| take_order.products.include? p}
   end
