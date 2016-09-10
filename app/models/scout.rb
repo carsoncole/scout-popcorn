@@ -71,7 +71,7 @@ class Scout < ApplicationRecord
   end
 
   def send_you_are_registered_email!
-    ScoutMailer.registration(self).deliver_later
+    ScoutMailer.you_are_registerd(self).deliver_later
   end
 
 end
