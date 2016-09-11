@@ -4,8 +4,9 @@
       .card-title
         %h1.h1 Take Orders
       - unless current_scout.is_admin?
-        %p.card-text.hidden-print
-          Enter your door-to-door orders here or submit your order form to your Den Leader and they will be entered for you. 
+        - if @take_orders.any?
+          %p.card-text.hidden-print
+            Enter your door-to-door orders here or drop off your order form and collection enveloper at any Site Sale and they will be entered for you. 
       %table.table.card-text
         %thead
           %tr
@@ -25,9 +26,9 @@
           - total = 0
           - @take_orders.each do |take_order|
             %tr
-              - if current_scout.is_admin? || current_scout.is_super_admin?
+              - if current_scout.is_admin?
                 %td= take_order.scout.name if take_order.scout
-              %td= take_order.customer_name
+                %td= take_order.customer_name
               %td= take_order.customer_address
               %td
                 - total += take_order.value
@@ -50,18 +51,22 @@
                 - if take_order.received? || take_order.submitted?
                   = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-trash.fa-lg
-          %tr.hidden-print
-            - if current_scout.is_admin? || current_scout.is_super_admin?
-              %td            
-            %td
-              = link_to new_take_order_path do
-                %i.fa.fa-plus.fa-lg
-            %td
-            %td= number_to_currency(total, precision: 0)
-            %td
-            %td
-            %td.hidden-print
-            %td.hidden-print
+          - if @take_orders.any? || current_scout.is_admin?
+            %tr.hidden-print
+              - if current_scout.is_admin? 
+                %td            
+                %td
+                  = link_to new_take_order_path do
+                    %i.fa.fa-plus.fa-lg
+              %td
+              %td= number_to_currency(total, precision: 0)
+              %td
+              %td
+              %td.hidden-print
+              %td.hidden-print
+          - else
+            .alert.alert-info
+              Drop off your Take Order order form/collection envelope as often as you want to any Site Sale and you'll see all your orders entered here. You can also pick up more order forms and collections envelopes at any Site Sale.
 
       = paginate @take_orders
 

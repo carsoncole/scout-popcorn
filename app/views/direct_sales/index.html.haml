@@ -3,6 +3,9 @@
     .card.card-block
       .card-title
         %h1.h1 Direct Sales
+      - if @direct_sales.any?
+        %p.card-text.hidden-print
+          Enter your door-to-door orders here or drop off your order form and collection enveloper at any Site Sale and they will be entered for you. 
       %table.table.card-text
         %thead
           %tr
@@ -44,24 +47,32 @@
                 - unless direct_sale.status == 'open' 
                   = link_to direct_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-trash.fa-lg                  
-          %tr
-            %td
-              = link_to new_direct_sale_path do
-                %i.fa.fa-plus.fa-lg
-            %td
-            %td
-            %td
-            %td
-          %tr
-            - if current_scout.is_admin? || current_scout.is_super_admin?
+          - if current_scout.is_admin?
+            %tr
               %td
-            %td
-            %td
-            %td
-            %td= number_to_currency(total)
-            %td
-            %td
-            %td
+                = link_to new_direct_sale_path do
+                  %i.fa.fa-plus.fa-lg
+              %td
+              %td
+              %td
+              %td
+          
+          - if @direct_sales.any?
+            %tr
+
+              - if current_scout.is_admin? || current_scout.is_super_admin?
+                %td
+              %td
+              %td
+              %td
+              %td= number_to_currency(total)
+              %td
+              %td
+              %td
+          - else
+            .alert.alert-info
+              Drop off your Direct Sale order form/collection envelope as often as you want to any Site Sale and you'll see all your direct door-to-door sales entered here. You can also pick up more order forms and collections envelopes at any Site Sale.
+
 
 
       = paginate @direct_sales
