@@ -17,9 +17,9 @@
               %th Sign In Count
               - if current_scout.is_admin?
                 %th
-              %th
-              %th
-              %th
+                %th
+                %th
+                %th
 
           %tbody
             - @scouts.each do |scout|
@@ -38,15 +38,16 @@
                     - if scout.is_admin?
                       %span.tag.tag-info
                         Admin
-                %td
-                  = link_to scout do
-                    %span.fa.fa-folder-open.fa-lg
-                %td
-                  = link_to edit_scout_path(scout) do
-                    %span.fa.fa-pencil.fa-lg
-                %td
-                  = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                    %span.fa.fa-trash.fa-lg
+                  %td
+                    = link_to scout do
+                      %span.fa.fa-folder-open.fa-lg
+                  %td
+                    = link_to edit_scout_path(scout) do
+                      %span.fa.fa-pencil.fa-lg
+                  %td
+                    = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                      %span.fa.fa-trash.fa-lg
+                    
 
 %br
 

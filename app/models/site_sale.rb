@@ -75,12 +75,7 @@ class SiteSale < ApplicationRecord
 
   def debit_stock!
     site_sale_line_items.each do |line_item|
-      # available_stock = event.unit.stocks.where(product_id: line_item.product_id, location: 'site sales').first
-      # if available_stock
-      #   available_stock.update(quantity: available_stock.quantity - line_item.quantity, location: 'site sales')
-      # else
-      event.unit.stocks.create(product_id: line_item.product_id, quantity: - line_item.quantity, location: 'site sales')
-      # end
+      event.unit.stocks.create(product_id: line_item.product_id, quantity: - line_item.quantity, location: 'site sale')
     end
   end
 end

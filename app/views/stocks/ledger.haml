@@ -31,6 +31,7 @@
               %th Location
               %th Created
               %th Created by
+              %th
 
           %tbody
             - @stocks.each do |stock|
@@ -52,11 +53,15 @@
                     =""
                   - else
                     = Scout.find(stock.created_by).name
+                %td
+                  = link_to stock_path(stock), method: :delete do
+                    %i.fa.fa-trash.fa-lg
 
             %tr
               %td                
                 = link_to new_stock_path do
                   %i.fa.fa-plus.fa-lg
+              %td
               %td
               %td
               %td
