@@ -13,6 +13,7 @@ class SiteSalesController < ApplicationController
     @line_items = @site_sale.site_sale_line_items.order(created_at: :desc)
     @scout_site_sales = @site_sale.scout_site_sales.joins(:scout).order("scouts.first_name ASC")
     @total_sales = @site_sale.site_sale_line_items.sum(:value)
+    @total_hours = @site_sale.scout_site_sales.sum(:hours_worked)
   end
 
   def new

@@ -98,7 +98,7 @@
                 - if current_scout.is_admin?
                   = link_to new_site_sale_scout_site_sale_path(@site_sale) do
                     %i.fa.fa-plus.fa-lg
-              %td
+              %td= @total_hours
               %td= number_to_currency(total_credited_sales, precision: 0)
 
 
