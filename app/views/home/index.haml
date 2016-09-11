@@ -14,7 +14,11 @@
               - unless current_scout.is_admin?
                 = current_scout.name
 
-            %p.lead= event.name
+            - if current_scout.is_admin
+              %h2= event.name
+            - else
+              %p.lead= event.name
+          
           - grand_total = 0
           %table.table
             %tr
@@ -75,6 +79,19 @@
               %th Total Sales
               %td.text-xs-right
                 = number_to_currency(grand_total, precision: 0)
+  - if current_scout.is_admin?
+    .col-md-6
+      .card
+        .card-block
+          .card-title
+            %h2 Sales Breakdown
+          %table.table
+            %tr
+              %th Product Sales
+              %td.text-xs-right= number_to_currency(@product_sales)
+            %tr
+              %th Pack Donations
+              %td.text-xs-right= number_to_currency(@pack_donations)
 
   .col-md-6
     .card
