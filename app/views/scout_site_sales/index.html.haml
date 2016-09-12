@@ -21,7 +21,7 @@
                 %td= link_to scout_site_sale.scout.name, scout_path(scout_site_sale.scout)
                 %td= link_to scout_site_sale.site_sale.name, site_sale_path(scout_site_sale.site_sale)
                 %td= scout_site_sale.hours_worked
-                %td= number_to_currency(scout_site_sale.site_sale.credited_sales(scout_site_sale.scout))
+                %td= number_to_currency(scout_site_sale.site_sale.credited_sales(scout_site_sale.scout, @active_event))
                 %td= link_to 'Edit', edit_scout_site_sale_path(scout_site_sale)
                 %td= link_to 'Destroy', scout_site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' }
 

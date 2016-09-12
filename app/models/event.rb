@@ -36,7 +36,7 @@ class Event < ApplicationRecord
   def total_site_sales(scout)
     total = 0
     site_sales.each do |site_sale|
-      total += site_sale.credited_sales(scout) || 0
+      total += site_sale.credited_sales(scout, @active_event) || 0
     end
     total
   end

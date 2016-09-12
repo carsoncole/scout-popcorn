@@ -45,8 +45,8 @@
                     = number_to_currency(site_sale.total_sales, precision: 0)
                 - unless current_scout.is_admin?
                   %td
-                    - total += (site_sale.credited_sales(current_scout) || 0)
-                    = number_to_currency(site_sale.credited_sales(current_scout), precision: 0)
+                    - total += (site_sale.credited_sales(current_scout, @active_event) || 0)
+                    = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
                 - if current_scout.is_admin?
                   %td
                     %span.tag.tag-primary

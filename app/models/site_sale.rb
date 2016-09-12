@@ -37,6 +37,17 @@ class SiteSale < ApplicationRecord
     scout_site_sales
   end
 
+  def credited_sales(scout, event)
+    if scout_site_sales.where(scout_id: scout.id).first
+      hours_worked(scout) * event.total_site_sales_per_hour_worked
+    end
+  end
+
+  def hours_worked(scout)
+    scout_site_sales
+  end
+
+
   def self.sales_by_scout_and_event(event)
     hash = {}
     event.site_sales.each do |site_sale|
