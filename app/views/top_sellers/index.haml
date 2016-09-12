@@ -12,7 +12,7 @@
         - if @top_sellers.any?
           
           %table.table
-            - @top_sellers[0..4].each do |top_seller|
+            - @top_sellers.each do |top_seller|
               - scout = Scout.find(top_seller[0])
               %tr
                 %th= scout.name

@@ -17,7 +17,14 @@ class TopSellersController < ApplicationController
       end
     end
 
-    @top_sellers = @scout_hash.sort{|a,b| a[1] <=> b[1]}.reverse
+    @top_sellers_full_list = @scout_hash.sort{|a,b| a[1] <=> b[1]}.reverse
+
+    @top_sellers = []
+    @top_sellers_full_list.each do |seller|
+      break if @top_sellers.count == 2 && seller[1] < @top_sellers.last[1]
+      @top_sellers << seller
+    end
+
     # top_sellers_hash = @active_event.take_orders.submitted.joins(:take_order_line_items, :scout).group(:scout_id).sum(:value)
     # @top_sellers_hash = top_sellers_hash.sort_by {|id, value| value }
   end
