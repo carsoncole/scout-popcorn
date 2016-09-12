@@ -17,6 +17,8 @@
           %li.nav-item
             = link_to home_index_path, class: "nav-link #{'active' if controller_name == 'home'}" do
               %i.fa.fa-home.fa-lg
+          - if @unit
+            %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
           %li.nav-item.btn-group
             = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
               Door-to-Door
@@ -28,8 +30,6 @@
           %li.nav-item= link_to "Online Sales", online_sales_path, class: "nav-link #{'active' if controller_name == 'online_sales'}"
           %li.nav-item= link_to "Prizes", prizes_path, class: "nav-link #{'active' if controller_name == 'prizes'}"
           %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
-          - if @unit
-            %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
           - if current_scout.is_admin?
             %li.nav-item.btn-group
               = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales', 'site_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do

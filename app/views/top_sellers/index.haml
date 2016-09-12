@@ -3,7 +3,10 @@
     .card
       .card-block
         .card-title
-          %h1.text-xs-center Top 5 Sellers
+          %h1.text-xs-center
+            %i.fa.fa-star.fa-log
+            Top 5 Sellers
+            %i.fa.fa-star.fa-log
           %h4.text-xs-center= @active_event.name
 
         - if @top_sellers.any?
@@ -16,3 +19,9 @@
                 %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
         - else
           %p.text-xs-center No sales posted yet.
+
+  .col-md-6
+    .card
+      .card-block
+        %p.card-text.small
+          Top Seller sales figures utilize both Site Sales and Take Order door-to-door sales. To include Take Orders, they should be dropped off at any Site Sale (You can pick up a new order form/collection envelope) to be confirmed and entered (if you haven't entered them already). 
