@@ -28,6 +28,7 @@
           %tbody
             - total = 0
             - total_sales = 0
+            - hours = 0
             - @site_sales.each do |site_sale|
               %tr
                 - if current_scout.is_super_admin?
@@ -37,13 +38,19 @@
                     = link_to site_sale.full_name, site_sale_path(site_sale)
                   - else
                     = site_sale.full_name
-                %td= site_sale.hours_worked(current_scout)
+                %td
+                  - if current_scout.is_admin?
+                    - hours += site_sale.scout_site_sales.sum(:hours_worked)
+                  - else
+                    - hours_worked= site_sale.hours_worked(current_scout)
+                    - hours += hours_worked if hours_worked
+                  = hours_worked
                 - if current_scout.is_admin?
                   %td= site_sale.scout_site_sales.sum(:hours_worked)
                   %td
                     - total_sales += site_sale.total_sales
                     = number_to_currency(site_sale.total_sales, precision: 0)
-                - unless current_scout.is_admin?
+                - else
                   %td
                     - total += (site_sale.credited_sales(current_scout, @active_event) || 0)
                     = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
@@ -64,10 +71,12 @@
                     %i.fa.fa-plus.fa-lg
               %td
               %td
-              - if current_scout.is_admin?
-                %td= number_to_currency(total_sales, precision: 0)
-                - unless current_scout.is_admin?
-                  %td= number_to_currency(total, precision: 0)
+                = hours               
+              %td
+                - if current_scout.is_admin?
+                  = number_to_currency(total_sales, precision: 0)
+                - else
+                  = number_to_currency(total, precision: 0)
               %td
               - if current_scout.is_admin?
                 %td
