@@ -4,9 +4,8 @@
       .card-title
         %h1.h1 Take Orders
       - unless current_scout.is_admin?
-        - if @take_orders.any?
-          %p.card-text.hidden-print
-            Enter your door-to-door orders here or drop off your order form and collection enveloper at any Site Sale and they will be entered for you. 
+        .alert.alert-info
+          Drop off your Take Order order form/collection envelope as often as you want to any Site Sale and you'll see all your orders entered here. You can also pre-enter the order form info here and pick up more order forms and collections envelopes at any Site Sale.
       %table.table.card-text
         %thead
           %tr
@@ -20,7 +19,6 @@
             %th.visible-print-block Delivered
             %th.hidden-print
             %th.hidden-print
-
 
         %tbody
           - total = 0
@@ -51,22 +49,20 @@
                 - if take_order.received? || take_order.submitted?
                   = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                     %i.fa.fa-trash.fa-lg
-          - if @take_orders.any? || current_scout.is_admin?
-            %tr.hidden-print
-              - if current_scout.is_admin? 
-                %td            
-                %td
-                  = link_to new_take_order_path do
-                    %i.fa.fa-plus.fa-lg
-              %td
-              %td= number_to_currency(total, precision: 0)
-              %td
-              %td
-              %td.hidden-print
-              %td.hidden-print
-          - else
-            .alert.alert-info
-              Drop off your Take Order order form/collection envelope as often as you want to any Site Sale and you'll see all your orders entered here. You can also pick up more order forms and collections envelopes at any Site Sale.
+
+          %tr.hidden-print
+            %td            
+            %td
+              = link_to new_take_order_path do
+                %i.fa.fa-plus.fa-lg
+            %td
+            %td= number_to_currency(total, precision: 0)
+            %td
+            %td
+            %td.hidden-print
+            %td.hidden-print
+
+
 
       = paginate @take_orders
 

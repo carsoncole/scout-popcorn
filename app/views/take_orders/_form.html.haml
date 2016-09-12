@@ -28,6 +28,14 @@
                 %br
                 %em.small A thank you receipt will be sent if an email address is entered.
               = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
+          .form-group
+            %label
+              = f.label "Was paid by credit card?"
+            = f.check_box :is_paid_by_credit_card, class: 'form-control'
+          .form-group
+            %label
+              = f.label :credit_card_order_number
+            = f.text_field :credit_card_order_number, class: 'form-control', placeholder: 'Enter Order # if paid by credit card'
           %br
           .actions
             = f.submit 'Save', class: 'btn btn-success'

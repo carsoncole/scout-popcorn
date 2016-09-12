@@ -86,9 +86,7 @@
                 %td= scout_site_sale.scout.name
                 %td= scout_site_sale.hours_worked
                 %td
-                  - credited_sales = @site_sale.credited_sales(scout_site_sale.scout)
-                  - total_credited_sales += credited_sales
-                  = number_to_currency(credited_sales, precision: 0)
+                  = number_to_currency(@active_event.total_site_sales_per_hour_worked * scout_site_sale.hours_worked, precision: 0)
                 - if current_scout.is_admin?
                   %td
                     = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do

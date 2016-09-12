@@ -37,20 +37,14 @@ class SiteSale < ApplicationRecord
     scout_site_sales
   end
 
-  def credited_sales(scout)
-    if scout_site_sales.where(scout_id: scout.id).first
-      hours_worked(scout) * sales_per_hour_worked
-    end
-  end
-
   def self.sales_by_scout_and_event(event)
     hash = {}
     event.site_sales.each do |site_sale|
       site_sale.scout_site_sales.each do |scout_site_sale|
         if hash[scout_site_sale.scout_id]
-          hash[scout_site_sale.scout_id] += site_sale.credited_sales(scout_site_sale.scout)
+          hash[scout_site_sale.scout_id] += scout_site_sale.hours_worked * event.total_site_sales_per_hour_worked
         else
-          hash[scout_site_sale.scout_id] = site_sale.credited_sales(scout_site_sale.scout)
+          hash[scout_site_sale.scout_id] = scout_site_sale.hours_worked * event.total_site_sales_per_hour_worked
         end
       end
     end
@@ -65,10 +59,6 @@ class SiteSale < ApplicationRecord
     if scout_site_sales.where(scout_id: scout.id).first
       scout_site_sales.where(scout_id: scout.id).first.hours_worked
     end
-  end
-
-  def sales_per_hour_worked
-    site_sale_line_items.sum(:value) / total_hours_worked
   end
 
   def total_hours_worked

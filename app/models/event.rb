@@ -33,15 +33,29 @@ class Event < ApplicationRecord
     take_orders.includes(:scouts).group
   end
 
-  def top_site_sale_sellers
-  end
-
   def total_site_sales(scout)
     total = 0
     site_sales.each do |site_sale|
       total += site_sale.credited_sales(scout) || 0
     end
     total
+  end
+
+  def total_site_sales
+    site_sales.joins(:site_sale_line_items).sum(:value)
+  end
+
+  def total_hours_worked
+    site_sales.joins(:scout_site_sales).sum(:hours_worked)
+  end
+
+  def total_site_sales_per_hour_worked
+    hours = total_hours_worked
+    if hours > 0
+      total_site_sales / total_hours_worked
+    else
+      0
+    end
   end
 
   private

@@ -17,6 +17,15 @@
               %br
               = @take_order.customer_email
 
+        - if @take_order.is_paid_by_credit_card
+          %b
+            PAID BY CREDIT CARD
+            - if @take_order.credit_card_order_number
+              = precede("#") do
+                = @take_order.credit_card_order_number
+          %br
+          %br
+
         - if @take_order.purchase_order && current_scout.is_admin?
           %p
             PURCHASE ORDER:

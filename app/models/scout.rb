@@ -49,6 +49,10 @@ class Scout < ApplicationRecord
     update(default_event_id: unit.events.active.last.id) if unit.events
   end
 
+  def event_site_sale_hours_worked(event)
+    scout_site_sales.joins(:site_sale).where("site_sales.event_id = ?",event.id).sum(:hours_worked)
+  end
+
   private
 
   def set_unit!

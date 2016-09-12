@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909045438) do
+ActiveRecord::Schema.define(version: 20160912144250) do
 
   create_table "direct_sales", force: :cascade do |t|
     t.integer  "scout_id"
@@ -154,16 +154,18 @@ ActiveRecord::Schema.define(version: 20160909045438) do
     t.integer  "scout_id"
     t.integer  "event_id"
     t.integer  "purchase_order_id"
-    t.string   "status",                                       default: "received", null: false
+    t.string   "status",                                           default: "received", null: false
     t.string   "customer_name"
     t.string   "customer_address"
     t.string   "customer_email"
-    t.decimal  "total_value",          precision: 5, scale: 2
+    t.decimal  "total_value",              precision: 5, scale: 2
     t.integer  "money_received_by_id"
     t.datetime "money_received_at"
-    t.datetime "created_at",                                                        null: false
-    t.datetime "updated_at",                                                        null: false
+    t.datetime "created_at",                                                            null: false
+    t.datetime "updated_at",                                                            null: false
     t.datetime "receipt_sent_at"
+    t.boolean  "is_paid_by_credit_card",                           default: false
+    t.integer  "credit_card_order_number"
   end
 
   create_table "units", force: :cascade do |t|
