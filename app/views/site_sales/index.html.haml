@@ -41,8 +41,8 @@
                 - if current_scout.is_admin?
                   %td= site_sale.scout_site_sales.sum(:hours_worked)
                   %td
-                    - total_sales += site_sale.site_sale_line_items.sum(:value)
-                    = number_to_currency(site_sale.site_sale_line_items.sum(:value), precision: 0)
+                    - total_sales += site_sale.total_sales
+                    = number_to_currency(site_sale.total_sales, precision: 0)
                 - unless current_scout.is_admin?
                   %td
                     - total += (site_sale.credited_sales(current_scout) || 0)

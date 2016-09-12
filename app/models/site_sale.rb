@@ -57,6 +57,10 @@ class SiteSale < ApplicationRecord
     hash
   end
 
+  def total_sales
+    site_sale_line_items.sum(:value)
+  end
+
   def hours_worked(scout)
     if scout_site_sales.where(scout_id: scout.id).first
       scout_site_sales.where(scout_id: scout.id).first.hours_worked
