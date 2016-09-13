@@ -9,8 +9,6 @@
             %thead
               %tr
                 %th Name
-                %th
-                %th
                 %th Take Orders
                 %th Site Sales
                 %th Direct Sales
@@ -20,19 +18,17 @@
                   %th
                   %th
                   %th
-                  %th
 
             %tbody
               - @scouts.each do |scout|
                 %tr
                   %td= link_to scout.name, scout_path(scout)
-                  %td= link_to "Take Orders", take_orders_path(scout_id: scout.id)
-                  %td= link_to "Site Sales"
                   / %td= number_to_currency(scout.total_sales)
                   %td
+                    = link_to number_to_currency(TakeOrder.scout_sales(scout, @active_event), precision: 0), take_orders_path(scout_id: scout.id)
                   %td
                     - amount = @active_event.total_site_sales_per_hour_worked * scout.event_site_sale_hours_worked(@active_event)
-                    = number_to_currency(amount, precision: 0)
+                    = link_to number_to_currency(amount, precision: 0), site_sales_path(scout_id: scout.id)
                   %td
                   %td= scout.last_sign_in_at.strftime("%m/%d/%Y %I:%M%p")
                   %td= scout.sign_in_count
@@ -41,9 +37,6 @@
                       - if scout.is_admin?
                         %span.tag.tag-info
                           Admin
-                    %td
-                      = link_to scout do
-                        %span.fa.fa-folder-open.fa-lg
                     %td
                       = link_to edit_scout_path(scout) do
                         %span.fa.fa-pencil.fa-lg

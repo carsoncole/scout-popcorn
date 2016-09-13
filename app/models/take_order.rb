@@ -41,6 +41,10 @@ class TakeOrder < ApplicationRecord
     status == 'received'
   end
 
+  def self.scout_sales(scout, event)
+    scout.take_orders.where(event_id: event.id).joins(:take_order_line_items).sum(:value)
+  end
+
   def self.sales_by_scout_and_event(event)
     event.take_orders.where("take_orders.status <> ?", "received").joins(:take_order_line_items).group(:scout_id).sum(:value)
   end
