@@ -6,82 +6,83 @@
           %h1.h1 Site Sales
         - unless current_scout.is_admin?
           %p All your hours worked at Site Sales will be shown here, with the sales credit you get based on all Site Sales so far.
-        %table.table.card-text
-          %thead
-            %tr
-              - if current_scout.is_super_admin?
-                %th Event
-              %th Name
-              - unless current_scout.is_admin?
-                %th Hours Worked
-              - if current_scout.is_admin?
-                %th
-                %th Hours Worked
-                %th Total Sales
-              - unless current_scout.is_admin?
-                %th Credited Sales
-              - if current_scout.is_admin?
-                %th Status
-                %th
-                %th
-
-          %tbody
-            - total = 0
-            - total_sales = 0
-            - hours = 0
-            - @site_sales.each do |site_sale|
+        .table-responsive
+          %table.table.card-text
+            %thead
               %tr
                 - if current_scout.is_super_admin?
-                  %td= site_sale.event.name
+                  %th Event
+                %th Name
+                - unless current_scout.is_admin?
+                  %th Hours Worked
+                - if current_scout.is_admin?
+                  %th
+                  %th Hours Worked
+                  %th Total Sales
+                - unless current_scout.is_admin?
+                  %th Credited Sales
+                - if current_scout.is_admin?
+                  %th Status
+                  %th
+                  %th
+
+            %tbody
+              - total = 0
+              - total_sales = 0
+              - hours = 0
+              - @site_sales.each do |site_sale|
+                %tr
+                  - if current_scout.is_super_admin?
+                    %td= site_sale.event.name
+                  %td
+                    - if current_scout.is_admin?
+                      = link_to site_sale.full_name, site_sale_path(site_sale)
+                    - else
+                      = site_sale.full_name
+                  %td
+                    - if current_scout.is_admin?
+                      - hours += site_sale.scout_site_sales.sum(:hours_worked)
+                    - else
+                      - hours_worked= site_sale.hours_worked(current_scout)
+                      - hours += hours_worked if hours_worked
+                    = hours_worked
+                  - if current_scout.is_admin?
+                    %td= site_sale.scout_site_sales.sum(:hours_worked)
+                    %td
+                      - total_sales += site_sale.total_sales
+                      = number_to_currency(site_sale.total_sales, precision: 0)
+                  - else
+                    %td
+                      - total += (site_sale.credited_sales(current_scout, @active_event) || 0)
+                      = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
+                  - if current_scout.is_admin?
+                    %td
+                      %span.tag.tag-primary
+                        = site_sale.status.titleize
+                    %td
+                      = link_to site_sale do
+                        %i.fa.fa-folder-open.fa-lg
+                    %td
+                      = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                        %i.fa.fa-trash.fa-lg
+              %tr
+                - if current_scout.is_admin?
+                  %td        
+                    = link_to new_site_sale_path do
+                      %i.fa.fa-plus.fa-lg
+                %td
+                %td
+                  = hours               
                 %td
                   - if current_scout.is_admin?
-                    = link_to site_sale.full_name, site_sale_path(site_sale)
+                    = number_to_currency(total_sales, precision: 0)
                   - else
-                    = site_sale.full_name
+                    = number_to_currency(total, precision: 0)
                 %td
-                  - if current_scout.is_admin?
-                    - hours += site_sale.scout_site_sales.sum(:hours_worked)
-                  - else
-                    - hours_worked= site_sale.hours_worked(current_scout)
-                    - hours += hours_worked if hours_worked
-                  = hours_worked
-                - if current_scout.is_admin?
-                  %td= site_sale.scout_site_sales.sum(:hours_worked)
-                  %td
-                    - total_sales += site_sale.total_sales
-                    = number_to_currency(site_sale.total_sales, precision: 0)
-                - else
-                  %td
-                    - total += (site_sale.credited_sales(current_scout, @active_event) || 0)
-                    = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
                 - if current_scout.is_admin?
                   %td
-                    %span.tag.tag-primary
-                      = site_sale.status.titleize
                   %td
-                    = link_to site_sale do
-                      %i.fa.fa-folder-open.fa-lg
-                  %td
-                    = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                      %i.fa.fa-trash.fa-lg
-            %tr
-              - if current_scout.is_admin?
-                %td        
-                  = link_to new_site_sale_path do
-                    %i.fa.fa-plus.fa-lg
-              %td
-              %td
-                = hours               
-              %td
-                - if current_scout.is_admin?
-                  = number_to_currency(total_sales, precision: 0)
-                - else
-                  = number_to_currency(total, precision: 0)
-              %td
-              - if current_scout.is_admin?
-                %td
-                %td
-                
+                  
 
 
         = paginate @site_sales

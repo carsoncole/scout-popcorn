@@ -17,41 +17,42 @@
               = link_to location.location.titleize, stocks_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
           
         %br
-        %table.table.table-sm
-          %thead
-            %tr
-              %th Product
-              %th.text-xs-center Quantity
-              %th Location
-              %th Retail Price
-              %th.text-xs-right Retail Value
-              %th.visible-print-block Change
-
-          %tbody
-            - total = 0
-            - @stocks_hash.each do |key, value|
-              - product = Product.find(key[0])
-              - location = key[1]
-              - quantity = value
-              - next if quantity == 0
+        .table-responsive
+          %table.table.table-sm
+            %thead
               %tr
-                %td= product.name
-                %td.text-xs-center= quantity
-                %td= location.titleize if location
-                %td= number_to_currency(product.retail_price)
-                %td.text-xs-right
-                  - total += quantity * product.retail_price
-                  = number_to_currency(quantity * product.retail_price)
-                %td.visible-print-block.cell-bordered
-                  
-            %tr
-              %td
-                = link_to new_stock_path, class: 'hidden-print' do
-                  %i.fa.fa-plus.fa-lg
-                .visible-print-block= nice_date_time(Time.current)
-              %td
-              %td
-              %td
-              %td.text-xs-right= number_to_currency(total)
-              %td.visible-print-block
+                %th Product
+                %th.text-xs-center Quantity
+                %th Location
+                %th Retail Price
+                %th.text-xs-right Retail Value
+                %th.visible-print-block Change
+
+            %tbody
+              - total = 0
+              - @stocks_hash.each do |key, value|
+                - product = Product.find(key[0])
+                - location = key[1]
+                - quantity = value
+                - next if quantity == 0
+                %tr
+                  %td= product.name
+                  %td.text-xs-center= quantity
+                  %td= location.titleize if location
+                  %td= number_to_currency(product.retail_price)
+                  %td.text-xs-right
+                    - total += quantity * product.retail_price
+                    = number_to_currency(quantity * product.retail_price)
+                  %td.visible-print-block.cell-bordered
+                    
+              %tr
+                %td
+                  = link_to new_stock_path, class: 'hidden-print' do
+                    %i.fa.fa-plus.fa-lg
+                  .visible-print-block= nice_date_time(Time.current)
+                %td
+                %td
+                %td
+                %td.text-xs-right= number_to_currency(total)
+                %td.visible-print-block
 

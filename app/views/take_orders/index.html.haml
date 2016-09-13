@@ -6,61 +6,62 @@
       - unless current_scout.is_admin?
         .alert.alert-info
           Drop off your Take Order order form/collection envelope as often as you want to any Site Sale and you'll see all your orders entered here. You can also pre-enter the order form info here and pick up more order forms and collections envelopes at any Site Sale.
-      %table.table.card-text
-        %thead
-          %tr
-            - if current_scout.is_admin? || current_scout.is_super_admin?
-              %th Scout
-            %th Customer
-            %th Address
-            %th Amount
-            %th Product
-            %th.hidden Status
-            %th.visible-print-block Delivered
-            %th.hidden-print
-            %th.hidden-print
-
-        %tbody
-          - total = 0
-          - @take_orders.each do |take_order|
+      .table-responsive
+        %table.table.card-text
+          %thead
             %tr
-              - if current_scout.is_admin?
-                %td= take_order.scout.name if take_order.scout
-                %td= take_order.customer_name
-              %td= take_order.customer_address
-              %td
-                - total += take_order.value
-                = number_to_currency(take_order.value, precision: 0)
-              %td
-                - take_order.take_order_line_items.each do |line_item|
-                  = line_item.product.name
-                  = surround("(", ")") do
-                    = line_item.quantity
-                  %br
-              %td
-                - if take_order.status
-                  %span.tag.tag-primary= take_order.status.capitalize
-              %td.visible-print-block
-                %i.fa.fa-square-o.fa-2x
-              %td.hidden-print
-                = link_to take_order do
-                  %i.fa.fa-folder-open.fa-lg
-              %td.hidden-print
-                - if take_order.received? || take_order.submitted?
-                  = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                    %i.fa.fa-trash.fa-lg
+              - if current_scout.is_admin? || current_scout.is_super_admin?
+                %th Scout
+              %th Customer
+              %th Address
+              %th Amount
+              %th Product
+              %th.hidden Status
+              %th.visible-print-block Delivered
+              %th.hidden-print
+              %th.hidden-print
 
-          %tr.hidden-print
-            %td            
-            %td
-              = link_to new_take_order_path do
-                %i.fa.fa-plus.fa-lg
-            %td
-            %td= number_to_currency(total, precision: 0)
-            %td
-            %td
-            %td.hidden-print
-            %td.hidden-print
+          %tbody
+            - total = 0
+            - @take_orders.each do |take_order|
+              %tr
+                - if current_scout.is_admin?
+                  %td= take_order.scout.name if take_order.scout
+                %td= take_order.customer_name
+                %td= take_order.customer_address
+                %td
+                  - total += take_order.value
+                  = number_to_currency(take_order.value, precision: 0)
+                %td
+                  - take_order.take_order_line_items.each do |line_item|
+                    = line_item.product.name
+                    = surround("(", ")") do
+                      = line_item.quantity
+                    %br
+                %td
+                  - if take_order.status
+                    %span.tag.tag-primary= take_order.status.capitalize
+                %td.visible-print-block
+                  %i.fa.fa-square-o.fa-2x
+                %td.hidden-print
+                  = link_to take_order do
+                    %i.fa.fa-folder-open.fa-lg
+                %td.hidden-print
+                  - if take_order.received? || take_order.submitted?
+                    = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                      %i.fa.fa-trash.fa-lg
+
+            %tr.hidden-print
+              %td            
+              %td
+                = link_to new_take_order_path do
+                  %i.fa.fa-plus.fa-lg
+              %td
+              %td= number_to_currency(total, precision: 0)
+              %td
+              %td
+              %td.hidden-print
+              %td.hidden-print
 
 
 

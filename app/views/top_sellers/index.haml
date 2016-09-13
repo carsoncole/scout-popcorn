@@ -11,12 +11,13 @@
 
         - if @top_sellers.any?
           
-          %table.table
-            - @top_sellers.each do |top_seller|
-              - scout = Scout.find(top_seller[0])
-              %tr
-                %th= scout.name
-                %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
+          .table-responsive
+            %table.table
+              - @top_sellers.each do |top_seller|
+                - scout = Scout.find(top_seller[0])
+                %tr
+                  %th= scout.name
+                  %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
         - else
           %p.text-xs-center No sales posted yet.
 

@@ -21,49 +21,50 @@
             %li.nav-item
               = link_to location.location.titleize, stocks_ledger_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
         %br
-        %table.table.table-sm
-          %thead
-            %tr
-              %th Product
-              %th Desc
-              %th 
-              %th Qty
-              %th Location
-              %th Created
-              %th Created by
-              %th
-
-          %tbody
-            - @stocks.each do |stock|
+        .table-responsive
+          %table.table.table-sm
+            %thead
               %tr
-                %td= stock.product.name_with_id
-                %td= stock.description
-                %td
-                  - if stock.take_order_id
-                    = link_to "Take Order", take_order_path(stock.take_order_id) if stock.take_order
-                  - elsif stock.direct_sale_id
-                    = link_to "Direct Sale", direct_sale_path(stock.direct_sale_id) if stock.direct_sale
-                %td= stock.quantity
-                %td= stock.location.titleize if stock.location
-                %td= nice_date_time(stock.created_at)
-                %td
-                  - if stock.created_by == 999
-                    System
-                  - elsif stock.created_by.blank?
-                    =""
-                  - else
-                    = Scout.find(stock.created_by).name
-                %td
-                  = link_to stock_path(stock), method: :delete do
-                    %i.fa.fa-trash.fa-lg
+                %th Product
+                %th Desc
+                %th 
+                %th Qty
+                %th Location
+                %th Created
+                %th Created by
+                %th
 
-            %tr
-              %td                
-                = link_to new_stock_path do
-                  %i.fa.fa-plus.fa-lg
-              %td
-              %td
-              %td
-              %td
-              %td
+            %tbody
+              - @stocks.each do |stock|
+                %tr
+                  %td= stock.product.name_with_id
+                  %td= stock.description
+                  %td
+                    - if stock.take_order_id
+                      = link_to "Take Order", take_order_path(stock.take_order_id) if stock.take_order
+                    - elsif stock.direct_sale_id
+                      = link_to "Direct Sale", direct_sale_path(stock.direct_sale_id) if stock.direct_sale
+                  %td= stock.quantity
+                  %td= stock.location.titleize if stock.location
+                  %td= nice_date_time(stock.created_at)
+                  %td
+                    - if stock.created_by == 999
+                      System
+                    - elsif stock.created_by.blank?
+                      =""
+                    - else
+                      = Scout.find(stock.created_by).name
+                  %td
+                    = link_to stock_path(stock), method: :delete do
+                      %i.fa.fa-trash.fa-lg
+
+              %tr
+                %td                
+                  = link_to new_stock_path do
+                    %i.fa.fa-plus.fa-lg
+                %td
+                %td
+                %td
+                %td
+                %td
         = paginate @stocks

@@ -6,37 +6,38 @@
           %h1 Online Sales
         %p All sales that are done on the Trails-End website using your Scout code will show up here.
 
-        %table.table
-          %thead
-            %tr
-              - if current_scout.is_admin?
-                %th Scout
-                %th Event
-              %th Order date
-              %th Customer name
-              %th Description
-              %th Amount
-              - if current_scout.is_admin?
-                %th
-                %th
-
-          %tbody
-            - @online_sales.each do |online_sale|
+        .table-responsive
+          %table.table
+            %thead
               %tr
                 - if current_scout.is_admin?
-                  %td= online_sale.scout.name
-                  %td= online_sale.event.name
-                %td= online_sale.order_date
-                %td= online_sale.customer_name
-                %td= online_sale.description
+                  %th Scout
+                  %th Event
+                %th Order date
+                %th Customer name
+                %th Description
+                %th Amount
                 - if current_scout.is_admin?
-                  %td= online_sale.amount
-                  %td
-                    = link_to edit_online_sale_path(online_sale) do
-                      %i.fa.fa-pencil.fa-lg
-                  %td
-                    = link_to online_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                      %i.fa.fa-trash.fa-lg
+                  %th
+                  %th
+
+            %tbody
+              - @online_sales.each do |online_sale|
+                %tr
+                  - if current_scout.is_admin?
+                    %td= online_sale.scout.name
+                    %td= online_sale.event.name
+                  %td= online_sale.order_date
+                  %td= online_sale.customer_name
+                  %td= online_sale.description
+                  - if current_scout.is_admin?
+                    %td= online_sale.amount
+                    %td
+                      = link_to edit_online_sale_path(online_sale) do
+                        %i.fa.fa-pencil.fa-lg
+                    %td
+                      = link_to online_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                        %i.fa.fa-trash.fa-lg
 
         %br
 

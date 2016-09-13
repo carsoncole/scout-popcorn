@@ -16,7 +16,7 @@
           %i.fa.fa-child.fa-lg
           &nbsp;
           = @scout.name
-        - if @scout.parent_first_name
+        - unless @scout.parent_first_name.blank?
           %li.list-group-item
             %i.fa.fa-male.fa-lg
             &nbsp;

@@ -4,51 +4,53 @@
       .card-block
         .card-title
           %h1 Scouts
-        %table.table.card-text
-          %thead
-            %tr
-              %th Name
-              %th
-              %th
-              %th Take Orders
-              %th Site Sales
-              %th Direct Sales
-              %th Last Sign In
-              %th Sign In Count
-              - if current_scout.is_admin?
-                %th
-                %th
-                %th
-                %th
-
-          %tbody
-            - @scouts.each do |scout|
+        .table-responsive
+          %table.table.card-text
+            %thead
               %tr
-                %td= link_to scout.name, scout_path(scout)
-                %td= link_to "Take Orders", take_orders_path(scout_id: scout.id)
-                %td= link_to "Site Sales"
-                / %td= number_to_currency(scout.total_sales)
-                %td
-                %td
-                %td
-                %td= scout.last_sign_in_at.strftime("%m/%d/%Y %I:%M%p")
-                %td= scout.sign_in_count
+                %th Name
+                %th
+                %th
+                %th Take Orders
+                %th Site Sales
+                %th Direct Sales
+                %th Last Sign In
+                %th Sign In Count
                 - if current_scout.is_admin?
-                  %td.text-xs-center
-                    - if scout.is_admin?
-                      %span.tag.tag-info
-                        Admin
+                  %th
+                  %th
+                  %th
+                  %th
+
+            %tbody
+              - @scouts.each do |scout|
+                %tr
+                  %td= link_to scout.name, scout_path(scout)
+                  %td= link_to "Take Orders", take_orders_path(scout_id: scout.id)
+                  %td= link_to "Site Sales"
+                  / %td= number_to_currency(scout.total_sales)
                   %td
-                    = link_to scout do
-                      %span.fa.fa-folder-open.fa-lg
                   %td
-                    = link_to edit_scout_path(scout) do
-                      %span.fa.fa-pencil.fa-lg
                   %td
-                    = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                      %span.fa.fa-trash.fa-lg
+                  %td= scout.last_sign_in_at.strftime("%m/%d/%Y %I:%M%p")
+                  %td= scout.sign_in_count
+                  - if current_scout.is_admin?
+                    %td.text-xs-center
+                      - if scout.is_admin?
+                        %span.tag.tag-info
+                          Admin
+                    %td
+                      = link_to scout do
+                        %span.fa.fa-folder-open.fa-lg
+                    %td
+                      = link_to edit_scout_path(scout) do
+                        %span.fa.fa-pencil.fa-lg
+                    %td
+                      = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                        %span.fa.fa-trash.fa-lg
                     
 
 %br
 
-= link_to 'New Scout', new_scout_path
+= link_to new_scout_path do
+  %i.fa.fa-plus.fa-lg
