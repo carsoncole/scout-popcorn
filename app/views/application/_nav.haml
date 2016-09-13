@@ -17,8 +17,8 @@
           %li.nav-item
             = link_to home_index_path, class: "nav-link #{'active' if controller_name == 'home'}" do
               %i.fa.fa-home.fa-lg
-          - if @unit
-            %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
+          / - if @unit
+          /   %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
           %li.nav-item.btn-group
             = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
               Sales

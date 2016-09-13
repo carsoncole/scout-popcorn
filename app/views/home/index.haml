@@ -96,13 +96,27 @@
     .card
       .card-block
         .card-title
-          %h2 Resources
+          %h3.text-xs-center
+            %i.fa.fa-star.fa-log
+            Top Sellers
+            %i.fa.fa-star.fa-log
+          %h5.text-xs-center= @active_event.name
 
-        %ul
-          %li= link_to "Site Sale Signup Sheet (View with your Parent)", "https://docs.google.com/spreadsheets/d/1yO7KX0E3OBasg2bCso0RZa74kTxiG-glYkt9b7PW5MY/edit?ts=57bf7d5d#gid=0", target: "_blank"
-          %li= link_to "BSA Prize Sheet", "chief-seattle-popcorn-prizes.pdf", target: "_blank"
-          %li= link_to "Order Form (Ask Parent to print)", "order-form-2016.pdf", target: "_blank"
-          %li= link_to "Popcorn Product Display Page (Ask Parent to print)", "popcorn-product-2016.pdf", target: "_blank"
+        - if @top_sellers.any?
+          
+          .table-responsive
+            %table.table
+              - @top_sellers.each do |top_seller|
+                - scout = Scout.find(top_seller[0])
+                %tr
+                  %th= scout.name
+                  %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
+        - else
+          %p.text-xs-center No sales posted yet.
+      .card-footer
+        %p.card-text.small
+          Top Seller sales figures utilize both Site Sales and Take Order door-to-door sales. To include Take Orders, they should be dropped off at any Site Sale (You can pick up a new order form/collection envelope) to be confirmed and entered (if you haven't entered them already). 
+
 
 .row
   .col-md-6
@@ -123,3 +137,14 @@
         %p.card-text
           Check off the products they want and write down the total amount which they can then pay by cash or check. If they pay by credit card, have your parent write down the order #.
 
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h5 Resources
+
+        %ul
+          %li= link_to "Site Sale Signup Sheet (View with your Parent)", "https://docs.google.com/spreadsheets/d/1yO7KX0E3OBasg2bCso0RZa74kTxiG-glYkt9b7PW5MY/edit?ts=57bf7d5d#gid=0", target: "_blank"
+          %li= link_to "BSA Prize Sheet", "chief-seattle-popcorn-prizes.pdf", target: "_blank"
+          %li= link_to "Order Form (Ask Parent to print)", "order-form-2016.pdf", target: "_blank"
+          %li= link_to "Popcorn Product Display Page (Ask Parent to print)", "popcorn-product-2016.pdf", target: "_blank"
