@@ -31,6 +31,8 @@
                   / %td= number_to_currency(scout.total_sales)
                   %td
                   %td
+                    - amount = @active_event.total_site_sales_per_hour_worked * scout.event_site_sale_hours_worked(@active_event)
+                    = number_to_currency(amount, precision: 0)
                   %td
                   %td= scout.last_sign_in_at.strftime("%m/%d/%Y %I:%M%p")
                   %td= scout.sign_in_count
