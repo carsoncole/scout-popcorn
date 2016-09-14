@@ -8,9 +8,16 @@
     .alert.alert-info
       As you earn your sales credits, the prizes that you are eligible for will be highlighted.
 
-- if @bsa_prizes
+- ['bsa', 'bsa_bonus', 'pack'].each do |prize_type|
+  - next unless eval("@#{prize_type}_prizes").any?
   .row
-    - @bsa_prizes.each do |prize|
+    .col-md-12
+      %h2
+        = prize_type.titleize
+        Prizes
+      %hr
+  .row
+    - eval("@#{prize_type}_prizes").each do |prize|
       .col-md-3
         .card
           .card-block{class: current_scout.total_sales(@active_event) > prize.amount ? 'prize-eligible' : nil }

@@ -4,8 +4,9 @@ class PrizesController < ApplicationController
   # GET /prizes
   # GET /prizes.json
   def index
-    @bsa_prizes = @active_event.prizes.order(:amount) if @active_event
+    @bsa_prizes = @active_event.prizes.bsa.order(:amount) if @active_event
     @pack_prizes = @active_event.prizes.pack.order(:amount)
+    @bsa_bonus_prizes = @active_event.prizes.bsa_bonus.order(:amount)
   end
 
   # GET /prizes/1

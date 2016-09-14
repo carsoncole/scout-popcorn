@@ -13,4 +13,9 @@ class Prize < ApplicationRecord
   def self.bsa
     where(source: 'bsa')
   end
+
+  def self.bsa_bonus
+    where(source: 'bsa bonus')
+  end
+
 end
