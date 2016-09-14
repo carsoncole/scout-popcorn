@@ -3,24 +3,27 @@
     %h1 Products
 
 
+
+- @products.each_slice(3) do |batch|
+  .row
+    - batch.each do |product|
+      .col-md-4
+        .card
+          .card-block
+            .card-title
+              %h5.h5= product.name
+
+            - if product.url
+              .text-xs-center= image_tag product.url, height: 200, class: 'img-rounded img-fluid m-x-auto d-block'
+              %br
+            
+            %h5.text-xs-center= number_to_currency(product.retail_price)
+            - if current_scout.is_admin?
+              = link_to 'Show', product
+              = link_to 'Edit', edit_product_path(product)
+              = link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
 .row
-  - @products.each do |product|
-    .col-md-4
-      .card
-        .card-block
-          .card-title
-            %h5.h5= product.name
-
-          - if product.url
-            .text-xs-center= image_tag product.url, height: 200, class: 'img-rounded img-fluid m-x-auto d-block'
-            %br
-          
-          %h5.text-xs-center= number_to_currency(product.retail_price)
-          - if current_scout.is_admin?
-            = link_to 'Show', product
-            = link_to 'Edit', edit_product_path(product)
-            = link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
   - if current_scout.is_admin?
     .col-md-4
       .card.card-block.text-xs-center
