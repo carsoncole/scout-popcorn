@@ -13,7 +13,14 @@
   .row
     .col-md-12
       %h2
-        = prize_type.titleize
+        - if prize_type == 'bsa'
+          BSA
+        - elsif prize_type == 'bsa_bonus'
+          BSA Bonus
+        - elsif prize_type == 'pack'
+          PACK 4496
+        - else
+          = prrize_type.titleize
         Prizes
       %hr
   .row
