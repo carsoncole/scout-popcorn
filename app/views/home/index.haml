@@ -91,19 +91,19 @@
             %tr
               %th Pack Donations
               %td.text-xs-right= number_to_currency(@pack_donations)
-    .col-md-6
-      .card
-        .card-block
-          .card-title
-            %h2 Payment
-          %table.table
-            - @unit.payment_methods.each do |payment_method|
-              - value = @active_event.take_orders.joins(:take_order_line_items).where(payment_method_id: payment_method.id).where.not(status: 'received').sum('take_order_line_items.value') 
-              - if value > 0
-                %tr
-                  %th= payment_method.name.titleize if payment_method.name
-                  %td.text-xs-right
-                    = number_to_currency(value)
+
+      / .card
+      /   .card-block
+      /     .card-title
+      /       %h2 Payment
+      /     %table.table
+      /       - @unit.payment_methods.each do |payment_method|
+      /         - value = @active_event.take_orders.joins(:take_order_line_items).where(payment_method_id: payment_method.id).where.not(status: 'received').sum('take_order_line_items.value') 
+      /         - if value > 0
+      /           %tr
+      /             %th= payment_method.name.titleize if payment_method.name
+      /             %td.text-xs-right
+      /               = number_to_currency(value)
   
 
   .col-md-6
@@ -132,7 +132,6 @@
           Top Seller sales figures utilize both Site Sales and Take Order door-to-door sales. To include Take Orders, they should be dropped off at any Site Sale (You can pick up a new order form/collection envelope) to be confirmed and entered (if you haven't entered them already). 
 
 
-.row
   .col-md-6
     .card
       .card-block
@@ -151,7 +150,6 @@
         %p.card-text
           Check off the products they want and write down the total amount which they can then pay by cash or check. If they pay by credit card, have your parent write down the order #.
 
-  .col-md-6
     .card
       .card-block
         .card-title
