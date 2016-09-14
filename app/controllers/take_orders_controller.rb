@@ -83,6 +83,6 @@ class TakeOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def take_order_params
-      params.require(:take_order).permit(:scout_id, :submitted, :status_id, :customer_name, :customer_address, :customer_email, :is_paid_by_credit_card, :credit_card_order_number)
+      params.require(:take_order).permit(:scout_id, :submitted, :status_id, :customer_name, :customer_address, :customer_email, :is_paid_by_credit_card, :credit_card_order_number, :payment_method_id)
     end
 end

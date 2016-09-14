@@ -2,10 +2,11 @@ class TakeOrder < ApplicationRecord
   belongs_to :scout
   belongs_to :event
   belongs_to :purchase_order, optional: true
+  belongs_to :payment_method
   has_many :products, through: :take_order_line_items
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
   has_many :take_order_line_items, dependent: :destroy
-  validates :scout_id, :event_id, :customer_name, presence: true
+  validates :scout_id, :event_id, :customer_name, :payment_method_id, presence: true
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}

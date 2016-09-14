@@ -17,79 +17,84 @@
               %br
               = @take_order.customer_email
 
-        - if @take_order.is_paid_by_credit_card
-          %b
-            PAID BY CREDIT CARD
-            - if @take_order.credit_card_order_number
-              = precede("#") do
-                = @take_order.credit_card_order_number
-          %br
-          %br
+        .row
+          .col-md-6
+            PAID BY:
+            = @take_order.payment_method.name.upcase if @take_order.payment_method
+            %span
+              = link_to edit_take_order_path(@take_order) do
+                %i.fa.fa-pencil
+            %br
+            %br
 
-        - if @take_order.purchase_order && current_scout.is_admin?
-          %p
-            PURCHASE ORDER:
-            = link_to @take_order.purchase_order.id, purchase_order_path(@take_order.purchase_order_id)
-        %table.table
-          %thead
-            %tr
-              %th Product
-              %th Quantity
-              %th
-              %th Price
-              %th Total
-              %th
-          %tbody
-            - @line_items.each do |line_item|
+        .row
+          .col-md-12
 
-              %tr
-                %td= link_to line_item.product.name, product_path(line_item.product)
+
+            - if @take_order.purchase_order && current_scout.is_admin?
+              %p
+                PURCHASE ORDER:
+                = link_to @take_order.purchase_order.id, purchase_order_path(@take_order.purchase_order_id)
+            %table.table
+              %thead
+                %tr
+                  %th Product
+                  %th Quantity
+                  %th
+                  %th Price
+                  %th Total
+                  %th
+              %tbody
+                - @line_items.each do |line_item|
+
+                  %tr
+                    %td= link_to line_item.product.name, product_path(line_item.product)
+                    - if @take_order.received?
+                      = form_for [@take_order, line_item] do |f|
+                        .form-group
+                          %td
+                            = f.select :quantity, options_for_select(['1','2','3','4','5','6','7','8','9','10'], selected: f.object.quantity),{}, class: 'form-control'
+                          %td
+                            = f.submit 'Update', class: 'btn btn-success'
+                    - else
+                      %td= line_item.quantity
+                      %td
+                    %td= number_to_currency( line_item.product.retail_price, precision: 0 )
+                    %td
+                      = number_to_currency( line_item.value, precision: 0 )
+                    %td
+                      - if @take_order.received?
+                        = link_to take_order_take_order_line_item_path(@take_order, line_item), method: :delete do
+                          %i.fa.fa-trash.fa-lg
+
                 - if @take_order.received?
-                  = form_for [@take_order, line_item] do |f|
-                    .form-group
-                      %td
-                        = f.select :quantity, options_for_select(['1','2','3','4','5','6','7','8','9','10'], selected: f.object.quantity),{}, class: 'form-control'
-                      %td
-                        = f.submit 'Update', class: 'btn btn-success'
-                - else
-                  %td= line_item.quantity
-                  %td
-                %td= number_to_currency( line_item.product.retail_price, precision: 0 )
-                %td
-                  = number_to_currency( line_item.value, precision: 0 )
-                %td
-                  - if @take_order.received?
-                    = link_to take_order_take_order_line_item_path(@take_order, line_item), method: :delete do
-                      %i.fa.fa-trash.fa-lg
+                  %tr
+                    %td
+                      = link_to new_take_order_take_order_line_item_path(@take_order) do
+                        %i.fa.fa-plus.fa-lg
 
-            - if @take_order.received?
-              %tr
-                %td
-                  = link_to new_take_order_take_order_line_item_path(@take_order) do
-                    %i.fa.fa-plus.fa-lg
-
-                %td
-                %td
-                %td
-                %td= number_to_currency( @take_order.value, precision: 0 )
-                %td
+                    %td
+                    %td
+                    %td
+                    %td= number_to_currency( @take_order.value, precision: 0 )
+                    %td
 
 
-        - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
-          = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
-        %br
-        Created at:
-        = nice_date_time(@take_order.created_at)
-        - if @take_order.money_received_by  
-          %br
-          Money received by:
-          = @take_order.money_received_by
-          = surround("(",")") do
-            = nice_date_time(@take_order.money_received_at)
-        - if @take_order.receipt_sent_at
-          %br
-          Receipt emailed at:
-          = nice_date_time(@take_order.receipt_sent_at)
+            - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
+              = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
+            %br
+            Created at:
+            = nice_date_time(@take_order.created_at)
+            - if @take_order.money_received_by  
+              %br
+              Money received by:
+              = @take_order.money_received_by
+              = surround("(",")") do
+                = nice_date_time(@take_order.money_received_at)
+            - if @take_order.receipt_sent_at
+              %br
+              Receipt emailed at:
+              = nice_date_time(@take_order.receipt_sent_at)
 .row
   .col-md-4
     %br

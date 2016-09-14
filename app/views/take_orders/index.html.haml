@@ -15,6 +15,7 @@
               %th Customer
               %th Address
               %th Amount
+              %th Payment
               %th Product
               %th.hidden Status
               %th.visible-print-block Delivered
@@ -28,10 +29,11 @@
                 - if current_scout.is_admin?
                   %td= take_order.scout.name if take_order.scout
                 %td= take_order.customer_name
-                %td= take_order.customer_address
+                %td= take_order.customer_address.truncate(30)
                 %td
                   - total += take_order.value
                   = number_to_currency(take_order.value, precision: 0)
+                %td= take_order.payment_method.name if take_order.payment_method
                 %td
                   - take_order.take_order_line_items.each do |line_item|
                     = line_item.product.name
