@@ -22,6 +22,7 @@
               %th Amount
               %th Account
               %th Product
+              %th
               %th.hidden Status
               %th.visible-print-block Delivered
               %th.hidden-print
@@ -45,6 +46,7 @@
                     = surround("(", ")") do
                       = line_item.quantity
                     %br
+                %td= nice_date_time_less(take_order.created_at)
                 %td
                   - if take_order.status
                     %span.tag.tag-primary= take_order.status.capitalize

@@ -131,6 +131,22 @@
         %p.card-text.small
           Top Seller sales figures utilize both Site Sales and Take Order door-to-door sales. To include Take Orders, they should be dropped off at any Site Sale (You can pick up a new order form/collection envelope) to be confirmed and entered (if you haven't entered them already). 
 
+    .card
+      .card-block
+        .card-title
+          %h4.text-xs-center
+            %i.fa.fa-dollar
+            How much money should I have?
+            %i.fa.fa-dollar
+
+        %h2.card-text.text-xs-center
+          = number_to_currency(current_scout.take_orders.where(status: 'received').where(account: Account.take_order(@unit)).joins(:take_order_line_items).sum('take_order_line_items.value'))
+
+      .card-footer
+        %p.card-text.small
+          Here we show you have much in cash and checks you should have in your collection envelope. For this number to be correct, you need to enter all of your Take Orders.
+
+
 
   .col-md-6
     .card
