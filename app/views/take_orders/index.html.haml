@@ -3,6 +3,11 @@
     .card.card-block
       .card-title
         %h1.h1 Take Orders
+      %p
+        = link_to new_take_order_path do
+          %i.fa.fa-plus.fa-lg
+          New Take Order
+
       - unless current_scout.is_admin?
         .alert.alert-info
           Drop off your Take Order order form/collection envelope as often as you want to any Site Sale and you'll see all your orders entered here. You can also pre-enter the order form info here and pick up more order forms and collections envelopes at any Site Sale.
@@ -15,7 +20,6 @@
               %th Customer
               %th Address
               %th Amount
-              %th Payment
               %th Account
               %th Product
               %th.hidden Status
@@ -34,7 +38,6 @@
                 %td
                   - total += take_order.value
                   = number_to_currency(take_order.value, precision: 0)
-                %td= take_order.payment_method.name if take_order.payment_method
                 %td= take_order.account.name if take_order.account
                 %td
                   - take_order.take_order_line_items.each do |line_item|
@@ -58,8 +61,6 @@
             %tr.hidden-print
               %td            
               %td
-                = link_to new_take_order_path do
-                  %i.fa.fa-plus.fa-lg
               %td
               %td= number_to_currency(total, precision: 0)
               %td

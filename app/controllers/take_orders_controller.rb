@@ -5,7 +5,7 @@ class TakeOrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @take_orders = TakeOrder.order(:status).page(params[:page])
+    @take_orders = TakeOrder.order(created_at: :desc).page(params[:page])
     @take_orders = @take_orders.where(event_id: @active_event.id) if @active_event
     @take_orders = @take_orders.where(scout_id: current_scout) unless current_scout.is_admin?
 
