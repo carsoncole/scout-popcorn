@@ -8,7 +8,7 @@ class Account < ApplicationRecord
   end
 
   def self.take_order(unit)
-    Account.where(unit_id: unit.id).where(name: 'Take Order').first
+    Account.where(unit_id: unit.id).where(name: 'Take Order Cash').first
   end
 
   def balance
