@@ -11,6 +11,14 @@ class Account < ApplicationRecord
     Account.where(unit_id: unit.id).where(name: 'Take Order Cash').first
   end
 
+  def self.is_take_order_eligible
+    where(is_take_order_eligible: true)
+  end
+
+  def self.is_site_sale_eligible
+    where(is_site_sale_eligible: true)
+  end
+
   def balance
     ledgers.sum(:amount)
   end

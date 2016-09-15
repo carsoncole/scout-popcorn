@@ -10,6 +10,8 @@
             %tr
               %th Name
               %th Balance
+              %th.text-xs-center Take Orders
+              %th.text-xs-center Site Sales
               %th
               %th
           %tbody
@@ -17,8 +19,18 @@
               %tr
                 %td= link_to account.name, account
                 %td= number_to_currency(account.balance)
-                %td= link_to 'Edit', edit_account_path(account)
-                %td= link_to 'Destroy', account, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                %td.text-xs-center
+                  - if account.is_take_order_eligible?
+                    %i.fa.fa-check
+                %td.text-xs-center
+                  - if account.is_site_sale_eligible?
+                    %i.fa.fa-check
+                %td
+                  = link_to edit_account_path(account) do
+                    %i.fa.fa-pencil.fa-lg
+                %td
+                  = link_to account, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                    %i.fa.fa-trash.fa-lg
 
         %br
 

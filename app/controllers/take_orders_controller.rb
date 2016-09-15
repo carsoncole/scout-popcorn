@@ -24,6 +24,7 @@ class TakeOrdersController < ApplicationController
   # GET /orders/new
   def new
     @take_order = TakeOrder.new
+    @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
   end
 
   # GET /orders/1/edit

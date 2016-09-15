@@ -13,5 +13,16 @@
           .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control'
+          .form-group
+            = f.label :is_take_order_eligible
+            = f.check_box :is_take_order_eligible, class: 'form-control'
+          .form-group
+            = f.label :is_site_sale_eligible
+            = f.check_box :is_site_sale_eligible, class: 'form-control'
+
+
+
+
+
           .actions
             = f.submit 'Save', class: 'btn btn-success'

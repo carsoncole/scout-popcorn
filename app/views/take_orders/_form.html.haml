@@ -31,7 +31,7 @@
           .form-group
             %label
               = f.label :account
-            = f.collection_select :account_id, @unit.accounts.order(:name), :id, :name,{}, class: 'form-control'
+            = f.collection_select :account_id, @accounts, :id, :name,{}, class: 'form-control'
           .form-group
             %label
               = f.label :credit_card_order_number
