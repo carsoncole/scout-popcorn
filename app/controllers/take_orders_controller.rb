@@ -45,6 +45,7 @@ class TakeOrdersController < ApplicationController
         format.html { redirect_to @take_order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @take_order }
       else
+        @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
         format.html { render :new }
         format.json { render json: @take_order.errors, status: :unprocessable_entity }
       end
