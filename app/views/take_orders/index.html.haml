@@ -56,7 +56,7 @@
                   = link_to take_order do
                     %i.fa.fa-folder-open.fa-lg
                 %td.hidden-print
-                  - if take_order.received? || take_order.submitted?
+                  - if take_order.received?
                     = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                       %i.fa.fa-trash.fa-lg
 

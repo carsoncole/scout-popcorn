@@ -99,6 +99,47 @@
               %td= @total_hours
               %td= number_to_currency(total_credited_sales, precision: 0)
 
+.row    
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h3 Payment Methods
+
+        %table.table        
+          %thead
+            %tr
+              %th Method
+              %th Amount
+              %th
+              %th
+          %tbody
+            - @site_sale_payment_methods.each do |payment_method|
+              %tr
+                %td= payment_method.account.name if payment_method.account
+                %td= number_to_currency(payment_method.amount)
+                %td
+                  - if @site_sale.open?
+                    = link_to edit_site_sale_site_sale_payment_method_path(@site_sale, payment_method) do
+                      %i.fa.fa-pencil.fa-lg
+                %td
+                  - if @site_sale.open?
+                    = link_to site_sale_site_sale_payment_method_path(@site_sale, payment_method), method: :delete do
+                      %i.fa.fa-trash.fa-lg
+
+            %tr
+              %td
+              %td
+                = number_to_currency(@site_sale_payment_methods.sum(:amount))
+                - if @site_sale.payments_balance?
+                  %i.fa.fa-check.fa-lg
+
+        - if @site_sale.open?
+          = link_to "New", new_site_sale_site_sale_payment_method_path(@site_sale)
+
+
+
+
 
 .row
   .col-md-4

@@ -12,7 +12,7 @@
               %th Balance
               %th.text-xs-center Take Orders
               %th.text-xs-center Site Sales
-              %th
+              %th.text-xs-center Bank Depositable
               %th
           %tbody
             - @accounts.each do |account|
@@ -24,6 +24,9 @@
                     %i.fa.fa-check
                 %td.text-xs-center
                   - if account.is_site_sale_eligible?
+                    %i.fa.fa-check
+                %td.text-xs-center
+                  - if account.is_bank_account_depositable?
                     %i.fa.fa-check
                 %td
                   = link_to edit_account_path(account) do

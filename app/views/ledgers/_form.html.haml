@@ -2,7 +2,9 @@
   .col-md-6
     .card
       .card-block
-
+        - if @deposit
+          .card-title
+            %h1 Bank Deposit
         = form_for @ledger do |f|
           - if @ledger.errors.any?
             #error_explanation
@@ -12,18 +14,25 @@
                   %li= msg
 
           .form-group
-            = f.label :account
+            = f.label "From"
             %br
-            = f.collection_select :account_id, @unit.accounts.order(:name), :id, :name, {}, class: 'form-control'
+            = f.collection_select :from_account_id, @unit.accounts.order(:name), :id, :name, {}, class: 'form-control'
+
           .form-group
-            = f.label :description
-            = f.text_field :description, class: 'form-control'
+            = f.label "Deposit to:"
+            %br
+            = f.collection_select :account_id, @accounts, :id, :name, {}, class: 'form-control'
+          - unless @deposit
+            .form-group
+              = f.label :description
+              = f.text_field :description, class: 'form-control'
           .form-group
             = f.label :amount
             = f.text_field :amount, class: 'form-control'
-          .form-group
-            = f.label "Bank deposit?"
-            = f.check_box :is_bank_deposit, class: 'form-control'
+          - unless @deposit
+            .form-group
+              = f.label "Bank deposit?"
+              = f.check_box :is_bank_deposit, class: 'form-control'
           .form-group
             = f.label :date
             %br

@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915041555) do
+ActiveRecord::Schema.define(version: 20160915144207) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "name"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.boolean  "is_take_order_eligible", default: false
-    t.boolean  "is_site_sale_eligible",  default: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.boolean  "is_take_order_eligible",      default: false
+    t.boolean  "is_site_sale_eligible",       default: false
+    t.boolean  "is_bank_account_depositable", default: false
   end
 
   create_table "direct_sales", force: :cascade do |t|
@@ -46,8 +47,10 @@ ActiveRecord::Schema.define(version: 20160915041555) do
     t.string   "description"
     t.decimal  "amount"
     t.date     "date"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "take_order_id"
+    t.integer  "site_sale_id"
   end
 
   create_table "online_sales", force: :cascade do |t|
@@ -144,6 +147,14 @@ ActiveRecord::Schema.define(version: 20160915041555) do
     t.decimal  "value",        precision: 5, scale: 2
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+  end
+
+  create_table "site_sale_payment_methods", force: :cascade do |t|
+    t.integer  "site_sale_id"
+    t.integer  "account_id"
+    t.decimal  "amount",       precision: 5, scale: 2, default: "0.0"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
   end
 
   create_table "site_sales", force: :cascade do |t|

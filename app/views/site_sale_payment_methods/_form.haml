@@ -1,0 +1,24 @@
+.row
+  .col-md-5
+    .card
+      .card-block
+        = form_for [@site_sale, @site_sale_payment_method] do |f|
+          - if @site_sale_payment_method.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@site_sale_payment_method.errors.count, "error")} prohibited this scout_site_sale from being saved:"
+              %ul
+                - @site_sale_payment_method.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .form-group
+            = f.label :payment_method
+            %br
+            = f.collection_select :account_id, @accounts, :id, :name, {},class: 'form-control'
+          .form-group
+            = f.label :amount
+            = f.text_field :amount, class: 'form-control'
+          .actions
+            = f.submit 'Save', class: 'btn btn-success'
+
+        %br
+        %p= link_to "Back to Site Sale", site_sale_path(@site_sale)

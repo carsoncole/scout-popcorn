@@ -4,6 +4,13 @@
       .card-block
         .card-title
           %h1 Ledger
+
+        = link_to new_ledger_path do
+          %i.fa.fa-plus.fa-lg
+
+        = link_to bank_deposit_path do
+          %i.fa.fa-plus.fa-lg
+          Bank Deposit
         %table.table
           %thead
             %tr
@@ -11,6 +18,7 @@
               %th Description
               %th Amount
               %th Date
+              %th
               %th
               %th
               %th
@@ -22,6 +30,11 @@
                 %td= ledger.description
                 %td= number_to_currency(ledger.amount)
                 %td= ledger.date
+                %td
+                  - if ledger.take_order_id
+                    =link_to "Take Order", take_order_path(ledger.take_order_id)
+                  - elsif ledger.site_sale_id
+                    =link_to "Site Sale", site_sale_path(ledger.site_sale_id)
                 %td= link_to 'Show', ledger
                 %td= link_to 'Edit', edit_ledger_path(ledger)
                 %td= link_to 'Destroy', ledger, :method => :delete, :data => { :confirm => 'Are you sure?' }
@@ -31,3 +44,7 @@
 
         = link_to new_ledger_path do
           %i.fa.fa-plus.fa-lg
+
+        = link_to bank_deposit_path do
+          %i.fa.fa-plus.fa-lg
+          Bank Deposit

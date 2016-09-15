@@ -14,6 +14,7 @@ class SiteSalesController < ApplicationController
     @scout_site_sales = @site_sale.scout_site_sales.joins(:scout).order("scouts.first_name ASC")
     @total_sales = @site_sale.site_sale_line_items.sum(:value)
     @total_hours = @site_sale.scout_site_sales.sum(:hours_worked)
+    @site_sale_payment_methods = @site_sale.site_sale_payment_methods
   end
 
   def new
@@ -39,11 +40,16 @@ class SiteSalesController < ApplicationController
 
   def update
     if params[:closed] && current_scout.is_admin?
-      @site_sale.update(status: :closed)
+      if @site_sale.payments_balance?
+        @site_sale.update(status: :closed)
+        redirect_to @site_sale, notice: 'Take Order was successfully updated.'
+      else
+        redirect_to @site_sale, notice: 'Payment methods do not balance with sales receipts.'
+      end
     else 
       @site_sale.update(site_sale_params)
-    end
-    redirect_to @site_sale, notice: 'Take Order was successfully updated.'
+      redirect_to @site_sale, notice: 'Take Order was successfully updated.'
+    end 
   end
 
   def destroy

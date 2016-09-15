@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :ledgers
+  get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
   resources :accounts
   resources :payment_methods
   get 'help/index'
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
   resources :scouts
   resources :site_sales do
     get "tracking_sheet" => "site_sales#tracking_sheet", as: 'tracking_sheet'
+    resources :site_sale_payment_methods
     resources :site_sale_line_items
     resources :scout_site_sales
   end

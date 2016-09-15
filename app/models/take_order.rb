@@ -84,7 +84,7 @@ class TakeOrder < ApplicationRecord
   def credit_ledger!
     take_order_line_items.each do |line_item|
       unit = self.event.unit
-      Ledger.create(account_id: account_id, amount: line_item.value, date: Date.current, description: "Take Order: #{self.id}")
+      Ledger.create(take_order_id: self.id, account_id: account_id, amount: line_item.value, date: Date.current, description: "Take Order submitted")
     end
   end
 

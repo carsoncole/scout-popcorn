@@ -3,10 +3,12 @@ class SiteSale < ApplicationRecord
   has_many :site_sale_line_items
   belongs_to :event
   has_many :products, through: :site_sale_line_items
+  has_many :site_sale_payment_methods
 
   validates :name, :date, presence: true
 
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
+  after_save :do_ledgers!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
 
   STATUSES = { 
       open: { :status => :open, :name => 'Open', description: "Site sales figures not complete"},
@@ -27,6 +29,10 @@ class SiteSale < ApplicationRecord
 
   def closed?
     status == 'closed'
+  end
+
+  def payments_balance?
+    site_sale_payment_methods.sum(:amount) == site_sale_line_items.sum(:value)
   end
 
   def full_name
@@ -81,6 +87,14 @@ class SiteSale < ApplicationRecord
   def debit_stock!
     site_sale_line_items.each do |line_item|
       event.unit.stocks.create(product_id: line_item.product_id, quantity: - line_item.quantity, location: 'site sale')
+    end
+  end
+
+  def do_ledgers!
+    site_sale_payment_methods.each do |payment_method|
+      Ledger.transaction do
+        Ledger.create(account_id: payment_method.account_id, amount: payment_method.amount, date: Date.today, site_sale_id: self.id)
+      end
     end
   end
 end

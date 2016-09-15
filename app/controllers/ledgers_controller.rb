@@ -4,7 +4,7 @@ class LedgersController < ApplicationController
   # GET /ledgers
   # GET /ledgers.json
   def index
-    @ledgers = @unit.ledgers.order(:date).page(params[:page]).per(50)
+    @ledgers = @unit.ledgers.order(date: :desc).page(params[:page]).per(50)
   end
 
   # GET /ledgers/1
@@ -15,6 +15,15 @@ class LedgersController < ApplicationController
   # GET /ledgers/new
   def new
     @ledger = Ledger.new
+    @accounts = @unit.accounts.order(:name)
+  end
+
+  def bank_deposit
+    @ledger = Ledger.new
+    @ledger.is_bank_deposit = true
+    @accounts = @unit.accounts.is_bank_account_depositable
+    @deposit = true
+    render :new
   end
 
   # GET /ledgers/1/edit
