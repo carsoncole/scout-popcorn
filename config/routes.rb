@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :ledgers
+  resources :accounts
   resources :payment_methods
   get 'help/index'
 

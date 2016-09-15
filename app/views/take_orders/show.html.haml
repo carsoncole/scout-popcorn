@@ -20,7 +20,7 @@
         .row
           .col-md-6
             PAID BY:
-            = @take_order.payment_method.name.upcase if @take_order.payment_method
+            = @take_order.account.name.upcase if @take_order.account
             %span
               = link_to edit_take_order_path(@take_order) do
                 %i.fa.fa-pencil

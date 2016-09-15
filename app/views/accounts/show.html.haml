@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Unit:
+  = @account.unit_id
+%p
+  %b Name:
+  = @account.name
+
+= link_to 'Edit', edit_account_path(@account)
+\|
+= link_to 'Back', accounts_path

@@ -8,6 +8,8 @@ class Unit < ApplicationRecord
   has_many :site_sales, through: :scouts
   has_many :purchase_orders, through: :events
   has_many :take_order_purchase_orders
+  has_many :accounts
+  has_many :ledgers, through: :accounts
 
   after_create :create_default_payment_methods!
 

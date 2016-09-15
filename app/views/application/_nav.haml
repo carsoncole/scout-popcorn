@@ -41,6 +41,7 @@
                     %li= link_to "Units", units_path, class: "dropdown-item #{'active' if controller_name == 'units'}"
                   %li= link_to "Stock Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name != 'ledger'}"
                   %li= link_to "Stock Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+                  %li= link_to "Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger'}"
                   %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
                   %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
                   %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
@@ -48,7 +49,7 @@
                     = link_to stock_movement_path, class: 'dropdown-item' do
                       %i.fa.fa-print.fa-lg
                       Stock Movement
-                  %li= link_to "Payment methods", payment_methods_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
+                  %li= link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
 
           %li.nav-item
             = link_to help_index_path, class: "nav-link #{'active' if controller_name == 'help'}" do

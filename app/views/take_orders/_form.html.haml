@@ -30,8 +30,8 @@
               = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
           .form-group
             %label
-              = f.label :payment_method
-            = f.collection_select :payment_method_id, @unit.payment_methods, :id, :name,{}, class: 'form-control'
+              = f.label :account
+            = f.collection_select :account_id, @unit.accounts.order(:name), :id, :name,{}, class: 'form-control'
           .form-group
             %label
               = f.label :credit_card_order_number

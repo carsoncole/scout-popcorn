@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Account:
+  = @ledger.account_id
+%p
+  %b Description:
+  = @ledger.description
+%p
+  %b Amount:
+  = @ledger.amount
+%p
+  %b Date:
+  = @ledger.date
+
+= link_to 'Edit', edit_ledger_path(@ledger)
+\|
+= link_to 'Back', ledgers_path

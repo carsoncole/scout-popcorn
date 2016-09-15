@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914013338) do
+ActiveRecord::Schema.define(version: 20160914234904) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "direct_sales", force: :cascade do |t|
     t.integer  "scout_id"
@@ -30,6 +37,15 @@ ActiveRecord::Schema.define(version: 20160914013338) do
     t.boolean  "is_active",  default: true, null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "ledgers", force: :cascade do |t|
+    t.integer  "account_id"
+    t.string   "description"
+    t.decimal  "amount"
+    t.date     "date"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "online_sales", force: :cascade do |t|
@@ -176,6 +192,7 @@ ActiveRecord::Schema.define(version: 20160914013338) do
     t.boolean  "is_paid_by_credit_card",                           default: false
     t.integer  "credit_card_order_number"
     t.integer  "payment_method_id"
+    t.integer  "account_id"
   end
 
   create_table "units", force: :cascade do |t|

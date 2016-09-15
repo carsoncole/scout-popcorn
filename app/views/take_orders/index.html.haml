@@ -16,6 +16,7 @@
               %th Address
               %th Amount
               %th Payment
+              %th Account
               %th Product
               %th.hidden Status
               %th.visible-print-block Delivered
@@ -34,6 +35,7 @@
                   - total += take_order.value
                   = number_to_currency(take_order.value, precision: 0)
                 %td= take_order.payment_method.name if take_order.payment_method
+                %td= take_order.account.name if take_order.account
                 %td
                   - take_order.take_order_line_items.each do |line_item|
                     = line_item.product.name

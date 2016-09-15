@@ -1,0 +1,33 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h1 Ledger
+        %table.table
+          %thead
+            %tr
+              %th Account
+              %th Description
+              %th Amount
+              %th Date
+              %th
+              %th
+              %th
+
+          %tbody
+            - @ledgers.each do |ledger|
+              %tr
+                %td= ledger.account.name
+                %td= ledger.description
+                %td= number_to_currency(ledger.amount)
+                %td= ledger.date
+                %td= link_to 'Show', ledger
+                %td= link_to 'Edit', edit_ledger_path(ledger)
+                %td= link_to 'Destroy', ledger, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+        = paginate @ledgers
+        %br
+
+        = link_to new_ledger_path do
+          %i.fa.fa-plus.fa-lg

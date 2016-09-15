@@ -17,7 +17,7 @@ class LedgersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ledger" do
     assert_difference('Ledger.count') do
-      post ledgers_url, params: { ledger: { amount: @ledger.amount, scout_id: @ledger.scout_id, transaction_type: @ledger.transaction_type, unit_id: @ledger.unit_id } }
+      post ledgers_url, params: { ledger: { account_id: @ledger.account_id, amount: @ledger.amount, date: @ledger.date, description: @ledger.description } }
     end
 
     assert_redirected_to ledger_url(Ledger.last)
@@ -34,7 +34,7 @@ class LedgersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update ledger" do
-    patch ledger_url(@ledger), params: { ledger: { amount: @ledger.amount, scout_id: @ledger.scout_id, transaction_type: @ledger.transaction_type, unit_id: @ledger.unit_id } }
+    patch ledger_url(@ledger), params: { ledger: { account_id: @ledger.account_id, amount: @ledger.amount, date: @ledger.date, description: @ledger.description } }
     assert_redirected_to ledger_url(@ledger)
   end
 
