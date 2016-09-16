@@ -44,7 +44,7 @@ class SiteSalesController < ApplicationController
         @site_sale.update(status: :closed)
         redirect_to @site_sale, notice: 'The Site Sale was successfully closed.'
       else
-        redirect_to @site_sale, notice: 'Payment methods do not balance with sales receipts.'
+        redirect_to @site_sale, alert: 'Payment methods do not balance with sales receipts.'
       end
     else 
       @site_sale.update(site_sale_params)

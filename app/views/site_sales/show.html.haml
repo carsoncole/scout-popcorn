@@ -67,7 +67,7 @@
               %td
               %td= number_to_currency( @total_sales, precision: 0 )
 
-- if @site_sale.open?
+- if @site_sale.open? && current_scout.is_admin? && @site_sale.site_sale_line_items.any?
   .row
     .col-md-1
     .col-md-10
@@ -76,8 +76,7 @@
           .col-md-9
             %p.card-text.text-danger Pressing this button will Close this Site Sale to any future inventory, or payment method changes. Scout volunteers can be changed at any time.
           .col-md-3
-            - if current_scout.is_admin? && @site_sale.open? && @site_sale.site_sale_line_items.any?
-              .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-danger btn-lg'
+            .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-danger btn-lg'
 .row    
   .col-md-12
     .card
