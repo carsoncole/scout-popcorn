@@ -18,7 +18,7 @@
               %th Description
               %th Amount
               %th Date
-              %th
+              %th Created
               %th
               %th
               %th
@@ -30,14 +30,18 @@
                 %td= ledger.description
                 %td= number_to_currency(ledger.amount)
                 %td= ledger.date
+                %td= nice_date_time_less(ledger.created_at)
                 %td
                   - if ledger.take_order_id
                     =link_to "Take Order", take_order_path(ledger.take_order_id)
                   - elsif ledger.site_sale_id
                     =link_to "Site Sale", site_sale_path(ledger.site_sale_id)
-                %td= link_to 'Show', ledger
-                %td= link_to 'Edit', edit_ledger_path(ledger)
-                %td= link_to 'Destroy', ledger, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                %td
+                  = link_to edit_ledger_path(ledger) do
+                    %i.fa.fa-pencil.fa-lg
+                %td
+                  = link_to ledger, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                    %i.fa.fa-trash.fa-lg
 
         = paginate @ledgers
         %br

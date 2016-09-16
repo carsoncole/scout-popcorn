@@ -42,13 +42,13 @@ class SiteSalesController < ApplicationController
     if params[:closed] && current_scout.is_admin?
       if @site_sale.payments_balance?
         @site_sale.update(status: :closed)
-        redirect_to @site_sale, notice: 'Take Order was successfully updated.'
+        redirect_to @site_sale, notice: 'The Site Sale was successfully closed.'
       else
         redirect_to @site_sale, notice: 'Payment methods do not balance with sales receipts.'
       end
     else 
       @site_sale.update(site_sale_params)
-      redirect_to @site_sale, notice: 'Take Order was successfully updated.'
+      redirect_to @site_sale, notice: 'The Site Sale was successfully updated.'
     end 
   end
 

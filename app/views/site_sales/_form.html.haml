@@ -23,11 +23,19 @@
           .form-group
             = f.label :date
             %br
-            = f.date_select :date, {}
+            = f.date_select :date, {}, class: 'form-control'
 
           / .form-group
           /   = f.label :total_sales
           /   = f.text_field :total_sales, class: 'form-control'
+          
+          - if current_scout.is_super_admin?
+            .form-group
+              = f.label :status
+              %br
+              = f.select :status, options_for_select(SiteSale::STATUSES, f.object.status), {}, class: 'form-control'
+
+
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

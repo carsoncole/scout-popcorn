@@ -46,7 +46,7 @@
                       = link_to "Direct Sale", direct_sale_path(stock.direct_sale_id) if stock.direct_sale
                   %td= stock.quantity
                   %td= stock.location.titleize if stock.location
-                  %td= nice_date_time(stock.created_at)
+                  %td= nice_date_time_less(stock.created_at)
                   %td
                     - if stock.created_by == 999
                       System

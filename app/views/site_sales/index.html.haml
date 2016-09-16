@@ -57,8 +57,10 @@
                       = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
                   - if current_scout.is_admin?
                     %td
-                      %span.tag.tag-primary
-                        = site_sale.status.titleize
+                      - if site_sale.status == 'closed'
+                        %span.tag.tag-danger= site_sale.status.titleize
+                      - else
+                        %span.tag.tag-primary= site_sale.status.titleize
                     %td
                       = link_to site_sale do
                         %i.fa.fa-folder-open.fa-lg

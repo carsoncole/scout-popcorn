@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916002052) do
+ActiveRecord::Schema.define(version: 20160916044528) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -161,9 +161,11 @@ ActiveRecord::Schema.define(version: 20160916002052) do
     t.integer  "event_id"
     t.string   "name"
     t.date     "date"
-    t.string   "status",     default: "open", null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "status",       default: "open", null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.datetime "closed_at"
+    t.integer  "closed_by_id"
   end
 
   create_table "stocks", force: :cascade do |t|
