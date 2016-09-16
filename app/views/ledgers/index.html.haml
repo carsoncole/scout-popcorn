@@ -3,7 +3,7 @@
     .card
       .card-block
         .card-title
-          %h1 Ledger
+          %h1 Financial Ledger
 
         = link_to new_ledger_path do
           %i.fa.fa-plus.fa-lg
@@ -40,7 +40,7 @@
                   = link_to edit_ledger_path(ledger) do
                     %i.fa.fa-pencil.fa-lg
                 %td
-                  = link_to ledger, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  = link_to ledger, :method => :delete do
                     %i.fa.fa-trash.fa-lg
 
         = paginate @ledgers

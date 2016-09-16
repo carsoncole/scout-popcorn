@@ -3,7 +3,7 @@
     .card
       .card-block
         .card-title
-          %h2 Stocks Ledger
+          %h2 Inventory Ledger
         - if current_scout.is_admin?
           %p
             = link_to stock_movement_path do
@@ -41,9 +41,11 @@
                   %td= stock.description
                   %td
                     - if stock.take_order_id
-                      = link_to "Take Order", take_order_path(stock.take_order_id) if stock.take_order
+                      = link_to "Take Order", take_order_path(stock.take_order_id)
                     - elsif stock.direct_sale_id
-                      = link_to "Direct Sale", direct_sale_path(stock.direct_sale_id) if stock.direct_sale
+                      = link_to "Direct Sale", direct_sale_path(stock.site_sale_id)
+                    - elsif stock.site_sale_id
+                      = link_to "Site Sale", site_sale_path(stock.site_sale_id)
                   %td= stock.quantity
                   %td= stock.location.titleize if stock.location
                   %td= nice_date_time_less(stock.created_at)
