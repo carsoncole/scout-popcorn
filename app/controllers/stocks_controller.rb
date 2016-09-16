@@ -23,6 +23,7 @@ class StocksController < ApplicationController
 
   # GET /stocks/1/edit
   def edit
+    @products = @active_event.products.order(:name)
   end
 
   def stock_movement
@@ -69,7 +70,7 @@ class StocksController < ApplicationController
   def update
     respond_to do |format|
       if @stock.update(stock_params)
-        format.html { redirect_to @stock, notice: 'Stock was successfully updated.' }
+        format.html { redirect_to stocks_ledger_path, notice: 'Stock was successfully updated.' }
         format.json { render :show, status: :ok, location: @stock }
       else
         format.html { render :edit }
@@ -96,6 +97,6 @@ class StocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params
-      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :movement_with_warehouse)
+      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :movement_with_warehouse, :is_transfer_from_bsa)
     end
 end

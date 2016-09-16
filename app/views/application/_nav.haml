@@ -43,6 +43,7 @@
                   %li= link_to "Inventory Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
                   %li= link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger'}"
                   %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
+                  %li= link_to "Financial Statement", statement_path, class: "dropdown-item #{'active' if action_name =='statement'}"
                   %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
                   %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
                   %li

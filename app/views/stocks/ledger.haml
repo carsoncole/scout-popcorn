@@ -32,6 +32,8 @@
                 %th Location
                 %th Created
                 %th Created by
+                %th From BSA
+                %th
                 %th
 
             %tbody
@@ -56,6 +58,12 @@
                       =""
                     - else
                       = Scout.find(stock.created_by).name
+                  %td
+                    - if stock.is_transfer_from_bsa
+                      %i.fa.fa-check
+                  %td
+                    = link_to edit_stock_path(stock) do
+                      %i.fa.fa-pencil.fa-lg
                   %td
                     = link_to stock_path(stock), method: :delete do
                       %i.fa.fa-trash.fa-lg

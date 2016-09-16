@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  
+  get "ledgers/statements" => "ledgers#statement", as: 'statement'
   resources :ledgers
   get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
   resources :accounts

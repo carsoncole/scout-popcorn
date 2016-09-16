@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916052846) do
+ActiveRecord::Schema.define(version: 20160916163544) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -175,11 +175,12 @@ ActiveRecord::Schema.define(version: 20160916052846) do
     t.string   "location"
     t.string   "description"
     t.integer  "created_by"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "take_order_id"
     t.integer  "direct_sale_id"
     t.integer  "site_sale_id"
+    t.boolean  "is_transfer_from_bsa"
   end
 
   create_table "take_order_line_items", force: :cascade do |t|

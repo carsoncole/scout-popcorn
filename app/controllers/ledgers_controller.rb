@@ -29,6 +29,19 @@ class LedgersController < ApplicationController
     render :new
   end
 
+  def statement
+    @take_order_cash = @unit.accounts.where(name: 'Take Order Cash').first.balance
+    @site_sale_cash = @unit.accounts.where(name: 'Site Sale Cash').first.balance
+    @square_cash = @unit.accounts.where(name: 'Square').first.balance
+    @bsa_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance if @unit.accounts.where(name: 'BSA Credit Card').first
+    @union_bank_cash = @unit.accounts.where(name: 'Union Bank').first.balance if @unit.accounts.where(name: 'Union Bank').first
+    @popcorn_inventory = Stock.wholesale_value(@unit)
+    @total_assets = @take_order_cash + @site_sale_cash + @square_cash + @bsa_credit_card_cash + @union_bank_cash + @popcorn_inventory
+    @due_to_bsa = Stock.wholesale_value_due_to_bsa(@unit)
+    @total_liabilities = @due_to_bsa
+    @total_equity = @total_assets - @total_liabilities
+  end
+
   # GET /ledgers/1/edit
   def edit
   end
