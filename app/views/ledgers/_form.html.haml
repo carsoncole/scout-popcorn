@@ -29,10 +29,14 @@
           .form-group
             = f.label :amount
             = f.text_field :amount, class: 'form-control'
-          - unless @deposit
+          - if @deposit
+            = f.hidden_field :is_bank_deposit, value: 1
+          - else
             .form-group
               = f.label "Bank deposit?"
               = f.check_box :is_bank_deposit, class: 'form-control'
+
+
           .form-group
             = f.label :date
             %br

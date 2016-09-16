@@ -3,8 +3,8 @@
   = render 'head'
   
   %body
-    =render 'nav' if scout_signed_in?
+    .hidden_print=render 'nav' if scout_signed_in?
     .container
-      = render 'flash'
+      .hidden_print= render 'flash'
       = yield
       / = render 'debugging'

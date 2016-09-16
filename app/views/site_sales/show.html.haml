@@ -135,7 +135,8 @@
                   %i.fa.fa-check.fa-lg
 
         - if @site_sale.open?
-          = link_to "New", new_site_sale_site_sale_payment_method_path(@site_sale)
+          = link_to new_site_sale_site_sale_payment_method_path(@site_sale) do
+            %i.fa.fa-plus.fa-lg
 
 
 
