@@ -25,6 +25,7 @@
                   %th Status
                   %th
                   %th
+                  %th
 
             %tbody
               - total = 0
@@ -60,10 +61,16 @@
                       - if site_sale.status == 'closed'
                         %span.tag.tag-danger= site_sale.status.titleize
                       - else
-                        %span.tag.tag-primary= site_sale.status.titleize
+                        %span.tag.tag-success= site_sale.status.titleize
                     %td
                       = link_to site_sale do
                         %i.fa.fa-folder-open.fa-lg
+                    %td
+                      - if current_scout.is_admin? && site_sale.open? 
+                        %p
+                          =link_to site_sale_tracking_sheet_path(site_sale) do
+                            %i.fa.fa-print.fa-lg
+
                     %td
                       = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                         %i.fa.fa-trash.fa-lg

@@ -5,12 +5,12 @@
         .card-title
           %h1 Financial Ledger
 
-        = link_to new_ledger_path do
-          %i.fa.fa-plus.fa-lg
-
-        = link_to bank_deposit_path do
-          %i.fa.fa-plus.fa-lg
-          Bank Deposit
+        %p
+          = link_to new_ledger_path do
+            %i.fa.fa-plus.fa-lg
+          = '|'
+          = link_to bank_deposit_path do
+            Bank Deposit
         %table.table
           %thead
             %tr
@@ -46,9 +46,9 @@
         = paginate @ledgers
         %br
 
-        = link_to new_ledger_path do
-          %i.fa.fa-plus.fa-lg
-
-        = link_to bank_deposit_path do
-          %i.fa.fa-plus.fa-lg
-          Bank Deposit
+        %p
+          = link_to new_ledger_path do
+            %i.fa.fa-plus.fa-lg
+          = '|'
+          = link_to bank_deposit_path do
+            Bank Deposit

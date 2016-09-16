@@ -25,7 +25,7 @@
               %span.caret
             %ul.dropdown-menu
               %li= link_to "Take Orders", take_orders_path, class: "dropdown-item #{'active' if controller_name == 'take_orders'}"
-              %li= link_to "Direct Sales", direct_sales_path, class: "dropdown-item #{'active' if controller_name == 'direct_sales'}"
+              / %li= link_to "Direct Sales", direct_sales_path, class: "dropdown-item #{'active' if controller_name == 'direct_sales'}"
               %li= link_to "Site Sales", site_sales_path, class: "dropdown-item #{'active' if controller_name == 'site_sales'}"
               %li= link_to "Online Sales", online_sales_path, class: "dropdown-item #{'active' if controller_name == 'online_sales'}"
           %li.nav-item= link_to "Prizes", prizes_path, class: "nav-link #{'active' if controller_name == 'prizes'}"
