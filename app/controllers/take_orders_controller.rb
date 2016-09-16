@@ -29,6 +29,7 @@ class TakeOrdersController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+    @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
   end
 
   # POST /orders
