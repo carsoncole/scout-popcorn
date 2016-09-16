@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
       rescue
         cookies.delete :unit_id
       end
-    elsif !current_scout.is_super_admin?
+    else
       @unit = current_scout.unit
     end
   end
