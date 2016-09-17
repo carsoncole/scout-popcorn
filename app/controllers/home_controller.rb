@@ -29,6 +29,9 @@ class HomeController < ApplicationController
       break if @top_sellers.count == 5 && seller[1] < @top_sellers.last[1]
       @top_sellers << seller
     end
+
+    @take_orders_submitted_count = @active_event.take_orders.submitted.count
+    @take_orders_received_count = @active_event.take_orders.received.count
   end
 
 end

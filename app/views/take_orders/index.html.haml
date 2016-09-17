@@ -2,7 +2,8 @@
   .col-md-12
     .card.card-block
       .card-title
-        %h1.h1 Take Orders
+        %h1.h1
+          Take Orders
       %p
         = link_to new_take_order_path do
           %i.fa.fa-plus.fa-lg
@@ -13,10 +14,23 @@
           Drop off your Take Order order form/collection envelope as often as you want to any Site Sale and you'll see all your orders entered here. You can also pre-enter the order form info here and pick up more order forms and collections envelopes at any Site Sale.
       
       %ul.nav.nav-tabs
-        %li.nav-item= link_to "All", take_orders_path, class: "nav-link #{'active' unless params[:filter]}"
-        %li.nav-item= link_to "In Hand", take_orders_path(filter: 'received', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'received'}"
-        %li.nav-item= link_to "Turned In", take_orders_path(filter: 'submitted', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'submitted'}"
+        %li.nav-item
+          = link_to take_orders_path, class: "nav-link #{'active' unless params[:filter]}" do
+            All
+            = surround("(", ")") do
+              = @active_event.take_orders.count
 
+        %li.nav-item
+          = link_to take_orders_path(filter: 'received', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'received'}" do
+            In Hand
+            = surround("(", ")") do
+              = @active_event.take_orders.received.count
+
+        %li.nav-item
+          = link_to take_orders_path(filter: 'submitted', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'submitted'}" do
+            Turned In 
+            = surround("(", ")") do
+              = @active_event.take_orders.submitted.count
       %br
       .table-responsive
         %table.table.card-text
