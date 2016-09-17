@@ -16,8 +16,8 @@ class TakeOrder < ApplicationRecord
 
 
   STATUSES = { 
-      received: { :status => :received, :name => 'Received', description: "Orders received by Scout, money not turned in"},
-      submitted: { status: :submitted, :name => 'Submitted', description: "Orders submitted to Pack" },
+      in_hand: { :status => :in_hand, :name => 'In Hand', description: "Order that a Scout has received"},
+      turned_in: { status: :turned_in, :name => 'Turned In', description: "Orders submitted to Pack" },
       ordered: { :status => :ordered, :name => 'Ordered', description: "Orders that have been ordered" },
       deliver: { :status => :deliver, name: 'Deliver', description: "Orders available for delivery"},
       delivered: { :status => :delivered, :name => 'Delivered', description: "Orders delivered by Scout" }

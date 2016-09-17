@@ -12,6 +12,10 @@ class TakeOrdersController < ApplicationController
     if params[:scout_id]
       @take_orders = @take_orders.where(scout_id: params[:scout_id])
     end
+
+    if params[:filter]
+      @take_orders = @take_orders.where(status: params[:filter])
+    end
   end
 
   # GET /orders/1

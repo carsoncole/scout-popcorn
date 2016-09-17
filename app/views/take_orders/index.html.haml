@@ -11,6 +11,13 @@
       - unless current_scout.is_admin?
         .alert.alert-info
           Drop off your Take Order order form/collection envelope as often as you want to any Site Sale and you'll see all your orders entered here. You can also pre-enter the order form info here and pick up more order forms and collections envelopes at any Site Sale.
+      
+      %ul.nav.nav-tabs
+        %li.nav-item= link_to "All", take_orders_path, class: "nav-link #{'active' unless params[:filter]}"
+        %li.nav-item= link_to "In Hand", take_orders_path(filter: 'received'), class: "nav-link #{'active' if params[:filter] == 'received'}"
+        %li.nav-item= link_to "Turned In", take_orders_path(filter: 'submitted'), class: "nav-link #{'active' if params[:filter] == 'submitted'}"
+
+      %br
       .table-responsive
         %table.table.card-text
           %thead
@@ -49,7 +56,13 @@
                 %td= nice_date_time_less(take_order.created_at)
                 %td
                   - if take_order.status
-                    %span.tag.tag-primary= take_order.status.capitalize
+                    %span.tag.tag-primary
+                      - if take_order.status == 'submitted'
+                        Turned In
+                      - elsif take_order.status == 'received'
+                        In Hand
+                      - else
+                        = take_order.status.capitalize
                 %td.visible-print-block
                   %i.fa.fa-square-o.fa-2x
                 %td.hidden-print
