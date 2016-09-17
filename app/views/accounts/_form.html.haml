@@ -14,6 +14,10 @@
             = f.label :name
             = f.text_field :name, class: 'form-control'
           .form-group
+            = f.label :account_type
+            %br
+            = f.select :account_type, options_for_select(Account::ACCOUNT_TYPES), {}, class: 'form-control'
+          .form-group
             = f.label :is_take_order_eligible
             = f.check_box :is_take_order_eligible, class: 'form-control'
           .form-group

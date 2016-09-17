@@ -85,6 +85,8 @@ class TakeOrder < ApplicationRecord
     take_order_line_items.each do |line_item|
       unit = self.event.unit
       Ledger.create(take_order_id: self.id, account_id: account_id, amount: line_item.value, date: Date.current, description: "Take Order submitted")
+      product_due_to_customers_account = event.unit.accounts.where(name: 'Product due to Customers').first
+      Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * Product::WHOLESALE_COST_PERCENTAGE, date: Date.current, description: "Take Order submitted")
     end
   end
 

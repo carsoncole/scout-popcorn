@@ -69,6 +69,6 @@ class AccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
-      params.require(:account).permit(:unit_id, :name, :is_take_order_eligible, :is_site_sale_eligible, :is_bank_account_depositable)
+      params.require(:account).permit(:unit_id, :name, :is_take_order_eligible, :is_site_sale_eligible, :is_bank_account_depositable, :account_type)
     end
 end

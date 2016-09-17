@@ -4,6 +4,8 @@ class Account < ApplicationRecord
   has_many :take_orders
   has_many :site_sale_payment_methods
 
+  ACCOUNT_TYPES = ['Asset', 'Liability', 'Equity']
+
   def self.site_sale(unit)
     Account.where(unit_id: unit.id).where(name: 'Site Sale').first
   end

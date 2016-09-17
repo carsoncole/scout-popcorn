@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916163544) do
+ActiveRecord::Schema.define(version: 20160917060729) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160916163544) do
     t.boolean  "is_take_order_eligible",      default: false
     t.boolean  "is_site_sale_eligible",       default: false
     t.boolean  "is_bank_account_depositable", default: false
+    t.string   "account_type"
   end
 
   create_table "direct_sales", force: :cascade do |t|
