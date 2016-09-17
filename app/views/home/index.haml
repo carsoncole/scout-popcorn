@@ -127,7 +127,7 @@
               How much money should I have?
 
           %h2.card-text.text-xs-center
-            = number_to_currency(current_scout.take_orders.where(status: 'received').where(account_id: Account.take_order(@unit).id).joins(:take_order_line_items).sum('take_order_line_items.value'))
+            = number_to_currency(current_scout.take_orders.where(status: 'received').where(payment_account_id: Account.take_order(@unit).id).joins(:take_order_line_items).sum('take_order_line_items.value'))
 
         .card-footer
           %p.card-text.small
