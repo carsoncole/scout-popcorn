@@ -28,6 +28,7 @@ gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'font-awesome-sass'
 gem 'devise'
 gem 'kaminari'
+gem 'exception_notification'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'

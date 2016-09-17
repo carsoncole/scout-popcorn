@@ -33,11 +33,7 @@
               = f.label 'Payment method'
               %br
               %em.small Select 'Take Order Cash' for cash + checks. 
-            = f.collection_select :account_id, @accounts, :id, :name,{}, class: 'form-control'
-          / .form-group
-          /   %label
-          /     = f.label :bsa_order_number
-          /   = f.text_field :credit_card_order_number, class: 'form-control', placeholder: 'Enter Order # if paid by credit card'
+            = f.collection_select :payment_account_id, @accounts, :id, :name,{}, class: 'form-control'
           %br
           .actions
             = f.submit 'Save', class: 'btn btn-success'

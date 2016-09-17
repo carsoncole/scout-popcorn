@@ -1,7 +1,7 @@
 class Account < ApplicationRecord
   belongs_to :unit
   has_many :ledgers
-  has_many :take_orders
+  has_many :take_orders, foreign_key: :payment_id
   has_many :site_sale_payment_methods
 
   ACCOUNT_TYPES = ['Asset', 'Liability', 'Equity']

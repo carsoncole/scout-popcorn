@@ -3,15 +3,15 @@ class TakeOrder < ApplicationRecord
   belongs_to :event
   belongs_to :purchase_order, optional: true
   belongs_to :payment_method
-  belongs_to :account
+  belongs_to :account, foreign_key: :payment_account_id
   has_many :products, through: :take_order_line_items
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
   has_many :take_order_line_items, dependent: :destroy
-  validates :scout_id, :event_id, :customer_name, :account_id, presence: true
+  validates :scout_id, :event_id, :customer_name, :payment_account_id, presence: true
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-  after_save :credit_ledger!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  after_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
 
 
@@ -81,10 +81,10 @@ class TakeOrder < ApplicationRecord
     self.update(receipt_sent_at: Time.current)
   end
 
-  def credit_ledger!
+  def register_money_received_and_product_due!
     take_order_line_items.each do |line_item|
       unit = self.event.unit
-      Ledger.create(take_order_id: self.id, account_id: account_id, amount: line_item.value, date: Date.current, description: "Take Order submitted")
+      Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: Date.current, description: "Take Order submitted")
       product_due_to_customers_account = event.unit.accounts.where(name: 'Product due to Customers').first
       Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * Product::WHOLESALE_COST_PERCENTAGE, date: Date.current, description: "Take Order submitted")
     end

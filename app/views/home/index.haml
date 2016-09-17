@@ -1,5 +1,3 @@
-
-
 - if current_scout.sign_in_count < 7
   = render 'welcome'
 
@@ -91,20 +89,6 @@
             %tr
               %th Pack Donations
               %td.text-xs-right= number_to_currency(@pack_donations)
-
-      / .card
-      /   .card-block
-      /     .card-title
-      /       %h2 Payment
-      /     %table.table
-      /       - @unit.payment_methods.each do |payment_method|
-      /         - value = @active_event.take_orders.joins(:take_order_line_items).where(payment_method_id: payment_method.id).where.not(status: 'received').sum('take_order_line_items.value') 
-      /         - if value > 0
-      /           %tr
-      /             %th= payment_method.name.titleize if payment_method.name
-      /             %td.text-xs-right
-      /               = number_to_currency(value)
-  
 
   .col-md-6
     .card
