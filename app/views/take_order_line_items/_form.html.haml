@@ -13,7 +13,7 @@
           .form-group
             = f.label :product
             %br
-            = f.collection_select :product_id, Product.take_order_left(@take_order), :id, :name, {:include_blank => "Select a product"}, class: 'form-control'
+            = f.collection_select :product_id, Product.take_order_left(@take_order), :id, :short_name, {:include_blank => "Select a product"}, class: 'form-control'
           .row
             .col-md-4
               .form-group

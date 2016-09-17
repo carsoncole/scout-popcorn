@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160917140616) do
+ActiveRecord::Schema.define(version: 20160917152930) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20160917140616) do
     t.boolean  "is_active",                            default: true
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
+    t.string   "short_name"
   end
 
   create_table "purchase_orders", force: :cascade do |t|

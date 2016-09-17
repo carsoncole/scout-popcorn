@@ -26,8 +26,12 @@ class Scout < ApplicationRecord
     first_name + ' ' + last_name
   end
 
+  def last_first_name
+    last_name + ', ' + first_name
+  end
+
   def self.not_admin
-    where(is_admin: nil)
+    where(is_admin: nil).order(:last_name)
   end
 
   def parent_name

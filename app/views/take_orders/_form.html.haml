@@ -12,7 +12,7 @@
           - if current_scout.is_admin?
             .form-group
               %label Scout
-              = f.collection_select:scout_id, Scout.not_admin, :id, :first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
+              = f.collection_select:scout_id, Scout.not_admin, :id, :last_first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
           .form-group
             .field
               %label= f.label :customer_name

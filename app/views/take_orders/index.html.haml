@@ -14,8 +14,8 @@
       
       %ul.nav.nav-tabs
         %li.nav-item= link_to "All", take_orders_path, class: "nav-link #{'active' unless params[:filter]}"
-        %li.nav-item= link_to "In Hand", take_orders_path(filter: 'received'), class: "nav-link #{'active' if params[:filter] == 'received'}"
-        %li.nav-item= link_to "Turned In", take_orders_path(filter: 'submitted'), class: "nav-link #{'active' if params[:filter] == 'submitted'}"
+        %li.nav-item= link_to "In Hand", take_orders_path(filter: 'received', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'received'}"
+        %li.nav-item= link_to "Turned In", take_orders_path(filter: 'submitted', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'submitted'}"
 
       %br
       .table-responsive
@@ -34,13 +34,16 @@
               %th.visible-print-block Delivered
               %th.hidden-print
               %th.hidden-print
+              %th.hidden-print
 
           %tbody
             - total = 0
             - @take_orders.each do |take_order|
               %tr
                 - if current_scout.is_admin?
-                  %td= take_order.scout.name if take_order.scout
+                  %td
+                    - if take_order.scout
+                      = link_to take_order.scout.name, take_orders_path(scout_id: take_order.scout.id, filter: params[:filter])
                 %td= take_order.customer_name
                 %td= take_order.customer_address.truncate(30)
                 %td
@@ -63,6 +66,10 @@
                         In Hand
                       - else
                         = take_order.status.capitalize
+                - if current_scout.is_admin?
+                  %th.hidden-print
+                    - if take_order.received? && take_order.take_order_line_items.any?
+                      = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
                 %td.visible-print-block
                   %i.fa.fa-square-o.fa-2x
                 %td.hidden-print
@@ -80,6 +87,9 @@
               %td= number_to_currency(total, precision: 0)
               %td
               %td
+              - if current_scout.is_admin?
+                %th.hidden-print
+              %td.visible-print-block
               %td.hidden-print
               %td.hidden-print
 
