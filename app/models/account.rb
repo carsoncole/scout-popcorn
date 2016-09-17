@@ -18,6 +18,10 @@ class Account < ApplicationRecord
     where(is_take_order_eligible: true)
   end
 
+  def self.assets
+    where(account_type: 'Asset')
+  end
+
   def self.is_site_sale_eligible
     where(is_site_sale_eligible: true)
   end

@@ -13,16 +13,21 @@
                 - @ledger.errors.full_messages.each do |msg|
                   %li= msg
 
-          .form-group
-            = f.label "From"
-            %br
-            = f.collection_select :from_account_id, @unit.accounts.order(:name), :id, :name, {}, class: 'form-control'
+          - if @deposit
+            .form-group
+              = f.label "From"
+              %br
+              = f.collection_select :from_account_id, @asset_accounts, :id, :name, {}, class: 'form-control'
 
-          .form-group
-            = f.label "Deposit to:"
-            %br
-            = f.collection_select :account_id, @accounts, :id, :name, {}, class: 'form-control'
-          - unless @deposit
+            .form-group
+              = f.label "Deposit to:"
+              %br
+              = f.collection_select :account_id, @bank_accounts, :id, :name, {}, class: 'form-control'
+          - else
+            .form-group
+              = f.label :account_id
+              %br
+              = f.collection_select :account_id, @accounts, :id, :name, {}, class: 'form-control'
             .form-group
               = f.label :description
               = f.text_field :description, class: 'form-control'
@@ -31,10 +36,10 @@
             = f.text_field :amount, class: 'form-control'
           - if @deposit
             = f.hidden_field :is_bank_deposit, value: 1
-          - else
-            .form-group
-              = f.label "Bank deposit?"
-              = f.check_box :is_bank_deposit, class: 'form-control'
+          / - else
+          /   .form-group
+          /     = f.label "Bank deposit?"
+          /     = f.check_box :is_bank_deposit, class: 'form-control'
 
 
           .form-group

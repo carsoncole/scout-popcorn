@@ -24,7 +24,8 @@ class LedgersController < ApplicationController
   def bank_deposit
     @ledger = Ledger.new
     @ledger.is_bank_deposit = true
-    @accounts = @unit.accounts.is_bank_account_depositable
+    @bank_accounts = @unit.accounts.is_bank_account_depositable.order(:name)
+    @asset_accounts = @unit.accounts.assets.order(:name)
     @deposit = true
     render :new
   end
@@ -38,7 +39,7 @@ class LedgersController < ApplicationController
     @popcorn_inventory = Stock.wholesale_value(@unit)
     @due_from_customers = (@unit.accounts.where(name: 'Money due from Customer').first.balance if @unit.accounts.where(name: 'Money due from Customer').any?) || 0
     @total_assets = @take_order_cash + @site_sale_cash + @square_cash + @bsa_credit_card_cash + @union_bank_cash + @popcorn_inventory + @due_from_customers
-    @due_to_bsa = Stock.wholesale_value_due_to_bsa(@unit)
+    @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0#Stock.wholesale_value_due_to_bsa(@unit)
     @product_due_to_customers = (@unit.accounts.where(name: 'Product due to Customers').first.balance if @unit.accounts.where(name: 'Product due to Customers').first) || 0
     @total_liabilities = @due_to_bsa + @product_due_to_customers
     @total_equity = @total_assets - @total_liabilities
@@ -57,9 +58,10 @@ class LedgersController < ApplicationController
       @contra_ledger = Ledger.new(ledger_params)
       @contra_ledger.account_id = ledger_params[:from_account_id]
       @contra_ledger.amount = -ledger_params[:amount].to_f
+      @contra_ledger.save
     end
     respond_to do |format|
-      if @ledger.save && @contra_ledger.save
+      if @ledger.save
         format.html { redirect_to ledgers_path, notice: 'Ledger was successfully created.' }
         format.json { render :show, status: :created, location: @ledger }
       else
