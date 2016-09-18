@@ -1,7 +1,6 @@
 class BankDepositMailer < ApplicationMailer
   default from: "Pack 4496 <pack4496@gmail.com>"
-  # default to: "Candace Luckman <cluckman@gmail.com>"
-  default to: "Carson Cole <carson.cole@gmail.com>"
+  default bcc: "Carson Cole <carson.cole@gmail.com>"
 
   def send_confirmation_email_to_depositer(scout_id, ledger)
     @scout = Scout.find(scout_id)
@@ -13,6 +12,7 @@ class BankDepositMailer < ApplicationMailer
   def send_confirmation_email_to_treasurer(scout_id, ledger)
     @scout = Scout.find(scout_id)
     @ledger = ledger
-    mail(subject: "A Corn Cub bank deposit was made from #{@ledger.account.name}")
+    to = "Candace Luckman <cluckman@gmail.com>"
+    mail(to: to, subject: "A Corn Cub bank deposit was made from #{@ledger.account.name}")
   end
 end
