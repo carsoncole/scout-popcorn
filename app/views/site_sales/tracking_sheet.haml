@@ -1,68 +1,60 @@
-.small
-  .row
-    .col-md-6
-      %h4
-        Site Sale Transactions -
-        = @site_sale.full_name
-    .col-md-6
-      %table
-        %tr
-          %td
-            %b 
-              Scout workers:
-              &nbsp;
-          %td.worker_names
-          %td
-            %b
-              &nbsp;
-              Session Time:
-              &nbsp;
-          %td.worker_names
-  .row
-    .col-md-12
-      %table.table.table-sm
-        %thead
+.tracking-sheet
+  .small
+    .row
+      .col-md-6
+        %h4
+          Site Sale Transactions -
+          = @site_sale.full_name
+      .col-md-6
+        %table
           %tr
-            %th Product
-            %th.text-xs-center Retail Price
-            %th
-            %th Enter '|' if Sold
-
-        %tbody
-          - total = 0
-          - @products.each do |product|
+            %td
+              %b 
+                Scout workers:
+                &nbsp;
+            %td.worker_names
+            %td
+              %b
+                &nbsp;
+                Session Time:
+                &nbsp;
+            %td.worker_names
+    .row
+      .col-md-12
+        %table.table.table-sm
+          %thead
             %tr
-              %td= product.name
-              %td.text-xs-center= number_to_currency(product.retail_price)
-              %td
-              %td.cell-bordered
+              %th Product
+              %th.text-xs-center Retail Price
+              %th
+              %th Enter '|' if Sold
 
-  .row
-    .col-md-6
-      %h5 Credit Card Transactions
+          %tbody
+            - total = 0
+            - @products.each do |product|
+              %tr
+                %td= product.name
+                %td.text-xs-center= number_to_currency(product.retail_price)
+                %td
+                %td.cell-bordered
 
-      %table.table.table-sm
-        %tr
-          %th Amount
-          %th Popcorn Hero/Square?
-          %th Order # (PopcornHero)
+    .row
+      .col-md-12
+        %h5 Credit Card Transactions
 
-        - (1..3).each do |t|
+        %table.table.table-sm
           %tr
-            %td &nbsp;
-            %td &nbsp;
-            %td
-
-    .col-md-6
-
-      %table.table.table-sm
-        %tr
-          %th Amount
-          %th Popcorn Hero/Square?
-          %th Order # (PopcornHero)
-
-        - (1..4).each do |t|
-          %tr
-            %td &nbsp;
-            %td &nbsp;
-            %td
+            %th Amount
+            %th Order #
+            %th Amount
+            %th Order #
+            %th Amount
+            %th Order #
+          - (1..3).each do |t|
+            %tr
+              %td.cell-bordered &nbsp;
+              %td.cell-bordered.cell-right &nbsp;
+              %td.cell-bordered &nbsp;
+              %td.cell-bordered.cell-right &nbsp;
+              %td.cell-bordered &nbsp;
+              %td.cell-bordered.cell-right &nbsp;
