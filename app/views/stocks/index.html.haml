@@ -37,7 +37,7 @@
                 %tr
                   %td
                     %b= product.name
-                    - if quantity = 0
+                    - if quantity == 0
                       .tag.tag-danger SOLD OUT
                   %td.text-xs-center= quantity
                   %td= location.titleize if location
