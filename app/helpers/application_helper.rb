@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def nice_date(date)
+    date.strftime("%B %d, %Y")
+  end
+
   def nice_date_time(datetime)
     datetime.strftime("%B %d, %Y %I:%M%p")
   end

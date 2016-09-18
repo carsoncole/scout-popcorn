@@ -53,16 +53,18 @@ class LedgersController < ApplicationController
   # POST /ledgers.json
   def create
     @ledger = Ledger.new(ledger_params)
+    @ledger.created_by = current_scout.id
 
     if @ledger.is_bank_deposit
       @contra_ledger = Ledger.new(ledger_params)
       @contra_ledger.account_id = ledger_params[:from_account_id]
       @contra_ledger.amount = -ledger_params[:amount].to_f
+      @contra_ledger.created_by = current_scout.id
       @contra_ledger.save
     end
     respond_to do |format|
       if @ledger.save
-        format.html { redirect_to ledgers_path, notice: 'Ledger was successfully created.' }
+        format.html { redirect_to ledgers_path, notice: 'Ledger entry was successfully created.' }
         format.json { render :show, status: :created, location: @ledger }
       else
         format.html { render :new }
@@ -103,6 +105,6 @@ class LedgersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ledger_params
-      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id)
+      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by)
     end
 end

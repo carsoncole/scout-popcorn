@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
+  %body
+    %h1{style: 'text-align:center'} A Corn Cub FYI.
+    %p
+      Hello
+      = succeed(",") do
+        Candace
+
+    %p
+      A deposit of
+      = number_to_currency(@ledger.amount.abs)
+      was made into
+      Union Bank
+      on
+      = @ledger.date.strftime("%B %d, %Y")
+      by
+      = @scout.name
+      from
+      = succeed(".") do
+        = @ledger.account.name
+
+    %p
+      = @scout.unit.name
+      Corn Cub

@@ -43,7 +43,10 @@
 
 
           .form-group
-            = f.label :date
+            - if @deposit
+              = f.label :deposit_date
+            - else
+              = f.label :date
             %br
             = f.date_select :date, {}, class: 'form-control'
           .actions
