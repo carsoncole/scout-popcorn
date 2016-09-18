@@ -34,9 +34,11 @@
                 - product = Product.find(key[0])
                 - location = key[1]
                 - quantity = value
-                - next if quantity == 0
                 %tr
-                  %td= product.name
+                  %td
+                    %b= product.name
+                    - if quantity = 0
+                      .tag.tag-danger SOLD OUT
                   %td.text-xs-center= quantity
                   %td= location.titleize if location
                   %td= number_to_currency(product.retail_price)
