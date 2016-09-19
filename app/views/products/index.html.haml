@@ -19,6 +19,9 @@
             
             %h5.text-xs-center= number_to_currency(product.retail_price)
             - if current_scout.is_admin?
+              .small
+                Short name:
+                = product.short_name
               = link_to 'Show', product
               = link_to 'Edit', edit_product_path(product)
               = link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
