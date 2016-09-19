@@ -23,9 +23,9 @@
                   %th Credited Sales
                 - if current_scout.is_admin?
                   %th Status
-                  %th
-                  %th
-                  %th
+                  %th.hidden-print
+                  %th.hidden-print
+                  %th.hidden-print
 
             %tbody
               - total = 0
@@ -62,25 +62,25 @@
                         %span.tag.tag-danger= site_sale.status.titleize
                       - else
                         %span.tag.tag-success= site_sale.status.titleize
-                    %td
+                    %td.hidden-print
                       = link_to site_sale do
                         %i.fa.fa-folder-open.fa-lg
-                    %td
+                    %td.hidden-print
                       - if current_scout.is_admin? && site_sale.open? 
                         %p
                           =link_to site_sale_tracking_sheet_path(site_sale) do
                             %i.fa.fa-print.fa-lg
 
-                    %td
+                    %td.hidden-print
                       = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                         %i.fa.fa-trash.fa-lg
               %tr
                 - if current_scout.is_super_admin?
                   %td
                 - if current_scout.is_admin?
-                  %td        
+                  %td      
                     = link_to new_site_sale_path do
-                      %i.fa.fa-plus.fa-lg
+                      %i.fa.fa-plus.fa-lg.hidden-print 
                 %td
                 %td
                   = hours               
@@ -89,10 +89,10 @@
                     = number_to_currency(total_sales, precision: 0)
                   - else
                     = number_to_currency(total, precision: 0)
-                %td
+                %td.hidden-print
                 - if current_scout.is_admin?
-                  %td
-                  %td
+                  %td.hidden-print
+                  %td.hidden-print
                   
 
 

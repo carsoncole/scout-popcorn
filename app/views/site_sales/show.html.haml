@@ -10,7 +10,7 @@
                 = @site_sale.full_name
                 %span.lead
                   = link_to edit_site_sale_path(@site_sale) do
-                    %i.fa.fa-pencil
+                    %i.fa.fa-pencil.hidden-print  
 
             - if current_scout.is_admin? && @site_sale.open? 
               %p
@@ -54,7 +54,7 @@
                 %td
                   - if @site_sale.open?
                     = link_to site_sale_site_sale_line_item_path(@site_sale, line_item), method: :delete do
-                      %i.fa.fa-trash.fa-lg
+                      %i.fa.fa-trash.fa-lg.hidden-print  
 
             
             %tr
@@ -76,7 +76,7 @@
           .col-md-9
             %p.card-text.text-danger Pressing this button will Close this Site Sale to any future inventory, or payment method changes. Scout volunteers can be changed at any time.
           .col-md-3
-            .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-danger btn-lg'
+            .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'
 .row    
   .col-md-12
     .card
@@ -100,12 +100,12 @@
                 - if current_scout.is_admin?
                   %td
                     = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do
-                      %i.fa.fa-trash.fa-lg
+                      %i.fa.fa-trash.fa-lg.hidden-print
             %tr
               %td
                 - if current_scout.is_admin?
                   = link_to new_site_sale_scout_site_sale_path(@site_sale) do
-                    %i.fa.fa-plus.fa-lg
+                    %i.fa.fa-plus.fa-lg.hidden-print
               %td= @total_hours
               %td= number_to_currency(total_credited_sales, precision: 0)
 
@@ -135,7 +135,7 @@
                 %td
                   - if @site_sale.open?
                     = link_to site_sale_site_sale_payment_method_path(@site_sale, payment_method), method: :delete do
-                      %i.fa.fa-trash.fa-lg
+                      %i.fa.fa-trash.fa-lg.hidden-print
 
             %tr
               %td
@@ -146,7 +146,7 @@
 
         - if @site_sale.open?
           = link_to new_site_sale_site_sale_payment_method_path(@site_sale) do
-            %i.fa.fa-plus.fa-lg
+            %i.fa.fa-plus.fa-lg.hidden-print
 
   - if current_scout.is_admin?  
     .col-md-6
@@ -174,8 +174,9 @@
 .row
   .col-md-4
     %br
-    = link_to site_sales_path do
-      %i.fa.fa-arrow-left.fa-lg
-      Back to Site Sales
+    .hidden-print
+      = link_to site_sales_path do
+        %i.fa.fa-arrow-left.fa-lg
+        Back to Site Sales
 %br
 / # = render 'legend'
