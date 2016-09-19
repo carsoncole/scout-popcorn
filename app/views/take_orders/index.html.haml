@@ -17,20 +17,23 @@
         %li.nav-item
           = link_to take_orders_path, class: "nav-link #{'active' unless params[:filter]}" do
             All
-            = surround("(", ")") do
-              = @active_event.take_orders.count
+            - if current_scout.is_admin?
+              = surround("(", ")") do
+                = @active_event.take_orders.count
 
         %li.nav-item
           = link_to take_orders_path(filter: 'received', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'received'}" do
             In Hand
-            = surround("(", ")") do
-              = @active_event.take_orders.received.count
+            - if current_scout.is_admin?
+              = surround("(", ")") do
+                = @active_event.take_orders.received.count
 
         %li.nav-item
           = link_to take_orders_path(filter: 'submitted', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'submitted'}" do
             Turned In 
-            = surround("(", ")") do
-              = @active_event.take_orders.submitted.count
+            - if current_scout.is_admin?
+              = surround("(", ")") do
+                = @active_event.take_orders.submitted.count
       %br
       .table-responsive
         %table.table.card-text

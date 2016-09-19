@@ -5,9 +5,16 @@ class StocksController < ApplicationController
   # GET /stocks.json
   def index
     @stocks_query = @unit.stocks.joins(:product).order(:location, 'products.name')
-    @stocks_query = @stocks_query.where(location: params[:location]) if params[:location]
+    @locations = @unit.stocks.order(location: :desc).group(:location)
+    if params[:location]
+      @stocks_query = @stocks_query.where(location: params[:location])
+    elsif params[:all]
+      # use default
+    elsif @locations.any?
+      redirect_to stocks_path(location: @locations.first.location)
+    end
     @stocks_hash = @stocks_query.group(:product_id, :location).sum(:quantity)
-    @locations = @unit.stocks.group(:location)
+    @locations = @unit.stocks.order(location: :desc).group(:location)
   end
 
   # GET /stocks/1

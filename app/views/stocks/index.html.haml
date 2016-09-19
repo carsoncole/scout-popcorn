@@ -10,12 +10,11 @@
               = "-"
               = params[:location].titleize if params[:location]
         %ul.nav.nav-tabs.hidden-print
-          %li.nav-item
-            = link_to "All", stocks_path, class: "nav-link #{!params[:location] ? 'active' : nil}"
           - @locations.each do |location|
             %li.nav-item
               = link_to location.location.titleize, stocks_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
-          
+          %li.nav-item= link_to "All", stocks_path(all: true), class: "nav-link #{!params[:location] ? 'active' : nil}"
+
         %br
         .table-responsive
           %table.table.table-sm
