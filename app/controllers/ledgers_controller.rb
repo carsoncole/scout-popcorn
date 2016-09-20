@@ -47,6 +47,7 @@ class LedgersController < ApplicationController
 
   # GET /ledgers/1/edit
   def edit
+    @accounts = @unit.accounts.order(:name)
   end
 
   # POST /ledgers
