@@ -24,13 +24,19 @@
               = @take_order.customer_email
 
         .row
-          .col-md-6
-            PAID BY:
-            = @take_order.account.name.upcase if @take_order.account
-            - unless @take_order.submitted?
-              %span
-                = link_to edit_take_order_path(@take_order) do
-                  %i.fa.fa-pencil
+          .col-md-5
+            %table.table.table-sm
+              %tr
+                %th PAID BY:
+                %td.text-xs-right
+                  = @take_order.account.name.upcase if @take_order.account
+                  - unless @take_order.submitted?
+                    %span
+                      = link_to edit_take_order_path(@take_order) do
+                        %i.fa.fa-pencil
+              %tr
+                %th
+                %td
             %br
             %br
 
