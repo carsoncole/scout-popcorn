@@ -10,9 +10,26 @@
             %tr
               %th Name
               %th Balance
-              %th.text-xs-center Take Orders
-              %th.text-xs-center Site Sales
-              %th.text-xs-center Bank Depositable
+              %th.text-xs-center
+                Take
+                %br
+                Orders
+              %th.text-xs-center
+                Site
+                %br
+                Sales
+              %th.text-xs-center
+                Bank
+                %br
+                Depositable
+              %th.text-xs-center
+                Credit Card
+                %br
+                %i.fa.fa-credit-card
+              %th.text-xs-center
+                Cash
+                %br
+                %i.fa.fa-money
               %th
               %th
           %tbody
@@ -28,6 +45,12 @@
                     %i.fa.fa-check
                 %td.text-xs-center
                   - if account.is_bank_account_depositable?
+                    %i.fa.fa-check
+                %td.text-xs-center
+                  - if account.is_credit_card?
+                    %i.fa.fa-check
+                %td.text-xs-center
+                  - if account.is_cash?
                     %i.fa.fa-check
                 %td= account.account_type
                 %td

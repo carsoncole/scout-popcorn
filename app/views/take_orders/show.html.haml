@@ -34,9 +34,12 @@
                     %span
                       = link_to edit_take_order_path(@take_order) do
                         %i.fa.fa-pencil
-              %tr
-                %th
-                %td
+              - if @take_order.square_reciept_url?
+                %tr
+                  %th Square reciept:
+                  %td.text-xs-right
+                    = link_to "Square reciept", @take_order.square_reciept_url, target: '_blank'
+                    %i.fa.fa-credit-card
             %br
             %br
 

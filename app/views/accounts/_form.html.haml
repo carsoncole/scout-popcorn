@@ -26,8 +26,12 @@
           .form-group
             = f.label :is_bank_account_depositable
             = f.check_box :is_bank_account_depositable, class: 'form-control'
-
-
+          .form-group
+            = f.label :is_credit_card
+            = f.check_box :is_credit_card, class: 'form-control'
+          .form-group
+            = f.label :is_cash
+            = f.check_box :is_cash, class: 'form-control'
 
 
           .actions
