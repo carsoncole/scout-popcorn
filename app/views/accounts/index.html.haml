@@ -22,20 +22,20 @@
                 Bank
                 %br
                 Depositable
-              %th.text-xs-center
-                Credit Card
-                %br
-                %i.fa.fa-credit-card
-              %th.text-xs-center
-                Cash
-                %br
-                %i.fa.fa-money
+
               %th
               %th
           %tbody
             - @accounts.each do |account|
               %tr
-                %td= link_to account.name, ledgers_path(account_id: account.id)
+                %td
+                  = link_to account.name, ledgers_path(account_id: account.id)
+                  - if account.is_credit_card?
+                    %i.fa.fa-credit-card
+                  - if account.is_cash?
+                    %i.fa.fa-money
+                  - if account.is_bank_account_depositable?
+                    %i.fa.fa-university
                 %td= number_to_currency(account.balance)
                 %td.text-xs-center
                   - if account.is_take_order_eligible?
@@ -45,12 +45,6 @@
                     %i.fa.fa-check
                 %td.text-xs-center
                   - if account.is_bank_account_depositable?
-                    %i.fa.fa-check
-                %td.text-xs-center
-                  - if account.is_credit_card?
-                    %i.fa.fa-check
-                %td.text-xs-center
-                  - if account.is_cash?
                     %i.fa.fa-check
                 %td= account.account_type
                 %td

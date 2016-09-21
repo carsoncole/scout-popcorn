@@ -25,6 +25,7 @@
               - @scouts.each do |scout|
                 %tr
                   %td
+                    %i.fa.fa-child
                     = link_to scout.name, scout_path(scout)
                     - if scout.is_admin?
                       %span.tag.tag-warning
