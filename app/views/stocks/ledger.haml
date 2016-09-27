@@ -25,6 +25,7 @@
           %table.table.table-sm
             %thead
               %tr
+                %th Date
                 %th Product
                 %th Desc
                 %th 
@@ -39,6 +40,7 @@
             %tbody
               - @stocks.each do |stock|
                 %tr
+                  %td= nice_date_compact(stock.date)
                   %td= stock.product.name_with_id
                   %td= stock.description
                   %td

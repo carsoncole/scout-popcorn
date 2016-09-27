@@ -13,6 +13,12 @@ class StocksController < ApplicationController
     elsif @locations.any?
       redirect_to stocks_path(location: @locations.first.location)
     end
+
+    if params['date(1i)']
+      @date = Date.new params['date(1i)'].to_i,params['date(2i)'].to_i, params['date(3i)'].to_i
+      @stocks_query = @stocks_query.where("stocks.date <= ?", @date)
+    end
+
     @stocks_hash = @stocks_query.group(:product_id, :location).sum(:quantity)
     @locations = @unit.stocks.order(location: :desc).group(:location)
   end

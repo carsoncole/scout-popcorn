@@ -9,11 +9,20 @@
             .visible-print-inline
               = "-"
               = params[:location].titleize if params[:location]
+        
+        .pull-right
+          = form_tag stocks_path(location: params[:location]), method: :get do
+            = date_select "", :date, default: @date
+            = hidden_field "", :location, value: params[:location]
+            = submit_tag "Reload", class: 'btn btn-success'
+
         %ul.nav.nav-tabs.hidden-print
           - @locations.each do |location|
             %li.nav-item
               = link_to location.location.titleize, stocks_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
           %li.nav-item= link_to "All", stocks_path(all: true), class: "nav-link #{!params[:location] ? 'active' : nil}"
+
+        
 
         %br
         .table-responsive

@@ -7,6 +7,10 @@ module ApplicationHelper
     date.strftime("%b %d, %Y")
   end
 
+  def nice_date_compact(date)
+    date.strftime("%m-%d-%y")
+  end
+
   def nice_date_time(datetime)
     datetime.strftime("%B %d, %Y %I:%M%p")
   end
