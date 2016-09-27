@@ -41,24 +41,20 @@ class SiteSaleLineItemsController < ApplicationController
   # PATCH/PUT /line_items/1
   # PATCH/PUT /line_items/1.json
   def update
-    respond_to do |format|
-      if @line_item.update(site_sale_line_item_params)
-        format.html { redirect_to @site_sale, notice: 'Line item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @line_item }
-      else
-        format.html { render :edit }
-        format.json { render json: @line_item.errors, status: :unprocessable_entity }
-      end
+    if @line_item.update(site_sale_line_item_params)
+      redirect_to @site_sale, notice: "#{@line_item.product.name} was successfully updated."
+    else
+      redirect_to @site_sale, alert: "The following errors occurred: #{@line_item.errors.full_messages.join(",")}"
     end
   end
 
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
-    @line_item.destroy
-    respond_to do |format|
-      format.html { redirect_to order_url(@site_sale), notice: 'Line item was successfully destroyed.' }
-      format.json { head :no_content }
+    if @line_item.destroy
+      redirect_to @site_sale, notice: "#{@line_item.product.name} was successfully destroyed."
+    else
+      redirect_to @site_sale, alert: "There was a problem destroying #{@line_item.product.name}."
     end
   end
 

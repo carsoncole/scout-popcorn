@@ -13,7 +13,7 @@ class Stock < ApplicationRecord
     ]
 
   def self.site_sales
-    where(location: 'site sales')
+    where(location: 'site sale')
   end
 
   def self.wholesale_value(unit)

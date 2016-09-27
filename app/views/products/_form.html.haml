@@ -1,25 +1,36 @@
-= form_for @product do |f|
-  - if @product.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
-      %ul
-        - @product.errors.full_messages.each do |msg|
-          %li= msg
+.row
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h1 Product
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :short_name
-    = f.text_field :short_name
-  .field
-    = f.label :quantity
-    = f.number_field :quantity
-  .field
-    = f.label :url
-    = f.text_field :url
-  .field
-    = f.label :retail_price
-    = f.text_field :retail_price
-  .actions
-    = f.submit 'Save'
+        = form_for @product do |f|
+          - if @product.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@product.errors.count, "error")} prohibited this product from being saved:"
+              %ul
+                - @product.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .form-group
+            = f.label :name
+            = f.text_field :name, class: 'form-control'
+          .form-group
+            = f.label :short_name
+            = f.text_field :short_name, class: 'form-control'
+          .form-group
+            = f.label :quantity
+            = f.number_field :quantity, class: 'form-control'
+          .form-group
+            = f.label :url
+            = f.text_field :url, class: 'form-control'
+          .form-group
+            = f.label :retail_price
+            = f.text_field :retail_price, class: 'form-control'
+          .form-group
+            = f.label :is_physical_inventory
+            = f.check_box :is_physical_inventory, class: 'form-control'
+
+          .actions
+            = f.submit 'Save', class: 'btn btn-success'

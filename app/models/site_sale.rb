@@ -90,10 +90,18 @@ class SiteSale < ApplicationRecord
     end
   end
 
+  def check_for_available_stock
+    site_sale_line_items.each do |line_item|
+      unless event.unit.stocks.sum(:quantity) >= line_item.quantity
+        self.errors.add(:base,"Insufficient #{line_item.product.name} product in Site Sale inventory.")
+      end
+    end
+  end
+
   def do_ledgers!
     site_sale_payment_methods.each do |payment_method|
       Ledger.transaction do
-        Ledger.create(account_id: payment_method.account_id, amount: payment_method.amount, date: Date.today, site_sale_id: self.id)
+        Ledger.create(account_id: payment_method.account_id, amount: payment_method.amount, date: self.date, site_sale_id: self.id)
       end
     end
   end
