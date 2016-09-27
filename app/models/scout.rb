@@ -10,6 +10,7 @@ class Scout < ApplicationRecord
   has_many :scout_site_sales
   has_many :direct_sales
   has_many :online_sales
+  has_many :envelopes
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
@@ -39,8 +40,8 @@ class Scout < ApplicationRecord
   end
 
   def total_sales(event)
-    total = 0
-    take_orders.where(event_id: event).each do |to|
+    total = event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
+    take_orders.where(event_id: event.id).each do |to|
       total += to.value
     end
     total

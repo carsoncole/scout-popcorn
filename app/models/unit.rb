@@ -17,6 +17,10 @@ class Unit < ApplicationRecord
     events.last
   end
 
+  def treasurer_name
+    (treasurer_first_name || '') + (treasurer_last_name || '')
+  end
+
   private
 
   def create_default_payment_methods!

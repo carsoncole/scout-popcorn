@@ -57,7 +57,12 @@ class LedgersController < ApplicationController
     @ledger.created_by = current_scout.id
 
     if @ledger.is_bank_deposit
+      from_account = Account.find(ledger_params[:from_account_id])
+      if from_account
+        @ledger.description = "Bank deposit from #{from_account.name}"
+      end
       @contra_ledger = Ledger.new(ledger_params)
+      @contra_ledger.description = "Bank deposit to #{@ledger.account.name}"
       @contra_ledger.account_id = ledger_params[:from_account_id]
       @contra_ledger.amount = -ledger_params[:amount].to_f
       @contra_ledger.created_by = current_scout.id

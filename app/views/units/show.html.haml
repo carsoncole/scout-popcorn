@@ -1,15 +1,24 @@
 .row
-  .col-md-12
-    %h2= @unit.name
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h1= @unit.name
+
+        %p
+          = link_to edit_unit_path do
+            %i.fa.fa-pencil
+
+        %table.table
+          %tr
+            %th Treasurer
+            %td.text-xs-right= @unit.treasurer_name
+
+          %tr
+            %th Treasuer Email
+            %td.text-xs-right= @unit.treasurer_email
 
 
-.row
-  - @unit.events.active.each do |event|
-    .col-md-4
-      .card
-        .card-block
-          .card-title
-            %h5.h5
-              = event.name
-              Top Sellers
+
+
 
