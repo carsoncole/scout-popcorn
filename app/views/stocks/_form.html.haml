@@ -13,6 +13,10 @@
                   %li= msg
 
           .form-group
+            = f.label :date
+            = f.date_select :date
+
+          .form-group
             .field
               = f.label :product
               = f.collection_select :product_id, @products, :id, :name, {prompt: "Select a Product"}, {class: 'form-control'}
