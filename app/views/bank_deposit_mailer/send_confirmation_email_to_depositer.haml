@@ -20,7 +20,11 @@
       = succeed(".") do
         = @ledger.account.name
 
-    %p We have also notified Candace Luckman of this deposit.
+    - unless @unit.treasurer_email.blank?
+      %p
+        We have also notified
+        = @unit.treasurer_name
+        of this deposit.
 
     %p
       = @scout.unit.name

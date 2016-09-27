@@ -14,7 +14,7 @@
             = f.label :unit_id
             %br
             - if current_scout.is_super_admin?
-              = f.collection_select :unit_id, Unit.all.order(:name), :id, :name, class: 'form-control'
+              = f.collection_select :unit_id, Unit.all.order(:name), :id, :name, {},class: 'form-control'
             - else
               = current_scout.unit.name
           .form-group

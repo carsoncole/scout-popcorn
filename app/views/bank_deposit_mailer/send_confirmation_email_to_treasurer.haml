@@ -4,10 +4,11 @@
     %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
   %body
     %h1{style: 'text-align:center'} A Corn Cub FYI.
-    %p
-      Hello
-      = succeed(",") do
-        Candace
+    - if @unit.treasurer_first_name
+      %p
+        Hello
+        = succeed(",") do
+          = @unit.treasurer_first_name
 
     %p
       A deposit of

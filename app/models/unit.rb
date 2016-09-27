@@ -11,6 +11,9 @@ class Unit < ApplicationRecord
   has_many :accounts
   has_many :ledgers, through: :accounts
 
+  validates :treasurer_email, format: /@/, unless: Proc.new {|u| u.treasurer_email.blank? }
+  validates :treasurer_first_name, presence: true, unless: Proc.new {|u| u.treasurer_email.blank? }
+
   after_create :create_default_payment_methods!
 
   def default_event
@@ -18,7 +21,7 @@ class Unit < ApplicationRecord
   end
 
   def treasurer_name
-    (treasurer_first_name || '') + (treasurer_last_name || '')
+    (treasurer_first_name || '') + ' ' + (treasurer_last_name || '')
   end
 
   private
