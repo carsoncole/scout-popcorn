@@ -38,7 +38,7 @@
                 %td= link_to ledger.account.name, ledgers_path(account_id: ledger.account_id)
                 %td= ledger.description
                 %td= number_to_currency(ledger.amount)
-                %td= ledger.date
+                %td= nice_date_less(ledger.date) if ledger.date
                 %td= nice_date_time_less(ledger.created_at)
                 %td
                   - if ledger.take_order_id

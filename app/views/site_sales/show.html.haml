@@ -159,6 +159,9 @@
             %tr
               %th Created
               %td= nice_date_time_less(@site_sale.created_at)
+            %tr
+              %th Last updated
+              %td= nice_date_time_less(@site_sale.updated_at)
             - if @site_sale.closed_at
               %tr
                 %th Closed at
@@ -166,7 +169,7 @@
             - if @site_sale.closed_by_id
               %tr
                 %th Closed by
-                %td= Scout.find(@site_sale.closed_by_id)
+                %td= Scout.find(@site_sale.closed_by_id).name if Scout.find(@site_sale.closed_by_id)
 
 
 

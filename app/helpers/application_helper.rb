@@ -3,6 +3,10 @@ module ApplicationHelper
     date.strftime("%B %d, %Y")
   end
 
+  def nice_date_less(date)
+    date.strftime("%b %d, %Y")
+  end
+
   def nice_date_time(datetime)
     datetime.strftime("%B %d, %Y %I:%M%p")
   end
