@@ -8,6 +8,7 @@ class LedgersController < ApplicationController
     if params[:account_id]
       @ledgers = @ledgers.where(account_id: params[:account_id])
     end
+    @bank_accounts = @unit.accounts.is_bank_account_depositable
   end
 
   # GET /ledgers/1
