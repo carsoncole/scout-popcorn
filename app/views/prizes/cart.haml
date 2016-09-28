@@ -1,5 +1,18 @@
-
 - unless current_scout.is_admin?
+  .row
+    .col-md-2
+    .col-md-8
+      .card
+        .card-block
+          .card-title.text-xs-center
+            %h2 Your Sales
+
+          %h4.card-text.text-xs-center.text-info
+            = number_to_currency(@total_sales)
+
+          %p.card-text.text-muted.text-xs-center.small This figure includes all Site Sales worked and Take Orders that have been turned in.
+
+
   .row
     .col-md-6
       .card
