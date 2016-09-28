@@ -8,7 +8,7 @@ class PrizesController < ApplicationController
     @pack_prizes = @active_event.prizes.pack.order(:amount)
     @bsa_bonus_prizes = @active_event.prizes.bsa_bonus.order(:amount)
   
-    @total_sales = 140#current_scout.total_sales(@active_event)
+    @total_sales = current_scout.total_sales(@active_event)
   end
 
   # GET /prizes/
@@ -17,7 +17,7 @@ class PrizesController < ApplicationController
   end
 
   def cart
-    @total_sales = 140#current_scout.total_sales(@active_event)
+    @total_sales = current_scout.total_sales(@active_event)
     @cart_prizes = current_scout.scout_prizes.order(:prize_amount)
     @available_pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).order(amount: :desc)
     @pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).select("MAX(amount), *").group(:group)
