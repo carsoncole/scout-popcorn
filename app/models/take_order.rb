@@ -27,20 +27,36 @@ class TakeOrder < ApplicationRecord
     take_order_line_items.inject(0) {|sum,line_item| sum + line_item.value}
   end
 
-  def self.submitted
-    where.not(status: 'received')
-  end
-
-  def submitted?
-    status == 'submitted'
-  end
-
   def self.received
-    where(status: 'received')
+    where.not(status: 'received')
   end
 
   def received?
     status == 'received'
+  end
+
+  def self.in_hand
+    where.not(status: 'received')
+  end
+
+  def in_hand?
+    status == 'received'
+  end
+
+  def self.turned_in
+    where(status: 'submitted')
+  end
+
+  def turned_in?
+    status == 'submitted'
+  end
+
+  def self.submitted
+    where(status: 'submitted')
+  end
+
+  def submitted?
+    status == 'submitted'
   end
 
   def self.scout_sales(scout, event)

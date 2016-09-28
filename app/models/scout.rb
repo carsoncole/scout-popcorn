@@ -46,7 +46,7 @@ class Scout < ApplicationRecord
 
   def total_sales(event)
     total = event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
-    take_orders.where(event_id: event.id).each do |to|
+    take_orders.where(event_id: event.id).where("status <> ?", 'received').each do |to|
       total += to.value
     end
     total
