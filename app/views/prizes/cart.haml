@@ -84,6 +84,12 @@
               - @cart_prizes.each do |scout_prize|
                 %tr
                   %td
+                    - if scout_prize.prize.source == 'bsa'
+                      BSA Prize
+                    - elsif scout_prize.prize.source == 'bsa-bonus'
+                      BSA Bonus Prize
+                    - elsif scout_prize.prize.source == 'pack'
+                      Pack Prize
                     = link_to scout_prize.prize.name, prize_path(scout_prize.prize_id)
                     = image_tag(scout_prize.prize.url, width: 40, class: 'img-rounded') if scout_prize.prize.url
                     - if scout_prize.prize.source == 'pack' && @available_pack_prizes.first && @available_pack_prizes.first.amount > scout_prize.prize_amount
@@ -92,19 +98,9 @@
 
                   %td.text-xs-right= number_to_currency(scout_prize.prize_amount, precision: 0)
                   %td.text-xs-right.action_button
-                    = button_to prize_removal_path(scout_prize.id), class: 'btn btn-success' do
-                      %i.fa.fa-minus
-
-              - if @bsa_bonus_prizes && @bsa_bonus_prizes.any?
-                - @bsa_bonus_prizes.each do |prize|
-                  %tr
-                    %td(COLSPAN="3")
-                      AUTOMATIC:
-                      = link_to prize_path(prize) do
-                        =prize.name
-                        = surround("(", ")") do
-                          = number_to_currency(prize.amount)
-                          Bonus Prize
+                    - unless scout_prize.prize.source == 'bsa-bonus'
+                      = button_to prize_removal_path(scout_prize.id), class: 'btn btn-success' do
+                        %i.fa.fa-minus
 
 
           - else
