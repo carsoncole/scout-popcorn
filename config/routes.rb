@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   resources :events do
     resources :scout_site_sales
   end
+  get "prizes/cart" => "prizes#cart", as: 'prize_cart'
+  post "prizes/selection/:id" => "prizes#selection", as: 'prize_selection'
+  post "prizes/removal/:id" => "prizes#removal", as: 'prize_removal'
   resources :prizes
   resources :products
   resources :home, only: :index
