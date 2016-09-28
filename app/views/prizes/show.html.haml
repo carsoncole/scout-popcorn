@@ -1,12 +1,23 @@
-%e
+.row
+  .col-md-8
+    .card
+      .card-block
+        .card-title
+          %h1= @prize.name
+        %table.table
+          %tr
+            %th Description:
+            %td.text-xs-right= @prize.description
 
-%p
-  %b Name:
-  = @prize.name
-%p
-  %b Amount:
-  = @prize.amount
+          %tr
+            %th Prize Level:
+            %td.text-xs-right= number_to_currency(@prize.amount)
 
-= link_to 'Edit', edit_prize_path(@prize)
-\|
-= link_to 'Back', prizes_path
+        = image_tag(@prize.url, class: 'img-fluid img-rounded m-x-auto') if @prize.url
+
+        - if current_scout.is_admin?
+          = link_to 'Edit', edit_prize_path(@prize)
+
+.row
+  .col-md-12
+    %p= link_to 'All Prizes', prizes_path

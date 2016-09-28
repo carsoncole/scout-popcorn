@@ -7,11 +7,40 @@ class PrizesController < ApplicationController
     @bsa_prizes = @active_event.prizes.bsa.order(:amount) if @active_event
     @pack_prizes = @active_event.prizes.pack.order(:amount)
     @bsa_bonus_prizes = @active_event.prizes.bsa_bonus.order(:amount)
+  
+    @total_sales = 140#current_scout.total_sales(@active_event)
   end
 
-  # GET /prizes/1
+  # GET /prizes/
   # GET /prizes/1.json
   def show
+  end
+
+  def cart
+    @total_sales = 140#current_scout.total_sales(@active_event)
+    @cart_prizes = current_scout.scout_prizes.order(:prize_amount)
+    @available_pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).order(amount: :desc)
+    @pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).select("MAX(amount), *").group(:group)
+    # @pack_prizes = @active_event.prizes.pack.where("amount < ?", @total_sales).order(amount: :desc)
+    unless (@active_event.prizes.pack.map{|p| p.id} & @cart_prizes.map{|p| p.prize_id }).empty?
+      @pack_prizes = []
+    end
+    # @pack_prizes = @active_event.prizes.pack.where(amount: @top_pack_prize.amount).where.not(id: @cart_prizes.map{|p|p.prize_id})
+    @bsa_prizes = @active_event.prizes.bsa.order(:amount) if @active_event
+    @total_bsa_prize_amounts = current_scout.total_bsa_prize_amounts(@active_event)
+    @bsa_bonus_prizes = @active_event.prizes.bsa_bonus.where("amount < ?", @total_sales).order(amount: :desc)
+  end
+
+  def selection
+    @prize = Prize.find(params[:id])
+    scout_prize = current_scout.scout_prizes.build(prize_id: @prize.id, prize_amount: @prize.amount, event_id: @active_event.id)
+    scout_prize.save
+    redirect_to prize_cart_path
+  end
+
+  def removal
+    current_scout.scout_prizes.find(params[:id]).destroy
+    redirect_to prize_cart_path
   end
 
   # GET /prizes/new
@@ -71,6 +100,6 @@ class PrizesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def prize_params
-      params.require(:prize).permit(:name, :amount, :event_id, :source, :source_id, :source_description, :is_by_level, :url, :description)
+      params.require(:prize).permit(:name, :amount, :event_id, :source, :source_id, :source_description, :is_by_level, :url, :description, :group)
     end
 end

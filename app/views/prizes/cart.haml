@@ -1,0 +1,109 @@
+
+- unless current_scout.is_admin?
+  .row
+    .col-md-6
+      .card
+        .card-block
+          .card-title
+            %h2 Available BSA Prizes
+
+          %p.card-text.text-muted
+            Select any combination of BSA prizes that total less than your total sales of
+            = number_to_currency(@total_sales)
+
+          - unless @cart_prizes.any? || @bsa_prizes.any?
+            %br
+            .col-md-2
+            .col-md-8
+              .alert.alert-info.text-xs-center
+                As you do more Popcorn Sales, prizes you become eligible for will be shown here.
+          %br
+          %table.table.table-sm
+            - @bsa_prizes.each do |prize|
+              - next if prize.amount > @total_sales - @total_bsa_prize_amounts
+              %tr
+                %td
+                  = link_to prize.name, prize_path(prize)
+                  = image_tag(prize.url, width: 40, class: 'img-rounded') if prize.url
+                %td.text-xs-right= number_to_currency(prize.amount, precision: 0)
+                %td.text-xs-right.action_button
+                  = button_to prize_selection_path(prize.id), class: 'btn btn-success' do
+                    %i.fa.fa-cart-plus
+
+    .col-md-6
+      .card
+        .card-block
+          .card-title
+            %h2 Available Pack Prizes
+          - if @pack_prizes.any?
+            %p.card-text.text-muted You can select one prize.
+
+          - unless @cart_prizes.any? || @available_pack_prizes.any?
+            %br
+            .col-md-2
+            .col-md-8
+              .alert.alert-info.text-xs-center
+                As you do more Popcorn Sales, prizes you become eligible for will be shown here.
+          
+
+          %br
+          %table.table.table-sm
+            - @pack_prizes.each do |prize|
+              %tr
+                %td
+                  = link_to prize.name, prize_path(prize)
+                  = image_tag(prize.url, width: 40, class: 'img-rounded') if prize.url
+                  / = number_to_currency(prize.amount, precision: 0)
+                %td.text-xs-right= number_to_currency(prize.amount, precision: 0)
+                %td.text-xs-right.action_button
+                  = button_to prize_selection_path(prize.id), class: 'btn btn-success' do
+                    %i.fa.fa-cart-plus
+
+      .card
+        .card-block
+          .card-title
+            %h2
+              %i.fa.fa-shopping-cart.fa-lg
+              Prize Cart
+          %br
+          - if @cart_prizes.any?
+            %table.table.table-sm
+              - @cart_prizes.each do |scout_prize|
+                %tr
+                  %td
+                    = link_to scout_prize.prize.name, prize_path(scout_prize.prize_id)
+                    = image_tag(scout_prize.prize.url, width: 40, class: 'img-rounded') if scout_prize.prize.url
+                    - if scout_prize.prize.source == 'pack' && @available_pack_prizes.first && @available_pack_prizes.first.amount > scout_prize.prize_amount
+                      %br
+                      .small.text-danger * Removing this prize will reveal additional Pack Prizes with higher values
+
+                  %td.text-xs-right= number_to_currency(scout_prize.prize_amount, precision: 0)
+                  %td.text-xs-right.action_button
+                    = button_to prize_removal_path(scout_prize.id), class: 'btn btn-success' do
+                      %i.fa.fa-minus
+
+              - if @bsa_bonus_prizes && @bsa_bonus_prizes.any?
+                - @bsa_bonus_prizes.each do |prize|
+                  %tr
+                    %td(COLSPAN="3")
+                      AUTOMATIC:
+                      = link_to prize_path(prize) do
+                        =prize.name
+                        = surround("(", ")") do
+                          = number_to_currency(prize.amount)
+                          Bonus Prize
+
+
+          - else
+            .col-md-2
+            .col-md-8
+              .alert.alert-info.text-xs-center
+                Prizes you have chosen will be shown here.           
+
+
+          .card-text.text-xs-center
+            = button_to "ORDER MY PRIZES", "#", disabled: true, class: 'btn btn-success btn-lg'
+          %br
+          .card-text.text-xs-center.small.text-muted Orders can be placed once Popcorn Sales end on October 16.
+              
+

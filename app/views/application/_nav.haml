@@ -28,7 +28,17 @@
               / %li= link_to "Direct Sales", direct_sales_path, class: "dropdown-item #{'active' if controller_name == 'direct_sales'}"
               %li= link_to "Site Sales", site_sales_path, class: "dropdown-item #{'active' if controller_name == 'site_sales'}"
               %li= link_to "Online Sales", online_sales_path, class: "dropdown-item #{'active' if controller_name == 'online_sales'}"
-          %li.nav-item= link_to "Prizes", prizes_path, class: "nav-link #{'active' if controller_name == 'prizes'}"
+
+          %li.nav-item.btn-group
+            = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
+              Prizes
+              %span.caret
+            %ul.dropdown-menu          
+              %li= link_to "Prizes", prizes_path, class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'index' }"
+              %li
+                = link_to prize_cart_path, class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'cart'}" do
+                  %i.fa.fa-shopping-cart
+                  Prize Cart
           %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
           - if current_scout.is_admin?
             %li.nav-item.btn-group

@@ -3,6 +3,7 @@ class Event < ApplicationRecord
   has_many :purchase_orders
   has_many :prizes
   has_many :products
+  has_many :scout_prizes
   has_many :direct_sales, dependent: :destroy
   has_many :take_orders, dependent: :destroy
   has_many :site_sales, dependent: :destroy

@@ -1,12 +1,16 @@
-.row
-  .col-md-12
-    %h1 Prizes
 
-.row
-  .col-md-2
-  .col-md-8
-    .alert.alert-info
-      As you earn your sales credits, the prizes that you are eligible for will be highlighted.
+- if @total_sales > 0
+  .row
+    .col-md-4
+    .col-md-4
+      .alert.alert-danger.text-xs-center
+        %p Select Your Prizes
+        %b
+          = link_to prize_cart_path do
+            Prize Cart
+            %i.fa.fa-shopping-cart.fa-lg
+
+
 
 - ['bsa', 'bsa_bonus', 'pack'].each do |prize_type|
   - next unless eval("@#{prize_type}_prizes").any?
@@ -28,7 +32,7 @@
       - batch.each do |prize|
         .col-md-3
           .card
-            .card-block{class: current_scout.total_sales(@active_event) > prize.amount ? 'prize-eligible' : nil }
+            .card-block{class: @total_sales > prize.amount ? 'prize-eligible' : nil }
               .card-title
                 .small
                   = prize.source.capitalize
@@ -51,6 +55,7 @@
                 = link_to 'Edit', edit_prize_path(prize)
                 = link_to 'Destroy', prize, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
+  %br
 / - if @pack_prizes
 /   .row
 /     - @pack_prizes.each do |prize|
