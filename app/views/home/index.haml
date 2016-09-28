@@ -33,19 +33,19 @@
                 = number_to_currency(total, precision: 0)
                 - grand_total += total
 
-            %tr
-              %th
-                = link_to "Direct Sales", direct_sales_path
-              %td.text-xs-right
-                - total = 0
-                - if current_scout.is_admin?
-                  - query = DirectSale.where(event_id: event.id)
-                - else
-                  - query = current_scout.direct_sales.where(event_id: event.id)
-                - query.each do |direct_sale|
-                  - total += direct_sale.amount
-                = number_to_currency(total, precision: 0)  
-                - grand_total += total
+            / %tr
+            /   %th
+            /     = link_to "Direct Sales", direct_sales_path
+            /   %td.text-xs-right
+            /     - total = 0
+            /     - if current_scout.is_admin?
+            /       - query = DirectSale.where(event_id: event.id)
+            /     - else
+            /       - query = current_scout.direct_sales.where(event_id: event.id)
+            /     - query.each do |direct_sale|
+            /       - total += direct_sale.amount
+            /     = number_to_currency(total, precision: 0)  
+            /     - grand_total += total
 
             %tr
               %th
