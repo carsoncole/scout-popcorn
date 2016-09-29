@@ -45,6 +45,10 @@ class ScoutsController < ApplicationController
     end
   end
 
+  def update_password
+    @scout = @unit.scouts.find(params[:scout_id])
+  end
+
   # PATCH/PUT /scouts/1
   # PATCH/PUT /scouts/1.json
   def update

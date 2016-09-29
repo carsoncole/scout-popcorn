@@ -34,6 +34,16 @@
                     %span
                       = link_to edit_take_order_path(@take_order) do
                         %i.fa.fa-pencil
+              %tr
+                %th Envelope:
+                %td.text-xs-right
+                  = @take_order.envelope.name
+                  - unless @take_order.submitted?
+                    %span
+                      = link_to edit_take_order_path(@take_order) do
+                        %i.fa.fa-pencil
+
+
               - if @take_order.square_reciept_url?
                 %tr
                   %th Square reciept:
@@ -117,5 +127,3 @@
     = link_to take_orders_path do
       %i.fa.fa-arrow-left.fa-lg
       Back to Take Orders
-%br
-= render 'legend'

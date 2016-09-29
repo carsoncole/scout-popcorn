@@ -13,9 +13,14 @@ class TakeOrdersController < ApplicationController
       @take_orders = @take_orders.where(scout_id: params[:scout_id])
     end
 
-    if params[:filter]
+    if params[:filter] == 'loose'
+      @take_orders = @take_orders.loose
+
+    elsif params[:filter]
       @take_orders = @take_orders.where(status: params[:filter])
     end
+
+    @open_envelopes = @active_event.envelopes.open
   end
 
   # GET /orders/1
@@ -28,12 +33,14 @@ class TakeOrdersController < ApplicationController
   # GET /orders/new
   def new
     @take_order = TakeOrder.new
+    @take_order.envelope_id = params[:envelope_id] if params[:envelope_id]
     @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
   end
 
   # GET /orders/1/edit
   def edit
     @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
+    @open_envelopes = @active_event.envelopes.open
   end
 
   # POST /orders
@@ -65,7 +72,7 @@ class TakeOrdersController < ApplicationController
     else 
       @take_order.update(take_order_params)
     end
-    redirect_to @take_order, notice: 'Take Order was successfully updated.'
+    redirect_to take_orders_path, notice: 'Take Order was successfully updated.'
   end
 
   # DELETE /orders/1
@@ -90,6 +97,6 @@ class TakeOrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def take_order_params
-      params.require(:take_order).permit(:scout_id, :submitted, :status_id, :customer_name, :customer_address, :customer_email, :is_paid_by_credit_card, :credit_card_order_number, :payment_account_id, :square_reciept_url)
+      params.require(:take_order).permit(:scout_id, :submitted, :status_id, :customer_name, :customer_address, :customer_email, :is_paid_by_credit_card, :credit_card_order_number, :payment_account_id, :square_reciept_url, :envelope_id)
     end
 end

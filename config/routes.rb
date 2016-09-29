@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  patch "envelopes/assign" => "envelopes#assign", as: 'assign_to_envelope'
+  post "envelopes/:id/close" => "envelopes#close", as: 'close_envelope'
+  put "envelopes/:envelope_id/remove-take-order/:id" => "envelopes#remove_take_order", as: 'envelope_remove_take_order'
+  resources :envelopes
   get "ledgers/statements" => "ledgers#statement", as: 'statement'
   resources :ledgers
   get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
@@ -10,7 +14,9 @@ Rails.application.routes.draw do
   root "home#index"
   devise_for :scouts, :controllers => { registrations: 'registrations' }
   resources :units
-  resources :scouts
+  resources :scouts do
+    get 'update-password' => 'scouts#update_password', as: 'update_password'
+  end
   resources :site_sales do
     get "tracking_sheet" => "site_sales#tracking_sheet", as: 'tracking_sheet'
     resources :site_sale_payment_methods

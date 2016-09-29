@@ -1,0 +1,86 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        %span.tag.tag-primary.pull-right
+          - if @envelope.status == 'Open'
+            Open
+          - elsif @envelope.status == 'Closed'
+            Closed
+          - else
+            = @envelope.status.capitalize if @envelope.status
+        .card-title
+          %h1= @envelope.name
+
+
+          
+
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h3 Take Orders
+        %table.table.table-sm
+          %tr
+            %th Customer
+            %th Items
+            %th Amount
+            %th Payment
+            %th
+            %th
+          - @take_orders.each do |take_order|
+            %tr
+              %td= take_order.customer_name
+              %td
+                - take_order.take_order_line_items.each do |line_item|
+                  = line_item.product.name
+                  = surround("(", ")") do
+                    = line_item.quantity
+                  %br
+              %td= number_to_currency(take_order.value, precision: 0)
+              %td= take_order.account.name
+
+              %td
+                = link_to take_order_path(take_order) do
+                  %i.fa.fa-folder-open
+              %td
+                - if @envelope.open?
+                  = link_to envelope_remove_take_order_path(@envelope.id, take_order.id), method: :put do
+                    %i.fa.fa-trash
+          %tr
+            %td
+            %td
+            %td= number_to_currency(@envelope.value, precision: 0)
+            %td
+            %td
+            %td
+
+.row
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h3 Payment Methods
+        %table.table.table-sm
+          - @payment_methods.each do |payment_method|
+            %tr
+              %th= payment_method.account.name
+              %td.text-xs-right
+                = number_to_currency(@take_orders.where(payment_account_id: payment_method.payment_account_id).joins(:take_order_line_items).sum('take_order_line_items.value'), precision: 0)
+          %tr
+            %th Total
+            %td.text-xs-right= number_to_currency(@envelope.value, precision: 0 )
+
+  - if @envelope.open? && current_scout.is_admin?
+    .col-md-6
+      .card
+        .card-block
+          .col-md-8
+            %em Closing an envelope is irreversible. Do not Close if totals do not match cash and other payment methods received.
+          .col-md-4.text-xs-center
+            = button_to "Close", close_envelope_path(@envelope), class: 'btn btn-lg btn-success'
+
+.row
+  .col-md-12
+    = render 'nav'

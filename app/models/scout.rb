@@ -46,7 +46,7 @@ class Scout < ApplicationRecord
 
   def total_sales(event)
     total = event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
-    take_orders.where(event_id: event.id).where("status <> ?", 'received').each do |to|
+    take_orders.where(event_id: event.id).each do |to|
       total += to.value
     end
     total
@@ -62,6 +62,14 @@ class Scout < ApplicationRecord
 
   def event_site_sale_hours_worked(event)
     scout_site_sales.joins(:site_sale).where("site_sales.event_id = ?",event.id).sum(:hours_worked)
+  end
+
+  def open_envelope(event)
+    envelopes.open.where(event_id: event.id).last
+  end
+
+  def open_envelope?(event)
+    envelopes.open.where(event_id: event.id).any?
   end
 
   private

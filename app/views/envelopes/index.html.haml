@@ -1,0 +1,61 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h1 Envelopes       
+
+        %ul.nav.nav-tabs
+          %li.nav-item
+            = link_to envelopes_path, class: "nav-link #{'active' unless params[:status]}" do
+              All
+              - if current_scout.is_admin?
+                = surround("(", ")") do
+                  = @active_event.envelopes.count
+
+          %li.nav-item
+            = link_to envelopes_path(status: 'open'), class: "nav-link #{'active' if params[:status] == 'open'}" do
+              Open
+              - if current_scout.is_admin?
+                = surround("(", ")") do
+                  = @active_event.envelopes.open.count
+
+          %li.nav-item
+            = link_to envelopes_path(status: 'closed'), class: "nav-link #{'active' if params[:status] == 'closed'}" do
+              Closed
+              - if current_scout.is_admin?
+                = surround("(", ")") do
+                  = @active_event.envelopes.closed.count
+
+        %br
+
+        %table.table
+          %thead
+            %tr
+              %th 
+              %th Status
+              %th Value
+              %th Closed
+              %th
+              %th
+
+          %tbody
+            - @envelopes.each do |envelope|
+              %tr
+                %td= link_to envelope.name, envelope_path(envelope)
+                %td= envelope.status
+                %td= number_to_currency(envelope.value)
+                %td= nice_date_time_less(envelope.closed_at) if envelope.closed_at
+                %td
+                  = link_to envelope do
+                    %i.fa.fa-folder-open
+                
+                %td
+                  - unless envelope.closed?
+                    = link_to  envelope, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                      %i.fa.fa-trash
+
+        = paginate @envelopes
+        %br
+
+        = render 'nav'

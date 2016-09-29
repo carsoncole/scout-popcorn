@@ -3,79 +3,80 @@
 
 .row
   %br
-  - @events.each do |event|
-    .col-md-6
-      .card
-        .card-block
-          .card-title
-            %h2
-              - unless current_scout.is_admin?
-                = current_scout.name
 
-            - if current_scout.is_admin
-              %h2= event.name
-            - else
-              %p.lead= event.name
-          
-          - grand_total = 0
-          %table.table
-            %tr
-              %th
-                = link_to "Take Orders (In Hand & Turned In)", take_orders_path
-              %td.text-xs-right
-                - total = 0
-                - if current_scout.is_admin?
-                  - query = TakeOrder.where(event_id: event.id)
-                - else
-                  - query = current_scout.take_orders.where(event_id: event.id)
-                - query.each do |take_order|
-                  - total += take_order.value
-                = number_to_currency(total, precision: 0)
-                - grand_total += total
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h2
+            - unless current_scout.is_admin?
+              = current_scout.name
 
-            / %tr
-            /   %th
-            /     = link_to "Direct Sales", direct_sales_path
-            /   %td.text-xs-right
-            /     - total = 0
-            /     - if current_scout.is_admin?
-            /       - query = DirectSale.where(event_id: event.id)
-            /     - else
-            /       - query = current_scout.direct_sales.where(event_id: event.id)
-            /     - query.each do |direct_sale|
-            /       - total += direct_sale.amount
-            /     = number_to_currency(total, precision: 0)  
-            /     - grand_total += total
-
-            %tr
-              %th
-                = link_to "Online Sales", online_sales_path
-              %td.text-xs-right
-                - total = 0
-                - if current_scout.is_admin?
-                  - query = OnlineSale.where(event_id: event.id)
-                - else
-                  - query = current_scout.online_sales.where(event_id: event.id)
-                - query.each do |online_sale|
-                  - total += online_sale.amount
-                = number_to_currency(total, precision: 0)  
-                - grand_total += total
-
-            %tr
-              %th
-                = link_to "Site Sales", site_sales_path
-              %td.text-xs-right
-                - if current_scout.is_admin?
-                  - amount = @active_event.site_sales.joins(:site_sale_line_items).sum(:value)
-                - else
-                  - amount = @active_event.total_site_sales_per_hour_worked * current_scout.event_site_sale_hours_worked(@active_event)
-                = number_to_currency(amount, precision: 0)
-                - grand_total += amount           
+          - if current_scout.is_admin
+            %h2= @active_event.name
+          - else
+            %p.lead
+              = @active_event.name          
         
-            %tr
-              %th Total Sales
-              %td.text-xs-right
-                = number_to_currency(grand_total, precision: 0)
+        - grand_total = 0
+        %table.table
+          %tr
+            %th
+              = link_to "Take Orders", take_orders_path
+            %td.text-xs-right
+              - total = 0
+              - if current_scout.is_admin?
+                - query = TakeOrder.where(event_id: @active_event.id)
+              - else
+                - query = current_scout.take_orders.where(event_id: @active_event.id)
+              - query.each do |take_order|
+                - total += take_order.value
+              = number_to_currency(total, precision: 0)
+              - grand_total += total
+
+          / %tr
+          /   %th
+          /     = link_to "Direct Sales", direct_sales_path
+          /   %td.text-xs-right
+          /     - total = 0
+          /     - if current_scout.is_admin?
+          /       - query = DirectSale.where(event_id: @active_event.id)
+          /     - else
+          /       - query = current_scout.direct_sales.where(event_id: @active_event.id)
+          /     - query.each do |direct_sale|
+          /       - total += direct_sale.amount
+          /     = number_to_currency(total, precision: 0)  
+          /     - grand_total += total
+
+          %tr
+            %th
+              = link_to "Online Sales", online_sales_path
+            %td.text-xs-right
+              - total = 0
+              - if current_scout.is_admin?
+                - query = OnlineSale.where(event_id: @active_event.id)
+              - else
+                - query = current_scout.online_sales.where(event_id: @active_event.id)
+              - query.each do |online_sale|
+                - total += online_sale.amount
+              = number_to_currency(total, precision: 0)  
+              - grand_total += total
+
+          %tr
+            %th
+              = link_to "Site Sales", site_sales_path
+            %td.text-xs-right
+              - if current_scout.is_admin?
+                - amount = @active_event.site_sales.joins(:site_sale_line_items).sum(:value)
+              - else
+                - amount = @active_event.total_site_sales_per_hour_worked * current_scout.event_site_sale_hours_worked(@active_event)
+              = number_to_currency(amount, precision: 0)
+              - grand_total += amount           
+      
+          %tr
+            %th Total Sales
+            %td.text-xs-right
+              = number_to_currency(grand_total, precision: 0)
   - if current_scout.is_admin?
     .col-md-6
       .card
@@ -118,20 +119,20 @@
 
 
 .row
-  - unless current_scout.is_admin?
-    .col-md-6  
-      .card
-        .card-block
-          .card-title
-            %h4.text-xs-center
-              How much money should I have?
+  / - unless current_scout.is_admin?
+  /   .col-md-6  
+  /     .card
+  /       .card-block
+  /         .card-title
+  /           %h4.text-xs-center
+  /             How much money should I have?
 
-          %h2.card-text.text-xs-center
-            = number_to_currency(current_scout.take_orders.where(status: 'received').where(payment_account_id: Account.take_order(@unit).id).joins(:take_order_line_items).sum('take_order_line_items.value'))
+  /         %h2.card-text.text-xs-center
+  /           = number_to_currency(current_scout.take_orders.where(status: 'received').where(payment_account_id: Account.take_order(@unit).id).joins(:take_order_line_items).sum('take_order_line_items.value'))
 
-        .card-footer
-          %p.card-text.small
-            Here we show you have much in cash and checks you should have in your collection envelope. For this number to be correct, you need to enter all of your Take Orders.
+  /       .card-footer
+  /         %p.card-text.small
+  /           Here we show you have much in cash and checks you should have in your collection envelope. For this number to be correct, you need to enter all of your Take Orders.
 
 
 

@@ -43,6 +43,18 @@
                 %br
               = f.text_field :square_reciept_url, class: 'form-control'          
 
+          - if f.object.new_record?
+            = f.hidden_field :envelope_id, value: f.object.envelope_id
+
+          - unless f.object.new_record?
+            .form-group
+              %label
+                = f.label :envelope
+                %span= link_to "(New Envelope)", new_envelope_path
+                %br
+              = f.collection_select :envelope_id, @open_envelopes, :id, :name, {}, class: 'form-control'      
+
+
           %br
           .actions
             = f.submit 'Save', class: 'btn btn-success'

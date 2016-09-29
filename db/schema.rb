@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918010231) do
+ActiveRecord::Schema.define(version: 20160928175053) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20160918010231) do
     t.boolean  "is_site_sale_eligible",       default: false
     t.boolean  "is_bank_account_depositable", default: false
     t.string   "account_type"
+    t.boolean  "is_credit_card"
+    t.boolean  "is_cash"
   end
 
   create_table "direct_sales", force: :cascade do |t|
@@ -33,6 +35,17 @@ ActiveRecord::Schema.define(version: 20160918010231) do
     t.string   "status",                             default: "delivered", null: false
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
+  end
+
+  create_table "envelopes", force: :cascade do |t|
+    t.integer  "scout_id"
+    t.integer  "event_id"
+    t.string   "status"
+    t.integer  "money_received_by_id"
+    t.datetime "money_received_at"
+    t.datetime "closed_at"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "events", force: :cascade do |t|
@@ -78,18 +91,20 @@ ActiveRecord::Schema.define(version: 20160918010231) do
     t.string   "url"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.string   "group"
   end
 
   create_table "products", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
     t.integer  "quantity"
-    t.decimal  "retail_price", precision: 5, scale: 2
+    t.decimal  "retail_price",          precision: 5, scale: 2
     t.string   "url"
-    t.boolean  "is_active",                            default: true
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.boolean  "is_active",                                     default: true
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
     t.string   "short_name"
+    t.boolean  "is_physical_inventory",                         default: true
   end
 
   create_table "purchase_orders", force: :cascade do |t|
@@ -99,6 +114,18 @@ ActiveRecord::Schema.define(version: 20160918010231) do
     t.datetime "ordered_at"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "scout_prizes", force: :cascade do |t|
+    t.integer  "scout_id"
+    t.integer  "event_id"
+    t.integer  "prize_id"
+    t.integer  "prize_amount"
+    t.boolean  "is_complete"
+    t.datetime "is_complete_at"
+    t.boolean  "is_approved"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "scout_site_sales", force: :cascade do |t|
@@ -175,6 +202,7 @@ ActiveRecord::Schema.define(version: 20160918010231) do
     t.integer  "direct_sale_id"
     t.integer  "site_sale_id"
     t.boolean  "is_transfer_from_bsa"
+    t.date     "date"
   end
 
   create_table "take_order_line_items", force: :cascade do |t|
@@ -203,6 +231,8 @@ ActiveRecord::Schema.define(version: 20160918010231) do
     t.boolean  "is_paid_by_credit_card",                           default: false
     t.integer  "credit_card_order_number"
     t.integer  "payment_account_id"
+    t.string   "square_reciept_url"
+    t.integer  "envelope_id"
   end
 
   create_table "units", force: :cascade do |t|
@@ -212,8 +242,11 @@ ActiveRecord::Schema.define(version: 20160918010231) do
     t.string   "city"
     t.string   "zip_code"
     t.string   "state_postal_code"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "treasurer_first_name"
+    t.string   "treasurer_last_name"
+    t.string   "treasurer_email"
   end
 
 end

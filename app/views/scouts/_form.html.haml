@@ -2,6 +2,8 @@
   .col-md-5
     .card
       .card-block
+        .card-title
+          %h1 Scout
         = form_for @scout do |f|
           - if @scout.errors.any?
             #error_explanation
@@ -24,12 +26,12 @@
             = f.label :last_name
             = f.text_field :last_name, class: 'form-control'
 
-          .form-group
-            = f.label :password
-            = f.password_field :password, class: 'form-control'
-          .form-group
-            = f.label :password_confirmation
-            = f.password_field :password_confirmation, class: 'form-control'
+          / .form-group
+          /   = f.label :password
+          /   = f.password_field :password, class: 'form-control'
+          / .form-group
+          /   = f.label :password_confirmation
+          /   = f.password_field :password_confirmation, class: 'form-control'
 
           
           .form-group
@@ -41,3 +43,6 @@
             = f.text_field :email, class: 'form-control'
           .actions
             = f.submit 'Save', class: 'btn btn-success'
+
+        %br
+        %p= link_to "Change password", scout_update_password_path(current_scout)

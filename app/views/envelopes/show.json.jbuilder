@@ -1,0 +1,1 @@
+json.partial! "envelopes/envelope", envelope: @envelope

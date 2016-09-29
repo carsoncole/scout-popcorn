@@ -19,7 +19,7 @@ class PrizesController < ApplicationController
   def cart
     Prize.process_bonus_prizes!(current_scout, @active_event) unless current_scout.is_admin?
     @total_sales = current_scout.total_sales(@active_event)
-    @cart_prizes = current_scout.scout_prizes.order(:prize_amount)
+    @cart_prizes = current_scout.scout_prizes.where(event_id: @active_event.id).order(:prize_amount)
     @available_pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).order(amount: :desc)
     @pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).select("MAX(amount), *").group(:group)
     # @pack_prizes = @active_event.prizes.pack.where("amount < ?", @total_sales).order(amount: :desc)
@@ -29,6 +29,7 @@ class PrizesController < ApplicationController
     # @pack_prizes = @active_event.prizes.pack.where(amount: @top_pack_prize.amount).where.not(id: @cart_prizes.map{|p|p.prize_id})
     @bsa_prizes = @active_event.prizes.bsa.order(:amount) if @active_event
     @total_bsa_prize_amounts = current_scout.total_bsa_prize_amounts(@active_event)
+    @eligible_bsa_prizes = @active_event.prizes.bsa.order(:amount).where("amount < ?", @total_sales - @total_bsa_prize_amounts)
     @bsa_bonus_prizes = @active_event.prizes.bsa_bonus.where("amount < ?", @total_sales).order(amount: :desc)
   end
 

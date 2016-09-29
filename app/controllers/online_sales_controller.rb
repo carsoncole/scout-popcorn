@@ -4,7 +4,7 @@ class OnlineSalesController < ApplicationController
   # GET /online_sales
   # GET /online_sales.json
   def index
-    @online_sales = OnlineSale.all
+    @online_sales = @active_event.online_sales
   end
 
   # GET /online_sales/1

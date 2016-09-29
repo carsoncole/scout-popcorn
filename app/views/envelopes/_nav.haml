@@ -1,0 +1,11 @@
+- if current_scout.is_admin?
+  %br
+
+  %ul.nav.nav-inline
+    / %li.nav-item
+    /   = link_to envelopes_path, class: 'nav-link' do
+    /     Envelopes
+    
+    %li.nav-item
+      = link_to new_envelope_path, class: 'nav-link' do
+        New Envelope

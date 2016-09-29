@@ -4,6 +4,7 @@ class TakeOrder < ApplicationRecord
   belongs_to :purchase_order, optional: true
   belongs_to :payment_method
   belongs_to :account, foreign_key: :payment_account_id
+  belongs_to :envelope
   has_many :products, through: :take_order_line_items
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
   has_many :take_order_line_items, dependent: :destroy
@@ -13,7 +14,7 @@ class TakeOrder < ApplicationRecord
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
-
+  before_create :assign_to_envelope!
 
   STATUSES = { 
       in_hand: { :status => :in_hand, :name => 'In Hand', description: "Order that a Scout has received"},
@@ -30,6 +31,23 @@ class TakeOrder < ApplicationRecord
   def self.received
     where.not(status: 'received')
   end
+
+  def self.loose
+    where(envelope_id: nil)
+  end
+
+  def self.loose?
+    envelope_id.nil?
+  end
+
+  def self.enveloped
+    where(envelope_id: nil)
+  end
+
+  def self.enveloped?
+    envelope_id.nil?
+  end
+
 
   def received?
     status == 'received'
@@ -103,6 +121,16 @@ class TakeOrder < ApplicationRecord
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: Date.current, description: "Take Order submitted")
       product_due_to_customers_account = event.unit.accounts.where(name: 'Product due to Customers').first
       Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * Product::WHOLESALE_COST_PERCENTAGE, date: Date.current, description: "Take Order submitted")
+    end
+  end
+
+  def assign_to_envelope!
+    return if self.envelope_id
+    if scout.open_envelope?(self.event)
+      self.envelope_id = scout.open_envelope(self.event).id
+    else
+      new_envelope = scout.envelopes.create(event_id: self.event_id)
+      self.envelope_id = new_envelope.id
     end
   end
 

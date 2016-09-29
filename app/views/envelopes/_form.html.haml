@@ -1,0 +1,29 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h1 Envelope
+
+        %p.card-text.text-muted Envelopes represent groups of Take Orders that are on one order form.
+
+        = form_for @envelope do |f|
+          - if @envelope.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@envelope.errors.count, "error")} prohibited this envelope from being saved:"
+              %ul
+                - @envelope.errors.full_messages.each do |msg|
+                  %li= msg
+
+          - if current_scout.is_admin?
+            .form-group
+              = f.label :scout
+              = f.collection_select :scout_id, @scouts, :id, :name, {}, class: 'form-control'
+          - else
+            = f.hidden_field :scout_id, value: current_scout.id
+
+          .actions
+            = f.submit "Create a new Envelope", class: 'btn btn-success'
+
+
+        = render 'nav'
