@@ -24,29 +24,9 @@
             %th
               = link_to "Take Orders", take_orders_path
             %td.text-xs-right
-              - total = 0
-              - if current_scout.is_admin?
-                - query = TakeOrder.where(event_id: @active_event.id)
-              - else
-                - query = current_scout.take_orders.where(event_id: @active_event.id)
-              - query.each do |take_order|
-                - total += take_order.value
+              - total = current_scout.take_order_sales(@active_event)
               = number_to_currency(total, precision: 0)
               - grand_total += total
-
-          / %tr
-          /   %th
-          /     = link_to "Direct Sales", direct_sales_path
-          /   %td.text-xs-right
-          /     - total = 0
-          /     - if current_scout.is_admin?
-          /       - query = DirectSale.where(event_id: @active_event.id)
-          /     - else
-          /       - query = current_scout.direct_sales.where(event_id: @active_event.id)
-          /     - query.each do |direct_sale|
-          /       - total += direct_sale.amount
-          /     = number_to_currency(total, precision: 0)  
-          /     - grand_total += total
 
           %tr
             %th
@@ -77,7 +57,6 @@
             %th Total Sales
             %td.text-xs-right
               = number_to_currency(grand_total, precision: 0)
-
 
     .card
       .card-block

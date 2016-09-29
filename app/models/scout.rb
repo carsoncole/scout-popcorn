@@ -46,10 +46,12 @@ class Scout < ApplicationRecord
 
   def total_sales(event)
     total = event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
-    take_orders.where(event_id: event.id).each do |to|
-      total += to.value
-    end
+    total += take_order_sales(event)
     total
+  end
+
+  def take_order_sales(event)
+    take_orders.where(event_id: event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
   end
 
   def default_event

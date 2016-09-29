@@ -5,27 +5,38 @@ class TakeOrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @take_orders = TakeOrder.order(created_at: :desc).page(params[:page])
-    @take_orders = @take_orders.where(event_id: @active_event.id) if @active_event
-    @take_orders = @take_orders.where(scout_id: current_scout) unless current_scout.is_admin?
-    @unassigned_take_orders = TakeOrder.loose.order(created_at: :desc)
+    # @take_orders = TakeOrder.order(created_at: :desc).page(params[:page])
+    # @take_orders = @take_orders.where(event_id: @active_event.id) if @active_event
+    # @take_orders = @take_orders.where(scout_id: current_scout) unless current_scout.is_admin?
+    # @unassigned_take_orders = TakeOrder.loose.order(created_at: :desc)
 
-    if params[:scout_id]
-      @take_orders = @take_orders.where(scout_id: params[:scout_id])
-    end
+    # if params[:scout_id]
+    #   @take_orders = @take_orders.where(scout_id: params[:scout_id])
+    # end
 
-    if params[:filter] == 'loose'
-      @take_orders = @take_orders.loose
+    # if params[:filter] == 'loose'
+    #   @take_orders = @take_orders.loose
 
-    elsif params[:filter]
-      @take_orders = @take_orders.where(status: params[:filter])
-    end
+    # elsif params[:filter]
+    #   @take_orders = @take_orders.where(status: params[:filter])
+    # end
 
     if current_scout.is_admin?
-      @open_envelopes = @active_event.envelopes.open
+      @envelopes = @active_event.envelopes
     else
-      @open_envelopes = @active_event.envelopes.where(scout_id: current_scout.id).open
+      @envelopes = @active_event.envelopes.where(scout_id: current_scout.id)
     end
+
+    if params[:envelopes] == 'open'
+      @envelopes = @envelopes.open
+    elsif params[:envelopes]  == 'closed'
+      @envelopes = @envelopes.closed
+    end
+
+    if params[:scout_id]
+      @envelopes = @envelopes.where(scout_id: params[:scout_id])
+    end
+
   end
 
   # GET /orders/1

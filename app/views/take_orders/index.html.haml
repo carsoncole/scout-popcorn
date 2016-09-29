@@ -20,26 +20,26 @@
       - if current_scout.is_admin?      
         %ul.nav.nav-tabs
           %li.nav-item
-            = link_to take_orders_path, class: "nav-link #{'active' unless params[:filter]}" do
-              All
+            = link_to take_orders_path, class: "nav-link #{'active' unless params[:envelopes]}" do
+              All Envelopes
               - if current_scout.is_admin?
                 = surround("(", ")") do
                   = @active_event.take_orders.count
 
           %li.nav-item
-            = link_to take_orders_path(filter: 'loose'), class: "nav-link #{'active' if params[:filter] == 'loose'}" do
-              Loose
+            = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open'}" do
+              Open Envelopes
               - if current_scout.is_admin?
                 = surround("(", ")") do
                   = @active_event.take_orders.loose.count
 
           %li.nav-item
-            = link_to take_orders_path(filter: 'enveloped'), class: "nav-link #{'active' if params[:filter] == 'enveloped'}" do
-              Enveloped
+            = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
+              Closed Envelopes
               - if current_scout.is_admin?
                 = surround("(", ")") do
                   = @active_event.take_orders.enveloped.count
-
+        %br
         / %li.nav-item
         /   = link_to take_orders_path(filter: 'received', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'received'}" do
         /     In Hand
@@ -139,10 +139,9 @@
       /                   = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
       /                     %i.fa.fa-trash.fa-lg
 
-      %br
       .row
         .col-md-12
-          - @open_envelopes.each do |envelope|
+          - @envelopes.each do |envelope|
             %h4
               = link_to envelope_path(envelope) do
                 - if current_scout.is_admin?
@@ -151,17 +150,24 @@
                 - else
                   %i.fa.fa-envelope
                   Order Form + Envelope
-              - if current_scout.is_admin?
-                - if envelope.take_orders.any?
+              - if current_scout.is_admin? && envelope.open?
+                - if envelope.take_orders.any? 
                   = link_to "#", :data => { :confirm =>  "You need to move all take orders to another envelope before deleting this envelope"} do
                     %i.fa.fa-trash
                 - else
                   = link_to envelope_path(envelope), method: :delete do
                     %i.fa.fa-trash
-            - if current_scout.is_admin?
+            - if current_scout.is_admin? && envelope.open?
               %p
                 = link_to new_take_order_path(envelope_id: envelope.id), class: 'nav-link' do
                   New Take Order
+
+            - if envelope.closed_at
+              %b.small.text-muted
+                Submitted:
+                = nice_date_time(envelope.closed_at)
+              %br
+              %br
 
             .table-responsive
               %table.table.table-sm.small.card-text
@@ -246,5 +252,5 @@
                       %td.visible-print-block
                       %td.hidden-print
                       %td.hidden-print
-          %br
+            %br
           / # = paginate @take_orders
