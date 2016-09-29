@@ -24,21 +24,21 @@
               All Envelopes
               - if current_scout.is_admin?
                 = surround("(", ")") do
-                  = @active_event.take_orders.count
+                  = @active_event.envelopes.count
 
           %li.nav-item
             = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open'}" do
               Open Envelopes
               - if current_scout.is_admin?
                 = surround("(", ")") do
-                  = @active_event.take_orders.loose.count
+                  = @active_event.envelopes.open.count
 
           %li.nav-item
             = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
               Closed Envelopes
               - if current_scout.is_admin?
                 = surround("(", ")") do
-                  = @active_event.take_orders.enveloped.count
+                  = @active_event.envelopes.closed.count
         %br
         / %li.nav-item
         /   = link_to take_orders_path(filter: 'received', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'received'}" do
@@ -142,7 +142,7 @@
       .row
         .col-md-12
           - @envelopes.each do |envelope|
-            %h4
+            %h5
               = link_to envelope_path(envelope) do
                 - if current_scout.is_admin?
                   %i.fa.fa-envelope
