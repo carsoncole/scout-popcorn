@@ -53,9 +53,10 @@
         /     - if current_scout.is_admin?
         /       = surround("(", ")") do
         /         = @active_event.take_orders.submitted.count
-      = form_tag assign_to_envelope_path  do
-        %br
-        - if current_scout.is_admin?
+      
+      - if current_scout.is_admin?
+        = form_tag assign_to_envelope_path  do
+          %br
           .col-md-6
             .form-group.form-inline
               %label
@@ -248,4 +249,4 @@
                       %td.hidden-print
                       %td.hidden-print
         
-          = paginate @take_orders
+          / # = paginate @take_orders
