@@ -27,7 +27,7 @@
           .form-group
             = f.label :location
             %br
-            = f.select :location, options_for_select(Stock::LOCATIONS), {}, class: 'form-control'
+            = f.select :location, options_for_select(Stock::LOCATIONS, selected: f.object.location), {}, class: 'form-control'
           .form-group
             = f.label :description
             = f.text_field :description, class: 'form-control'

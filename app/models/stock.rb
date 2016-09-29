@@ -9,11 +9,16 @@ class Stock < ApplicationRecord
   LOCATIONS = [
     'warehouse',
     'site sale',
+    'take orders',
     'distribution boxes'
     ]
 
   def self.site_sales
     where(location: 'site sale')
+  end
+
+  def self.take_orders
+    where(location: 'take orders')
   end
 
   def self.wholesale_value(unit)
