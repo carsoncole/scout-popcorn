@@ -54,92 +54,92 @@
         /       = surround("(", ")") do
         /         = @active_event.take_orders.submitted.count
       
-      - if current_scout.is_admin?
-        = form_tag assign_to_envelope_path  do
-          %br
-          .col-md-6
-            .form-group.form-inline
-              %label
-                Open Envelopes:
-              = select_tag :envelope_id, options_for_select(@open_envelopes.map{|oe| ["#{oe.name}",oe.id]}),  class: 'form-control'
-              = submit_tag "Add to envelope", class: 'btn btn-success'
-            %br
-            %br
-        .table-responsive
-          %table.table.table-sm.small.card-text
-            %thead
-              %tr
-                - if current_scout.is_admin? || current_scout.is_super_admin?
-                  %th.hidden-print
-                  %th Scout
-                %th Customer
-                %th Address
-                %th Amount
-                %th Payment
-                %th Product
-                - if current_scout.is_admin?
-                  %th
-                  %th.hidden Status
-                  %th.visible-print-block Delivered
-                  %th.hidden-print
-                  %th.hidden-print
-                  %th.hidden-print
-            %tbody
-              - @unassigned_take_orders.each do |take_order|
-                - total = 0
+      / - if current_scout.is_admin?
+      /   = form_tag assign_to_envelope_path  do
+      /     %br
+      /     .col-md-6
+      /       .form-group.form-inline
+      /         %label
+      /           Open Envelopes:
+      /         = select_tag :envelope_id, options_for_select(@open_envelopes.map{|oe| ["#{oe.name}",oe.id]}),  class: 'form-control'
+      /         = submit_tag "Add to envelope", class: 'btn btn-success'
+      /       %br
+      /       %br
+      /   .table-responsive
+      /     %table.table.table-sm.small.card-text
+      /       %thead
+      /         %tr
+      /           - if current_scout.is_admin? || current_scout.is_super_admin?
+      /             %th.hidden-print
+      /             %th Scout
+      /           %th Customer
+      /           %th Address
+      /           %th Amount
+      /           %th Payment
+      /           %th Product
+      /           - if current_scout.is_admin?
+      /             %th
+      /             %th.hidden Status
+      /             %th.visible-print-block Delivered
+      /             %th.hidden-print
+      /             %th.hidden-print
+      /             %th.hidden-print
+      /       %tbody
+      /         - @unassigned_take_orders.each do |take_order|
+      /           - total = 0
 
-                %tr
-                  - if current_scout.is_admin?
-                    %td
+      /           %tr
+      /             - if current_scout.is_admin?
+      /               %td
                       
-                      = check_box_tag "take_orders[]", take_order.id
-                    %td
-                      - if take_order.scout
-                        = link_to take_order.scout.name, take_orders_path(scout_id: take_order.scout.id, filter: params[:filter])
-                  %td= take_order.customer_name
-                  %td= take_order.customer_address.truncate(30)
-                  %td
-                    - total += take_order.value
-                    = number_to_currency(take_order.value, precision: 0)
-                  %td
-                    = take_order.account.name if take_order.account
-                    - if take_order.account && take_order.account.is_credit_card?
-                      %i.fa.fa-credit-card
-                    - elsif take_order.account && take_order.account.is_cash?
-                      %i.fa.fa-money
-                  %td
-                    - take_order.take_order_line_items.each do |line_item|
-                      = line_item.product.name
-                      = surround("(", ")") do
-                        = line_item.quantity
-                      %br
+      /                 = check_box_tag "take_orders[]", take_order.id
+      /               %td
+      /                 - if take_order.scout
+      /                   = link_to take_order.scout.name, take_orders_path(scout_id: take_order.scout.id, filter: params[:filter])
+      /             %td= take_order.customer_name
+      /             %td= take_order.customer_address.truncate(30)
+      /             %td
+      /               - total += take_order.value
+      /               = number_to_currency(take_order.value, precision: 0)
+      /             %td
+      /               = take_order.account.name if take_order.account
+      /               - if take_order.account && take_order.account.is_credit_card?
+      /                 %i.fa.fa-credit-card
+      /               - elsif take_order.account && take_order.account.is_cash?
+      /                 %i.fa.fa-money
+      /             %td
+      /               - take_order.take_order_line_items.each do |line_item|
+      /                 = line_item.product.name
+      /                 = surround("(", ")") do
+      /                   = line_item.quantity
+      /                 %br
 
 
-                  - if current_scout.is_admin?
-                    %td= nice_date_time_less(take_order.created_at)
-                    %td
-                      - if take_order.status
-                        %span.tag.tag-primary
-                          - if take_order.status == 'submitted'
-                            Turned In
-                          - elsif take_order.status == 'received'
-                            In Hand
-                          - else
-                            = take_order.status.capitalize
-                    %td.hidden-print
-                      - if take_order.received? && take_order.take_order_line_items.any?
-                        = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
-                    %td.visible-print-block
-                      %i.fa.fa-square-o.fa-2x
-                    %td.hidden-print
-                      = link_to take_order do
-                        %i.fa.fa-folder-open.fa-lg
-                    %td.hidden-print
-                      - if take_order.in_hand?
-                        = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                          %i.fa.fa-trash.fa-lg
+      /             - if current_scout.is_admin?
+      /               %td= nice_date_time_less(take_order.created_at)
+      /               %td
+      /                 - if take_order.status
+      /                   %span.tag.tag-primary
+      /                     - if take_order.status == 'submitted'
+      /                       Turned In
+      /                     - elsif take_order.status == 'received'
+      /                       In Hand
+      /                     - else
+      /                       = take_order.status.capitalize
+      /               %td.hidden-print
+      /                 - if take_order.received? && take_order.take_order_line_items.any?
+      /                   = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
+      /               %td.visible-print-block
+      /                 %i.fa.fa-square-o.fa-2x
+      /               %td.hidden-print
+      /                 = link_to take_order do
+      /                   %i.fa.fa-folder-open.fa-lg
+      /               %td.hidden-print
+      /                 - if take_order.in_hand?
+      /                   = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+      /                     %i.fa.fa-trash.fa-lg
 
-
+      %br
       .row
         .col-md-12
           - @open_envelopes.each do |envelope|
@@ -149,10 +149,8 @@
                   %i.fa.fa-envelope
                   = envelope.name
                 - else
-                  %i.fa.fa-pencil-square-o
-                  Order Form +
                   %i.fa.fa-envelope
-                  Envelope
+                  Order Form + Envelope
               - if current_scout.is_admin?
                 - if envelope.take_orders.any?
                   = link_to "#", :data => { :confirm =>  "You need to move all take orders to another envelope before deleting this envelope"} do
@@ -164,7 +162,7 @@
               %p
                 = link_to new_take_order_path(envelope_id: envelope.id), class: 'nav-link' do
                   New Take Order
-            %br
+
             .table-responsive
               %table.table.table-sm.small.card-text
                 %thead
@@ -248,5 +246,5 @@
                       %td.visible-print-block
                       %td.hidden-print
                       %td.hidden-print
-        
+                  %br
           / # = paginate @take_orders
