@@ -21,7 +21,11 @@ class TakeOrdersController < ApplicationController
       @take_orders = @take_orders.where(status: params[:filter])
     end
 
-    @open_envelopes = @active_event.envelopes.open
+    if current_scout.is_admin?
+      @open_envelopes = @active_event.envelopes.open
+    else
+      @open_envelopes = @active_event.envelopes.where(scout_id: current_scout.id).open
+    end
   end
 
   # GET /orders/1
