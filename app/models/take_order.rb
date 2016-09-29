@@ -13,7 +13,7 @@ class TakeOrder < ApplicationRecord
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-  # after_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
+  after_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   before_create :assign_to_envelope!
 
   STATUSES = { 
