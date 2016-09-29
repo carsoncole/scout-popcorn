@@ -8,6 +8,7 @@ class TakeOrdersController < ApplicationController
     @take_orders = TakeOrder.order(created_at: :desc).page(params[:page])
     @take_orders = @take_orders.where(event_id: @active_event.id) if @active_event
     @take_orders = @take_orders.where(scout_id: current_scout) unless current_scout.is_admin?
+    @unassigned_take_orders = TakeOrder.loose.order(created_at: :desc)
 
     if params[:scout_id]
       @take_orders = @take_orders.where(scout_id: params[:scout_id])

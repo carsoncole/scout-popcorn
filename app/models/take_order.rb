@@ -41,11 +41,11 @@ class TakeOrder < ApplicationRecord
   end
 
   def self.enveloped
-    where(envelope_id: nil)
+    where.not(envelope_id: nil)
   end
 
   def self.enveloped?
-    envelope_id.nil?
+    !envelope_id.nil?
   end
 
 
