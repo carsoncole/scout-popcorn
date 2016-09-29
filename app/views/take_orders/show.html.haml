@@ -37,7 +37,7 @@
               %tr
                 %th Envelope:
                 %td.text-xs-right
-                  = @take_order.envelope.name
+                  = @take_order.envelope.name if @take_order.envelope
                   - unless @take_order.submitted?
                     %span
                       = link_to edit_take_order_path(@take_order) do
