@@ -44,7 +44,7 @@
                 - quantity = value
                 %tr
                   %td
-                    %b= product.name
+                    %b= link_to product.name, product_path(product)
                     - if quantity <= 0 && product.is_physical_inventory
                       .tag.tag-danger SOLD OUT
                   %td.text-xs-center= quantity

@@ -53,7 +53,7 @@ class StocksController < ApplicationController
   # POST /stocks
   # POST /stocks.json
   def create
-    if stock_params[:movement_with_warehouse] && stock_params[:location] == 'warehouse'
+    if stock_params[:movement_with_warehouse] == true && stock_params[:location] == 'warehouse'
       redirect_to stocks_ledger_path, notice: "Location needs to be different than -warehouse-"
     else
       if stock_params[:movement_with_warehouse] == "1"
