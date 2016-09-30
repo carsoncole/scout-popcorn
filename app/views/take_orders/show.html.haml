@@ -107,8 +107,8 @@
                     %td
 
 
-            - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
-              = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
+            / - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
+            /   = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
             %br
             Created at:
             = nice_date_time(@take_order.created_at)

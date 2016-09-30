@@ -229,8 +229,8 @@
                               - else
                                 = take_order.status.capitalize
                         %td.hidden-print
-                          - if take_order.received? && take_order.take_order_line_items.any?
-                            = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
+                          / - if take_order.received? && take_order.take_order_line_items.any?
+                          /   = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
                         %td.visible-print-block
                           %i.fa.fa-square-o.fa-2x
                         %td.hidden-print
