@@ -77,6 +77,10 @@ class TakeOrder < ApplicationRecord
     status == 'submitted'
   end
 
+  def self.sales(event)
+    where(event_id: event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+  end
+
   def self.scout_sales(scout, event)
     scout.take_orders.where(event_id: event.id).joins(:take_order_line_items).sum(:value)
   end
