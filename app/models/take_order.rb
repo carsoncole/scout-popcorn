@@ -10,6 +10,7 @@ class TakeOrder < ApplicationRecord
   has_many :take_order_line_items, dependent: :destroy
   validates :scout_id, :event_id, :customer_name, :payment_account_id, presence: true
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
+  validate :check_scout_id_matches_envelope_scout_id
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
@@ -123,8 +124,11 @@ class TakeOrder < ApplicationRecord
     take_order_line_items.each do |line_item|
       unit = self.event.unit
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: Date.current, description: "Take Order submitted")
-      product_due_to_customers_account = event.unit.accounts.where(name: 'Product due to Customers').first
-      Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * Product::WHOLESALE_COST_PERCENTAGE, date: Date.current, description: "Take Order submitted")
+      
+      unless line_item.product.is_pack_donation
+        product_due_to_customers_account = event.unit.accounts.where(name: 'Product due to Customers').first
+        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * (event.pack_commission_percentage / 100), date: Date.current, description: "Take Order submitted")
+      end
     end
   end
 
@@ -135,6 +139,12 @@ class TakeOrder < ApplicationRecord
     else
       new_envelope = scout.envelopes.create(event_id: self.event_id)
       self.envelope_id = new_envelope.id
+    end
+  end
+
+  def check_scout_id_matches_envelope_scout_id
+    if envelope && scout_id != envelope.scout_id
+      errors.add(:scout_id, "must match the Scout on the Envelope.")
     end
   end
 

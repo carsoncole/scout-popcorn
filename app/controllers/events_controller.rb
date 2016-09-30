@@ -71,6 +71,6 @@ class EventsController < ApplicationController
 
   private
     def event_params
-      params.require(:event).permit(:unit_id, :name, :is_active)
+      params.require(:event).permit(:unit_id, :name, :is_active, :pack_commission_percentage)
     end
 end

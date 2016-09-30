@@ -19,6 +19,11 @@
             = f.label :name
             = f.text_field :name, class: 'form-control'
           .form-group
+            = f.label :pack_commission_percentage
+            %p.small.text-muted Enter '35' for 35%.
+            = f.text_field :pack_commission_percentage, class: 'form-control'
+
+          .form-group
             = f.label :is_active
             = f.check_box :is_active, class: 'form-control'
           .actions

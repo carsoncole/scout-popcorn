@@ -31,6 +31,9 @@
           .form-group
             = f.label :is_physical_inventory
             = f.check_box :is_physical_inventory, class: 'form-control'
+          .form-group
+            = f.label :is_pack_donation
+            = f.check_box :is_pack_donation, class: 'form-control'
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

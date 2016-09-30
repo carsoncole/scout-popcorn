@@ -20,7 +20,7 @@
           / - if @unit
           /   %li.nav-item= link_to "Top Sellers", top_sellers_path, class: "nav-link #{'active' if controller_name == 'top_sellers'}"
           %li.nav-item.btn-group
-            = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
+            = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'online_sales', 'direct_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
               Sales
               %span.caret
             %ul.dropdown-menu
@@ -42,7 +42,7 @@
           %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
           - if current_scout.is_admin?
             %li.nav-item.btn-group
-              = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['take_orders', 'direct_sales', 'site_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
+              = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
                 Admin
                 %span.caret
               - if current_scout.try(:is_admin?)

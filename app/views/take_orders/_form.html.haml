@@ -4,15 +4,15 @@
       .card-block
         .card-title
           %h2 Take Order
-        %p.card-text
-          Enter each door-to-door take-order sale you make that will need to be delivered.
+        %p.text-emphasis= @take_order.envelope.name if @take_order.envelope
+        %br
         = form_for @take_order do |f|
           = render 'errors', target: @take_order
 
-          - if current_scout.is_admin?
+          - if current_scout.is_admin? && @take_order.envelope.nil?
             .form-group
               %label Scout
-              = f.collection_select:scout_id, Scout.not_admin, :id, :last_first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
+              = f.collection_select :scout_id, Scout.not_admin, :id, :last_first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
           .form-group
             .field
               %label= f.label :customer_name

@@ -159,7 +159,7 @@
                     %i.fa.fa-trash
             - if current_scout.is_admin? && envelope.open?
               %p
-                = link_to new_take_order_path(envelope_id: envelope.id), class: 'nav-link' do
+                = link_to new_take_order_path(envelope_id: envelope.id, scout_id: envelope.scout_id), class: 'nav-link' do
                   New Take Order
 
             - if envelope.closed_at

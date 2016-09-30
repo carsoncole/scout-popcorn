@@ -7,8 +7,6 @@ class Product < ApplicationRecord
 
   validates :name, :retail_price, :quantity, presence: true
 
-  WHOLESALE_COST_PERCENTAGE = 0.65
-
 
   def self.default
     where(event_id: nil)
