@@ -1,7 +1,7 @@
 class Ledger < ApplicationRecord
   belongs_to :unit
   belongs_to :account
-  belongs_to :take_order
+  belongs_to :take_order, optional: true
 
   TREASURER = ['Candace', 'cluckman@gmail.com']
 

@@ -95,10 +95,17 @@
             %td.text-xs-right= number_to_currency(@envelope.value, precision: 0 )
 
   - if @envelope.open? && current_scout.is_admin?
-    .col-md-6
+    .col-md-1
+    .col-md-4
       .card
         .card-block
-          .col-md-8
-            %em Closing an envelope is irreversible. Do not Close if totals do not match cash and other payment methods received.
-          .col-md-4.text-xs-center
-            = button_to "Close", close_envelope_path(@envelope.id), class: 'btn btn-lg btn-success'
+          .text-xs-center
+            = button_to "Close", close_envelope_path(@envelope.id), class: 'btn btn-lg btn-danger'
+
+  - if @envelope.closed? && current_scout.is_admin?
+    .col-md-1
+    .col-md-4
+      .card
+        .card-block
+          .text-xs-center
+            = button_to "Re-Open", open_envelope_path(@envelope.id), class: 'btn btn-lg btn-success'

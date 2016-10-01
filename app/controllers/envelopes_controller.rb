@@ -40,6 +40,12 @@ class EnvelopesController < ApplicationController
     redirect_to envelope_path(@envelope)
   end
 
+  def open
+    @envelope = Envelope.find(params[:id])
+    @envelope.update(status: 'Open',money_received_by_id: nil, money_received_at: nil, closed_at: nil)
+    redirect_to envelope_path(@envelope)
+  end
+
   def remove_take_order
     take_order = TakeOrder.find(params[:id])
     take_order.update(envelope_id: nil)

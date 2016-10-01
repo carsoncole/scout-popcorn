@@ -12,8 +12,13 @@ class TakeOrder < ApplicationRecord
   validate :check_scout_id_matches_envelope_scout_id
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
-  after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-  after_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+
+  before_save :remove_from_purchase_order!, if: Proc.new {|t| t.status_changed? && t.status == 'received'}
+  before_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'received'}
+  before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'received'}
+
   before_create :assign_to_envelope!
 
   STATUSES = { 
@@ -100,6 +105,10 @@ class TakeOrder < ApplicationRecord
     self.purchase_order_id = event.open_take_order_purchase_order.id
   end
 
+  def remove_from_purchase_order!
+    self.purchase_order_id = nil
+  end
+
   def debit_stock!
     take_order_line_items.each do |line_item|
       new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", created_by: 999)
@@ -109,8 +118,8 @@ class TakeOrder < ApplicationRecord
 
   def credit_stock!
     take_order_line_items.each do |line_item|
-      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: line_item.quantity, take_order_id: self.id, date: Date.today, description: "Take order ##{line_item.take_order_id} credited back", created_by: 999)
-      new_stock_entry.save
+      existing_stock_entry = Stock.where(take_order_id: self.id).first
+      existing_stock_entry.destroy
     end
   end
 
@@ -129,6 +138,10 @@ class TakeOrder < ApplicationRecord
         Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * (event.pack_commission_percentage / 100), date: Date.current, description: "Take Order submitted")
       end
     end
+  end
+
+  def reverse_money_received_and_product_due!
+    existing_ledger = Ledger.where(take_order_id: self.id).destroy_all
   end
 
   def assign_to_envelope!
