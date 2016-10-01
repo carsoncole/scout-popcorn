@@ -119,7 +119,7 @@ class TakeOrder < ApplicationRecord
   def credit_stock!
     take_order_line_items.each do |line_item|
       existing_stock_entry = Stock.where(take_order_id: self.id).first
-      existing_stock_entry.destroy
+      existing_stock_entry.destroy if existing_stock_entry
     end
   end
 
