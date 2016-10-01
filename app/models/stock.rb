@@ -21,13 +21,13 @@ class Stock < ApplicationRecord
     where(location: 'take orders')
   end
 
-  def self.wholesale_value(unit)
+  def self.wholesale_value(unit, event)
     value = 0
-    unit.stocks.group(:product_id).sum(:quantity).each do |product_id,quantity|
+    unit.stocks.where(location: ['warehouse', 'site sale']).group(:product_id).sum(:quantity).each do |product_id,quantity|
       product = Product.find(product_id)
       value += product.retail_price * quantity
     end
-    value = value * 0.65
+    value = value * (1 - event.pack_commission_percentage / 100 )
     value
   end
 
