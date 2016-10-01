@@ -27,7 +27,7 @@
           .col-md-5
             %table.table.table-sm
               %tr
-                %th PAID BY:
+                %th Payment by:
                 %td.text-xs-right
                   = @take_order.account.name.upcase if @take_order.account
                   - unless @take_order.submitted?
@@ -51,17 +51,17 @@
                   %td.text-xs-right
                     = link_to "Square reciept", @take_order.square_reciept_url, target: '_blank'
                     %i.fa.fa-credit-card
+
+              - if @take_order.purchase_order && current_scout.is_admin?
+                %tr
+                  %th Purchase order
+                  %td.text-xs-right
+                    = link_to @take_order.purchase_order.id, purchase_order_path(@take_order.purchase_order_id)
             %br
             %br
 
         .row
           .col-md-12
-
-
-            - if @take_order.purchase_order && current_scout.is_admin?
-              %p
-                PURCHASE ORDER:
-                = link_to @take_order.purchase_order.id, purchase_order_path(@take_order.purchase_order_id)
             %table.table
               %thead
                 %tr

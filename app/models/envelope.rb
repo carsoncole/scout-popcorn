@@ -20,12 +20,12 @@ class Envelope < ApplicationRecord
     where(status: 'Closed')
   end
 
-  def closed?
-    status == 'Closed'
-  end
-
   def open?
     status == 'Open'
+  end
+  
+  def closed?
+    status == 'Closed'
   end
 
   def name

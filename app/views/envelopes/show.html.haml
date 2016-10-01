@@ -25,14 +25,18 @@
           %p= link_to "Add a New Take Order", new_take_order_path(envelope_id: @envelope_id, scout_id: @envelope.scout_id)
         %table.table.table-sm
           %tr
+            - if current_scout.is_admin?
+              %th Scout
             %th Customer
             %th Items
             %th Amount
             %th Payment
             %th
             %th
-          - @take_orders.each do |take_order|
+          - @take_orders.each do |take_order|              
             %tr
+              - if current_scout.is_admin?
+                %td= take_order.scout.name
               %td= take_order.customer_name
               %td
                 - take_order.take_order_line_items.each do |line_item|
@@ -51,6 +55,8 @@
                   = link_to envelope_remove_take_order_path(@envelope.id, take_order.id), method: :put do
                     %i.fa.fa-trash
           %tr
+            - if current_scout.is_admin?
+              %td
             %td
             %td
             %td= number_to_currency(@envelope.value, precision: 0)
@@ -61,6 +67,16 @@
         %p
           Total number of Take Orders (including donations):
           = @take_orders.count
+
+        - if @envelope.closed_at
+          Closed at:
+          = nice_date_time(@envelope.closed_at)
+          %br
+
+        - if @envelope.money_received_at
+          Money received at:
+          = nice_date_time(@envelope.money_received_at)
+          %br
 
 .row
   .col-md-6

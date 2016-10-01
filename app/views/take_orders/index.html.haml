@@ -9,11 +9,18 @@
         .alert.alert-info
           Drop off Take-Order order forms and collection envelope as often as you want to any Site Sale and your orders will be shown here. Pick up more order forms and collections envelopes at any Site Sale.
 
+      / - if current_scout.is_admin?
+      /   %ul.nav.nav-inline
+      /     %li.nav-item
+      /       = link_to new_take_order_path, class: 'nav-link' do
+      /         New Take Order
+
       - if current_scout.is_admin?
         %ul.nav.nav-inline
           %li.nav-item
-            = link_to new_take_order_path, class: 'nav-link' do
-              New Take Order
+            = link_to new_envelope_path, class: 'nav-link' do
+              New Envelope
+
 
         %br
 
