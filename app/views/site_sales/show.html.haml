@@ -80,16 +80,22 @@
               %td
               %td= number_to_currency( @total_sales, precision: 0 )
 
-- if @site_sale.open? && current_scout.is_admin? && @site_sale.site_sale_line_items.any?
+- if current_scout.is_admin?
   .row
     .col-md-1
     .col-md-10
       .card
         .card-block
-          .col-md-9
-            %p.card-text.text-danger Pressing this button will Close this Site Sale to any future inventory, or payment method changes. Scout volunteers can be changed at any time.
-          .col-md-3
-            .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'
+          - if @site_sale.open?  
+            .col-md-9
+              %p.card-text.text-danger Pressing this button will Close this Site Sale to any future inventory, or payment method changes. Scout volunteers can be changed at any time.
+            .col-md-3
+              .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'
+          - else
+            .col-md-9
+              %p.card-text.text-danger Reopening reverses all inventory and financial transactions.
+            .col-md-3
+              .card-text.text-xs-center= button_to 'RE-OPEN', site_sale_path(@site_sale, open: true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'
 .row    
   .col-md-12
     .card

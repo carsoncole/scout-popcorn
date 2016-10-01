@@ -5,6 +5,7 @@ class StocksController < ApplicationController
   # GET /stocks.json
   def index
     @stocks_query = @unit.stocks.joins(:product).order(:location, 'products.name')
+    @stocks = @unit.stocks.joins(:product).order('products.name')
     @locations = @unit.stocks.order(location: :desc).group(:location)
     if params[:location]
       @stocks_query = @stocks_query.where(location: params[:location])

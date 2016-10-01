@@ -4,6 +4,9 @@
       .card-block
         .card-title
           %h1.h1 Site Sales
+        - if current_scout.is_admin?
+          = link_to new_site_sale_path do
+            %i.fa.fa-plus.fa-lg.hidden-print 
         - unless current_scout.is_admin?
           .alert.alert-info
             All your hours worked at Site Sales will be shown here, with the sales credit you get based on all Site Sales so far.
@@ -81,8 +84,6 @@
                     %td
                   - if current_scout.is_admin?
                     %td      
-                      = link_to new_site_sale_path do
-                        %i.fa.fa-plus.fa-lg.hidden-print 
                   %td Total
                   %td
                     = hours               

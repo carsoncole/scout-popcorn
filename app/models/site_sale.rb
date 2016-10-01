@@ -10,6 +10,10 @@ class SiteSale < ApplicationRecord
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
   after_save :do_ledgers!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
 
+  after_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'open'}
+  after_save :reverse_ledgers!, if: Proc.new { |to| to.status_changed? && to.status == 'open'}
+
+
   STATUSES = { 
       open: { :status => :open, :name => 'Open', description: "Site sales figures not complete"},
       closed: { status: :closed, :name => 'Closed', description: "Sites sales figures complete" }
@@ -90,12 +94,8 @@ class SiteSale < ApplicationRecord
     end
   end
 
-  def check_for_available_stock
-    site_sale_line_items.each do |line_item|
-      unless event.unit.stocks.sum(:quantity) >= line_item.quantity
-        self.errors.add(:base,"Insufficient #{line_item.product.name} product in Site Sale inventory.")
-      end
-    end
+  def credit_stock!
+    Stock.where(site_sale_id: self.id).destroy_all
   end
 
   def do_ledgers!
@@ -104,5 +104,9 @@ class SiteSale < ApplicationRecord
         Ledger.create(account_id: payment_method.account_id, amount: payment_method.amount, date: self.date, site_sale_id: self.id)
       end
     end
+  end
+
+  def reverse_ledgers!
+    Ledger.where(site_sale_id: self.id).destroy_all
   end
 end
