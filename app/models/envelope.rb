@@ -6,7 +6,7 @@ class Envelope < ApplicationRecord
   validates :scout_id, :event_id, presence: true
 
   after_initialize :init
-  after_save :process_if_closed!, if: Proc.new {|e| e.status == 'Closed' && e.status_changed? }
+  before_save :process_if_closed!, if: Proc.new {|e| e.status == 'Closed' && e.status_changed? }
 
   def init
     self.status ||= 'Open'
