@@ -64,13 +64,14 @@ class TakeOrdersController < ApplicationController
   # POST /orders.json
   def create
     @take_order = TakeOrder.new(take_order_params)
-    @envelope = Envelope.find(params[:take_order][:envelope_id])
-    if current_scout.is_admin?
-      @take_order.scout_id = @envelope.scout_id if @envelope
-    else
-      @take_order.scout_id = current_scout.id
+    unless @take_order.scout_id
+      @envelope = Envelope.find(params[:take_order][:envelope_id])
+      if current_scout.is_admin?
+        @take_order.scout_id = @envelope.scout_id if @envelope
+      else
+        @take_order.scout_id = current_scout.id
+      end
     end
-
 
 
     @take_order.event_id = @active_event.id if @active_event

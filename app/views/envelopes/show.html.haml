@@ -21,6 +21,8 @@
       .card-block
         .card-title
           %h3 Take Orders
+        - if @envelope.open?
+          %p= link_to "Add a New Take Order", new_take_order_path(envelope_id: @envelope_id, scout_id: @envelope.scout_id)
         %table.table.table-sm
           %tr
             %th Customer
