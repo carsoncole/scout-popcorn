@@ -41,7 +41,7 @@
               - @stocks.each do |stock|
                 %tr
                   %td= nice_date_compact(stock.date) if stock.date
-                  %td= stock.product.name_with_id
+                  %td= link_to stock.product.name_with_id, stocks_ledger_path(product_id: stock.product_id)
                   %td= stock.description
                   %td
                     - if stock.take_order_id
@@ -51,7 +51,9 @@
                     - elsif stock.site_sale_id
                       = link_to "Site Sale", site_sale_path(stock.site_sale_id)
                   %td= stock.quantity
-                  %td= stock.location.titleize if stock.location
+                  %td
+                    - if stock.location
+                      = link_to stock.location.titleize, stocks_ledger_path(location: stock.location)
                   %td= nice_date_time_less(stock.created_at)
                   %td
                     - if stock.created_by == 999

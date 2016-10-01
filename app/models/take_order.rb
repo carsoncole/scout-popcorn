@@ -110,7 +110,7 @@ class TakeOrder < ApplicationRecord
 
   def credit_stock!
     take_order_line_items.each do |line_item|
-      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id} credited back", created_by: 999)
+      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: line_item.quantity, take_order_id: self.id, date: Date.today, description: "Take order ##{line_item.take_order_id} credited back", created_by: 999)
       new_stock_entry.save
     end
   end
