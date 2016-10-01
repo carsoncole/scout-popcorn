@@ -12,9 +12,9 @@ class TakeOrder < ApplicationRecord
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   validate :check_scout_id_matches_envelope_scout_id
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   after_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-  after_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   before_create :assign_to_envelope!
 
   STATUSES = { 
@@ -117,7 +117,7 @@ class TakeOrder < ApplicationRecord
 
   def send_receipt!
     TakeOrderMailer.receipt(self).deliver_now
-    self.update(receipt_sent_at: Time.current)
+    self.receipt_sent_at =  Time.current
   end
 
   def register_money_received_and_product_due!

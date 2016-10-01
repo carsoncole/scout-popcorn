@@ -29,11 +29,10 @@
                 %th Product
                 %th Desc
                 %th 
+                %th
                 %th Qty
                 %th Location
                 %th Created
-                %th Created by
-                %th From BSA
                 %th
                 %th
 
@@ -43,6 +42,7 @@
                   %td= nice_date_compact(stock.date) if stock.date
                   %td= link_to stock.product.name_with_id, stocks_ledger_path(product_id: stock.product_id)
                   %td= stock.description
+                  %td= link_to("Take Order #{stock.take_order_id}", take_order_path(stock.take_order_id)) if stock.take_order_id
                   %td
                     - if stock.take_order_id
                       = link_to "Take Order", stocks_ledger_path(take_order_id: stock.take_order_id)
@@ -55,16 +55,16 @@
                     - if stock.location
                       = link_to stock.location.titleize, stocks_ledger_path(location: stock.location)
                   %td= nice_date_time_less(stock.created_at)
-                  %td
-                    - if stock.created_by == 999
-                      System
-                    - elsif stock.created_by.blank?
-                      =""
-                    - else
-                      = Scout.find(stock.created_by).name
-                  %td
-                    - if stock.is_transfer_from_bsa
-                      %i.fa.fa-check
+                  / %td
+                  /   - if stock.created_by == 999
+                  /     System
+                  /   - elsif stock.created_by.blank?
+                  /     =""
+                  /   - else
+                  /     = Scout.find(stock.created_by).name
+                  / %td
+                  /   - if stock.is_transfer_from_bsa
+                  /     %i.fa.fa-check
                   %td
                     = link_to edit_stock_path(stock) do
                       %i.fa.fa-pencil.fa-lg
@@ -76,7 +76,6 @@
                 %td                
                   = link_to new_stock_path do
                     %i.fa.fa-plus.fa-lg
-                %td
                 %td
                 %td
                 %td
