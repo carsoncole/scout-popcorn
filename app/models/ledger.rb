@@ -1,9 +1,8 @@
 class Ledger < ApplicationRecord
-  belongs_to :unit
   belongs_to :account
   belongs_to :take_order, optional: true
 
-  TREASURER = ['Candace', 'cluckman@gmail.com']
+  validates :account_id, presence: true
 
   after_save :send_bank_deposit_notifications!, if: Proc.new {|l| l.is_bank_deposit && l.amount < 0}
   
