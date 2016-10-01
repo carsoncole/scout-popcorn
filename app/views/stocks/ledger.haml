@@ -16,7 +16,7 @@
 
         %ul.nav.nav-tabs.hidden-print
           %li.nav-item
-            = link_to "All", stocks_path, class: "nav-link #{!params[:location] ? 'active' : nil}"          
+            = link_to "All", stocks_ledger_path, class: "nav-link #{!params[:location] ? 'active' : nil}"          
           - @locations.each do |location|
             %li.nav-item
               = link_to location.location.titleize, stocks_ledger_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
@@ -45,7 +45,7 @@
                   %td= stock.description
                   %td
                     - if stock.take_order_id
-                      = link_to "Take Order", take_order_path(stock.take_order_id)
+                      = link_to "Take Order", stocks_ledger_path(take_order_id: stock.take_order_id)
                     - elsif stock.direct_sale_id
                       = link_to "Direct Sale", direct_sale_path(stock.site_sale_id)
                     - elsif stock.site_sale_id
