@@ -31,7 +31,6 @@
               %tr
                 %th
                 %th.text-xs-center Quantity
-                / %th Location
                 %th Retail Price
                 %th.text-xs-right Retail Value
                 %th.visible-print-block Change
@@ -59,7 +58,6 @@
                   = link_to new_stock_path, class: 'hidden-print' do
                     %i.fa.fa-plus.fa-lg
                   .visible-print-block= nice_date_time(Time.current)
-                %td
                 %td
                 %td
                 %td.text-xs-right= number_to_currency(total)
