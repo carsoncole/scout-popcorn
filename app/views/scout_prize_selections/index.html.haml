@@ -20,7 +20,7 @@
               %td= number_to_currency(scout_prize.scout.total_sales(@active_event))
               %td= scout_prize.prize.name
               %td= number_to_currency(scout_prize.prize.amount)
-              %td= scout_prize.source.capitalize
+              %td= scout_prize.prize.source.capitalize
               %td= scout_prize.is_complete
               %td= nice_date_time(scout_prize.is_complete_at) if scout_prize.is_complete_at
               %td= scout_prize.is_approved
