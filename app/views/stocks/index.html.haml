@@ -31,7 +31,7 @@
               %tr
                 %th
                 %th.text-xs-center Quantity
-                %th Location
+                / %th Location
                 %th Retail Price
                 %th.text-xs-right Retail Value
                 %th.visible-print-block Change
@@ -39,8 +39,7 @@
             %tbody
               - total = 0
               - @stocks_hash.each do |key, value|
-                - product = Product.find(key[0])
-                - location = key[1]
+                - product = Product.find(key)
                 - quantity = value
                 %tr
                   %td
@@ -48,7 +47,7 @@
                     - if quantity <= 0 && product.is_physical_inventory
                       .tag.tag-danger SOLD OUT
                   %td.text-xs-center= quantity
-                  %td= location.titleize if location
+                  / %td= location.titleize if location
                   %td= number_to_currency(product.retail_price)
                   %td.text-xs-right
                     - total += quantity * product.retail_price
