@@ -253,10 +253,13 @@
                               %i.fa.fa-trash.fa-lg
                   
                   %tr.hidden-print       
+                    - if current_scout.is_admin?
+                      %td
                     %td
                     %td
                     %td= number_to_currency(total, precision: 0)
                     - if current_scout.is_admin?
+                      %td
                       %td
                     %td
                     %td

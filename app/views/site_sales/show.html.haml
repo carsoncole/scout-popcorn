@@ -88,7 +88,7 @@
         .card-block
           - if @site_sale.open?  
             .col-md-9
-              %p.card-text.text-danger Pressing this button will Close this Site Sale to any future inventory, or payment method changes. Scout volunteers can be changed at any time.
+              %p.card-text.text-danger Closing a Site Sale processes inventory and financials. Site Sales can be re-opened for any necessary changes.
             .col-md-3
               .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'
           - else
