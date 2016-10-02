@@ -135,7 +135,7 @@ class TakeOrder < ApplicationRecord
       
       unless line_item.product.is_pack_donation
         product_due_to_customers_account = event.unit.accounts.where(name: 'Product due to Customers').first
-        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * (event.pack_commission_percentage / 100), date: Date.current, description: "Take Order submitted")
+        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * (1 - event.pack_commission_percentage / 100), date: Date.current, description: "Take Order submitted")
       end
     end
   end
