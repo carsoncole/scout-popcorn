@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'scout_prize_selections/index', as: 'scout_prize_selections'
+
   patch "envelopes/assign" => "envelopes#assign", as: 'assign_to_envelope'
   post "envelopes/:id/close" => "envelopes#close", as: 'close_envelope'
   post "envelopes/:id/open" => "envelopes#open", as: 'open_envelope'
