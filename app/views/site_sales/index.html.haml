@@ -15,8 +15,6 @@
             %table.table.card-text
               %thead
                 %tr
-                  - if current_scout.is_super_admin?
-                    %th Event
                   %th Site Sale
                   - unless current_scout.is_admin?
                     %th Hours Worked
@@ -38,8 +36,6 @@
                 - hours = 0
                 - @site_sales.each do |site_sale|
                   %tr
-                    - if current_scout.is_super_admin?
-                      %td= site_sale.event.name
                     %td
                       - if current_scout.is_admin?
                         = link_to site_sale.full_name, site_sale_path(site_sale)
@@ -80,11 +76,8 @@
                         = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                           %i.fa.fa-trash.fa-lg
                 %tr
-                  - if current_scout.is_super_admin?
-                    %td
-                  - if current_scout.is_admin?
-                    %td      
-                  %td Total
+                  %td      
+                  %td
                   %td
                     = hours               
                   %td
