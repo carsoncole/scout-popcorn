@@ -35,7 +35,8 @@
         %table.table.table-sm
           %tr
             %th Scout
-          - if @scouts
-            - @scouts.each do |scout|
-              %tr
-                %td= scout.name
+            %th Sales
+          - @scouts_with_prizes.each do |scout|
+            %tr
+              %td= scout.name
+              %td= number_to_currency(scout.total_sales(@active_event))
