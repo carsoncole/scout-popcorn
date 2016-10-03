@@ -31,7 +31,7 @@ class LedgersController < ApplicationController
     render :new
   end
 
-  def statement
+  def balance_sheet
     @take_order_cash = @unit.accounts.where(name: 'Take Order Cash').first.balance
     @site_sale_cash = @unit.accounts.where(name: 'Site Sale Cash').first.balance
     @square_cash = @unit.accounts.where(name: 'Square').first.balance
@@ -45,6 +45,15 @@ class LedgersController < ApplicationController
     @pack_prizes = @active_event.scout_prizes.joins(:prize).where('prizes.source = "pack"').sum('prizes.cost')
     @total_liabilities = @due_to_bsa + @product_due_to_customers
     @total_equity = @total_assets - @total_liabilities
+  end
+
+  def income_statement
+    @site_sales = @active_event.total_site_sales
+    @take_orders = @active_event.total_take_orders
+    @online_sales = @active_event.total_online_sales
+    @total_sales = @active_event.total_sales
+    @total_cost_of_goods_sold = @active_event.cost_of_goods_sold
+    @total_expenses = @active_event.cost_of_goods_sold
   end
 
   # GET /ledgers/1/edit

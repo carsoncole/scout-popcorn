@@ -14,7 +14,7 @@ class Event < ApplicationRecord
   has_many :online_sales, dependent: :destroy
   has_many :envelopes
 
-  validates :name, presence: true
+  validates :name, :pack_commission_percentage, presence: true
 
   after_create :add_default_products!
   after_create :add_default_prizes!
@@ -47,6 +47,18 @@ class Event < ApplicationRecord
     site_sales.joins(:site_sale_line_items).sum(:value)
   end
 
+  def total_take_orders
+    envelopes.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
+  end
+
+  def total_online_sales
+    0
+  end
+
+  def cost_of_goods_sold
+    total_sales * (1 - pack_commission_percentage / 100)
+  end
+
   def total_hours_worked
     site_sales.joins(:scout_site_sales).sum(:hours_worked)
   end
@@ -58,6 +70,10 @@ class Event < ApplicationRecord
     else
       0
     end
+  end
+
+  def total_sales
+    total_site_sales + total_take_orders
   end
 
   private

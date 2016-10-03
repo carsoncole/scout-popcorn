@@ -1,0 +1,56 @@
+.row
+  .col-md-12
+    %h3 Income Statement
+
+
+
+    .row
+      .col-md-6
+        .card
+          .card-block
+            .card-title
+              %h5 Sales
+
+            %table.table.table-sm
+              %tr
+                %td Site Sales
+                %td.text-xs-right= number_to_currency(@site_sales)
+              %tr
+                %td Take Orders
+                %td.text-xs-right= number_to_currency(@take_orders)
+              %tr
+                %td Online Sales
+                %td.text-xs-right= number_to_currency(@online_sales)
+              %tr
+                %td Total
+                %td.text-xs-right= number_to_currency(@total_sales)
+
+      .col-md-6
+        .card
+          .card-block
+            .card-title
+              %h5 Expenses
+
+            %table.table.table-sm
+              %tr
+                %td Cost of goods sold
+                %td.text-xs-right= number_to_currency(@total_cost_of_goods_sold)
+              %tr
+                %td Other expenses
+                %td.text-xs-right= number_to_currency(0)
+
+              %tr
+                %td Total
+                %td.text-xs-right= number_to_currency(@total_cost_of_goods_sold)
+
+    .row
+      .col-md-6
+        .card
+          .card-block
+            .card-title
+              %h5 Net
+
+            %table.table.table-sm
+              %tr
+                %td Net Income
+                %td.text-xs-right= number_to_currency(@total_sales - @total_expenses)

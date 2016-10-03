@@ -1,6 +1,6 @@
 .row
   .col-md-12
-    %h2 Financial Statement
+    %h3 Balance Sheet
 
 
     .row
@@ -8,9 +8,9 @@
         .card
           .card-block
             .card-title
-              %h4 Assets
+              %h5 Assets
 
-            %table.table
+            %table.table.table-sm
               %tr
                 %td Take Order cash
                 %td.text-xs-right= number_to_currency(@take_order_cash)
@@ -42,9 +42,9 @@
           .card-block
             .card-title
       
-              %h4 Liabilities
+              %h5 Liabilities
 
-            %table.table
+            %table.table.table-sm
               %tr
                 %td Due to BSA
                 %td.text-xs-right= number_to_currency(@due_to_bsa)
@@ -63,9 +63,9 @@
         .card
           .card-block
             .card-title        
-              %h4 Equity
+              %h5 Equity
 
-            %table.table
+            %table.table.table-sm
               %tr
                 %th Equity
                 %th.text-xs-right= number_to_currency(@total_equity)

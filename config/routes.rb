@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   resources :envelopes do
     resources :take_orders
   end
-  get "ledgers/statements" => "ledgers#statement", as: 'statement'
+  get "ledgers/statements/balance-sheet" => "ledgers#balance_sheet", as: 'balance_sheet'
+  get "ledgers/statements/income-statement" => "ledgers#income_statement", as: 'income_statement'
   resources :ledgers
   get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
   resources :accounts

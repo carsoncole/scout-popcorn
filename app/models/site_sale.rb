@@ -57,7 +57,6 @@ class SiteSale < ApplicationRecord
     scout_site_sales
   end
 
-
   def self.sales_by_scout_and_event(event)
     hash = {}
     event.site_sales.each do |site_sale|
