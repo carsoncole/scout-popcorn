@@ -45,7 +45,6 @@
               = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
                 Admin
                 %span.caret
-              - if current_scout.try(:is_admin?)
                 %ul.dropdown-menu
                   - if current_scout.is_super_admin?
                     %li= link_to "Units", units_path, class: "dropdown-item #{'active' if controller_name == 'units'}"
