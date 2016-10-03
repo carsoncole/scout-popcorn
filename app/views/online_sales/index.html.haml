@@ -40,8 +40,8 @@
                         = link_to online_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                           %i.fa.fa-trash.fa-lg
 
-          %br
+        %br
 
-          - if current_scout.is_admin?
-            = link_to new_online_sale_path do
-              %i.fa.fa-plus.fa-lg
+        - if current_scout.is_admin?
+          = link_to new_online_sale_path do
+            %i.fa.fa-plus.fa-lg

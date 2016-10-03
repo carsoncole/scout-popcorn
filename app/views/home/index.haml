@@ -90,21 +90,6 @@
           %li= link_to "Popcorn Product Display Page (Ask Parent to print)", "popcorn-product-2016.pdf", target: "_blank"
 
 
-
-  - if current_scout.is_admin?
-    .col-md-6
-      .card
-        .card-block
-          .card-title
-            %h2 Sales
-          %table.table
-            %tr
-              %th Product Sales
-              %td.text-xs-right= number_to_currency(@product_sales)
-            %tr
-              %th Pack Donations
-              %td.text-xs-right= number_to_currency(@pack_donations)
-
   .col-md-6
     .card
       .card-block

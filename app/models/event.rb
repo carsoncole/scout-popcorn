@@ -60,7 +60,7 @@ class Event < ApplicationRecord
   end
 
   def total_online_sales
-    0
+    online_sales.sum(:amount)
   end
 
   def cost_of_goods_sold
@@ -81,11 +81,11 @@ class Event < ApplicationRecord
   end
 
   def total_product_sales
-    total_site_sales + total_take_orders - total_site_sale_donations - total_take_order_donations
+    total_site_sales + total_take_orders - total_site_sale_donations - total_take_order_donations + total_online_sales
   end
 
   def total_sales
-    total_site_sales + total_take_orders
+    total_site_sales + total_take_orders + total_online_sales
   end
 
   private

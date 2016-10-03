@@ -45,24 +45,25 @@
               = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
                 Admin
                 %span.caret
-                %ul.dropdown-menu
-                  - if current_scout.is_super_admin?
-                    %li= link_to "Units", units_path, class: "dropdown-item #{'active' if controller_name == 'units'}"
-                  %li= link_to "Envelopes", envelopes_path, class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
-                  %li= link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name != 'ledger'}"
-                  %li= link_to "Inventory Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
-                  %li= link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger'}"
-                  %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
-                
-                  %li= link_to "Scout Prize Selections", scout_prize_selections_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
-                  %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
-                  %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
+              %ul.dropdown-menu
+                - if current_scout.is_super_admin?
+                  %li= link_to "Units", units_path, class: "dropdown-item #{'active' if controller_name == 'units'}"
+                %li= link_to "Envelopes", envelopes_path, class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
+                %li= link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name != 'ledger'}"
+                %li= link_to "Inventory Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+                %li= link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger'}"
+                %li= link_to "Purchase Orders", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
+              
+                %li= link_to "Scout Prize Selections", scout_prize_selections_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
+                %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
+                %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
+                - if @unit
                   %li= link_to "Unit", unit_path(@unit), class: "dropdown-item #{'active' if controller_name == 'units' && action_name != 'index' }"
-                  %li
-                    = link_to stock_movement_path, class: 'dropdown-item' do
-                      %i.fa.fa-print.fa-lg
-                      Stock Movement
-                  %li= link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
+                %li
+                  = link_to stock_movement_path, class: 'dropdown-item' do
+                    %i.fa.fa-print.fa-lg
+                    Stock Movement
+                %li= link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
             %li.nav-item.btn-group
              
               = link_to "#", class: "dropdown-toggle nav-link #{'active' if ['balance_sheet', 'income_statement'].include? action_name}",  "data-toggle": "dropdown", 'role': "button" do
