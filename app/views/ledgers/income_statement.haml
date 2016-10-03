@@ -42,12 +42,14 @@
                 %td Cost of goods sold
                 %td.text-xs-right= number_to_currency(@total_cost_of_goods_sold)
               %tr
+                %td Pack prizes
+                %td.text-xs-right= number_to_currency(@pack_prizes)
+              %tr
                 %td Other expenses
                 %td.text-xs-right= number_to_currency(0)
-
               %tr
                 %td Total
-                %td.text-xs-right= number_to_currency(@total_cost_of_goods_sold)
+                %td.text-xs-right= number_to_currency(@total_expenses)
 
       .col-md-6
         .card
