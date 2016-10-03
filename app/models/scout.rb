@@ -22,7 +22,7 @@ class Scout < ApplicationRecord
   after_create :send_registration_email!
   after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
 
-  ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'], ['charlotte', 'boulind-yeung'], ['kevin', 'daniels'],['lisa', 'cass'], ['keri', 'pinzon']]
+  ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'],['keri', 'pinzon']]
 
   def name
     first_name + ' ' + last_name
