@@ -2,8 +2,6 @@
   .col-md-12
     %h3 Income Statement
 
-
-
     .row
       .col-md-6
         .card
@@ -11,7 +9,7 @@
             .card-title
               %h5 Sales
 
-            %table.table.table-sm.card-text
+            %table.table.card-text
               %tr
                 %td Site Sale Product Sales
                 %td.text-xs-right= number_to_currency(@site_sales)
@@ -37,7 +35,7 @@
             .card-title
               %h5 Expenses
 
-            %table.table.table-sm.card-text
+            %table.table.card-text
               %tr
                 %td Cost of goods sold
                 %td.text-xs-right= number_to_currency(@total_cost_of_goods_sold)
@@ -57,7 +55,7 @@
             .card-title
               %h5 Net
 
-            %table.table.table-sm.card-text
+            %table.table.card-text
               %tr
                 %th Net Income
                 %th.text-xs-right= number_to_currency(@total_sales - @total_expenses)

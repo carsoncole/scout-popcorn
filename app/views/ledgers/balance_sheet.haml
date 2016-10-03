@@ -10,7 +10,7 @@
             .card-title
               %h5 Assets
 
-            %table.table.table-sm.card-text
+            %table.table.card-text
               %tr
                 %td Take Order cash
                 %td.text-xs-right= number_to_currency(@take_order_cash)
@@ -44,7 +44,7 @@
       
               %h5 Liabilities
 
-            %table.table.table-sm.card-text
+            %table.table.card-text
               %tr
                 %td Due to BSA
                 %td.text-xs-right= number_to_currency(@due_to_bsa)
@@ -64,7 +64,7 @@
             .card-title        
               %h5 Equity
 
-            %table.table.table-sm.card-text
+            %table.table.card-text
               %tr
                 %th Equity
                 %th.text-xs-right= number_to_currency(@total_equity)
