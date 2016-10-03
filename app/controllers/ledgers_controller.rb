@@ -43,7 +43,7 @@ class LedgersController < ApplicationController
     @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0#Stock.wholesale_value_due_to_bsa(@unit)
     @product_due_to_customers = (@unit.accounts.where(name: 'Product due to Customers').first.balance if @unit.accounts.where(name: 'Product due to Customers').first) || 0
     @pack_prizes = @active_event.scout_prizes.joins(:prize).where('prizes.source = "pack"').sum('prizes.cost')
-    @total_liabilities = @due_to_bsa + @product_due_to_customers
+    @total_liabilities = @due_to_bsa + @product_due_to_customers + @pack_prizes
     @total_equity = @total_assets - @total_liabilities
   end
 
