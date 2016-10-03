@@ -13,11 +13,17 @@
 
             %table.table.table-sm
               %tr
-                %td Site Sales
+                %td Site Sale Product Sales
                 %td.text-xs-right= number_to_currency(@site_sales)
               %tr
-                %td Take Orders
+                %td Site Sale Donations
+                %td.text-xs-right= number_to_currency(@site_sale_donations)
+              %tr
+                %td Take Order Sales
                 %td.text-xs-right= number_to_currency(@take_orders)
+              %tr
+                %td Take Order Donations
+                %td.text-xs-right= number_to_currency(@take_order_donations)
               %tr
                 %td Online Sales
                 %td.text-xs-right= number_to_currency(@online_sales)

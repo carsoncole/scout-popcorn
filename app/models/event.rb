@@ -47,8 +47,16 @@ class Event < ApplicationRecord
     site_sales.joins(:site_sale_line_items).sum(:value)
   end
 
+  def total_site_sale_donations
+    site_sales.joins(site_sale_line_items: :product).where("products.is_pack_donation = ?", true).sum(:value)
+  end
+
   def total_take_orders
     envelopes.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
+  end
+
+  def total_take_order_donations
+    envelopes.joins(take_orders: [take_order_line_items: [:product]]).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
   def total_online_sales
@@ -56,7 +64,7 @@ class Event < ApplicationRecord
   end
 
   def cost_of_goods_sold
-    total_sales * (1 - pack_commission_percentage / 100)
+    total_product_sales * (1 - pack_commission_percentage / 100)
   end
 
   def total_hours_worked
@@ -70,6 +78,10 @@ class Event < ApplicationRecord
     else
       0
     end
+  end
+
+  def total_product_sales
+    total_site_sales + total_take_orders - total_site_sale_donations - total_take_order_donations
   end
 
   def total_sales
