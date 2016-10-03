@@ -13,6 +13,7 @@
                 %th Name
                 %th Take Orders
                 %th Site Sales
+                %th Online
                 %th Total Sales
                 %th Last Sign In
                 %th Sign In Count
@@ -31,9 +32,8 @@
                       %span.tag.tag-warning
                         Admin
                   %td= link_to number_to_currency(TakeOrder.scout_sales(scout, @active_event), precision: 0), take_orders_path(scout_id: scout.id)
-                  %td
-                    - amount = @active_event.total_site_sales_per_hour_worked * scout.event_site_sale_hours_worked(@active_event)
-                    = link_to number_to_currency(amount, precision: 0), site_sales_path(scout_id: scout.id)
+                  %td= link_to number_to_currency(scout.total_site_sales(@active_event), precision: 0), site_sales_path(scout_id: scout.id)
+                  %td= link_to number_to_currency(scout.total_online_sales(@active_event), precision: 0), online_sales_path(scout_id: scout.id)
                   %td= number_to_currency(scout.total_sales(@active_event), precision: 0)
                   %td= scout.last_sign_in_at.strftime("%m/%d/%Y %I:%M%p")
                   %td= scout.sign_in_count
