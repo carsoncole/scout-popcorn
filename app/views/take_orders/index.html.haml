@@ -7,7 +7,8 @@
 
       - unless current_scout.is_admin?
         .alert.alert-info
-          Drop off Take-Order order forms and collection envelope as often as you want to any Site Sale and your orders will be shown here. Pick up more order forms and collections envelopes at any Site Sale.
+          Drop off Take-Order order forms and collection envelope as often as you want to any Site Sale and your orders will be shown here. Pick up more order forms and collections envelopes at any
+          =link_to "Site Sale.", site_sales_path
 
       / - if current_scout.is_admin?
       /   %ul.nav.nav-inline
@@ -20,6 +21,15 @@
           %li.nav-item
             = link_to new_envelope_path, class: 'nav-link' do
               New Envelope
+        %br
+
+      - elsif !current_scout.open_envelope?(@active_event)
+        %ul.nav.nav-inline
+          %li.nav-item
+            = link_to new_envelope_path, class: 'nav-link' do
+              %i.fa.fa-plus
+              Create new Order Form/Envelope
+
 
 
         %br
@@ -149,6 +159,7 @@
       .row
         .col-md-12
           - @envelopes.each do |envelope|
+            %hr
             %h5
               = link_to envelope_path(envelope) do
                 - if current_scout.is_admin?
@@ -157,6 +168,11 @@
                 - else
                   %i.fa.fa-envelope
                   Order Form + Envelope
+                  - if envelope.open?
+                    %span.tag.tag-info OPEN
+                  - elsif envelope.closed?
+                    %span.tag.tag-info TURNED IN
+  
               - if current_scout.is_admin? && envelope.open?
                 - if envelope.take_orders.any? 
                   = link_to "#", :data => { :confirm =>  "You need to move all take orders to another envelope before deleting this envelope"} do
@@ -164,14 +180,24 @@
                 - else
                   = link_to envelope_path(envelope), method: :delete do
                     %i.fa.fa-trash
-            - if current_scout.is_admin? && envelope.open?
+            - if envelope.open?
               %p
-                = link_to new_take_order_path(envelope_id: envelope.id, scout_id: envelope.scout_id), class: 'nav-link' do
-                  New Take Order
+                = link_to new_envelope_take_order_path(envelope.id) do
+                  %i.fa.fa-plus
+                  Add a New Take Order to this Envelope
+              %br
+            
+            - if envelope.created_by && current_scout.is_admin?
+              - scout = Scout.find(envelope.created_by) 
+              %p
+                Created by:
+                = scout.name
+                
+                
 
             - if envelope.closed_at
               %b.small.text-muted
-                Submitted:
+                Turned in at:
                 = nice_date_time(envelope.closed_at)
               %br
               %br

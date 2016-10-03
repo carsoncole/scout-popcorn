@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930161732) do
+ActiveRecord::Schema.define(version: 20161003034730) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20160930161732) do
     t.datetime "closed_at"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "created_by"
   end
 
   create_table "events", force: :cascade do |t|

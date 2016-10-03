@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   post "envelopes/:id/close" => "envelopes#close", as: 'close_envelope'
   post "envelopes/:id/open" => "envelopes#open", as: 'open_envelope'
   put "envelopes/:envelope_id/remove-take-order/:id" => "envelopes#remove_take_order", as: 'envelope_remove_take_order'
-  resources :envelopes
+  resources :envelopes do
+    resources :take_orders
+  end
   get "ledgers/statements" => "ledgers#statement", as: 'statement'
   resources :ledgers
   get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'

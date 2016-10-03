@@ -3,17 +3,21 @@
     .card
       .card-block
         %span.tag.tag-primary.pull-right
-          - if @envelope.status == 'Open'
+          - if @envelope.open?
             Open
-          - elsif @envelope.status == 'Closed'
+          - elsif @envelope.closed?
             Closed
           - else
             = @envelope.status.capitalize if @envelope.status
+        
+
+
         .card-title
-          %h1= @envelope.name
+          %h1= @envelope.name       
+        - if @envelope.open?
+          = link_to envelope_path(@envelope), method: :delete, data: { confirm: 'Are you sure?'} do
+            %i.fa.fa-trash.fa-lg
 
-
-          
 
 .row
   .col-md-12
@@ -22,7 +26,7 @@
         .card-title
           %h3 Take Orders
         - if @envelope.open?
-          %p= link_to "Add a New Take Order", new_take_order_path(envelope_id: @envelope_id, scout_id: @envelope.scout_id)
+          %p= link_to "Add a New Take Order", new_envelope_take_order_path(@envelope.id)
         %table.table.table-sm
           %tr
             - if current_scout.is_admin?

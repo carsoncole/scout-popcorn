@@ -24,7 +24,7 @@ class TakeOrdersController < ApplicationController
     if current_scout.is_admin?
       @envelopes = @active_event.envelopes
     else
-      @envelopes = @active_event.envelopes.where(scout_id: current_scout.id)
+      @envelopes = @active_event.envelopes.where(scout_id: current_scout.id).order(status: :desc, closed_at: :desc)
     end
 
     if params[:envelopes] == 'open'

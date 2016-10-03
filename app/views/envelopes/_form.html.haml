@@ -5,7 +5,7 @@
         .card-title
           %h1 Envelope
 
-        %p.card-text.text-muted Envelopes represent groups of Take Orders that are on one order form.
+        %p.card-text.text-muted Envelopes represent groups of Take Orders that are on one order form. Entering this is optional. If you turn in your Envelope + Order Form all the information will be entered for you.
 
         = form_for @envelope do |f|
           - if @envelope.errors.any?

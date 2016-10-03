@@ -17,7 +17,7 @@ class EnvelopesController < ApplicationController
     end
   end
 
-  # GET /envelopes/1
+  # GET /envelopes/1p
   # GET /envelopes/1.json
   def show
     @take_orders = @envelope.take_orders.order(:created_at)
@@ -57,10 +57,11 @@ class EnvelopesController < ApplicationController
   # POST /envelopes.json
   def create
     @envelope = Envelope.new(envelope_params)
+    @envelope.created_by = current_scout.id
     @envelope.event_id = @active_event.id
 
     if @envelope.save
-      redirect_to take_orders_path, notice: 'Envelope was successfully created.'
+      redirect_to envelope_path(@envelope), notice: 'Envelope was successfully created.'
     else
       render :new
     end
