@@ -42,6 +42,7 @@ class LedgersController < ApplicationController
     @total_assets = @take_order_cash + @site_sale_cash + @square_cash + @bsa_credit_card_cash + @union_bank_cash + @popcorn_inventory + @due_from_customers
     @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0#Stock.wholesale_value_due_to_bsa(@unit)
     @product_due_to_customers = (@unit.accounts.where(name: 'Product due to Customers').first.balance if @unit.accounts.where(name: 'Product due to Customers').first) || 0
+    @pack_prizes = @active_event.scout_prizes.joins(:prize).where('prizes.source = "pack"').sum('prizes.cost')
     @total_liabilities = @due_to_bsa + @product_due_to_customers
     @total_equity = @total_assets - @total_liabilities
   end

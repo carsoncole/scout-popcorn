@@ -102,6 +102,6 @@ class PrizesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def prize_params
-      params.require(:prize).permit(:name, :amount, :event_id, :source, :source_id, :source_description, :is_by_level, :url, :description, :group)
+      params.require(:prize).permit(:name, :amount, :event_id, :source, :source_id, :source_description, :is_by_level, :url, :description, :group, :cost)
     end
 end
