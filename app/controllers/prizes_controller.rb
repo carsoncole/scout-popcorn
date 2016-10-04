@@ -28,6 +28,7 @@ class PrizesController < ApplicationController
     end
     # @pack_prizes = @active_event.prizes.pack.where(amount: @top_pack_prize.amount).where.not(id: @cart_prizes.map{|p|p.prize_id})
     @bsa_prizes = @active_event.prizes.bsa.order(:amount) if @active_event
+    @bsa_prize_amounts_selected = current_scout.scout_prizes.joins(:prize).where("prizes.source = ?", 'bsa').sum(:prize_amount)
     @total_bsa_prize_amounts = current_scout.total_bsa_prize_amounts(@active_event)
     @eligible_bsa_prizes = @active_event.prizes.bsa.order(:amount).where("amount < ?", @total_sales - @total_bsa_prize_amounts)
     @bsa_bonus_prizes = @active_event.prizes.bsa_bonus.where("amount < ?", @total_sales).order(amount: :desc)

@@ -55,8 +55,12 @@ class Scout < ApplicationRecord
     event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
   end
 
-  def take_order_sales(event)
-    take_orders.where(event_id: event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+  def take_order_sales(event, is_turned_in=false)
+    if is_turned_in
+      take_orders.where(event_id: event.id).where.not(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+    else
+      take_orders.where(event_id: event.id).where(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+    end
   end
 
   def total_online_sales(event)

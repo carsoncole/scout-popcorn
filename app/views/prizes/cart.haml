@@ -27,7 +27,7 @@
 
           %p.text-xs-center
             You have
-            = number_to_currency(@total_sales - current_scout.scout_prizes.sum(:prize_amount), precision: 0)
+            = number_to_currency(@total_sales - @bsa_prize_amounts_selected, precision: 0)
             left to choose prizes with
 
           - unless @cart_prizes.any? || @eligible_bsa_prizes.any?
