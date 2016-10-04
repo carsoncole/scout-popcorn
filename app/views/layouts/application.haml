@@ -4,7 +4,7 @@
   
   %body
     .hidden_print=render 'application/nav' if scout_signed_in?
-    .container
+    .container-fluid
       .hidden_print= render 'flash'
       = yield
       / = render 'debugging'
