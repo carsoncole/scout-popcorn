@@ -25,7 +25,7 @@
               = link_to "Take Orders (Turned In)", take_orders_path
             %td.text-xs-right
               - if current_scout.is_admin?
-                - total = TakeOrder.sales(@active_event)
+                - total = TakeOrder.sales(@active_event, true)
               - else
                 - total = current_scout.take_order_sales(@active_event, true)
               = number_to_currency(total, precision: 0)
@@ -35,7 +35,7 @@
               = link_to "Take Orders", take_orders_path
             %td.text-xs-right
               - if current_scout.is_admin?
-                - total = TakeOrder.sales(@active_event)
+                - total = TakeOrder.sales(@active_event, false)
               - else
                 - total = current_scout.take_order_sales(@active_event, false)
               = number_to_currency(total, precision: 0)

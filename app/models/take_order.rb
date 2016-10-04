@@ -82,11 +82,13 @@ class TakeOrder < ApplicationRecord
     status == 'submitted'
   end
 
-  def self.sales(event, is_turned_in)
+  def self.sales(event, is_turned_in=nil)
     if is_turned_in
       where(event_id: event.id).where.not(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
-    else
+    elsif is_turned_in == false
       where(event_id: event.id).where(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
+    else
+      where(event_id: event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
     end
   end
 
