@@ -15,6 +15,10 @@ module ApplicationHelper
     datetime.strftime("%B %d, %Y %I:%M%p")
   end
 
+  def nice_date_time_compact(datetime)
+    datetime.strftime("%m/%d/%y %I:%M%p")
+  end
+  
   def nice_date_time_less(datetime)
     datetime.strftime("%b %d, %Y %I:%M%p")
   end

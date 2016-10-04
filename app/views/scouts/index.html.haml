@@ -19,8 +19,8 @@
                 %th Sign In Count
                 - if current_scout.is_admin?
                   %th
-                  %th
-                  %th
+                  %th.hidden-print
+                  %th.hidden-print
 
             %tbody
               - @scouts.each do |scout|
@@ -31,22 +31,30 @@
                     - if scout.is_admin?
                       %span.tag.tag-warning
                         Admin
-                  %td= link_to number_to_currency(TakeOrder.scout_sales(scout, @active_event), precision: 0), take_orders_path(scout_id: scout.id)
-                  %td= link_to number_to_currency(scout.total_site_sales(@active_event), precision: 0), site_sales_path(scout_id: scout.id)
-                  %td= link_to number_to_currency(scout.total_online_sales(@active_event), precision: 0), online_sales_path(scout_id: scout.id)
-                  %td= number_to_currency(scout.total_sales(@active_event), precision: 0)
-                  %td= scout.last_sign_in_at.strftime("%m/%d/%Y %I:%M%p")
+                  %td
+                    - unless scout.is_admin?
+                      = link_to number_to_currency(TakeOrder.scout_sales(scout, @active_event), precision: 0), take_orders_path(scout_id: scout.id)
+                  %td
+                    - unless scout.is_admin?
+                      = link_to number_to_currency(scout.total_site_sales(@active_event), precision: 0), site_sales_path(scout_id: scout.id)
+                  %td
+                    - unless scout.is_admin?
+                      = link_to number_to_currency(scout.total_online_sales(@active_event), precision: 0), online_sales_path(scout_id: scout.id)
+                  %td
+                    - unless scout.is_admin?
+                      = number_to_currency(scout.total_sales(@active_event), precision: 0)
+                  %td= nice_date_time_compact(scout.last_sign_in_at)
                   %td= scout.sign_in_count
                   - if current_scout.is_admin?
-                    %td
+                    %td.hidden-print
                       = link_to edit_scout_path(scout) do
                         %span.fa.fa-pencil.fa-lg
-                    %td
+                    %td.hidden-print
                       = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                         %span.fa.fa-trash.fa-lg
                     
 
 %br
-
-= link_to new_scout_path do
-  %i.fa.fa-plus.fa-lg
+.hidden-print
+  = link_to new_scout_path do
+    %i.fa.fa-plus.fa-lg

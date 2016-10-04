@@ -36,8 +36,11 @@ class PrizesController < ApplicationController
   def selection
     @prize = Prize.find(params[:id])
     scout_prize = current_scout.scout_prizes.build(prize_id: @prize.id, prize_amount: @prize.amount, event_id: @active_event.id)
-    scout_prize.save
-    redirect_to prize_cart_path
+    if scout_prize.save
+      redirect_to prize_cart_path
+    else
+      redirect_to prize_cart_path, notice: 'There was an error'
+    end
   end
 
   def removal

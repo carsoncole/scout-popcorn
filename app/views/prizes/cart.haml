@@ -1,3 +1,4 @@
+
 - unless current_scout.is_admin?
   .row
     .col-md-2
@@ -23,6 +24,11 @@
           %p.card-text.text-muted
             Select any combination of BSA prizes that total less than your total sales of
             = number_to_currency(@total_sales)
+
+          %p.text-xs-center
+            You have
+            = number_to_currency(@total_sales - current_scout.scout_prizes.sum(:prize_amount), precision: 0)
+            left to choose prizes with
 
           - unless @cart_prizes.any? || @eligible_bsa_prizes.any?
             %br
@@ -60,6 +66,7 @@
                 As you do more Popcorn Sales, prizes you become eligible for will be shown here.
           
           - if @pack_prizes.any?
+            %p.card-text.text-muted You can select one prize
             %br
             %table.table.table-sm
               - @pack_prizes.each do |prize|
