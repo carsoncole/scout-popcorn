@@ -1,6 +1,8 @@
 .row
   .col-md-12
-    %h3 Income Statement
+    %h3
+      .visible-print-block= @active_event.name
+      Income Statement
 
     .row
       .col-md-6
@@ -59,3 +61,5 @@
               %tr
                 %th Net Income
                 %th.text-xs-right= number_to_currency(@total_sales - @total_expenses)
+
+    .small.text-muted.visible-print-block= nice_date_time(Time.now)
