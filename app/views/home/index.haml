@@ -41,7 +41,6 @@
               - else
                 - total = current_scout.take_order_sales(@active_event, true)
               = number_to_currency(total, precision: 0)
-              - grand_total += total
           %tr
             %td
             %th
@@ -52,7 +51,6 @@
               - else
                 - total = current_scout.take_order_sales(@active_event, false)
               = number_to_currency(total, precision: 0)
-              - grand_total += total
 
           %tr
             %th(colspan=2)
