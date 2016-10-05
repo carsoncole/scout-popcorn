@@ -51,8 +51,12 @@ class Event < ApplicationRecord
     site_sales.joins(site_sale_line_items: :product).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
-  def total_take_orders
-    envelopes.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
+  def total_take_orders(is_turned_in: true)
+    if is_turned_in
+      envelopes.closed.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
+    else
+      envelopes.closed.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
+    end
   end
 
   def total_take_order_donations
