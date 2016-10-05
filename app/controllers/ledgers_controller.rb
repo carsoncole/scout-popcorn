@@ -36,7 +36,7 @@ class LedgersController < ApplicationController
     @site_sale_cash = @unit.accounts.where(name: 'Site Sale Cash').first.balance
     @square_cash = @unit.accounts.where(name: 'Square').first.balance
     @bsa_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance if @unit.accounts.where(name: 'BSA Credit Card').first
-    @bsa_site_sale_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance(site_sales: true) if @unit.accounts.where(name: 'BSA Credit Card').first
+    @bsa_site_sales_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance(site_sales: true) if @unit.accounts.where(name: 'BSA Credit Card').first
     @bsa_take_orders_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance(take_orders: true) if @unit.accounts.where(name: 'BSA Credit Card').first
     @union_bank_cash = @unit.accounts.where(name: 'Union Bank').first.balance if @unit.accounts.where(name: 'Union Bank').first
     @popcorn_inventory = Stock.wholesale_value(@unit, @active_event)
