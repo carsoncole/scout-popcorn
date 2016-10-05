@@ -54,7 +54,7 @@
                   %td
                     - if stock.location
                       = link_to stock.location.titleize, stocks_ledger_path(location: stock.location)
-                  %td= nice_date_time_less(stock.created_at)
+                  %td= nice_date_time_compact(stock.created_at)
                   / %td
                   /   - if stock.created_by == 999
                   /     System
