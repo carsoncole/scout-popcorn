@@ -203,7 +203,7 @@
               %br
 
             .table-responsive
-              %table.table.table-sm.small.card-text
+              %table.table.table-sm.card-text
                 %thead
                   %tr
                     - if current_scout.is_admin? || current_scout.is_super_admin?
@@ -215,7 +215,7 @@
                     %th Product
                     - if current_scout.is_admin?
                       %th
-                      %th.hidden Status
+                      %th.hidden
                       %th.visible-print-block Delivered
                       %th.hidden-print
                       %th.hidden-print

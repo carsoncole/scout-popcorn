@@ -39,6 +39,7 @@
               - total = 0
               - @stocks_hash.each do |key, value|
                 - product = Product.find(key)
+                - next unless product.is_physical_inventory
                 - quantity = value
                 %tr
                   %td
