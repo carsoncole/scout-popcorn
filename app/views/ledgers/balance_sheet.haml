@@ -14,34 +14,37 @@
 
             %table.table.card-text
               %tr
-                %td Take Order cash
+
+                %td(colspan=2) Take Order cash
                 %td.text-xs-right= number_to_currency(@take_order_cash)
               %tr
-                %td Site Sale cash
+                %td(colspan=2) Site Sale cash
                 %td.text-xs-right= number_to_currency(@site_sale_cash)
               %tr
-                %td BSA credit card payments
+                %td(colspan=2) BSA credit card payments
                 %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
               %tr
+                %td
                 %td BSA credit card payments (Site Sales)
                 %td.text-xs-right= number_to_currency(@bsa_site_sales_credit_card_cash)
               %tr
+                %td
                 %td BSA credit card payments (Take Orders)
                 %td.text-xs-right= number_to_currency(@bsa_take_orders_credit_card_cash)
               %tr
-                %td Square payments
+                %td(colspan=2) Square payments
                 %td.text-xs-right= number_to_currency(@square_cash)
               %tr
-                %td Due from Customers
+                %td(colspan=2) Due from Customers
                 %td.text-xs-right= number_to_currency(@due_from_customers)
               %tr
-                %td Union Bank deposits
+                %td(colspan=2) Union Bank deposits
                 %td.text-xs-right= number_to_currency(@union_bank_cash)
               %tr
-                %td Popcorn Inventory
+                %td(colspan=2) Popcorn Inventory
                 %td.text-xs-right= number_to_currency(@popcorn_inventory)
               %tr
-                %th Total assets
+                %th(colspan=2) Total assets
                 %th.text-xs-right= number_to_currency(@total_assets)
 
 
