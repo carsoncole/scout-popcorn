@@ -49,6 +49,9 @@
                   - elsif ledger.site_sale_id
                     =link_to "Site Sale", site_sale_path(ledger.site_sale_id)
                 %td
+                  = link_to ledger_path(ledger) do
+                    %i.fa.fa-folder-open.fa-lg
+                %td
                   = link_to edit_ledger_path(ledger) do
                     %i.fa.fa-pencil.fa-lg
                 %td

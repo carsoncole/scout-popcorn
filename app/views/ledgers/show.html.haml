@@ -1,32 +1,37 @@
 .row
-  .col-md-12
+  .col-md-6
     .card
       .card-block
         .card-title
           %h1 Ledger
 
+        %table.table
+          %tr
+            %th Account:
+            %td.text-xs-right= @ledger.account.name
+          %tr
+            %th Description:
+            %td.text-xs-right= @ledger.description
+          %tr
+            %th Amount:
+            %td.text-xs-right= number_to_currency(@ledger.amount)
+          %tr
+            %th Date:
+            %td.text-xs-right=nice_date(@ledger.date)
+          %tr
+            %th Take Order:
+            %td.text-xs-right= link_to "Take Order", take_order_path(@ledger.take_order_id) if @ledger.take_order_id
+          %tr
+            %th Site Sale:
+            %td.text-xs-right= link_to "Site Sale", site_sale_path(@ledger.site_sale_id) if @ledger.site_sale_id
+          %tr
+            %th Created:
+            %td.text-xs-right= nice_date_time(@ledger.created_at)
 
-        %p
-          %b Account:
-          = @ledger.account.name
-        %p
-          %b Description:
-          = @ledger.description
-        %p
-          %b Amount:
-          = number_to_currency(@ledger.amount)
-        %p
-          %b Date:
-          = nice_date(@ledger.date)
-
-        %p
-          %b Created:
-          = nice_date_time(@ledger.created_at)
-
-        - if @ledger.bank_deposit_notification_sent_at
-          %p
-            %b Bank notification email sent at:
-            = nice_date_time(@ledger.bank_deposit_notification_sent_at)
+          - if @ledger.account.is_bank_account_depositable
+            %tr
+              %th Bank notification email sent at:
+              %td.text-xs-right= nice_date_time(@ledger.bank_deposit_notification_sent_at) if @ledger.bank_deposit_notification_sent_at
 
         = link_to 'Edit', edit_ledger_path(@ledger)
         \|

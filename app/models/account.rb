@@ -30,7 +30,13 @@ class Account < ApplicationRecord
     where(is_bank_account_depositable: true)
   end
 
-  def balance
-    ledgers.sum(:amount)
+  def balance(args={})
+    if args[:site_sales]
+      ledgers.where.not(site_sale_id: nil).sum(:amount)
+    elsif args[:take_orders]
+      ledgers.where.not(take_order_id: nil).sum(:amount)
+    else
+      ledgers.sum(:amount)
+    end
   end
 end

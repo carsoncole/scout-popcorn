@@ -36,11 +36,13 @@ class LedgersController < ApplicationController
     @site_sale_cash = @unit.accounts.where(name: 'Site Sale Cash').first.balance
     @square_cash = @unit.accounts.where(name: 'Square').first.balance
     @bsa_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance if @unit.accounts.where(name: 'BSA Credit Card').first
+    @bsa_site_sale_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance(site_sales: true) if @unit.accounts.where(name: 'BSA Credit Card').first
+    @bsa_take_orders_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance(take_orders: true) if @unit.accounts.where(name: 'BSA Credit Card').first
     @union_bank_cash = @unit.accounts.where(name: 'Union Bank').first.balance if @unit.accounts.where(name: 'Union Bank').first
     @popcorn_inventory = Stock.wholesale_value(@unit, @active_event)
     @due_from_customers = (@unit.accounts.where(name: 'Money due from Customer').first.balance if @unit.accounts.where(name: 'Money due from Customer').any?) || 0
     @total_assets = @take_order_cash + @site_sale_cash + @square_cash + @bsa_credit_card_cash + @union_bank_cash + @popcorn_inventory + @due_from_customers
-    @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0#Stock.wholesale_value_due_to_bsa(@unit)
+    @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
     @product_due_to_customers = (@unit.accounts.where(name: 'Product due to Customers').first.balance if @unit.accounts.where(name: 'Product due to Customers').first) || 0
     @pack_prizes = @active_event.scout_prizes.joins(:prize).where('prizes.source = "pack"').sum('prizes.cost')
     @total_liabilities = @due_to_bsa + @product_due_to_customers + @pack_prizes

@@ -23,6 +23,12 @@
                 %td BSA credit card payments
                 %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
               %tr
+                %td BSA credit card payments (Site Sales)
+                %td.text-xs-right= number_to_currency(@bsa_site_sales_credit_card_cash)
+              %tr
+                %td BSA credit card payments (Take Orders)
+                %td.text-xs-right= number_to_currency(@bsa_take_orders_credit_card_cash)
+              %tr
                 %td Square payments
                 %td.text-xs-right= number_to_currency(@square_cash)
               %tr
