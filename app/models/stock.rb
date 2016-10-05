@@ -27,7 +27,7 @@ class Stock < ApplicationRecord
       product = Product.find(product_id)
       value += product.retail_price * quantity
     end
-    value = value * (1 - event.pack_commission_percentage / 100 )
+    value = value * (event.pack_commission_percentage / 100 )
     value
   end
 
