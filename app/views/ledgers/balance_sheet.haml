@@ -32,6 +32,9 @@
                 %td BSA credit card payments (Take Orders)
                 %td.text-xs-right= number_to_currency(@bsa_take_orders_credit_card_cash)
               %tr
+                %td(colspan=2) BSA online accounts receivable
+                %td.text-xs-right= number_to_currency(@bsa_online_credits)
+              %tr
                 %td(colspan=2) Square payments
                 %td.text-xs-right= number_to_currency(@square_cash)
               %tr
