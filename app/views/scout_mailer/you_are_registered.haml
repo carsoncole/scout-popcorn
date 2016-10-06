@@ -5,13 +5,15 @@
   %body
     %h1{style: 'text-align:center'}
       Welcome to Pack 4496's Corn Cub!
-    
-    - if @scout.parent_first_name
-      %p 
-        Hello
-        = succeed(",") do
+
+    %p 
+      Hello   
+      = succeed(",") do 
+        - if @scout.parent_first_name.blank?
+          = @scout.first_name.capitalize
+        - else
           = @scout.parent_first_name.capitalize
-    
+  
     %p
       Welcome to our own Popcorn Sale event website, where we've made it fun for all of our Scouts to be able to see their contribution.
 
@@ -32,7 +34,7 @@
     %p 
       If
       = @scout.first_name.capitalize
-      has collected an email address on their order form, a thank-you and receipt will also automatically be sent.
+      included an email address on their order form, a thank-you and receipt will also automatically be sent.
 
     %p Yours in Scouting,
 
