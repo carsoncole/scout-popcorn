@@ -16,6 +16,7 @@ class Scout < ApplicationRecord
   validates :first_name, :last_name, :email, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   before_save :fix_name!
+  after_initialize :init
   after_create :set_unit!
   after_create :set_default_event!
   after_create :set_if_admin!
@@ -23,6 +24,10 @@ class Scout < ApplicationRecord
   after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
 
   ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'],['keri', 'pinzon']]
+
+  def init
+    self.unit_id = 1
+  end
 
   def name
     first_name + ' ' + last_name
