@@ -28,7 +28,7 @@
                   %td= product.name
                   %td= quantity
                   %td
-                    - unit_inventory = @unit.stocks.where(product_id: product.id).sum(quantity)
+                    - unit_inventory = @unit.stocks.where(product_id: product.id).sum(:quantity)
                     = unit_inventory
                   %td
                     - net_quantity = quantity - unit_inventory
