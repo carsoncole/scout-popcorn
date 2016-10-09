@@ -33,6 +33,10 @@ class TakeOrder < ApplicationRecord
     take_order_line_items.inject(0) {|sum,line_item| sum + line_item.value}
   end
 
+  def value_without_pack_donations
+    take_order_line_items.joins(:product).where("products.is_pack_donation IS NULL OR ?",false).inject(0) {|sum,line_item| sum + line_item.value}
+  end
+
   def self.received
     where.not(status: 'received')
   end

@@ -10,7 +10,7 @@ class PurchaseOrdersController < ApplicationController
     @page_title = 'Purchase Order'
     @take_orders = @purchase_order.take_orders
     if @active_event
-      @products = @active_event.products.order(:name)
+      @products = @active_event.products.where(is_sourced_from_bsa: true).order(:name)
     else
       @products = Product.order(:name)
     end

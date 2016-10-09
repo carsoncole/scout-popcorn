@@ -37,7 +37,7 @@
               %td= number_to_currency( total_value )
 
         - if @purchase_order.status == 'open'
-          = button_to 'Ordered', purchase_order_path(@purchase_order, ordered: true), method: :patch, class: 'btn btn-default'
+          = button_to 'Ordered', purchase_order_path(@purchase_order, ordered: true), method: :patch, class: 'btn btn-danger'
 
 
 
@@ -61,10 +61,10 @@
               %td= to.scout.name
               %td
                 = link_to take_order_path(to) do
-                  %i.fa.fa-eye.fa-lg
+                  %i.fa.fa-folder-open.fa-lg
               %td
-                - total_value += to.value
-                = number_to_currency(to.value)
+                - total_value += to.value_without_pack_donations
+                = number_to_currency(to.value_without_pack_donations)
               %td= to.updated_at
 
           %tr
