@@ -78,9 +78,16 @@
           %br
 
         - if @envelope.money_received_at
-          Money received at:
+          Enveloped received at:
           = nice_date_time(@envelope.money_received_at)
           %br
+
+        - if @envelope.money_received_by_id
+          Envelope received by:
+          - scout = Scout.find(@envelope.money_received_by_id)
+          = scout.name
+          %br
+
 
 .row
   .col-md-6
