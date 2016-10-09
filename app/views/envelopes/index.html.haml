@@ -59,3 +59,25 @@
         %br
 
         = render 'nav'
+
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h2 Totals
+
+
+        %table.table
+          %tr
+            %th Total sales:
+            %td.text-xs-right
+              = number_to_currency(@total_sales)
+          %tr
+            %th Total BSA products:
+            %td.text-xs-right
+              = number_to_currency(@total_bsa_product)
+          %tr
+            %th Total Pack donations:
+            %td.text-xs-right
+              = number_to_currency(@total_pack_donations)

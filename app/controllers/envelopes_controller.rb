@@ -15,6 +15,11 @@ class EnvelopesController < ApplicationController
     elsif params[:status] == 'closed'
       @envelopes = @envelopes.closed
     end
+  
+    @take_orders = @envelopes.joins(take_orders: :take_order_line_items)
+    @total_sales = @take_orders.sum(:value)
+    @total_bsa_product = @envelopes.joins(take_orders: [take_order_line_items: :product]).where("products.is_sourced_from_bsa = ?", true).sum(:value)
+    @total_pack_donations = @envelopes.joins(take_orders: [take_order_line_items: :product]).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
   # GET /envelopes/1p
