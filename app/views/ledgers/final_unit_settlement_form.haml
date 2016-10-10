@@ -1,0 +1,32 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h1 Final Unit Settlement Form
+        %table.table.table-sm
+          %tr
+            %th Total due to BSA
+            %td.text-xs-right= number_to_currency(@due_to_bsa)
+
+          %tr
+            %th Total deposits to BSA bank account
+            %td.text-xs-right
+
+          %tr
+            %th Total deposits to Council
+            %td.text-xs-right
+
+          %tr
+            %th Total BSA credit card payments
+            %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
+
+          %tr
+            %th Total payments
+            %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
+
+          %tr
+            %th Balance due
+            %td.text-xs-right= number_to_currency(@due_to_bsa - @bsa_credit_card_cash)
+
+

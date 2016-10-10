@@ -31,6 +31,11 @@ class LedgersController < ApplicationController
     render :new
   end
 
+  def final_unit_settlement_form
+    @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
+    @bsa_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance if @unit.accounts.where(name: 'BSA Credit Card').first
+  end
+
   def balance_sheet
     @take_order_cash = @unit.accounts.where(name: 'Take Order Cash').first.balance
     @site_sale_cash = @unit.accounts.where(name: 'Site Sale Cash').first.balance

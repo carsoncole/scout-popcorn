@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :take_orders
   end
   get "ledgers/statements/balance-sheet" => "ledgers#balance_sheet", as: 'balance_sheet'
+   get "ledgers/final-unit-settlement-form" => "ledgers#final_unit_settlement_form", as: 'final_unit_settlement_form'
   get "ledgers/statements/income-statement" => "ledgers#income_statement", as: 'income_statement'
   resources :ledgers
   get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
