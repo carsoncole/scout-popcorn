@@ -9,6 +9,10 @@
           %tr
             %th Product
             %th Inventory
+            %th
+              Take Orders
+              %br
+              Inventory
             %th Take Orders
             %th Returns
           - @products.each do |product|
@@ -18,10 +22,11 @@
                 - inventory= @unit.inventory(product)
                 = inventory
               %td
-                - take_orders =  @active_event.take_orders.joins(:take_order_line_items).where("take_order_line_items.product_id = ?", product.id).sum(:quantity)
                 - take_orders_inventory = @unit.stocks.take_orders.where(product_id: product.id).sum(:quantity)
-                = take_orders - take_orders_inventory
+                = take_orders_inventory.abs
               %td
-                - returns =  inventory - take_orders
+                =  @active_event.take_orders.joins(:take_order_line_items).where("take_order_line_items.product_id = ?", product.id).sum(:quantity)
+              %td
+                - returns =  inventory - take_orders_inventory.abs
                 - if returns > 0
                   = returns
