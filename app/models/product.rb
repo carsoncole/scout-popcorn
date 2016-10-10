@@ -16,6 +16,13 @@ class Product < ApplicationRecord
     name + " (" + id.to_s + ")" 
   end
 
+  def self.physical
+    where(is_physical_inventory: true)
+  end
+
+  def self.is_sourced_from_bsa
+    where(is_sourced_from_bsa: true)
+  end
 
   def self.take_order_left(take_order)
     Product.where(event_id: take_order.event_id).order(:name).reject{ |p| take_order.products.include? p}

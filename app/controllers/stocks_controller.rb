@@ -53,7 +53,7 @@ class StocksController < ApplicationController
   end
 
   def show_and_sell_returns
-    @products = @active_event.products
+    @products = @active_event.products.is_sourced_from_bsa.order(:name)
   end
 
   # POST /stocks
