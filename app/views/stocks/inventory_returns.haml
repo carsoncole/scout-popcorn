@@ -3,16 +3,19 @@
     .card
       .card-block
         .card-title
-          %h1 Show & Sell Returns
+          %h1 Inventory Returns
 
         %table.table.table-sm
           %tr
             %th Product
-            %th Inventory
             %th
-              Take Orders
-              %br
               Inventory
+              %br
+              (Excl Take Orders)
+            %th
+              Inventory
+              %br
+              (Take Orders)
             %th Take Orders
             %th Returns
           - @products.each do |product|
@@ -23,10 +26,10 @@
                 = inventory
               %td
                 - take_orders_inventory = @unit.stocks.take_orders.where(product_id: product.id).sum(:quantity)
-                = take_orders_inventory.abs
+                = take_orders_inventory
               %td
                 =  @active_event.take_orders.where("take_orders.status = 'submitted'").joins(:take_order_line_items).where("take_order_line_items.product_id = ?", product.id).sum("take_order_line_items.quantity")
               %td
-                - returns =  inventory - take_orders_inventory.abs
+                - returns =  inventory + take_orders_inventory
                 - if returns > 0
                   = returns

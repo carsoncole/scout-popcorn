@@ -52,7 +52,7 @@ class StocksController < ApplicationController
     @locations = @unit.stocks.group(:location)
   end
 
-  def show_and_sell_returns
+  def inventory_returns
     @products = @active_event.products.is_sourced_from_bsa.physical.order(:name)
   end
 
