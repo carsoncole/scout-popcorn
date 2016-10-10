@@ -19,7 +19,8 @@
                 = inventory
               %td
                 - take_orders =  @active_event.take_orders.joins(:take_order_line_items).where("take_order_line_items.product_id = ?", product.id).sum(:quantity)
-                = take_orders
+                - take_orders_inventory = @unit.stocks.take_orders.where(product_id: product.id).sum(:quantity)
+                = take_orders - take_orders_inventory
               %td
                 - returns =  inventory - take_orders
                 - if returns > 0
