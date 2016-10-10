@@ -1,0 +1,26 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h1 Show & Sell Returns
+
+        %table.table.table-sm
+          %tr
+            %th Product
+            %th Inventory
+            %th Take Orders
+            %th Returns
+          - @products.each do |product|
+            %tr
+              %td= product.name
+              %td
+                - inventory= @unit.inventory(product)
+                = inventory
+              %td
+                - take_orders =  @active_event.take_orders.joins(:take_order_line_items).where("take_order_line_items.product_id = ?", product.id).sum(:quantity)
+                = take_orders
+              %td
+                - returns =  inventory - take_orders
+                - if returns > 0
+                  = returns

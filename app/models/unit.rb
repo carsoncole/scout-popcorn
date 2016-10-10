@@ -24,6 +24,10 @@ class Unit < ApplicationRecord
     (treasurer_first_name || '') + ' ' + (treasurer_last_name || '')
   end
 
+  def inventory(product)
+    stocks.where.not(location: 'take orders').where(product_id: product.id).sum(:quantity)
+  end
+
   private
 
   def create_default_payment_methods!

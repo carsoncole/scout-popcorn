@@ -52,6 +52,10 @@ class StocksController < ApplicationController
     @locations = @unit.stocks.group(:location)
   end
 
+  def show_and_sell_returns
+    @products = @active_event.products
+  end
+
   # POST /stocks
   # POST /stocks.json
   def create
