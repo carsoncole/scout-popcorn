@@ -4,8 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.order(:name)
-    @products = @products.where(event_id: @active_event) if @active_event
+    @products = @active_event.products
   end
 
   # GET /products/1

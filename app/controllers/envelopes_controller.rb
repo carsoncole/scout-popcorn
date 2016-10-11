@@ -32,7 +32,7 @@ class EnvelopesController < ApplicationController
   # GET /envelopes/new
   def new
     @envelope = Envelope.new
-    @scouts = @unit.scouts.not_admin.order(:last_name)
+    @scouts = @unit.scouts.active.not_admin.order(:last_name)
   end
 
   # GET /envelopes/1/edit

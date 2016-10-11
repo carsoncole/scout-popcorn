@@ -34,7 +34,13 @@
           &nbsp;
           = @scout.email
 
-        - if @scout.is_admin?
+        - if current_scout.is_admin?
+          %li.list-group-item
+            Is active:
+            - if @scout.is_active
+              %i.fa.fa-check
+
+
           %li.list-group-item
             Administrator
 
