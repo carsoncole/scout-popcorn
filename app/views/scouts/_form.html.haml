@@ -46,6 +46,14 @@
             .form-group
               = f.label :is_active
               = f.check_box :is_active, class: 'form-control'           
+            
+            .form-group
+              = f.label :is_take_order_admin
+              = f.check_box :is_take_order_admin, class: 'form-control', disabled: current_scout.is_super_admin? ? false : true
+
+            .form-group
+              = f.label :is_site_sale_admin
+              = f.check_box :is_site_sale_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

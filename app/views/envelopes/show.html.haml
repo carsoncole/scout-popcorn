@@ -111,7 +111,7 @@
       .card
         .card-block
           .text-xs-center
-            = button_to "Close", close_envelope_path(@envelope.id), class: 'btn btn-lg btn-danger'
+            = button_to "Close", close_envelope_path(@envelope.id), {disabled: (current_scout.is_take_order_admin? ? false : true), class: 'btn btn-lg btn-danger'}
 
   - if @envelope.closed? && current_scout.is_admin?
     .col-md-1
@@ -119,4 +119,4 @@
       .card
         .card-block
           .text-xs-center
-            = button_to "Re-Open", open_envelope_path(@envelope.id), class: 'btn btn-lg btn-success'
+            = button_to "Re-Open", open_envelope_path(@envelope.id), {disabled: (current_scout.is_take_order_admin? ? false : true), class: 'btn btn-lg btn-success'}
