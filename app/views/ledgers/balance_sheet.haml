@@ -47,8 +47,8 @@
                 %td(colspan=2) Popcorn Inventory
                 %td.text-xs-right= number_to_currency(@popcorn_inventory)
               %tr
-                %th(colspan=2) Total assets
-                %th.text-xs-right= number_to_currency(@total_assets)
+                %th.top.bottom(colspan=2) Total assets
+                %th.top.bottom.text-xs-right= number_to_currency(@total_assets)
 
 
       .col-md-6
@@ -69,8 +69,8 @@
                 %td Pack prizes
                 %td.text-xs-right= number_to_currency(@pack_prizes)
               %tr
-                %th Total liabilities
-                %th.text-xs-right= number_to_currency(@total_liabilities)
+                %th.top.bottom Total liabilities
+                %th.top.bottom.text-xs-right= number_to_currency(@total_liabilities)
 
       .col-md-6
         .card
@@ -80,5 +80,5 @@
 
             %table.table.card-text
               %tr
-                %th Equity
-                %th.text-xs-right= number_to_currency(@total_equity)
+                %th.top.bottom-double Equity
+                %th.top.bottom-double.text-xs-right= number_to_currency(@total_equity)

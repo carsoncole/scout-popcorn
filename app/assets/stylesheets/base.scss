@@ -63,3 +63,15 @@ a.kill {
 .action_button {
   width: 11%;
 }
+
+.table td, th {
+  &.top{
+    border-top: 2px solid #999;
+  }
+  &.bottom-double {
+    border-bottom: 4px solid #000;
+  }
+  &.bottom {
+    border-bottom: 2px solid #000;
+  }
+}

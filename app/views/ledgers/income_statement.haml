@@ -28,8 +28,8 @@
                 %td Online Sales
                 %td.text-xs-right= number_to_currency(@online_sales)
               %tr
-                %th Total
-                %th.text-xs-right= number_to_currency(@total_sales)
+                %th.top.bottom Total
+                %th.top.bottom.text-xs-right= number_to_currency(@total_sales)
 
       .col-md-6
         .card
@@ -48,8 +48,8 @@
                 %td Other expenses
                 %td.text-xs-right= number_to_currency(0)
               %tr
-                %th Total
-                %th.text-xs-right= number_to_currency(@total_expenses)
+                %th.top.bottom Total
+                %th.top.bottom.text-xs-right= number_to_currency(@total_expenses)
 
       .col-md-6
         .card
@@ -59,7 +59,7 @@
 
             %table.table.card-text
               %tr
-                %th Net Income
-                %th.text-xs-right= number_to_currency(@total_sales - @total_expenses)
+                %th.top.bottom-double Net Income
+                %th.top.bottom-double.text-xs-right= number_to_currency(@total_sales - @total_expenses)
 
     .small.text-muted.visible-print-block= nice_date_time(Time.now)

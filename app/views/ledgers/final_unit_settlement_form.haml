@@ -6,8 +6,8 @@
           %h1 Final Unit Settlement Form
         %table.table.table-sm
           %tr
-            %th Total due to BSA
-            %td.text-xs-right= number_to_currency(@due_to_bsa)
+            %th.top Total due to BSA
+            %td.top.text-xs-right= number_to_currency(@due_to_bsa)
 
           %tr
             %th Total deposits to BSA bank account
@@ -22,11 +22,11 @@
             %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
 
           %tr
-            %th Total payments
-            %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
+            %th.top Total payments
+            %td.top.text-xs-right= number_to_currency(@bsa_credit_card_cash)
 
           %tr
-            %th Balance due
-            %td.text-xs-right= number_to_currency(@due_to_bsa - @bsa_credit_card_cash)
+            %th.top.bottom-double Balance due
+            %td.top.bottom-double.text-xs-right= number_to_currency(@due_to_bsa - @bsa_credit_card_cash)
 
 
