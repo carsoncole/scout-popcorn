@@ -7,22 +7,22 @@
         %table.table.table-sm
           - @due_to_bsa_ledgers.each do |ledger|
             %tr
-              %th= ledger.description
+              %td= ledger.description
               %td.text-xs-right= number_to_currency(ledger.amount)
           %tr
-            %th.top Total due to BSA
-            %td.top.text-xs-right= number_to_currency(@due_to_bsa)
+            %th.top.bottom Total due to BSA
+            %td.top.bottom.text-xs-right= number_to_currency(@due_to_bsa)
 
           %tr
-            %th Total deposits to BSA bank account
+            %td Total deposits to BSA bank account
             %td.text-xs-right
 
           %tr
-            %th Total deposits to Council
+            %td Total deposits to Council
             %td.text-xs-right
 
           %tr
-            %th Total BSA credit card payments
+            %td Total BSA credit card payments
             %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
 
           %tr
