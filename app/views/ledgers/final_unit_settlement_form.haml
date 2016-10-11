@@ -5,6 +5,10 @@
         .card-title
           %h1 Final Unit Settlement Form
         %table.table.table-sm
+          - @due_to_bsa_ledgers.each do |ledger|
+            %tr
+              %th= ledger.description
+              %td.text-xs-right= number_to_currency(ledger.amount)
           %tr
             %th.top Total due to BSA
             %td.top.text-xs-right= number_to_currency(@due_to_bsa)

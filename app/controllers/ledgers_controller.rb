@@ -32,7 +32,8 @@ class LedgersController < ApplicationController
   end
 
   def final_unit_settlement_form
-    @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
+    @due_to_bsa_ledgers = @unit.ledgers.joins(:account).where("accounts.name = 'Due to BSA'")#(@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
+    @due_to_bsa= (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
     @bsa_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance if @unit.accounts.where(name: 'BSA Credit Card').first
   end
 
