@@ -13,6 +13,7 @@ class Event < ApplicationRecord
   has_many :purchase_orders, dependent: :destroy
   has_many :online_sales, dependent: :destroy
   has_many :envelopes
+  has_many :accounts
 
   validates :name, :pack_commission_percentage, presence: true
 

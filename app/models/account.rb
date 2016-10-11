@@ -1,5 +1,5 @@
 class Account < ApplicationRecord
-  belongs_to :unit
+  belongs_to :event
   has_many :ledgers
   has_many :take_orders, foreign_key: :payment_id
   has_many :site_sale_payment_methods

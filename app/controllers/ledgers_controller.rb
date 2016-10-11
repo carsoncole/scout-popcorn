@@ -8,7 +8,7 @@ class LedgersController < ApplicationController
     if params[:account_id]
       @ledgers = @ledgers.where(account_id: params[:account_id])
     end
-    @bank_accounts = @unit.accounts.is_bank_account_depositable
+    @bank_accounts = @active_event.accounts.is_bank_account_depositable
   end
 
   # GET /ledgers/1
@@ -19,38 +19,38 @@ class LedgersController < ApplicationController
   # GET /ledgers/new
   def new
     @ledger = Ledger.new
-    @accounts = @unit.accounts.order(:name)
+    @accounts = @active_event.accounts.order(:name)
   end
 
   def bank_deposit
     @ledger = Ledger.new
     @ledger.is_bank_deposit = true
-    @bank_accounts = @unit.accounts.is_bank_account_depositable.order(:name)
-    @asset_accounts = @unit.accounts.assets.order(:name)
+    @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
+    @asset_accounts = @active_event.accounts.assets.order(:name)
     @deposit = true
     render :new
   end
 
   def final_unit_settlement_form
-    @due_to_bsa_ledgers = @unit.ledgers.joins(:account).where("accounts.name = 'Due to BSA'")#(@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
-    @due_to_bsa= (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
-    @bsa_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance if @unit.accounts.where(name: 'BSA Credit Card').first
+    @due_to_bsa_ledgers = @unit.ledgers.joins(:account).where("accounts.name = 'Due to BSA'")#(@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
+    @due_to_bsa= (@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
+    @bsa_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance if @active_event.accounts.where(name: 'BSA Credit Card').first
   end
 
   def balance_sheet
-    @take_order_cash = @unit.accounts.where(name: 'Take Order Cash').first.balance
-    @site_sale_cash = @unit.accounts.where(name: 'Site Sale Cash').first.balance
-    @square_cash = @unit.accounts.where(name: 'Square').first.balance
-    @bsa_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance if @unit.accounts.where(name: 'BSA Credit Card').first
-    @bsa_site_sales_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance(site_sales: true) if @unit.accounts.where(name: 'BSA Credit Card').first
-    @bsa_take_orders_credit_card_cash = @unit.accounts.where(name: 'BSA Credit Card').first.balance(take_orders: true) if @unit.accounts.where(name: 'BSA Credit Card').first
-    @union_bank_cash = @unit.accounts.where(name: 'Union Bank').first.balance if @unit.accounts.where(name: 'Union Bank').first
+    @take_order_cash = @active_event.accounts.where(name: 'Take Order Cash').first.balance if @active_event.accounts.where(name: 'Take Order Cash').first
+    @site_sale_cash = @active_event.accounts.where(name: 'Site Sale Cash').first.balance if @active_event.accounts.where(name: 'Site Sale Cash').first
+    @square_cash = @active_event.accounts.where(name: 'Square').first.balance if @active_event.accounts.where(name: 'Square').first
+    @bsa_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance if @active_event.accounts.where(name: 'BSA Credit Card').first
+    @bsa_site_sales_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance(site_sales: true) if @active_event.accounts.where(name: 'BSA Credit Card').first
+    @bsa_take_orders_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance(take_orders: true) if @active_event.accounts.where(name: 'BSA Credit Card').first
+    @union_bank_cash = @active_event.accounts.where(name: 'Union Bank').first.balance if @active_event.accounts.where(name: 'Union Bank').first
     @popcorn_inventory = Stock.wholesale_value(@unit, @active_event)
-    @due_from_customers = (@unit.accounts.where(name: 'Money due from Customer').first.balance if @unit.accounts.where(name: 'Money due from Customer').any?) || 0
+    @due_from_customers = (@active_event.accounts.where(name: 'Money due from Customer').first.balance if @active_event.accounts.where(name: 'Money due from Customer').any?) || 0
     @bsa_online_credits = @active_event.total_online_sales * (@active_event.pack_commission_percentage/100)
-    @total_assets = @take_order_cash + @site_sale_cash + @square_cash + @bsa_credit_card_cash + @union_bank_cash + @popcorn_inventory + @due_from_customers + @bsa_online_credits
-    @due_to_bsa = (@unit.accounts.where(name: 'Due to BSA').first.balance if @unit.accounts.where(name: 'Due to BSA').any?) || 0
-    @product_due_to_customers = (@unit.accounts.where(name: 'Product due to Customers').first.balance if @unit.accounts.where(name: 'Product due to Customers').first) || 0
+    @total_assets = (@take_order_cash || 0) + (@site_sale_cash||0) + (@square_cash||0) + (@bsa_credit_card_cash||0) + (@union_bank_cash||0) + (@popcorn_inventory||0) + (@due_from_customers||0) + (@bsa_online_credits||0)
+    @due_to_bsa = (@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
+    @product_due_to_customers = (@active_event.accounts.where(name: 'Product due to Customers').first.balance if @active_event.accounts.where(name: 'Product due to Customers').first) || 0
     @pack_prizes = @active_event.scout_prizes.joins(:prize).where('prizes.source = "pack"').sum('prizes.cost')
     @total_liabilities = @due_to_bsa + @product_due_to_customers + @pack_prizes
     @total_equity = @total_assets - @total_liabilities
@@ -70,7 +70,7 @@ class LedgersController < ApplicationController
 
   # GET /ledgers/1/edit
   def edit
-    @accounts = @unit.accounts.order(:name)
+    @accounts = @active_event.accounts.order(:name)
   end
 
   # POST /ledgers

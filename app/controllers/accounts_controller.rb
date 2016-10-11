@@ -14,7 +14,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts/new
   def new
-    @account = @unit.accounts.build
+    @account = @active_event.accounts.build
   end
 
   # GET /accounts/1/edit
@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
   # POST /accounts
   # POST /accounts.json
   def create
-    @account = @unit.accounts.build(account_params)
+    @account = @active_event.accounts.build(account_params)
 
     respond_to do |format|
       if @account.save

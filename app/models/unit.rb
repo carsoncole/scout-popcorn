@@ -8,7 +8,7 @@ class Unit < ApplicationRecord
   has_many :site_sales, through: :scouts
   has_many :purchase_orders, through: :events
   has_many :take_order_purchase_orders
-  has_many :accounts
+  has_many :accounts, through: :events
   has_many :ledgers, through: :accounts
 
   validates :treasurer_email, format: /@/, unless: Proc.new {|u| u.treasurer_email.blank? }
