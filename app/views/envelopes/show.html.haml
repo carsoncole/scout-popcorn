@@ -72,23 +72,6 @@
           Total number of Take Orders (including donations):
           = @take_orders.count
 
-        - if @envelope.closed_at
-          Closed at:
-          = nice_date_time(@envelope.closed_at)
-          %br
-
-        - if @envelope.money_received_at
-          Enveloped received at:
-          = nice_date_time(@envelope.money_received_at)
-          %br
-
-        - if @envelope.money_received_by_id
-          Envelope received by:
-          - scout = Scout.find(@envelope.money_received_by_id)
-          = scout.name
-          %br
-
-
 .row
   .col-md-6
     .card
@@ -120,3 +103,30 @@
         .card-block
           .text-xs-center
             = button_to "Re-Open", open_envelope_path(@envelope.id), {disabled: (current_scout.is_take_order_admin? ? false : true), class: 'btn btn-lg btn-success'}
+
+.row
+  .col-md-6
+    .card
+      .card-block
+        - if @envelope.closed_at
+          Closed at:
+          = nice_date_time(@envelope.closed_at)
+          %br
+
+        - if @envelope.money_received_at
+          Enveloped received at:
+          = nice_date_time(@envelope.money_received_at)
+          %br
+
+        - if @envelope.money_received_by_id
+          Envelope received by:
+          - scout = Scout.find(@envelope.money_received_by_id)
+          = scout.name
+          %br
+
+        - if current_scout.is_admin?
+          Envelope created at:
+          = nice_date_time(@envelope.created_at)
+          %br
+          Envelope updated at:
+          = nice_date_time(@envelope.updated_at)
