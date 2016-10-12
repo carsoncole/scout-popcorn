@@ -38,7 +38,11 @@ class Scout < ApplicationRecord
   end
 
   def self.not_admin
-    where(is_admin: nil).order(:last_name)
+    where("is_admin IS NULL OR is_admin = ?", false)
+  end
+
+  def self.admin
+    where(is_admin: true)
   end
 
   def self.active

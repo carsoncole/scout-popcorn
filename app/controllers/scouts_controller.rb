@@ -6,7 +6,8 @@ class ScoutsController < ApplicationController
   def index
     if current_scout.is_admin?
       if @unit
-        @scouts = @unit.scouts.order(:first_name)
+        @scouts = @unit.scouts.not_admin.order(:first_name)
+        @admins = @unit.scouts.admin.order(:first_name)
       else
         @scouts = Scout.order(:first_name)
       end
@@ -84,6 +85,6 @@ class ScoutsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scout_params
-      params.require(:scout).permit(:first_name, :last_name, :email, :parent_first_name, :parent_last_name, :password, :password_confirmation, :default_event_id, :is_active, :is_site_sale_admin, :is_take_order_admin)
+      params.require(:scout).permit(:first_name, :last_name, :email, :parent_first_name, :parent_last_name, :password, :password_confirmation, :default_event_id, :is_active, :is_site_sales_admin, :is_take_orders_admin, :is_online_sales_admin, :is_admin, :is_super_admin)
     end
 end

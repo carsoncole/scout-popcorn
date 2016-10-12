@@ -1,11 +1,12 @@
+
+
 .row
   .col-md-12
     .card
       .card-block
         .card-title
-          %h1
-            = @unit.name
-            Scouts
+          %h2 Scouts
+        
         .table-responsive
           %table.table.card-text
             %thead
@@ -26,11 +27,8 @@
               - @scouts.each do |scout|
                 %tr
                   %td
-                    %i.fa.fa-child
+                    %i.fa.fa-user
                     = link_to scout.name, scout_path(scout)
-                    - if scout.is_admin?
-                      %span.tag.tag-warning
-                        Admin
                   %td
                     - unless scout.is_admin?
                       = link_to number_to_currency(TakeOrder.scout_sales(scout, @active_event), precision: 0), take_orders_path(scout_id: scout.id)
@@ -52,9 +50,65 @@
                     %td.hidden-print
                       = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                         %span.fa.fa-trash.fa-lg
-                    
+                  
+        %br
+        .hidden-print
+          = link_to new_scout_path do
+            %i.fa.fa-plus
 
-%br
-.hidden-print
-  = link_to new_scout_path do
-    %i.fa.fa-plus.fa-lg
+
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h2 Administrators
+        
+        .table-responsive
+          %table.table.card-text
+            %thead
+              %tr
+                %th Name
+                %th Admin
+                %th Take Orders
+                %th Site Sales
+                %th Online Sales
+                %th Last Sign In
+                %th Sign In Count
+                - if current_scout.is_admin?
+                  %th
+                  %th.hidden-print
+                  %th.hidden-print
+
+            %tbody
+              - @admins.each do |scout|
+                %tr
+                  %td
+                    %i.fa.fa-user
+                    = link_to scout.name, scout_path(scout)
+                  %td
+                    - if scout.is_admin?
+                      %i.fa.fa-check
+                  %td
+                    - if scout.is_take_orders_admin?
+                      %i.fa.fa-check
+                  %td
+                    - if scout.is_site_sales_admin?
+                      %i.fa.fa-check
+                  %td
+                    - if scout.is_online_sales_admin?
+                      %i.fa.fa-check
+                  %td= nice_date_time_compact(scout.last_sign_in_at)
+                  %td= scout.sign_in_count
+                  - if current_scout.is_admin?
+                    %td.hidden-print
+                      = link_to edit_scout_path(scout) do
+                        %span.fa.fa-pencil.fa-lg
+                    %td.hidden-print
+                      = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                        %span.fa.fa-trash.fa-lg
+                  
+        %br
+        .hidden-print
+          = link_to new_scout_path do
+            %i.fa.fa-plus

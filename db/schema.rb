@@ -168,6 +168,9 @@ ActiveRecord::Schema.define(version: 20161011233218) do
     t.boolean  "is_active",              default: true
     t.boolean  "is_take_order_admin",    default: false
     t.boolean  "is_site_sale_admin",     default: false
+    t.boolean  "is_take_orders_admin",   default: false
+    t.boolean  "is_site_sales_admin",    default: false
+    t.boolean  "is_online_sales_admin",  default: false
     t.index ["email"], name: "index_scouts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_scouts_on_reset_password_token", unique: true
   end
