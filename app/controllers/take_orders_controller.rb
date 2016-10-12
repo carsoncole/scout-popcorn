@@ -27,7 +27,7 @@ class TakeOrdersController < ApplicationController
       @envelopes = @active_event.envelopes.where(scout_id: current_scout.id).order(status: :desc, closed_at: :desc)
     end
 
-    if params[:envelopes] == 'open'
+    if params[:envelopes] == 'open' || params[:envelopes].blank?
       @envelopes = @envelopes.open
     elsif params[:envelopes]  == 'closed'
       @envelopes = @envelopes.closed

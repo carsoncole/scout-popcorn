@@ -37,14 +37,7 @@
       - if current_scout.is_admin?      
         %ul.nav.nav-tabs
           %li.nav-item
-            = link_to take_orders_path, class: "nav-link #{'active' unless params[:envelopes]}" do
-              All Envelopes
-              - if current_scout.is_admin?
-                = surround("(", ")") do
-                  = @active_event.envelopes.count
-
-          %li.nav-item
-            = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open'}" do
+            = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
               Open Envelopes
               - if current_scout.is_admin?
                 = surround("(", ")") do
@@ -56,6 +49,12 @@
               - if current_scout.is_admin?
                 = surround("(", ")") do
                   = @active_event.envelopes.closed.count
+          %li.nav-item
+            = link_to take_orders_path(envelopes: 'all'), class: "nav-link #{'active' if params[:envelopes] == 'all'}" do
+              All Envelopes
+              - if current_scout.is_admin?
+                = surround("(", ")") do
+                  = @active_event.envelopes.count
         %br
         / %li.nav-item
         /   = link_to take_orders_path(filter: 'received', scout_id: params[:scout_id]), class: "nav-link #{'active' if params[:filter] == 'received'}" do
