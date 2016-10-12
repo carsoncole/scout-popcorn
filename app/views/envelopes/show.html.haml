@@ -2,21 +2,18 @@
   .col-md-12
     .card
       .card-block
-        %span.tag.tag-primary.pull-right
-          - if @envelope.open?
-            Open
-          - elsif @envelope.closed?
-            Closed
-          - else
-            = @envelope.status.capitalize if @envelope.status
-        
-
-
-        .card-title
-          %h1= @envelope.name       
         - if @envelope.open?
-          = link_to envelope_path(@envelope), method: :delete, data: { confirm: 'Are you sure?'} do
-            %i.fa.fa-trash.fa-lg
+          .pull-right
+            = link_to envelope_path(@envelope), method: :delete, data: { confirm: 'Are you sure?'} do
+              %i.fa.fa-trash.fa-lg
+        .card-title
+          %h1
+            - if @envelope.open?
+              %i.fa.fa-folder-open.fa-lg.text-muted
+            - else
+              %i.fa.fa-folder.fa-lg.text-muted
+            = @envelope.name       
+
 
 
 .row

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005044935) do
+ActiveRecord::Schema.define(version: 20161011233218) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20161005044935) do
     t.string   "account_type"
     t.boolean  "is_credit_card"
     t.boolean  "is_cash"
+    t.integer  "event_id"
   end
 
   create_table "direct_sales", force: :cascade do |t|
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(version: 20161005044935) do
     t.integer  "site_sale_id"
     t.integer  "created_by"
     t.datetime "bank_deposit_notification_sent_at"
+    t.integer  "line_item_id"
   end
 
   create_table "online_sales", force: :cascade do |t|
@@ -110,6 +112,7 @@ ActiveRecord::Schema.define(version: 20161005044935) do
     t.string   "short_name"
     t.boolean  "is_physical_inventory",                         default: true
     t.boolean  "is_pack_donation"
+    t.boolean  "is_sourced_from_bsa",                           default: true
   end
 
   create_table "purchase_orders", force: :cascade do |t|
@@ -149,19 +152,22 @@ ActiveRecord::Schema.define(version: 20161005044935) do
     t.string   "parent_last_name"
     t.string   "email"
     t.integer  "default_event_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.boolean  "is_admin"
     t.boolean  "is_super_admin"
+    t.boolean  "is_active",              default: true
+    t.boolean  "is_take_order_admin",    default: false
+    t.boolean  "is_site_sale_admin",     default: false
     t.index ["email"], name: "index_scouts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_scouts_on_reset_password_token", unique: true
   end
@@ -223,15 +229,15 @@ ActiveRecord::Schema.define(version: 20161005044935) do
     t.integer  "scout_id"
     t.integer  "event_id"
     t.integer  "purchase_order_id"
-    t.string   "status",                                           default: "received", null: false
+    t.string   "status",                                           default: "in hand", null: false
     t.string   "customer_name"
     t.string   "customer_address"
     t.string   "customer_email"
     t.decimal  "total_value",              precision: 5, scale: 2
     t.integer  "money_received_by_id"
     t.datetime "money_received_at"
-    t.datetime "created_at",                                                            null: false
-    t.datetime "updated_at",                                                            null: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
     t.datetime "receipt_sent_at"
     t.boolean  "is_paid_by_credit_card",                           default: false
     t.integer  "credit_card_order_number"

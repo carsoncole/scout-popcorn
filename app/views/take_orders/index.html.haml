@@ -3,7 +3,7 @@
     .card.card-block
       .card-title
         %h1.h1
-          Take Orders
+          Take Order Envelopes
 
       - unless current_scout.is_admin?
         .alert.alert-info
@@ -163,7 +163,10 @@
             %h5
               = link_to envelope_path(envelope) do
                 - if current_scout.is_admin?
-                  %i.fa.fa-envelope
+                  - if envelope.open?
+                    %i.fa.fa-envelope
+                  - else
+                    %i.fa.fa-envelope
                   = envelope.name
                 - else
                   %i.fa.fa-envelope

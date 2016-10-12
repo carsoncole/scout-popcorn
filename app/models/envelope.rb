@@ -30,7 +30,7 @@ class Envelope < ApplicationRecord
   end
 
   def name
-    scout.name + ' Envelope #' + id.to_s
+    scout.name + ' Take Order Envelope #' + id.to_s
   end
 
   def value
