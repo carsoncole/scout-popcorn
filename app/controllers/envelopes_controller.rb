@@ -53,7 +53,7 @@ class EnvelopesController < ApplicationController
 
   def remove_take_order
     take_order = TakeOrder.find(params[:id])
-    take_order.update(envelope_id: nil)
+    take_order.destroy
     @envelope = Envelope.find(params[:envelope_id])
     redirect_to envelope_path(@envelope.id)
   end
