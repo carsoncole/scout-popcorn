@@ -49,6 +49,10 @@ class Scout < ApplicationRecord
     where(is_active: true)
   end
 
+  def self.inactive
+    where(is_active: false)
+  end
+
   def total_bsa_prize_amounts(event)
     scout_prizes.joins(:prize).where("prizes.source = 'bsa'").where(event_id: event.id).sum(:prize_amount)
   end

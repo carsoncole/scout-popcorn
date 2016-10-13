@@ -5,11 +5,12 @@ class ScoutsController < ApplicationController
   # GET /scouts.json
   def index
     if current_scout.is_admin?
-      if @unit
-        @scouts = @unit.scouts.active.not_admin.order(:first_name)
-        @admins = @unit.scouts.active.admin.order(:first_name)
+      if params[:inactive]
+        @scouts = @unit.scouts.inactive
+      elsif params[:administrators]
+        @admins = @unit.scouts.admin
       else
-        @scouts = Scout.order(:first_name)
+        @scouts = @unit.scouts.active.not_admin.order(:first_name)
       end
     end
   end
@@ -68,10 +69,7 @@ class ScoutsController < ApplicationController
   # DELETE /scouts/1.json
   def destroy
     @scout.update(is_active: false)
-    respond_to do |format|
-      format.html { redirect_to scouts_url, notice: 'Scout was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to scouts_path, notice: 'Scout was successfully moved to "inactive".'
   end
 
   private
