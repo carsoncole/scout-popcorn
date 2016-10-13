@@ -64,7 +64,7 @@
             = link_to new_scout_path do
               %i.fa.fa-plus
 
-        - else
+        - elsif @admins && @admins.any?
           .table-responsive
             %table.table.card-text
               %thead
