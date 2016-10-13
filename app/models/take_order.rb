@@ -86,6 +86,10 @@ class TakeOrder < ApplicationRecord
     status == 'submitted'
   end
 
+  def products_and_quantities
+    take_order_line_items.joins(:product).map{|toli| toli.product.name + ' (' + toli.quantity.to_s + ')' }.join(',')
+  end
+
   def self.sales(event, is_turned_in=nil)
     if is_turned_in
       where(event_id: event.id).where.not(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
