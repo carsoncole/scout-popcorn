@@ -87,7 +87,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def products_and_quantities
-    take_order_line_items.joins(:product).map{|toli| toli.product.name + ' (' + toli.quantity.to_s + ')' }.join(',')
+    take_order_line_items.joins(:product).map{|toli| toli.product.name + ' (' + toli.quantity.to_s + ')' }.join(', ')
   end
 
   def self.sales(event, is_turned_in=nil)

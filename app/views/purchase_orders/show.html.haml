@@ -65,8 +65,13 @@
               %td
               %td Envelope #
               %td Value
+              %td
+                Value
+                %br
+                (Excl Donations)
               %td Added
           - total_value = 0
+          - total_value_wo_donations = 0
           - @take_orders.each do |to|
             %tr
               %td= to.scout.name
@@ -76,12 +81,19 @@
               %td= to.products_and_quantities
               %td= link_to to.envelope_id, envelope_path(to.envelope_id)
               %td
-                - total_value += to.value_without_pack_donations
+                - total_value += to.value
+                = number_to_currency(to.value)
+              %td
+                - total_value_wo_donations += to.value_without_pack_donations
+                
                 = number_to_currency(to.value_without_pack_donations)
               %td= to.updated_at
 
           %tr
             %td
             %td
+            %td
+            %td
             %td= number_to_currency(total_value)
+            %td= number_to_currency(total_value_wo_donations)
             %td
