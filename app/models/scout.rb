@@ -22,6 +22,7 @@ class Scout < ApplicationRecord
   after_create :set_if_admin!
   after_create :send_registration_email!
   after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
+  after_create :create_prize_cart!
 
   ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'],['keri', 'pinzon']]
 
@@ -108,6 +109,10 @@ def self.admin
 
   def open_envelope?(event)
     envelopes.open.where(event_id: event.id).any?
+  end
+
+  def create_prize_cart!
+    prize_carts.create(event_id: @active_event) unless prize_carts.any?
   end
 
   private
