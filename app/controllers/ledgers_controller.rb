@@ -64,7 +64,7 @@ class LedgersController < ApplicationController
     @online_sales = @active_event.total_online_sales
     @total_sales = @active_event.total_sales
     @total_cost_of_goods_sold = @active_event.cost_of_goods_sold
-    @pack_selected_prizes = @active_event.scout_prizes.approved.joins(:prize).where('prizes.source = "pack"').sum('prizes.cost')
+    @pack_selected_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where('prizes.source = "pack"').sum('prizes.cost')
     @other_expenses = @active_event.accounts.joins(:ledgers).where("accounts.account_type = 'Expense'").sum("ledgers.amount")
     @total_expenses = @active_event.cost_of_goods_sold + @pack_selected_prizes + @other_expenses
   end
