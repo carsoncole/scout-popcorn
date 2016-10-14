@@ -41,7 +41,7 @@ class StocksController < ApplicationController
   end
 
   def stock_movement
-    @products = @active_event.products.order(:name)
+    @products = @active_event.products.physical.order(:name)
   end
 
   def ledger

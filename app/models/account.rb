@@ -4,7 +4,7 @@ class Account < ApplicationRecord
   has_many :take_orders, foreign_key: :payment_id
   has_many :site_sale_payment_methods
 
-  ACCOUNT_TYPES = ['Asset', 'Liability', 'Equity']
+  ACCOUNT_TYPES = ['Asset', 'Liability', 'Equity', 'Income', 'Expense']
 
   def self.site_sale(unit)
     Account.where(unit_id: unit.id).where(name: 'Site Sale').first

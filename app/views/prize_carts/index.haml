@@ -1,0 +1,73 @@
+.row
+  .col-md-12
+
+    %ul.nav.nav-pills
+      %li.nav-item= link_to "Open", prize_carts_path(open: true), class: "nav-link #{params[:ordered].blank? && params[:approved].blank? ? 'active' : nil}"    
+      %li.nav-item= link_to "Ordered", prize_carts_path(ordered: true), class: "nav-link #{params[:ordered] ? 'active' : nil}"
+      %li.nav-item= link_to "Approved", prize_carts_path(approved: true), class: "nav-link #{params[:approved] ? 'active' : nil}"
+
+%br
+
+.row
+  .col-md-8
+    - @prize_carts.each do |cart|
+      .col-md-6
+        .card
+          .card-block
+            .pull-right
+              - if cart.ordered?
+                = button_to "Approve", approve_prize_cart_path(cart.id), class: 'btn btn-success', disabled: current_scout.is_prizes_admin? ? false : true
+              - elsif cart.approved?
+                = button_to "Unapprove", unapprove_prize_cart_path(cart.id), class: 'btn btn-info', disabled: current_scout.is_prizes_admin? ? false : true
+            .pull-right  
+              = button_to prize_cart_path(cart.id), method: :delete, class: 'btn btn-danger', disabled: current_scout.is_prizes_admin? ? false : true do
+                %i.fa.fa-trash
+
+            .card-title
+              %h3= cart.scout.name
+            %p
+              Total sales:
+              = number_to_currency(cart.scout.total_sales(@active_event), precision: 0)
+              / %br
+              / Scout ordered:
+              / = nice_date_time_compact(cart.is_ordered_at) if cart.is_ordered_at
+            %br
+            %table.table.table-sm
+              %tr
+              
+                %th Prize
+                %th Amount
+                %th Source
+                / %th Completed
+                / %th Approved
+                / %th
+              
+              - cart.cart_prizes.each do |scout_prize|
+                %tr
+                  
+                  %td= scout_prize.prize.name
+                  %td= number_to_currency(scout_prize.prize.amount, precision: 0)
+                  %td= scout_prize.prize.source.upcase
+                  / %td
+                  /   - if scout_prize.complete?
+                  /     = nice_date_time_compact(scout_prize.is_complete_at) 
+                  /   - else
+                  /     = button_to "Complete", complete_scout_prize_path(scout_prize.id), class: 'btn btn-info'
+                  / %td
+                  /   - if scout_prize.approved?
+                  /     = nice_date_time_compact(scout_prize.is_approved_at)
+                  /   - elsif !scout_prize.approved? && scout_prize.complete?
+                  /     = button_to "Approve", approve_scout_prize_path(scout_prize.id), class: 'btn btn-success'
+                  / %td= button_to "Remove", remove_scout_prize_path(scout_prize.id), class: 'btn btn-danger'
+  .col-md-4
+    .card
+      .card-block
+        .card-title
+          %h3 Prizes to Order
+        %table.table.table-sm
+          - @approved_prizes.each do |key, value|
+            - prize = Prize.find(key)
+            %tr
+              %td= prize.name
+              %td= number_to_currency(prize.amount)
+              %td= value

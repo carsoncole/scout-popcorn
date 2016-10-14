@@ -11,7 +11,7 @@ class Scout < ApplicationRecord
   has_many :direct_sales
   has_many :online_sales
   has_many :envelopes
-  has_many :scout_prizes
+  has_many :prize_carts
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
@@ -41,7 +41,7 @@ class Scout < ApplicationRecord
     where("is_admin IS NULL OR is_admin = ?", false)
   end
 
-  def self.admin
+def self.admin
     where(is_admin: true)
   end
 
@@ -54,11 +54,15 @@ class Scout < ApplicationRecord
   end
 
   def total_bsa_prize_amounts(event)
-    scout_prizes.joins(:prize).where("prizes.source = 'bsa'").where(event_id: event.id).sum(:prize_amount)
+    prize_cart(event).cart_prizes.joins(:prize).where("prizes.source = 'bsa'").sum(:prize_amount)
   end
 
   def parent_name
     (parent_first_name||'') + ' ' + (parent_last_name||'')
+  end
+
+  def prize_cart(event)
+    prize_carts.where(event_id: event.id).first || prize_carts.create(event_id: event.id)
   end
 
   def total_sales(event)

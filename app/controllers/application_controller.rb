@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_scout!
   before_action :set_unit, :set_event, if: Proc.new {|n| current_scout }
 
+  def redirect_unless_admin!
+    redirect_to root_path unless current_scout.is_admin?
+  end
+
   private
 
   def set_unit

@@ -6,7 +6,7 @@
       .alert.alert-danger.text-xs-center
         %p Select Your Prizes
         %b
-          = link_to prize_cart_path do
+          = link_to prize_cart_path(@active_event) do
             Prize Cart
             %i.fa.fa-shopping-cart.fa-lg
 

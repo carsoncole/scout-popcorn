@@ -61,6 +61,10 @@
               = f.check_box :is_online_sales_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
 
             .form-group
+              = f.label :is_prizes_admin
+              = f.check_box :is_prizes_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
+
+            .form-group
               = f.label :is_admin
               = f.check_box :is_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
 

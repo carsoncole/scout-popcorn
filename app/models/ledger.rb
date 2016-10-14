@@ -10,6 +10,10 @@ class Ledger < ApplicationRecord
   attr_accessor :is_bank_deposit, :from_account_id
 
 
+  def self.expenses
+    joins(:account).where("accounts.acount_type = 'Expense'")
+  end
+
   def send_bank_deposit_notifications!
     if created_by
       BankDepositMailer.send_confirmation_email_to_depositer(self.created_by, self).deliver_now

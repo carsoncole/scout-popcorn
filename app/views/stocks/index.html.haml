@@ -9,12 +9,20 @@
             .visible-print-inline
               = "-"
               = params[:location].titleize if params[:location]
-        
+
+        %p.hidden-print
+          = link_to stock_movement_path, class: 'dropdown-item' do
+            %i.fa.fa-print.fa-lg
+            Stock Transfers
+                    
         .pull-right.hidden-print
           = form_tag stocks_path(location: params[:location]), method: :get do
             = date_select "", :date, default: @date
             = hidden_field "", :location, value: params[:location]
             = submit_tag "Reload", class: 'btn btn-success'
+
+
+
 
         %ul.nav.nav-tabs.hidden-print
           - @locations.each do |location|

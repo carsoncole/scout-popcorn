@@ -19,11 +19,11 @@ class Prize < ApplicationRecord
   end
 
   def self.process_bonus_prizes!(scout, event)
-    scout.scout_prizes.joins(:prize).where("prizes.source = ?", 'bsa-bonus').destroy_all
+    scout.prize_cart(event).cart_prizes.joins(:prize).where("prizes.source = ?", 'bsa-bonus').destroy_all
     total_sales = scout.total_sales(event)
     bsa_bonus_prizes = event.prizes.bsa_bonus.where("amount <= ?", total_sales)
     bsa_bonus_prizes.each do |prize|
-      scout.scout_prizes.create(event_id: event.id, prize_id: prize.id, prize_amount: prize.amount)
+      scout.prize_cart(event).cart_prizes.create(prize_id: prize.id, prize_amount: prize.amount)
     end
   end
 

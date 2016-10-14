@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   
-  get 'scout_prize_selections/index', as: 'scout_prize_selections'
+  resources :prize_carts
 
+  post 'order-prizes' => 'scout_prize_cart#order-prizes', as: 'order_prizes'
+  post "approve-prize-cart/:id" => "prize_carts#approve", as: 'approve_prize_cart'
+  post "unapprove-prize-cart/:id" => "prize_carts#unapprove", as: 'unapprove_prize_cart'
   patch "envelopes/assign" => "envelopes#assign", as: 'assign_to_envelope'
   post "envelopes/:id/close" => "envelopes#close", as: 'close_envelope'
   post "envelopes/:id/open" => "envelopes#open", as: 'open_envelope'
@@ -43,9 +46,8 @@ Rails.application.routes.draw do
   resources :events do
     resources :scout_site_sales
   end
-  get "prizes/cart" => "prizes#cart", as: 'prize_cart'
-  post "prizes/selection/:id" => "prizes#selection", as: 'prize_selection'
-  post "prizes/removal/:id" => "prizes#removal", as: 'prize_removal'
+  post "prize-cart/selection/:id" => "prize_carts#selection", as: 'prize_selection'
+  post "prize-cart/removal/:id" => "prize_carts#removal", as: 'prize_removal'
   resources :prizes
   resources :products
   resources :home, only: :index

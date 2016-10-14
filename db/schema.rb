@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011233218) do
+ActiveRecord::Schema.define(version: 20161014061250) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20161011233218) do
     t.boolean  "is_credit_card"
     t.boolean  "is_cash"
     t.integer  "event_id"
+  end
+
+  create_table "cart_prizes", force: :cascade do |t|
+    t.integer  "prize_id"
+    t.integer  "prize_amount"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "prize_cart_id"
   end
 
   create_table "direct_sales", force: :cascade do |t|
@@ -84,6 +92,15 @@ ActiveRecord::Schema.define(version: 20161011233218) do
     t.datetime "updated_at",                                            null: false
   end
 
+  create_table "prize_carts", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "scout_id"
+    t.datetime "is_ordered_at"
+    t.datetime "is_approved_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "prizes", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
@@ -124,18 +141,6 @@ ActiveRecord::Schema.define(version: 20161011233218) do
     t.datetime "updated_at",                  null: false
   end
 
-  create_table "scout_prizes", force: :cascade do |t|
-    t.integer  "scout_id"
-    t.integer  "event_id"
-    t.integer  "prize_id"
-    t.integer  "prize_amount"
-    t.boolean  "is_complete"
-    t.datetime "is_complete_at"
-    t.boolean  "is_approved"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
   create_table "scout_site_sales", force: :cascade do |t|
     t.integer  "scout_id"
     t.integer  "site_sale_id"
@@ -171,6 +176,7 @@ ActiveRecord::Schema.define(version: 20161011233218) do
     t.boolean  "is_take_orders_admin",   default: false
     t.boolean  "is_site_sales_admin",    default: false
     t.boolean  "is_online_sales_admin",  default: false
+    t.boolean  "is_prizes_admin"
     t.index ["email"], name: "index_scouts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_scouts_on_reset_password_token", unique: true
   end
