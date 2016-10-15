@@ -64,6 +64,7 @@ class TakeOrdersController < ApplicationController
   # POST /orders.json
   def create
     @take_order = TakeOrder.new(take_order_params)
+    @take_order.status = 'in hand'
     unless @take_order.scout_id
       @envelope = Envelope.find(params[:take_order][:envelope_id])
       if current_scout.admin?
