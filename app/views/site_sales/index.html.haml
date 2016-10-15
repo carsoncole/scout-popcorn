@@ -9,7 +9,7 @@
             %i.fa.fa-plus.fa-lg.hidden-print 
         - unless current_scout.admin?
           .alert.alert-info
-            All your hours worked at Site Sales will be shown here, with the sales credit you get based on all Site Sales so far.
+            All your hours worked at Site Sales will be shown here, with the proportionate sales credit from all Site Sales.
         - if @site_sales.any?
           .table-responsive
             %table.table.card-text
@@ -76,7 +76,9 @@
                         = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                           %i.fa.fa-trash.fa-lg
                 %tr
-                  %td      
+                  %td 
+                  - if current_scout.admin?
+                    %td     
                   %td
                     = hours               
                   %td
