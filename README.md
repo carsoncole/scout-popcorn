@@ -2,7 +2,7 @@
 
 Corn Cub is for managing a Scout popcorn fundraiser. Through their own accounts, Scouts can view their sales progress in door-to-door (Take Order) sales and hours they have contributed towards Site Sales.
 
-Corn Cub also provides comprehensive management tools, including an Income Statement, Balance Sheet, Take Order Purchase Order and Final BSA Settlement Form. It also notifies your Unit Treasure every time a bank deposit is made from Popcorn sales.
+Corn Cub also provides comprehensive management tools, including an Income Statement, Balance Sheet, Take Order Purchase Order and Final BSA Settlement Form. It also notifies your Unit Treasurer every time a bank deposit is made from Popcorn sales.
 
 * Dependencies
 

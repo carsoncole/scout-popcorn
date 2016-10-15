@@ -4,7 +4,7 @@ class LedgersController < ApplicationController
   # GET /ledgers
   # GET /ledgers.json
   def index
-    @ledgers = @unit.ledgers.order(date: :desc, created_at: :desc).page(params[:page]).per(50)
+    @ledgers = Ledger.joins(account: :event).where("events.id = ?", @active_event).order(date: :desc, created_at: :desc).page(params[:page]).per(50)
     if params[:account_id]
       @ledgers = @ledgers.where(account_id: params[:account_id])
     end
