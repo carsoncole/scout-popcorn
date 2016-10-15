@@ -46,6 +46,10 @@
               = f.check_box :is_active, class: 'form-control'           
 
             .form-group
+              = f.label :is_admin
+              = f.check_box :is_admin, class: 'form-control' , disabled: current_scout.is_admin? || current_scout.is_admin? ? false : true
+
+            .form-group
               = f.label :is_super_admin
               = f.check_box :is_super_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
             
@@ -65,6 +69,9 @@
               = f.label :is_prizes_admin
               = f.check_box :is_prizes_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
 
+            .form-group
+              = f.label :is_super_admin
+              = f.check_box :is_super_admin, class: 'form-control' , disabled: current_scout.is_admin? || current_scout.is_admin? ? false : true
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

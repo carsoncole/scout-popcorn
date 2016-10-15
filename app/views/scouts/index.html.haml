@@ -75,6 +75,7 @@
                   %th Site Sales
                   %th Online Sales
                   %th Prizes
+                  %th Super Admin
                   %th Last Sign In
                   %th Sign In Count
                   - if current_scout.admin?
@@ -89,19 +90,22 @@
                       %i.fa.fa-user
                       = link_to scout.name, scout_path(scout)
                     %td
-                      - if scout.is_admin? || scout.is_super_admin?
+                      - if scout.is_admin?
                         %i.fa.fa-check
                     %td
-                      - if scout.is_take_orders_admin? || scout.is_super_admin?
+                      - if scout.is_take_orders_admin?
                         %i.fa.fa-check
                     %td
-                      - if scout.is_site_sales_admin? || scout.is_super_admin?
+                      - if scout.is_site_sales_admin?
                         %i.fa.fa-check
                     %td
-                      - if scout.is_online_sales_admin? || scout.is_super_admin?
+                      - if scout.is_online_sales_admin?
                         %i.fa.fa-check
                     %td
-                      - if scout.is_prizes_admin? || scout.is_super_admin?
+                      - if scout.is_prizes_admin?
+                        %i.fa.fa-check
+                    %td
+                      - if scout.is_super_admin?
                         %i.fa.fa-check
                     %td= nice_date_time_compact(scout.last_sign_in_at)
                     %td= scout.sign_in_count

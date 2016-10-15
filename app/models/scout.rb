@@ -14,7 +14,9 @@ class Scout < ApplicationRecord
 
   validates :first_name, :last_name, :email, :unit_id, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  
   before_save :fix_name!
+  before_save :check_super_admin_rights!, if: Proc.new {|s| s.is_super_admin_changed? }
   after_create :set_default_event!
   after_create :set_if_admin!
   after_create :send_registration_email!
@@ -68,7 +70,8 @@ class Scout < ApplicationRecord
 
   def admin?
     is_super_admin == true || is_take_orders_admin == true ||
-    is_site_sales_admin == true || is_prizes_admin == true
+    is_site_sales_admin == true || is_prizes_admin == true ||
+    is_admin == true
   end
 
   def total_site_sales(event)
@@ -132,6 +135,16 @@ class Scout < ApplicationRecord
 
   def send_you_are_registered_email!
     ScoutMailer.you_are_registered(self).deliver_later
+  end
+
+  def check_super_admin_rights!
+    if is_super_admin
+      self.is_take_orders_admin = true
+      self.is_site_sales_admin = true
+      self.is_online_sales_admin = true
+      self.is_prizes_admin = true
+      self.is_admin = true
+    end
   end
 
 end
