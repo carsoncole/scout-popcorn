@@ -19,6 +19,10 @@ class Unit < ApplicationRecord
     events.last
   end
 
+  def treasurer?
+    true unless treasurer_email.blank?
+  end
+
   def treasurer_name
     (treasurer_first_name || '') + ' ' + (treasurer_last_name || '')
   end

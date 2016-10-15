@@ -1,0 +1,33 @@
+.col-md-4
+  .card
+    .card-block
+      .card-title
+        %h1 Get Started
+
+      %ul.list_group
+        %li.list-group-item
+          %i.fa.fa-circle-thin
+          = link_to "Create an Event", new_event_path
+          - if @active_event
+            %i.fa.fa-check 
+            Done
+
+        %li.list-group-item
+          %i.fa.fa-circle-thin    
+          = link_to "Add a Bank Account", new_account_path
+          - if @active_event.bank_account?
+            %i.fa.fa-check 
+            Done
+
+
+        %li.list-group-item
+          %i.fa.fa-circle-thin    
+          = link_to "Add a Treasurer", edit_unit_path(@unit)
+          - if @unit.treasurer?
+            %i.fa.fa-check 
+            Done
+          .text-muted Your Unit Treasurer will be notified all bank deposits
+
+        %li.list-group-item
+          %i.fa.fa-circle-thin    
+          Invite Scouts to sign up

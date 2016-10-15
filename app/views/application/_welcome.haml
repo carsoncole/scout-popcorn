@@ -1,22 +1,22 @@
-.row
-  .col-md-4
-    .card
-      .card-block
-        .card-title
-          %h1 
-            Hello
-            = succeed("!") do
-              = current_scout.first_name
-        
-        %p.lead
-          Welcome to
-          = succeed("'s") do
-            = @unit.name
-          Corn Cub.
 
-        - if current_scout.admin? && @active_event.nil?
-          %p.card-text
-            Get started.
-            = link_to new_event_path do
-              %i.fa.fa-play
-              Create an Event
+.card
+  .card-block
+    .card-title
+      %h1 
+        Hello
+        = succeed("!") do
+          = current_scout.first_name
+    
+    %p.lead
+      Welcome to
+      = succeed("'s") do
+        = @unit.name
+      Corn Cub.
+
+
+    %span.tag.tag-danger
+      IMPORTANT
+
+    Our Popcorn Sales event ends October 16. Take Order Forms must be turned in by October 17.
+
+

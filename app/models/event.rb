@@ -72,6 +72,14 @@ class Event < ApplicationRecord
     total_product_sales * (1 - pack_commission_percentage / 100)
   end
 
+  def bank_account?
+    accounts.is_bank_account_depositable.any?
+  end
+
+  def set_up?
+    bank_account? && unit.treasurer? ? true : false 
+  end
+
   def total_hours_worked
     site_sales.joins(:scout_site_sales).sum(:hours_worked)
   end
@@ -110,5 +118,9 @@ class Event < ApplicationRecord
   def create_default_accounts!
     Account.create_site_sales_cash(self)
     Account.create_take_orders_cash(self)
+    Account.create_money_due_from_customers(self)
+    Account.create_product_due_to_customers(self)
+    Account.create_money_due_to_bsa(self)
+    Account.create_bsa_credit_card(self)
   end
 end

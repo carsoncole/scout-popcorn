@@ -70,6 +70,7 @@
               %thead
                 %tr
                   %th Name
+                  %th General
                   %th Take Orders
                   %th Site Sales
                   %th Online Sales
@@ -87,6 +88,9 @@
                     %td
                       %i.fa.fa-user
                       = link_to scout.name, scout_path(scout)
+                    %td
+                      - if scout.is_admin? || scout.is_super_admin?
+                        %i.fa.fa-check
                     %td
                       - if scout.is_take_orders_admin? || scout.is_super_admin?
                         %i.fa.fa-check

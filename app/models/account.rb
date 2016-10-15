@@ -15,6 +15,22 @@ class Account < ApplicationRecord
     create(event_id: event.id, name: 'Take Orders Cash', is_cash: true, is_take_order_eligible: true, account_type: 'Asset')
   end
 
+  def self.create_money_due_from_customers(event)
+    create(event_id: event.id, name: 'Money due from customers', is_cash: false, is_take_order_eligible: true, account_type: 'Asset')
+  end
+
+  def self.create_product_due_to_customers(event)
+    create(event_id: event.id, name: 'Product due to customers', is_cash: false, account_type: 'Liability')
+  end
+
+  def self.create_money_due_to_bsa(event)
+    create(event_id: event.id, name: 'Money due to BSA', is_cash: false, account_type: 'Liability')
+  end
+
+  def self.create_bsa_credit_card(event)
+    create(event_id: event.id, name: 'BSA credit card', is_cash: false, account_type: 'Asset')
+  end
+
   def self.site_sale(unit)
     Account.where(unit_id: unit.id).where(name: 'Site Sale').first
   end
