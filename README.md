@@ -1,24 +1,15 @@
-# README
+# Corn Cub README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Corn Cub was developed by Carson Cole. It is free to use and be modified as you see fit.
 
-Things you may want to cover:
+* Dependencies
 
-* Ruby version
+Rails 5.0, Ruby 2.3
 
-* System dependencies
+* Installation
 
-* Configuration
+This application has no external requirements and can be run on a single instance. `Bundle Install` will install all required gems.
 
-* Database creation
+* Database
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This application uses Sqlite. Under heavier concurrant requests, it may be advisable to use a more robust datbase.
