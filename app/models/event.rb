@@ -16,8 +16,8 @@ class Event < ApplicationRecord
 
   validates :name, :pack_commission_percentage, presence: true
 
-  after_create :add_default_products!
-  after_create :add_default_prizes!
+  after_create :create_default_products!
+  after_create :create_default_prizes!
   after_create :create_default_accounts!
 
   def self.active
@@ -30,10 +30,6 @@ class Event < ApplicationRecord
       open = take_order_purchase_orders.create(event_id: self.id ? self.id : nil)
     end
     open
-  end
-
-  def top_take_order_sellers
-    take_orders.includes(:scouts).group
   end
 
   def total_site_sales(scout)
@@ -103,24 +99,24 @@ class Event < ApplicationRecord
 
   private
 
-  def add_default_products!
+  def create_default_products!
     Product.default.each do |product|
       self.products.where(name: product.name).first_or_create(name: product.name, quantity: product.quantity, retail_price: product.retail_price, url: product.url)
     end  
   end
 
-  def add_default_prizes!
+  def create_default_prizes!
     Prize.default.each do |prize|
       self.prizes.where(name: prize.name).first_or_create(name: prize.name, amount: prize.amount, url: prize.url, source: prize.source, source_id: prize.source_id, is_by_level: prize.is_by_level, description: prize.description)
     end   
   end
 
   def create_default_accounts!
-    Account.create_site_sales_cash(self)
-    Account.create_take_orders_cash(self)
-    Account.create_money_due_from_customers(self)
-    Account.create_product_due_to_customers(self)
-    Account.create_money_due_to_bsa(self)
-    Account.create_bsa_credit_card(self)
+    Account.create_site_sales_cash!(self)
+    Account.create_take_orders_cash!(self)
+    Account.create_money_due_from_customers!(self)
+    Account.create_product_due_to_customers!(self)
+    Account.create_money_due_to_bsa!(self)
+    Account.create_bsa_credit_card!(self)
   end
 end

@@ -7,5 +7,4 @@ class ScoutSiteSale < ApplicationRecord
   def self.total_event_hours_worked(event)
     where(event_id: event.id).sum(:hours_worked)
   end
-
 end

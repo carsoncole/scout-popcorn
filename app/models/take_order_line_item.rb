@@ -10,5 +10,4 @@ class TakeOrderLineItem < ApplicationRecord
   def update_value!
     self.value = quantity * product.retail_price
   end
-
 end

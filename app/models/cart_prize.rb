@@ -22,6 +22,7 @@ class CartPrize < ApplicationRecord
   end
 
   protected
+  
   def check_value_of_prizes
     if prize_cart.cart_prizes.joins(:prize).where("prizes.source = 'bsa'").sum(:prize_amount) > prize_cart.scout.total_sales(self.prize_cart.event)
       errors[:base] << "Your cart is full"

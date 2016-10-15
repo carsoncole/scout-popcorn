@@ -7,7 +7,6 @@ class SiteSaleLineItem < ApplicationRecord
 
   private
 
-
   def check_for_available_stock
     if self.product.is_physical_inventory
       if self.quantity > site_sale.event.unit.stocks.site_sales.where(product_id: self.product_id).sum(:quantity) 
@@ -19,5 +18,4 @@ class SiteSaleLineItem < ApplicationRecord
   def update_value!
     self.value = quantity * product.retail_price
   end
-
 end

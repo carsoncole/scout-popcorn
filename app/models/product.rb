@@ -3,7 +3,7 @@ class Product < ApplicationRecord
   has_many :take_order_line_items
   has_many :site_sale_line_items
   has_many :take_orders, through: :take_order_line_items
-  has_many :site_sales, through: :take_order_line_items
+  has_many :site_sales, through: :site_sale_line_items
 
   validates :name, :retail_price, :quantity, presence: true
 
