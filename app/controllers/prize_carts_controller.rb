@@ -2,7 +2,7 @@ class PrizeCartsController < ApplicationController
   before_action :redirect_unless_admin!, except: [:show, :order_prizes, :selection, :removal]
 
   def index
-    redirect_to root_path unless current_scout.is_admin?
+    redirect_to root_path unless current_scout.admin?
     @prize_carts = @active_event.prize_carts.includes(:scout).order("scouts.last_name ASC")
     if params[:ordered]
       @prize_carts = @prize_carts.ordered
@@ -16,7 +16,7 @@ class PrizeCartsController < ApplicationController
   end
 
   def show
-    Prize.process_bonus_prizes!(current_scout, @active_event) unless current_scout.is_admin? || params[:recalc]
+    Prize.process_bonus_prizes!(current_scout, @active_event) unless current_scout.admin? || params[:recalc]
     @total_sales = current_scout.total_sales(@active_event)
     @cart_prizes = current_scout.prize_cart(@active_event).cart_prizes.order(:prize_amount)
     @available_pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).order(amount: :desc)

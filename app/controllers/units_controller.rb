@@ -1,17 +1,7 @@
 class UnitsController < ApplicationController
   helper StatesHelper
   before_action :set_unit, only: [:show, :edit, :update, :destroy]
-
-  # GET /units
-  # GET /units.json
-  def index
-    if current_scout && !current_scout.is_admin?
-      redirect_to unit_path(current_scout.unit.id)
-    else
-      @units = Unit.all
-      cookies.delete :unit_id
-    end
-  end
+  skip_before_action :authenticate_scout!, only: [:new, :create]
 
   # GET /units/1
   # GET /units/1.json
@@ -32,15 +22,16 @@ class UnitsController < ApplicationController
   # POST /units.json
   def create
     @unit = Unit.new(unit_params)
-
-    respond_to do |format|
-      if @unit.save
-        format.html { redirect_to @unit, notice: 'Unit was successfully created.' }
-        format.json { render :show, status: :created, location: @unit }
+    if @unit.save
+      @scout = @unit.scouts.new(first_name: unit_params[:first_name], last_name: unit_params[:last_name], unit_id: @unit.id, email: unit_params[:email], password:  'robert', password_confirmation: 'robert', is_super_admin: true)
+      if @scout.save
+        redirect_to root_path, notice: 'Unit was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @unit.errors, status: :unprocessable_entity }
+        render :new, notice: @scout.errors.full_messages
       end
+    else
+      puts @unit.errors.full_messages
+      render :new, notice: @unit.errors.full_messages
     end
   end
 
@@ -76,6 +67,6 @@ class UnitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unit_params
-      params.require(:unit).permit(:name, :street_address_1, :street_address_2, :city, :zip_code, :state_postal_code, :treasurer_first_name, :treasurer_last_name, :treasurer_email)
+      params.require(:unit).permit(:name, :street_address_1, :street_address_2, :city, :zip_code, :state_postal_code, :treasurer_first_name, :treasurer_last_name, :treasurer_email, :first_name, :last_name, :email)
     end
 end

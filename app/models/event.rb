@@ -3,7 +3,6 @@ class Event < ApplicationRecord
   has_many :purchase_orders
   has_many :prizes
   has_many :products
-  has_many :direct_sales, dependent: :destroy
   has_many :take_orders, dependent: :destroy
   has_many :site_sales, dependent: :destroy
   has_many :line_items, through: :take_orders
@@ -19,6 +18,7 @@ class Event < ApplicationRecord
 
   after_create :add_default_products!
   after_create :add_default_prizes!
+  after_create :create_default_accounts!
 
   def self.active
     where(is_active: true)
@@ -107,4 +107,8 @@ class Event < ApplicationRecord
     end   
   end
 
+  def create_default_accounts!
+    Account.create_site_sales_cash(self)
+    Account.create_take_orders_cash(self)
+  end
 end

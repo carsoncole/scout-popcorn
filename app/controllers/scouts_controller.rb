@@ -4,7 +4,7 @@ class ScoutsController < ApplicationController
   # GET /scouts
   # GET /scouts.json
   def index
-    if current_scout.is_admin?
+    if current_scout.admin?
       if params[:inactive]
         @scouts = @unit.scouts.inactive
       elsif params[:administrators]

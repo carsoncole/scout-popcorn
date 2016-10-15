@@ -1,5 +1,5 @@
 .row
-  .col-md-12
+  .col-md-6
     .card
       .card-block
         .card-title
@@ -9,7 +9,7 @@
         = form_for @take_order do |f|
           = render 'errors', target: @take_order
 
-          - if current_scout.is_admin? && @take_order.envelope.nil?
+          - if current_scout.admin? && @take_order.envelope.nil?
             .form-group
               %label Scout
               = f.collection_select :scout_id, Scout.not_admin, :id, :last_first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
@@ -34,7 +34,7 @@
               %br
               %em.small Select 'Take Order Cash' for cash + checks. 
             = f.collection_select :payment_account_id, @accounts, :id, :name,{}, class: 'form-control'
-          - if current_scout.is_admin?
+          - if current_scout.admin?
             .form-group
               %label
                 = f.label :square_reciept_url

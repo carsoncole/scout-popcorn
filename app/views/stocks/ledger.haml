@@ -4,7 +4,7 @@
       .card-block
         .card-title
           %h2 Inventory Ledger
-        - if current_scout.is_admin?
+        - if current_scout.admin?
           %p
             = link_to stock_movement_path do
               %i.fa.fa-print.fa-lg
@@ -46,8 +46,6 @@
                   %td
                     - if stock.take_order_id
                       = link_to "Take Order", stocks_ledger_path(take_order_id: stock.take_order_id)
-                    - elsif stock.direct_sale_id
-                      = link_to "Direct Sale", direct_sale_path(stock.site_sale_id)
                     - elsif stock.site_sale_id
                       = link_to "Site Sale", site_sale_path(stock.site_sale_id)
                   %td= stock.quantity

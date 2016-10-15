@@ -1,1 +1,0 @@
-json.array! @direct_sales, partial: 'direct_sales/direct_sale', as: :direct_sale

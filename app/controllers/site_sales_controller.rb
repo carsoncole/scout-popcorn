@@ -9,7 +9,7 @@ class SiteSalesController < ApplicationController
   end
 
   def show
-    redirect_to site_sales_path unless current_scout.is_admin?
+    redirect_to site_sales_path unless current_scout.admin?
     @line_items = @site_sale.site_sale_line_items.order(created_at: :desc)
     @scout_site_sales = @site_sale.scout_site_sales.joins(:scout).order("scouts.first_name ASC")
     @total_sales = @site_sale.site_sale_line_items.sum(:value)
@@ -39,7 +39,7 @@ class SiteSalesController < ApplicationController
   end
 
   def update
-    if params[:closed] && current_scout.is_admin?
+    if params[:closed] && current_scout.admin?
       if @site_sale.payments_balance?
         if @site_sale.update(status: :closed, closed_at: Time.now, closed_by_id: current_scout.id)
           redirect_to @site_sale, notice: 'The Site Sale was successfully closed.'
@@ -49,7 +49,7 @@ class SiteSalesController < ApplicationController
       else
         redirect_to @site_sale, alert: 'Payment methods do not balance with sales receipts.'
       end
-    elsif params[:open] && current_scout.is_admin?
+    elsif params[:open] && current_scout.admin?
       @site_sale.update(status: :open, closed_at: nil, closed_by_id: nil)
       redirect_to @site_sale, notice: 'The Site Sale was re-opened.'
     else 

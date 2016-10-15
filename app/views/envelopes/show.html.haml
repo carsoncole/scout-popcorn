@@ -26,7 +26,7 @@
           %p= link_to "Add a New Take Order", new_envelope_take_order_path(@envelope.id)
         %table.table.table-sm
           %tr
-            - if current_scout.is_admin?
+            - if current_scout.admin?
               %th Scout
             %th Customer
             %th Items
@@ -36,7 +36,7 @@
             %th
           - @take_orders.each do |take_order|              
             %tr
-              - if current_scout.is_admin?
+              - if current_scout.admin?
                 %td= take_order.scout.name
               %td= take_order.customer_name
               %td
@@ -56,7 +56,7 @@
                   = link_to envelope_remove_take_order_path(@envelope.id, take_order.id), method: :put do
                     %i.fa.fa-trash
           %tr
-            - if current_scout.is_admin?
+            - if current_scout.admin?
               %td
             %td
             %td
@@ -85,7 +85,7 @@
             %th Total
             %td.text-xs-right= number_to_currency(@envelope.value, precision: 0 )
 
-  - if @envelope.open? && current_scout.is_admin?
+  - if @envelope.open? && current_scout.admin?
     .col-md-1
     .col-md-4
       .card
@@ -93,7 +93,7 @@
           .text-xs-center
             = button_to "Close", close_envelope_path(@envelope.id), {disabled: (current_scout.is_take_order_admin? ? false : true), class: 'btn btn-lg btn-danger'}
 
-  - if @envelope.closed? && current_scout.is_admin?
+  - if @envelope.closed? && current_scout.admin?
     .col-md-1
     .col-md-4
       .card
@@ -121,7 +121,7 @@
           = scout.name
           %br
 
-        - if current_scout.is_admin?
+        - if current_scout.admin?
           Envelope created at:
           = nice_date_time(@envelope.created_at)
           %br

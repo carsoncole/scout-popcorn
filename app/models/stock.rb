@@ -1,7 +1,6 @@
 class Stock < ApplicationRecord
   belongs_to :product
   belongs_to :take_order, optional: true
-  belongs_to :direct_sale, optional: true
   validates :product_id, :location, :quantity, presence: true
 
   attr_accessor :movement_with_warehouse

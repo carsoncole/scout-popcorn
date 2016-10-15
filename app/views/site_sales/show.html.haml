@@ -12,7 +12,7 @@
                   = link_to edit_site_sale_path(@site_sale) do
                     %i.fa.fa-pencil.hidden-print  
 
-            - if current_scout.is_admin? && @site_sale.open? 
+            - if current_scout.admin? && @site_sale.open? 
               %p
                 =link_to site_sale_tracking_sheet_path(@site_sale) do
                   %i.fa.fa-print.fa-lg
@@ -80,7 +80,7 @@
               %td
               %td= number_to_currency( @total_sales, precision: 0 )
 
-- if current_scout.is_admin?
+- if current_scout.admin?
   .row
     .col-md-1
     .col-md-10
@@ -116,13 +116,13 @@
                 %td= scout_site_sale.hours_worked
                 %td
                   = number_to_currency(@active_event.total_site_sales_per_hour_worked * scout_site_sale.hours_worked, precision: 0)
-                - if current_scout.is_admin?
+                - if current_scout.admin?
                   %td
                     = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do
                       %i.fa.fa-trash.fa-lg.hidden-print
             %tr
               %td
-                - if current_scout.is_admin?
+                - if current_scout.admin?
                   = link_to new_site_sale_scout_site_sale_path(@site_sale) do
                     %i.fa.fa-plus.fa-lg.hidden-print
               %td= @total_hours
@@ -167,7 +167,7 @@
           = link_to new_site_sale_site_sale_payment_method_path(@site_sale) do
             %i.fa.fa-plus.fa-lg.hidden-print
 
-  - if current_scout.is_admin?  
+  - if current_scout.admin?  
     .col-md-6
       .card
         .card-block

@@ -18,7 +18,7 @@
               %br
             
             %h5.text-xs-center= number_to_currency(product.retail_price)
-            - if current_scout.is_admin?
+            - if current_scout.admin?
               .small
                 Short name:
                 = product.short_name
@@ -27,7 +27,7 @@
               = link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 .row
-  - if current_scout.is_admin?
+  - if current_scout.admin?
     .col-md-4
       .card.card-block.text-xs-center
         %br

@@ -5,82 +5,83 @@
   %br
 
   .col-md-4
-    .card
-      .card-block
-        .card-title
-          %h2
-            - unless current_scout.is_admin?
-              = current_scout.name
+    - if @active_event
+      .card
+        .card-block
+          .card-title
+            %h2
+              - unless current_scout.admin?
+                = current_scout.name
 
-          - if current_scout.is_admin
-            %h2= @active_event.name
-          - else
-            %p.lead
-              = @active_event.name          
+            - if current_scout.is_admin
+              %h2= @active_event.name
+            - else
+              %p.lead
+                = @active_event.name          
+          
+          - grand_total = 0
+          %table.table
+            %tr
+              %th(colspan=2)
+                = link_to "Take Orders", take_orders_path
+              %td.text-xs-right
+                - if current_scout.admin?
+                  - total = TakeOrder.sales(@active_event)
+                - else
+                  - total = current_scout.take_order_sales(@active_event)
+                = number_to_currency(total, precision: 0)
+                - grand_total += total          
+
+            %tr
+              %td
+              %th
+                = link_to "Turned in", take_orders_path
+              %td.text-xs-right
+                - if current_scout.admin?
+                  - total = TakeOrder.sales(@active_event, true)
+                - else
+                  - total = current_scout.take_order_sales(@active_event, true)
+                = number_to_currency(total, precision: 0)
+            %tr
+              %td
+              %th
+                = link_to "Not turned in", take_orders_path
+              %td.text-xs-right
+                - if current_scout.admin?
+                  - total = TakeOrder.sales(@active_event, false)
+                - else
+                  - total = current_scout.take_order_sales(@active_event, false)
+                = number_to_currency(total, precision: 0)
+
+            %tr
+              %th(colspan=2)
+                = link_to "Online Sales", online_sales_path
+              %td.text-xs-right
+                - total = 0
+                - if current_scout.admin?
+                  - query = OnlineSale.where(event_id: @active_event.id)
+                - else
+                  - query = current_scout.online_sales.where(event_id: @active_event.id)
+                - query.each do |online_sale|
+                  - total += online_sale.amount
+                = number_to_currency(total, precision: 0)  
+                - grand_total += total
+
+            %tr
+              %th(colspan=2)
+                = link_to "Site Sales", site_sales_path
+              %td.text-xs-right
+                - if current_scout.admin?
+                  - amount = @active_event.site_sales.joins(:site_sale_line_items).sum(:value)
+                - else
+                  - amount = @active_event.total_site_sales_per_hour_worked * current_scout.event_site_sale_hours_worked(@active_event)
+                = number_to_currency(amount, precision: 0)
+                - grand_total += amount           
         
-        - grand_total = 0
-        %table.table
-          %tr
-            %th(colspan=2)
-              = link_to "Take Orders", take_orders_path
-            %td.text-xs-right
-              - if current_scout.is_admin?
-                - total = TakeOrder.sales(@active_event)
-              - else
-                - total = current_scout.take_order_sales(@active_event)
-              = number_to_currency(total, precision: 0)
-              - grand_total += total          
-
-          %tr
-            %td
-            %th
-              = link_to "Turned in", take_orders_path
-            %td.text-xs-right
-              - if current_scout.is_admin?
-                - total = TakeOrder.sales(@active_event, true)
-              - else
-                - total = current_scout.take_order_sales(@active_event, true)
-              = number_to_currency(total, precision: 0)
-          %tr
-            %td
-            %th
-              = link_to "Not turned in", take_orders_path
-            %td.text-xs-right
-              - if current_scout.is_admin?
-                - total = TakeOrder.sales(@active_event, false)
-              - else
-                - total = current_scout.take_order_sales(@active_event, false)
-              = number_to_currency(total, precision: 0)
-
-          %tr
-            %th(colspan=2)
-              = link_to "Online Sales", online_sales_path
-            %td.text-xs-right
-              - total = 0
-              - if current_scout.is_admin?
-                - query = OnlineSale.where(event_id: @active_event.id)
-              - else
-                - query = current_scout.online_sales.where(event_id: @active_event.id)
-              - query.each do |online_sale|
-                - total += online_sale.amount
-              = number_to_currency(total, precision: 0)  
-              - grand_total += total
-
-          %tr
-            %th(colspan=2)
-              = link_to "Site Sales", site_sales_path
-            %td.text-xs-right
-              - if current_scout.is_admin?
-                - amount = @active_event.site_sales.joins(:site_sale_line_items).sum(:value)
-              - else
-                - amount = @active_event.total_site_sales_per_hour_worked * current_scout.event_site_sale_hours_worked(@active_event)
-              = number_to_currency(amount, precision: 0)
-              - grand_total += amount           
-      
-          %tr
-            %th(colspan=2) Total Sales
-            %td.text-xs-right
-              = number_to_currency(grand_total, precision: 0)
+            %tr
+              %th(colspan=2) Total Sales
+              %td.text-xs-right
+                = number_to_currency(grand_total, precision: 0)
 
     .card
       .card-block
@@ -112,23 +113,24 @@
 
 
   .col-md-4
-    .card
-      .card-block
-        .card-title
-          %h3.text-xs-center
-            %i.fa.fa-star.fa-log
-            Top Sellers
-            %i.fa.fa-star.fa-log
-          %h5.text-xs-center= @active_event.name
+    - if @active_event
+      .card
+        .card-block
+          .card-title
+            %h3.text-xs-center
+              %i.fa.fa-star.fa-log
+              Top Sellers
+              %i.fa.fa-star.fa-log
+            %h5.text-xs-center= @active_event.name
 
-        - if @top_sellers.any?
-          
-          .table-responsive
-            %table.table
-              - @top_sellers.each do |top_seller|
-                - scout = Scout.find(top_seller[0])
-                %tr
-                  %th= scout.name
-                  %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
-        - else
-          %p.text-xs-center No sales posted yet.
+          - if @top_sellers.any?
+            
+            .table-responsive
+              %table.table
+                - @top_sellers.each do |top_seller|
+                  - scout = Scout.find(top_seller[0])
+                  %tr
+                    %th= scout.name
+                    %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
+          - else
+            %p.text-xs-center No sales posted yet.

@@ -8,16 +8,13 @@ class Scout < ApplicationRecord
   has_many :events, through: :unit
   has_many :site_sales, through: :scout_site_sales
   has_many :scout_site_sales
-  has_many :direct_sales
   has_many :online_sales
   has_many :envelopes
   has_many :prize_carts
 
-  validates :first_name, :last_name, :email, presence: true
+  validates :first_name, :last_name, :email, :unit_id, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   before_save :fix_name!
-  after_initialize :init
-  after_create :set_unit!
   after_create :set_default_event!
   after_create :set_if_admin!
   after_create :send_registration_email!
@@ -25,10 +22,6 @@ class Scout < ApplicationRecord
   after_create :create_prize_cart!
 
   ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'],['keri', 'pinzon']]
-
-  def init
-    self.unit_id = 1
-  end
 
   def name
     first_name + ' ' + last_name
@@ -39,11 +32,7 @@ class Scout < ApplicationRecord
   end
 
   def self.not_admin
-    where("is_admin IS NULL OR is_admin = ?", false)
-  end
-
-def self.admin
-    where(is_admin: true)
+    where("is_super_admin IS NULL OR is_super_admin = ?", false)
   end
 
   def self.active
@@ -73,15 +62,24 @@ def self.admin
     total
   end
 
+  def self.admin
+    where(is_super_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true))
+  end
+
+  def admin?
+    is_super_admin == true || is_take_orders_admin == true ||
+    is_site_sales_admin == true || is_prizes_admin == true
+  end
+
   def total_site_sales(event)
     event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
   end
 
   def take_order_sales(event, is_turned_in=nil)
     if is_turned_in
-      take_orders.where(event_id: event.id).where.not(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+      take_orders.where(event_id: event.id).where.not(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     elsif is_turned_in == false
-      take_orders.where(event_id: event.id).where(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+      take_orders.where(event_id: event.id).where(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     else
       take_orders.where(event_id: event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     end
@@ -96,7 +94,7 @@ def self.admin
   end
 
   def set_default_event!
-    update(default_event_id: unit.events.active.last.id) if unit.events
+    update(default_event_id: unit.events.active.last.id) if unit.events && unit.events.active && unit.events.active.last
   end
 
   def event_site_sale_hours_worked(event)
@@ -116,10 +114,6 @@ def self.admin
   end
 
   private
-
-  def set_unit!
-    self.update(unit_id: 1)
-  end
 
   def fix_name!
     self.first_name = first_name.capitalize if first_name

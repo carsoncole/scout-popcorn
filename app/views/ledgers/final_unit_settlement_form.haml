@@ -31,6 +31,4 @@
 
           %tr
             %th.top.bottom-double Balance due
-            %td.top.bottom-double.text-xs-right= number_to_currency(@due_to_bsa - @bsa_credit_card_cash)
-
-
+            %td.top.bottom-double.text-xs-right= number_to_currency((@due_to_bsa || 0) - (@bsa_credit_card_cash||0))

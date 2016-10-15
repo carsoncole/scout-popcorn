@@ -4,10 +4,10 @@
       .card-block
         .card-title
           %h1.h1 Site Sales
-        - if current_scout.is_admin?
+        - if current_scout.admin?
           = link_to new_site_sale_path do
             %i.fa.fa-plus.fa-lg.hidden-print 
-        - unless current_scout.is_admin?
+        - unless current_scout.admin?
           .alert.alert-info
             All your hours worked at Site Sales will be shown here, with the sales credit you get based on all Site Sales so far.
         - if @site_sales.any?
@@ -16,15 +16,15 @@
               %thead
                 %tr
                   %th Site Sale
-                  - unless current_scout.is_admin?
+                  - unless current_scout.admin?
                     %th Hours Worked
-                  - if current_scout.is_admin?
+                  - if current_scout.admin?
                     %th
                     %th Hours Worked
                     %th Total Sales
-                  - unless current_scout.is_admin?
+                  - unless current_scout.admin?
                     %th Credited Sales
-                  - if current_scout.is_admin?
+                  - if current_scout.admin?
                     %th Status
                     %th.hidden-print
                     %th.hidden-print
@@ -37,18 +37,18 @@
                 - @site_sales.each do |site_sale|
                   %tr
                     %td
-                      - if current_scout.is_admin?
+                      - if current_scout.admin?
                         = link_to site_sale.full_name, site_sale_path(site_sale)
                       - else
                         = site_sale.full_name
                     %td
-                      - if current_scout.is_admin?
+                      - if current_scout.admin?
                         - hours += site_sale.scout_site_sales.sum(:hours_worked)
                       - else
                         - hours_worked= site_sale.hours_worked(current_scout)
                         - hours += hours_worked if hours_worked
                       = hours_worked
-                    - if current_scout.is_admin?
+                    - if current_scout.admin?
                       %td= site_sale.scout_site_sales.sum(:hours_worked)
                       %td
                         - total_sales += site_sale.total_sales
@@ -57,7 +57,7 @@
                       %td
                         - total += (site_sale.credited_sales(current_scout, @active_event) || 0)
                         = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
-                    - if current_scout.is_admin?
+                    - if current_scout.admin?
                       %td
                         - if site_sale.status == 'closed'
                           %span.tag.tag-danger= site_sale.status.titleize
@@ -67,7 +67,7 @@
                         = link_to site_sale do
                           %i.fa.fa-folder-open.fa-lg
                       %td.hidden-print
-                        - if current_scout.is_admin? && site_sale.open? 
+                        - if current_scout.admin? && site_sale.open? 
                           %p
                             =link_to site_sale_tracking_sheet_path(site_sale) do
                               %i.fa.fa-print.fa-lg
@@ -80,12 +80,12 @@
                   %td
                     = hours               
                   %td
-                    - if current_scout.is_admin?
+                    - if current_scout.admin?
                       = number_to_currency(total_sales, precision: 0)
                     - else
                       = number_to_currency(total, precision: 0)
                   %td.hidden-print
-                  - if current_scout.is_admin?
+                  - if current_scout.admin?
                     %td.hidden-print
                     %td.hidden-print
                     

@@ -5,6 +5,15 @@ class Account < ApplicationRecord
   has_many :site_sale_payment_methods
 
   ACCOUNT_TYPES = ['Asset', 'Liability', 'Equity', 'Income', 'Expense']
+  REQUIRED_ASSET_ACCOUNTS = ['Take Order Cash', 'Site Sale Cash']
+
+  def self.create_site_sales_cash(event)
+    create(event_id: event.id, name: 'Site Sales Cash', is_cash: true, is_site_sale_eligible: true, account_type: 'Asset')
+  end
+
+  def self.create_take_orders_cash(event)
+    create(event_id: event.id, name: 'Take Orders Cash', is_cash: true, is_take_order_eligible: true, account_type: 'Asset')
+  end
 
   def self.site_sale(unit)
     Account.where(unit_id: unit.id).where(name: 'Site Sale').first

@@ -3,7 +3,7 @@
     .card
       .card-block
         .card-title
-          %h1 Unit
+          %h1 New Corn Cub Unit
 
         = form_for @unit do |f|
           - if @unit.errors.any?
@@ -12,41 +12,61 @@
               %ul
                 - @unit.errors.full_messages.each do |msg|
                   %li= msg
-
+          
           .form-group
             = f.label :name
-            = f.text_field :name, class: 'form-control'
-          .form-group
-            = f.label :street_address
-            = f.text_field :street_address_1, class: 'form-control'
-          .form-group
-            = f.label :street_address
-            = f.text_field :street_address_2, class: 'form-control'
-          .form-group
-            = f.label :city
-            = f.text_field :city, class: 'form-control'
-          .form-group
-            = f.label :state
-            %br
-            = f.select :state_postal_code, StatesHelper.us_states, {}, class: 'form-control'
-          .form-group
-            = f.label :zip_code
-            = f.text_field :zip_code, class: 'form-control'
+            = f.text_field :name, placeholder: 'Pack 999', class: 'form-control'
+          / .form-group
+          /   = f.label :street_address
+          /   = f.text_field :street_address_1, class: 'form-control'
+          / .form-group
+          /   = f.label :street_address
+          /   = f.text_field :street_address_2, class: 'form-control'
+          / .form-group
+          /   = f.label :city
+          /   = f.text_field :city, class: 'form-control'
+          / .form-group
+          /   = f.label :state
+          /   %br
+          /   = f.select :state_postal_code, StatesHelper.us_states, {}, class: 'form-control'
+          / .form-group
+          /   = f.label :zip_code
+          /   = f.text_field :zip_code, class: 'form-control'
 
           %br
-          %p Bank deposit notifications will be sent to the Unit Treasurer if their information is entered below.
+          %hr
+          %br
+
+          %h2 Administrator
 
           .form-group
-            = f.label :treasurer_first_name
-            = f.text_field :treasurer_first_name, class: 'form-control'
+            = f.label :first_name
+            = f.text_field :first_name, class: 'form-control'
 
           .form-group
-            = f.label :treasurer_last_name
-            = f.text_field :treasurer_last_name, class: 'form-control'
+            = f.label :last_name
+            = f.text_field :last_name, class: 'form-control'
 
           .form-group
-            = f.label :treasurer_email
-            = f.text_field :treasurer_email, class: 'form-control'
+            = f.label :email
+            = f.text_field :email, class: 'form-control'
+
+          .form-group
+            = f.label :password
+            - if @minimum_password_length
+              %em
+                = surround("(", ")") do
+                  = @minimum_password_length
+                  characters minimum.
+
+            = f.password_field :password, autocomplete: "off",class: 'form-control'
+
+          .form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+
+          %hr
+
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014061250) do
+ActiveRecord::Schema.define(version: 20161015060221) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -32,18 +32,6 @@ ActiveRecord::Schema.define(version: 20161014061250) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "prize_cart_id"
-  end
-
-  create_table "direct_sales", force: :cascade do |t|
-    t.integer  "scout_id"
-    t.integer  "event_id"
-    t.integer  "product_id"
-    t.decimal  "price",      precision: 5, scale: 2, default: "0.0",       null: false
-    t.integer  "quantity",                           default: 0,           null: false
-    t.decimal  "amount",     precision: 5, scale: 2, default: "0.0",       null: false
-    t.string   "status",                             default: "delivered", null: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
   end
 
   create_table "envelopes", force: :cascade do |t|
@@ -219,7 +207,6 @@ ActiveRecord::Schema.define(version: 20161014061250) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "take_order_id"
-    t.integer  "direct_sale_id"
     t.integer  "site_sale_id"
     t.boolean  "is_transfer_from_bsa"
     t.date     "date"

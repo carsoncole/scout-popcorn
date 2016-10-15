@@ -25,7 +25,7 @@
                   %th Total Sales
                   %th Last Sign In
                   %th Sign In Count
-                  - if current_scout.is_admin?
+                  - if current_scout.admin?
                     %th
                     %th.hidden-print
                     %th.hidden-print
@@ -50,7 +50,7 @@
                         = number_to_currency(scout.total_sales(@active_event), precision: 0)
                     %td= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
                     %td= scout.sign_in_count
-                    - if current_scout.is_admin?
+                    - if current_scout.admin?
                       %td.hidden-print
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
@@ -70,14 +70,13 @@
               %thead
                 %tr
                   %th Name
-                  %th Admin
                   %th Take Orders
                   %th Site Sales
                   %th Online Sales
                   %th Prizes
                   %th Last Sign In
                   %th Sign In Count
-                  - if current_scout.is_admin?
+                  - if current_scout.admin?
                     %th
                     %th.hidden-print
                     %th.hidden-print
@@ -89,23 +88,20 @@
                       %i.fa.fa-user
                       = link_to scout.name, scout_path(scout)
                     %td
-                      - if scout.is_admin?
+                      - if scout.is_take_orders_admin? || scout.is_super_admin?
                         %i.fa.fa-check
                     %td
-                      - if scout.is_take_orders_admin?
+                      - if scout.is_site_sales_admin? || scout.is_super_admin?
                         %i.fa.fa-check
                     %td
-                      - if scout.is_site_sales_admin?
+                      - if scout.is_online_sales_admin? || scout.is_super_admin?
                         %i.fa.fa-check
                     %td
-                      - if scout.is_online_sales_admin?
-                        %i.fa.fa-check
-                    %td
-                      - if scout.is_prizes_admin?
+                      - if scout.is_prizes_admin? || scout.is_super_admin?
                         %i.fa.fa-check
                     %td= nice_date_time_compact(scout.last_sign_in_at)
                     %td= scout.sign_in_count
-                    - if current_scout.is_admin?
+                    - if current_scout.admin?
                       %td.hidden-print
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg

@@ -33,7 +33,6 @@ Rails.application.routes.draw do
     resources :site_sale_line_items
     resources :scout_site_sales
   end
-  resources :direct_sales
   resources :online_sales
   resources :take_orders do
     resources :take_order_line_items

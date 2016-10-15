@@ -28,13 +28,16 @@
         %li.list-group-item
           %i.fa.fa-calendar.fa-lg
           &nbsp;
-          = @scout.default_event.name if @scout.default_event
+          - if @scout.default_event
+            = @scout.default_event.name
+          - else
+            = link_to "Set Event", edit_scout_path(@scout)
         %li.list-group-item
           %i.fa.fa-envelope.fa-lg
           &nbsp;
           = @scout.email
 
-        - if current_scout.is_admin?
+        - if current_scout.admin?
           %li.list-group-item
             Is active:
             - if @scout.is_active

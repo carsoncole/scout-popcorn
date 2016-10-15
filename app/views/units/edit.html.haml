@@ -1,5 +1,55 @@
-= render 'form'
+.row
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h1 Unit Info
 
-= link_to 'Show', @unit
-\|
-= link_to 'Back', units_path
+        = form_for @unit do |f|
+          - if @unit.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@unit.errors.count, "error")} prohibited this unit from being saved:"
+              %ul
+                - @unit.errors.full_messages.each do |msg|
+                  %li= msg
+          
+          .form-group
+            = f.label :name
+            = f.text_field :name, placeholder: 'Pack 999', class: 'form-control'
+          .form-group
+            = f.label :street_address
+            = f.text_field :street_address_1, class: 'form-control'
+          .form-group
+            = f.label :street_address
+            = f.text_field :street_address_2, class: 'form-control'
+          .form-group
+            = f.label :city
+            = f.text_field :city, class: 'form-control'
+          .form-group
+            = f.label :state
+            %br
+            = f.select :state_postal_code, StatesHelper.us_states, {}, class: 'form-control'
+          .form-group
+            = f.label :zip_code
+            = f.text_field :zip_code, class: 'form-control'
+
+          %br
+          %hr
+
+          %h3 Banking
+
+          %p
+            Enter Unit Treasurer to receive bank deposit notifications
+          .form-group
+            = f.label :treasurer_first_name
+            = f.text_field :treasurer_first_name, class: 'form-control'
+          .form-group
+            = f.label :treasurer_last_name
+            = f.text_field :treasurer_last_name, class: 'form-control'
+          .form-group
+            = f.label :treasurer_email
+            = f.text_field :treasurer_email, class: 'form-control'
+
+          .actions
+            = f.submit 'Save', class: 'btn btn-success'
+

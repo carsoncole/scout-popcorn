@@ -5,29 +5,21 @@ class TakeOrder < ApplicationRecord
   belongs_to :account, foreign_key: :payment_account_id
   belongs_to :envelope
   has_many :products, through: :take_order_line_items
-  before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
   has_many :take_order_line_items, dependent: :destroy
+  
   validates :scout_id, :event_id, :customer_name, :payment_account_id, presence: true
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   validate :check_scout_id_matches_envelope_scout_id
+  
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-
-  before_save :remove_from_purchase_order!, if: Proc.new {|t| t.status_changed? && t.status == 'received'}
-  before_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'received'}
-  before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'received'}
-
+  before_save :remove_from_purchase_order!, if: Proc.new {|t| t.status_changed? && t.status == 'in hand'}
+  before_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
+  before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
   before_create :assign_to_envelope!
-
-  STATUSES = { 
-      in_hand: { :status => :in_hand, :name => 'In Hand', description: "Order that a Scout has received"},
-      turned_in: { status: :turned_in, :name => 'Turned In', description: "Orders submitted to Pack" },
-      ordered: { :status => :ordered, :name => 'Ordered', description: "Orders that have been ordered" },
-      deliver: { :status => :deliver, name: 'Deliver', description: "Orders available for delivery"},
-      delivered: { :status => :delivered, :name => 'Delivered', description: "Orders delivered by Scout" }
-    }
+  before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
 
   def value
     take_order_line_items.inject(0) {|sum,line_item| sum + line_item.value}
@@ -37,37 +29,12 @@ class TakeOrder < ApplicationRecord
     take_order_line_items.joins(:product).where("products.is_pack_donation IS NULL OR ?",false).inject(0) {|sum,line_item| sum + line_item.value}
   end
 
-  def self.received
-    where.not(status: 'received')
-  end
-
-  def self.loose
-    where(envelope_id: nil)
-  end
-
-  def self.loose?
-    envelope_id.nil?
-  end
-
-  def self.enveloped
-    where.not(envelope_id: nil)
-  end
-
-  def self.enveloped?
-    !envelope_id.nil?
-  end
-
-
-  def received?
-    status == 'received'
-  end
-
   def self.in_hand
-    where.not(status: 'received')
+    where.(status: 'in hand')
   end
 
   def in_hand?
-    status == 'received'
+    status == 'in hand'
   end
 
   def self.turned_in
@@ -92,9 +59,9 @@ class TakeOrder < ApplicationRecord
 
   def self.sales(event, is_turned_in=nil)
     if is_turned_in
-      where(event_id: event.id).where.not(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+      where(event_id: event.id).where.not(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     elsif is_turned_in == false
-      where(event_id: event.id).where(status: 'received').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
+      where(event_id: event.id).where(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
     else
       where(event_id: event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
     end
@@ -105,7 +72,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def self.sales_by_scout_and_event(event)
-    event.take_orders.where("take_orders.status <> ?", "received").joins(:take_order_line_items).group(:scout_id).sum(:value)
+    event.take_orders.where("take_orders.status <> ?", "in hand").joins(:take_order_line_items).group(:scout_id).sum(:value)
   end
 
   def money_received_by

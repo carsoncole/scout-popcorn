@@ -12,7 +12,7 @@
               %span.tag.tag-primary
                 - if @take_order.status == 'submitted'
                   Turned In
-                - elsif @take_order.status == 'received'
+                - elsif @take_order.status == 'in hand'
                   In Hand
                 - else
                   = @take_order.status.capitalize
@@ -52,7 +52,7 @@
                     = link_to "Square reciept", @take_order.square_reciept_url, target: '_blank'
                     %i.fa.fa-credit-card
 
-              - if @take_order.purchase_order && current_scout.is_admin?
+              - if @take_order.purchase_order && current_scout.admin?
                 %tr
                   %th Purchase order
                   %td.text-xs-right
@@ -76,7 +76,7 @@
 
                   %tr
                     %td= link_to line_item.product.name, product_path(line_item.product)
-                    - if @take_order.received?
+                    - if @take_order.in_hand?
                       = form_for [@take_order, line_item] do |f|
                         .form-group
                           %td
@@ -90,11 +90,11 @@
                     %td
                       = number_to_currency( line_item.value, precision: 0 )
                     %td
-                      - if @take_order.received?
+                      - if @take_order.in_hand?
                         = link_to take_order_take_order_line_item_path(@take_order, line_item), method: :delete do
                           %i.fa.fa-trash.fa-lg
 
-                - if @take_order.received?
+                - if @take_order.in_hand?
                   %tr
                     %td
                       = link_to new_take_order_take_order_line_item_path(@take_order) do

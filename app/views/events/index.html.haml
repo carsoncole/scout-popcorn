@@ -7,13 +7,13 @@
         %table.table.card-text.card-text
           / %thead
           /   %tr
-          /     - unless current_scout.is_admin?
+          /     - unless current_scout.admin?
           /       %th Unit
           /     %th          
           /     %th
           /     %th
           /     %th
-          /     - if current_scout.is_admin?
+          /     - if current_scout.admin?
           /       %th
           /       %th
           /       %th
@@ -21,7 +21,7 @@
           %tbody
             - @events.each do |event|
               %tr
-                - unless current_scout.is_admin?
+                - unless current_scout.admin?
                   %td= event.unit.name
                 %td
                   - if event == current_scout.default_event
@@ -33,14 +33,14 @@
                     = link_to event.name, event
                 %td= event.is_active? ? "" : "Closed"
                 
-                - if current_scout.is_admin?
+                - if current_scout.admin?
                   %td
                     = link_to edit_event_path(event) do
                       %i.fa.fa-pencil.fa-lg
                   %td
                     = link_to event, :method => :delete, :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
                       %i.fa.fa-trash.fa-lg
-            - if current_scout.is_admin? && @unit
+            - if current_scout.admin? && @unit
               %tr
                 %td
                   = link_to new_event_path do

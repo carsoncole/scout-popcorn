@@ -47,7 +47,7 @@ class Envelope < ApplicationRecord
 
   def reverse_if_reopened!
     take_orders.each do |take_order|
-      take_order.update(status: :received)
+      take_order.update(status: 'in hand')
     end    
   end
 end

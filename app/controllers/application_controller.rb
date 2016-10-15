@@ -3,24 +3,29 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :authenticate_scout!
-  before_action :set_unit, :set_event, if: Proc.new {|n| current_scout }
+  before_action :set_event, if: Proc.new {|n| current_scout }
+  before_action :set_unit,if: Proc.new {|n| current_scout }
+
 
   def redirect_unless_admin!
-    redirect_to root_path unless current_scout.is_admin?
+    redirect_to root_path unless current_scout.admin?
   end
 
   private
 
   def set_unit
-    if cookies[:unit_id]
-      begin
-        @unit = Unit.find(cookies[:unit_id]) 
-      rescue
-        cookies.delete :unit_id
-      end
-    else
+    if current_scout
       @unit = current_scout.unit
     end
+    # if cookies[:unit_id]
+    #   begin
+    #     @unit = Unit.find(cookies[:unit_id]) 
+    #   rescue
+    #     cookies.delete :unit_id
+    #   end
+    # else
+    #   @unit = current_scout.unit
+    # end
   end
 
   def set_event

@@ -6,7 +6,7 @@ class EnvelopesController < ApplicationController
   def index
     @envelopes = @active_event.envelopes.order(closed_at: :desc).page(params[:page])
 
-    unless current_scout.is_admin?
+    unless current_scout.admin?
       @envelopes = @envelopes.where(scout_id: current_scout)
     end
 

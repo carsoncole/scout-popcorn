@@ -7,7 +7,7 @@ class TakeOrdersController < ApplicationController
   def index
     # @take_orders = TakeOrder.order(created_at: :desc).page(params[:page])
     # @take_orders = @take_orders.where(event_id: @active_event.id) if @active_event
-    # @take_orders = @take_orders.where(scout_id: current_scout) unless current_scout.is_admin?
+    # @take_orders = @take_orders.where(scout_id: current_scout) unless current_scout.admin?
     # @unassigned_take_orders = TakeOrder.loose.order(created_at: :desc)
 
     # if params[:scout_id]
@@ -21,7 +21,7 @@ class TakeOrdersController < ApplicationController
     #   @take_orders = @take_orders.where(status: params[:filter])
     # end
 
-    if current_scout.is_admin?
+    if current_scout.admin?
       @envelopes = @active_event.envelopes
     else
       @envelopes = @active_event.envelopes.where(scout_id: current_scout.id).order(status: :desc, closed_at: :desc)
@@ -51,12 +51,12 @@ class TakeOrdersController < ApplicationController
     @take_order = TakeOrder.new
     @take_order.envelope_id = params[:envelope_id] if params[:envelope_id]
     @take_order.scout_id = params[:scout_id] if params[:scout_id]
-    @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
+    @accounts = @active_event.accounts.is_take_order_eligible.order(name: :desc)
   end
 
   # GET /orders/1/edit
   def edit
-    @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
+    @accounts = @active_event.accounts.is_take_order_eligible.order(name: :desc)
     @open_envelopes = @active_event.envelopes.open
   end
 
@@ -66,7 +66,7 @@ class TakeOrdersController < ApplicationController
     @take_order = TakeOrder.new(take_order_params)
     unless @take_order.scout_id
       @envelope = Envelope.find(params[:take_order][:envelope_id])
-      if current_scout.is_admin?
+      if current_scout.admin?
         @take_order.scout_id = @envelope.scout_id if @envelope
       else
         @take_order.scout_id = current_scout.id
@@ -81,7 +81,7 @@ class TakeOrdersController < ApplicationController
         format.html { redirect_to @take_order, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @take_order }
       else
-        @accounts = @unit.accounts.is_take_order_eligible.order(name: :desc)
+        @accounts = @active_event.accounts.is_take_order_eligible.order(name: :desc)
         format.html { render :new }
         format.json { render json: @take_order.errors, status: :unprocessable_entity }
       end
@@ -91,7 +91,7 @@ class TakeOrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
-    if params[:submitted] && current_scout.is_admin?
+    if params[:submitted] && current_scout.admin?
       @take_order.update(status: :submitted, money_received_by_id: current_scout.id, money_received_at: Time.current)
     else 
       @take_order.update(take_order_params)

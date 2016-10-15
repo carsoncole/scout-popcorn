@@ -15,7 +15,7 @@
                 - @envelope.errors.full_messages.each do |msg|
                   %li= msg
 
-          - if current_scout.is_admin?
+          - if current_scout.admin?
             .form-group
               = f.label :scout
               = f.collection_select :scout_id, @scouts, :id, :name, {}, class: 'form-control'
