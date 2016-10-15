@@ -63,7 +63,7 @@ class Scout < ApplicationRecord
   end
 
   def self.admin
-    where(is_super_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true))
+    where(is_super_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true)).or(Scout.where(is_admin: true))
   end
 
   def admin?
