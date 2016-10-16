@@ -15,9 +15,9 @@ class TakeOrder < ApplicationRecord
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-  #before_save :remove_from_purchase_order!, if: Proc.new {|t| t.status_changed? && t.status == 'in hand'}
-  #before_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
-  #before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
+  before_save :remove_from_purchase_order!, if: Proc.new {|t| t.status_changed? && t.status == 'in hand'}
+  before_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
+  before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
   before_create :assign_to_envelope!
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
 
@@ -115,7 +115,7 @@ class TakeOrder < ApplicationRecord
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: Date.current, description: "Take Order submitted")
       
       unless line_item.product.is_pack_donation
-        product_due_to_customers_account = event.unit.accounts.where(name: 'Product due to Customers').first
+        product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
         Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * (1 - event.pack_commission_percentage / 100), date: Date.current, description: "Take Order submitted", line_item_id: line_item.id)
       end
     end
