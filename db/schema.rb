@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016015109) do
+ActiveRecord::Schema.define(version: 20161016164601) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -242,6 +242,7 @@ ActiveRecord::Schema.define(version: 20161016015109) do
     t.integer  "payment_account_id"
     t.string   "square_reciept_url"
     t.integer  "envelope_id"
+    t.string   "note"
   end
 
   create_table "units", force: :cascade do |t|

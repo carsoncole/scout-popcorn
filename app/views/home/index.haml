@@ -1,8 +1,3 @@
-
-
-- if current_scout.admin?
-  = render 'get_started' unless @active_event && @active_event.set_up?
-
 .row
   .col-md-4
     = render 'welcome'
@@ -80,6 +75,9 @@
 
 
   .col-md-4
+    - if current_scout.admin?
+      = render 'get_started' unless @active_event && @active_event.set_up?
+
     - if @active_event
       .card
         .card-block

@@ -34,6 +34,13 @@
               %br
               %em.small Select 'Take Order Cash' for cash + checks. 
             = f.collection_select :payment_account_id, @accounts, :id, :name,{}, class: 'form-control'
+          .form-group
+            .field
+              %label
+                = f.label :note
+                %br
+              = f.text_field :note, class: 'form-control', placeholder: 'Note (BSA credit card # etc.)'
+
           - if current_scout.admin?
             .form-group
               %label

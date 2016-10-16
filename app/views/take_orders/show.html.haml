@@ -6,43 +6,47 @@
           .col-md-6
             .card-title
               %h3
+                Take Order -
                 = @take_order.scout.name  
-          .col-md-6
-            %h3.text-xs-right
-              %span.tag.tag-primary
-                - if @take_order.status == 'submitted'
-                  Turned In
-                - elsif @take_order.status == 'in hand'
-                  In Hand
-                - else
-                  = @take_order.status.capitalize
-            %p.text-xs-right
-              = @take_order.customer_name
-              %br
-              = @take_order.customer_address
-              %br
-              = @take_order.customer_email
+                %span.tag.tag-primary
+                  - if @take_order.status == 'submitted'
+                    Turned In
+                  - elsif @take_order.status == 'in hand'
+                    In Hand
+                  - else
+                    = @take_order.status.capitalize
+                - unless @take_order.submitted?
+                  %span
+                    = link_to edit_take_order_path(@take_order) do
+                      %i.fa.fa-pencil
 
         .row
-          .col-md-5
+          .col-md-4
             %table.table.table-sm
+              %tr
+                %th Customer:
+                %td.text-xs-right
+                  = @take_order.customer_name
+                  %br
+                  = @take_order.customer_address
+                  %br
+                  = @take_order.customer_email                  
+
               %tr
                 %th Payment by:
                 %td.text-xs-right
                   = @take_order.account.name.upcase if @take_order.account
-                  - unless @take_order.submitted?
-                    %span
-                      = link_to edit_take_order_path(@take_order) do
-                        %i.fa.fa-pencil
+
               %tr
                 %th Envelope:
                 %td.text-xs-right
                   - if @take_order.envelope
                     = link_to @take_order.envelope.name, envelope_path(@take_order.envelope) 
-                  - unless @take_order.submitted?
-                    %span
-                      = link_to edit_take_order_path(@take_order) do
-                        %i.fa.fa-pencil
+
+              - unless @take_order.note.blank?
+                %tr
+                  %th Note:
+                  %td.text-xs-right= @take_order.note
 
 
               - if @take_order.square_reciept_url?
