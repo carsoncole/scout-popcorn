@@ -8,15 +8,28 @@
 
     %p Pack 4496 on Bainbridge Island thanks you for your support and in helping a Scout earn his way to Summer Camp.
 
-    %p We have received your order and expect to deliver it by October 20, 2016.
+    %p We have received your order and expect to deliver it by November 10, 2016.
 
     %h2 Your Order
     %ul
+      - total = 0
       - @take_order.take_order_line_items.each do |line_item|
         %li
           = line_item.product.name
           = surround("(", ")") do
             = line_item.quantity
+          - value = line_item.quantity * line_item.product.retail_price
+          = number_to_currency(value)
+          - total += value
+      %li
+        Amount due:
+        = number_to_currency(total)
+
+      %li
+        - if @take_order.payment_account_id == 6
+          Please pay on delivery
+        - else
+          PAID IN FULL. Thank you!
 
     %p
       If you have any questions, you can reach us at
