@@ -15,9 +15,9 @@ class TakeOrder < ApplicationRecord
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
-  before_save :remove_from_purchase_order!, if: Proc.new {|t| t.status_changed? && t.status == 'in hand'}
-  before_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
-  before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
+  #before_save :remove_from_purchase_order!, if: Proc.new {|t| t.status_changed? && t.status == 'in hand'}
+  #before_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
+  #before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'in hand'}
   before_create :assign_to_envelope!
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
 
