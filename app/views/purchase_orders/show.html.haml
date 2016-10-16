@@ -4,17 +4,27 @@
       .card-block
         .card-title
           %h2
-            Take Orders Purchase Order
+            = @unit.name
+            Take Orders - Purchase Order
 
-          %h3
-            %span.tag.tag-info= @purchase_order.status.capitalize 
-        %table.table
+          - unless params[:final]
+            %h3
+              %span.tag.tag-info= @purchase_order.status.capitalize 
+
+        %p.hidden-print= link_to "Final Purchase Order", purchase_order_path(@purchase_order, final: true)
+
+        %table.table.table-sm
           %thead
             %tr
               %th Product
-              %th Quantity
-              %th Unit Inventory
-              %th Net Quantity
+              - unless params[:final]
+                %th Quantity
+                %th Unit Inventory
+              %th
+                - if params[:final]
+                  Quantity
+                - else
+                  Net Quantity
               %th Price
               %th Value
           %tbody
@@ -24,11 +34,12 @@
               - if quantity != 0
                 %tr
                   %td= product.name
-                  %td= quantity
-                  %td
-                    - unit_inventory = @unit.inventory(product)
-                    - unit_inventory += quantity + @unit.stocks.where(product_id: product.id).take_orders.sum(:quantity)
-                    = unit_inventory
+                  - unit_inventory = @unit.inventory(product)
+                  - unit_inventory += quantity + @unit.stocks.where(product_id: product.id).take_orders.sum(:quantity)
+                  - unless params[:final]
+                    %td= quantity
+                    %td
+                      = unit_inventory
                   %td
                     - net_quantity = quantity - unit_inventory
                     = net_quantity
