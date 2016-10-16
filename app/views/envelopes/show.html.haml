@@ -32,6 +32,7 @@
             %th Items
             %th Amount
             %th Payment
+            %th Receipt emailed
             %th
             %th
           - @take_orders.each do |take_order|              
@@ -47,7 +48,7 @@
                   %br
               %td= number_to_currency(take_order.value, precision: 0)
               %td= take_order.account.name
-
+              %td= nice_date_time_compact(take_order.receipt_sent_at) if take_order.receipt_sent_at
               %td
                 = link_to take_order_path(take_order) do
                   %i.fa.fa-folder-open
