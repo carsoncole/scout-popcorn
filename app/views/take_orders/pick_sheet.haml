@@ -1,0 +1,17 @@
+- @envelopes.each do |envelope|
+  .envelope
+    %h3
+      = envelope.name
+
+    %table.table.table-sm.small
+      - envelope.take_orders.each do |take_order|
+        %tr
+          %td= take_order.customer_name
+          %td.address= take_order.customer_address
+          %td.product= take_order.products_and_quantities
+          %td.amount= number_to_currency(take_order.value)
+          %td.status
+            - if take_order.payment_account_id == 6
+              %b COLLECT MONEY
+            - else
+              PAID IN FULL

@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     resources :scout_site_sales
   end
   resources :online_sales
+
+  # get "take-orders/pick-sheet" => 'take_orders#pick_sheet' as: :print_take_order_pick_sheet
   resources :take_orders do
     resources :take_order_line_items
   end

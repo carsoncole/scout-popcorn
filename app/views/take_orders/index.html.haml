@@ -21,7 +21,12 @@
           %li.nav-item
             = link_to new_envelope_path, class: 'nav-link' do
               New Envelope
+        
+          %li.nav-item
+            = link_to "Print Pick Sheet", take_orders_path(pick_sheet: true), class: 'nav-link'
         %br
+
+
 
       - elsif !current_scout.open_envelope?(@active_event)
         %ul.nav.nav-inline

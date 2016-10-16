@@ -7,18 +7,20 @@
 
         %ul.nav.nav-tabs
           %li.nav-item
+            = link_to envelopes_path(status: 'open'), class: "nav-link #{'active' if params[:status] == 'open'}" do
+              Open
+              - if current_scout.admin?
+                = surround("(", ")") do
+                  = @active_event.envelopes.open.count
+
+          %li.nav-item
             = link_to envelopes_path, class: "nav-link #{'active' unless params[:status]}" do
               All
               - if current_scout.admin?
                 = surround("(", ")") do
                   = @active_event.envelopes.count
 
-          %li.nav-item
-            = link_to envelopes_path(status: 'open'), class: "nav-link #{'active' if params[:status] == 'open'}" do
-              Open
-              - if current_scout.admin?
-                = surround("(", ")") do
-                  = @active_event.envelopes.open.count
+
 
           %li.nav-item
             = link_to envelopes_path(status: 'closed'), class: "nav-link #{'active' if params[:status] == 'closed'}" do

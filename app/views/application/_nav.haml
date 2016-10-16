@@ -47,7 +47,7 @@
                 %span.caret
               %ul.dropdown-menu
                 - if @active_event
-                  %li= link_to "Envelopes", envelopes_path, class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
+                  %li= link_to "Envelopes", envelopes_path(status: 'open'), class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
                   %li= link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
                   %li= link_to "Inventory Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
                   %li= link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger'}"

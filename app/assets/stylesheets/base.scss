@@ -75,3 +75,19 @@ a.kill {
     border-bottom: 2px solid #000;
   }
 }
+div.envelope {
+   page-break-after: always; 
+
+}
+td.amount {
+  width: 8em;
+}
+td.status {
+  width: 10em;
+}
+td.address {
+  width: 17em;
+}
+td.product {
+  width: 40em;
+}

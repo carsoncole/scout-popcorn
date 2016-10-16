@@ -37,6 +37,11 @@ class TakeOrdersController < ApplicationController
       @envelopes = @envelopes.where(scout_id: params[:scout_id])
     end
 
+    if params[:pick_sheet]
+      @envelopes = @active_event.envelopes.closed
+      render :pick_sheet
+    end
+
   end
 
   # GET /orders/1
