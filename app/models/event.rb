@@ -14,7 +14,7 @@ class Event < ApplicationRecord
   has_many :accounts
   has_many :prize_carts
 
-  validates :name, :pack_commission_percentage, presence: true
+  validates :name, :pack_commission_percentage, :number_of_top_sellers, presence: true
 
   after_create :create_default_products!
   after_create :create_default_prizes!

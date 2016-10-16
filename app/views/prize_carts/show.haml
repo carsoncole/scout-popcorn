@@ -119,8 +119,18 @@
 
 
           .card-text.text-xs-center
-            = button_to "ORDER MY PRIZES", "#", disabled: true, class: 'btn btn-success btn-lg'
+            - if @active_event.allow_prize_cart_ordering_at.blank?
+              = button_to "ORDER MY PRIZES", "#", class: 'btn btn-success btn-lg'
+            - else
+
+              = button_to "ORDER MY PRIZES", "#", disabled: @active_event.allow_prize_cart_ordering_at < Date.today ? false : true, class: 'btn btn-success btn-lg'
           %br
-          .card-text.text-xs-center.small.text-muted Orders can be placed once Popcorn Sales end on October 16.
+          - unless @active_event.allow_prize_cart_ordering_at.blank?
+            .card-text.text-xs-center.small.text-muted
+              Orders can be placed once
+              = @active_event.name
+              ends on
+              = succeed(".") do
+                = @active_event.allow_prize_cart_ordering_at.strftime("%B %d")
               
 

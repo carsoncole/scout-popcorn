@@ -1,5 +1,4 @@
 .row
-  .col-md-3
   .col-md-6
     .card
       .card-block
@@ -22,9 +21,15 @@
             = f.label :pack_commission_percentage
             %p.small.text-muted Enter '35' for 35%.
             = f.text_field :pack_commission_percentage, class: 'form-control'
-
           .form-group
             = f.label :is_active
             = f.check_box :is_active, class: 'form-control'
+          .form-group
+            = f.label :allow_prize_cart_ordering_at
+            %p.text-muted This date enables/disables the 'Order' prize cart button
+            = f.date_select :allow_prize_cart_ordering_at, {}, class: 'form-control'
+          .form-group
+            = f.label :number_of_top_sellers
+            = f.number_field :number_of_top_sellers, class: 'form-control'
           .actions
             = f.submit 'Save', class: 'btn btn-default'

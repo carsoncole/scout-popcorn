@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161015060221) do
+ActiveRecord::Schema.define(version: 20161016015109) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -49,10 +49,12 @@ ActiveRecord::Schema.define(version: 20161015060221) do
   create_table "events", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "name"
-    t.boolean  "is_active",                                          default: true,   null: false
-    t.datetime "created_at",                                                          null: false
-    t.datetime "updated_at",                                                          null: false
-    t.decimal  "pack_commission_percentage", precision: 5, scale: 2, default: "32.0"
+    t.boolean  "is_active",                                            default: true,   null: false
+    t.datetime "created_at",                                                            null: false
+    t.datetime "updated_at",                                                            null: false
+    t.decimal  "pack_commission_percentage",   precision: 5, scale: 2, default: "32.0"
+    t.date     "allow_prize_cart_ordering_at"
+    t.integer  "number_of_top_sellers",                                default: 5
   end
 
   create_table "ledgers", force: :cascade do |t|

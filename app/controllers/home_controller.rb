@@ -26,7 +26,7 @@ class HomeController < ApplicationController
 
       @top_sellers = []
       @top_sellers_full_list.each do |seller|
-        break if @top_sellers.count == 5 && seller[1] < @top_sellers.last[1]
+        break if @top_sellers.count == @active_event.number_of_top_sellers && seller[1] < @top_sellers.last[1]
         @top_sellers << seller
       end
     end

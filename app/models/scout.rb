@@ -31,6 +31,10 @@ class Scout < ApplicationRecord
     last_name + ', ' + first_name
   end
 
+  def self.admin
+    where(is_super_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true)).or(Scout.where(is_admin: true))
+  end
+
   def self.not_admin
     where("is_super_admin IS NULL OR is_super_admin = ?", false)
   end
@@ -60,10 +64,6 @@ class Scout < ApplicationRecord
     total += take_order_sales(event)
     total += total_online_sales(event)
     total
-  end
-
-  def self.admin
-    where(is_super_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true)).or(Scout.where(is_admin: true))
   end
 
   def admin?
@@ -144,5 +144,4 @@ class Scout < ApplicationRecord
       self.is_admin = true
     end
   end
-
 end
