@@ -19,7 +19,7 @@
               .form-group
                 = f.label :quantity
                 %br
-                = f.select :quantity, options_for_select((1..100)),{:include_blank => "Select a quantity"},class: 'form-control'
+                = f.select :quantity, options_for_select((1..100)),{},class: 'form-control'
           .actions
             = f.submit 'Save', class: 'btn btn-success'
         %br
