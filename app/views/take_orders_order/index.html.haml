@@ -16,11 +16,13 @@
       %td
         - inventory = product.stocks.sum(:quantity)
         = inventory
-      %td= quantity - inventory
+      %td
+        - order_quantity = quantity - inventory
+        - order_quantity = 0 if order_quantity < 0
       %td= number_to_currency(product.retail_price)
       %td
-        = number_to_currency((quantity - inventory) * product.retail_price)
-        - @grand_total += (quantity - inventory) * product.retail_price
+        = number_to_currency(order_quantity * product.retail_price)
+        - @grand_total += order_quantity * product.retail_price
 
   %tr
     %td(colspan=5)
