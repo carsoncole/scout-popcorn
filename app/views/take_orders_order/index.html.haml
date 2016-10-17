@@ -1,11 +1,17 @@
+%h2
+  = @unit.name
+  = "-"
+  = @active_event.name
+  Take Orders Order
+
 %table.table.table-sm
   %tr
     %th Product
     %th Orders
     %th Inventory
-    %td Order
-    %td Price
-    %td Amount
+    %th Order
+    %th Price
+    %th Amount
   - @grand_total = 0
   - @products_to_order.each do |product_id, quantity|
     - product = @active_event.products.find(product_id)
@@ -28,3 +34,5 @@
   %tr
     %td(colspan=5)
     %td= number_to_currency(@grand_total)
+
+%p= nice_date_time(Time.now)
