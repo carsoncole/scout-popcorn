@@ -2,10 +2,7 @@
   %tr
     %th Product
     %th Orders
-    %th
-      Take Order
-      %br
-      Inventory
+    %th Inventory
     %td Order
     %td Price
     %td Amount
@@ -16,7 +13,7 @@
       %td= product.name
       %td= quantity
       %td
-        - inventory = product.stocks.take_orders.sum(:quantity)
+        - inventory = product.stocks.sum(:quantity)
         = inventory
       %td= quantity - inventory
       %td= number_to_currency(product.retail_price)
