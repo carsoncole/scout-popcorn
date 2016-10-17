@@ -10,13 +10,18 @@
           Drop off Take-Order order forms and collection envelope as often as you want to any Site Sale and your orders will be shown here. Pick up more order forms and collections envelopes at any
           =link_to "Site Sale.", site_sales_path
 
+      - unless @active_event.take_orders_allowed?
+        .alert.alert-warning
+          Take Orders are currently closed.
+
+
       / - if current_scout.admin?
       /   %ul.nav.nav-inline
       /     %li.nav-item
       /       = link_to new_take_order_path, class: 'nav-link' do
       /         New Take Order
 
-      - if current_scout.admin?
+      - if current_scout.admin? && @active_event.take_orders_allowed?
         %ul.nav.nav-inline
           %li.nav-item
             = link_to new_envelope_path, class: 'nav-link' do
@@ -28,7 +33,7 @@
 
 
 
-      - elsif !current_scout.open_envelope?(@active_event)
+      - elsif !current_scout.open_envelope?(@active_event) && @active_event.take_orders_allowed?
         %ul.nav.nav-inline
           %li.nav-item
             = link_to new_envelope_path, class: 'nav-link' do
@@ -79,14 +84,14 @@
                   - elsif envelope.closed?
                     %span.tag.tag-info TURNED IN
   
-              - if current_scout.admin? && envelope.open?
+              - if current_scout.admin? && envelope.open? && @active_event.take_orders_allowed?
                 - if envelope.take_orders.any? 
                   = link_to "#", :data => { :confirm =>  "You need to move all take orders to another envelope before deleting this envelope"} do
                     %i.fa.fa-trash
                 - else
                   = link_to envelope_path(envelope), method: :delete do
                     %i.fa.fa-trash
-            - if envelope.open?
+            - if envelope.open? && @active_event.take_orders_allowed?
               %p
                 = link_to new_envelope_take_order_path(envelope.id) do
                   %i.fa.fa-plus
@@ -174,7 +179,7 @@
                           = link_to take_order do
                             %i.fa.fa-folder-open.fa-lg
                         %td.hidden-print
-                          - if take_order.in_hand?
+                          - if take_order.in_hand? && @active_event.take_orders_allowed?
                             = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                               %i.fa.fa-trash.fa-lg
                   

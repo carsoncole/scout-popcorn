@@ -29,6 +29,10 @@
             %p.text-muted This date enables/disables the 'Order' prize cart button
             = f.date_select :allow_prize_cart_ordering_at, {}, class: 'form-control'
           .form-group
+            = f.label :take_orders_deadline_at
+            %p.text-muted Take Orders can not be entered after this time
+            = f.datetime_select :take_orders_deadline_at, {include_blank: true},  class: 'form-control'
+          .form-group
             = f.label :number_of_top_sellers
             = f.number_field :number_of_top_sellers, class: 'form-control'
           .actions

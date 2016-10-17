@@ -22,7 +22,7 @@
       .card-block
         .card-title
           %h3 Take Orders
-        - if @envelope.open?
+        - if @envelope.open? && @active_event.take_orders_allowed?
           %p= link_to "Add a New Take Order", new_envelope_take_order_path(@envelope.id)
         %table.table.table-sm
           %tr
@@ -53,7 +53,7 @@
                 = link_to take_order_path(take_order) do
                   %i.fa.fa-folder-open
               %td
-                - if @envelope.open?
+                - if @envelope.open? && @active_event.take_orders_allowed?
                   = link_to envelope_remove_take_order_path(@envelope.id, take_order.id), method: :put do
                     %i.fa.fa-trash
           %tr

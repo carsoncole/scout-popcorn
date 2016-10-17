@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016164601) do
+ActiveRecord::Schema.define(version: 20161017002321) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20161016164601) do
     t.decimal  "pack_commission_percentage",   precision: 5, scale: 2, default: "32.0"
     t.date     "allow_prize_cart_ordering_at"
     t.integer  "number_of_top_sellers",                                default: 5
+    t.datetime "take_orders_deadline_at"
   end
 
   create_table "ledgers", force: :cascade do |t|

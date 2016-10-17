@@ -15,7 +15,7 @@
                     In Hand
                   - else
                     = @take_order.status.capitalize
-                - unless @take_order.submitted?
+                - if !@take_order.submitted? && @active_event.take_orders_allowed?
                   %span
                     = link_to edit_take_order_path(@take_order) do
                       %i.fa.fa-pencil
@@ -84,9 +84,10 @@
                       = form_for [@take_order, line_item] do |f|
                         .form-group
                           %td
-                            = f.select :quantity, options_for_select((1..100), selected: f.object.quantity),{}, class: 'form-control'
+                            = f.select :quantity, options_for_select((1..100), selected: f.object.quantity),{}, disabled: @active_event.take_orders_allowed? ? false: true, class: 'form-control'
                           %td
-                            = f.submit 'Update', class: 'btn btn-success'
+                            - if @active_event.take_orders_allowed?
+                              = f.submit 'Update', class: 'btn btn-success'
                     - else
                       %td= line_item.quantity
                       %td
@@ -94,11 +95,11 @@
                     %td
                       = number_to_currency( line_item.value, precision: 0 )
                     %td
-                      - if @take_order.in_hand?
+                      - if @take_order.in_hand? && @active_event.take_orders_allowed?
                         = link_to take_order_take_order_line_item_path(@take_order, line_item), method: :delete do
                           %i.fa.fa-trash.fa-lg
 
-                - if @take_order.in_hand?
+                - if @take_order.in_hand? && @active_event.take_orders_allowed?
                   %tr
                     %td
                       = link_to new_take_order_take_order_line_item_path(@take_order) do

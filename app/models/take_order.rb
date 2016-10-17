@@ -45,6 +45,14 @@ class TakeOrder < ApplicationRecord
     status == 'submitted'
   end
 
+  def ordered?
+    status == 'ordered'
+  end
+
+  def ordered
+    where(status: 'ordered')
+  end
+
   def self.submitted
     where(status: 'submitted')
   end
