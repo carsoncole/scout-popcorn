@@ -21,11 +21,12 @@
       /       = link_to new_take_order_path, class: 'nav-link' do
       /         New Take Order
 
-      - if current_scout.admin? && @active_event.take_orders_allowed?
+      - if current_scout.admin?
         %ul.nav.nav-inline
-          %li.nav-item
-            = link_to new_envelope_path, class: 'nav-link' do
-              New Envelope
+          - if @active_event.take_orders_allowed?
+            %li.nav-item
+              = link_to new_envelope_path, class: 'nav-link' do
+                New Envelope
         
           %li.nav-item
             = link_to "Print Pick Sheet", take_orders_path(pick_sheet: true), class: 'nav-link'

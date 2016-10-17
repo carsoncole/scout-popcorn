@@ -61,6 +61,14 @@ class TakeOrder < ApplicationRecord
     status == 'submitted'
   end
 
+  def self.delivered
+    where(status: 'delivered')
+  end
+
+  def delivered?
+    status == 'delivered'
+  end
+
   def products_and_quantities
     take_order_line_items.joins(:product).map{|toli| toli.product.name + ' (' + toli.quantity.to_s + ')' }.join(', ')
   end
