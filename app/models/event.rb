@@ -60,6 +60,11 @@ class Event < ApplicationRecord
     envelopes.joins(take_orders: [take_order_line_items: [:product]]).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
+  
+  def allow_prize_cart_ordering?
+    allow_prize_cart_ordering_at.blank? || allow_prize_cart_ordering_at < Time.now
+  end
+
   def take_orders_allowed?
     take_orders_deadline_at.blank? || take_orders_deadline_at > Time.now
   end

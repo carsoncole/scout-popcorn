@@ -17,6 +17,16 @@
     %span.tag.tag-danger
       IMPORTANT
 
-    Our Popcorn Sales event ends October 16. Take Order Forms must be turned in by Sunday, October 16.
+    Our Popcorn Sales event ended October 16.
+    - if @active_event.allow_prize_cart_ordering?
+      Scouts can now select their prizes in the
+      = succeed(".") do
+        = link_to "Prize Cart", prize_cart_path(@active_event)
+    - else
+      Prizes can be selected starting on
+      = nice_date(@active_event.allow_prize_cart_ordering_at)
+      in the 
+      = succeed(".") do
+        = link_to "Prize Cart", prize_cart_path(@active_event)
 
 

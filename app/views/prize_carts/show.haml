@@ -66,8 +66,6 @@
                 As you do more Popcorn Sales, prizes you become eligible for will be shown here.
           
           - if @pack_prizes.any?
-            %p.card-text.text-muted You can select one prize
-            %br
             %table.table.table-sm
               - @pack_prizes.each do |prize|
                 %tr
@@ -119,18 +117,14 @@
 
 
           .card-text.text-xs-center
-            - if @active_event.allow_prize_cart_ordering_at.blank?
+            - if @active_event.allow_prize_cart_ordering?
               = button_to "ORDER MY PRIZES", "#", class: 'btn btn-success btn-lg'
             - else
-
+              .text-muted
+                Prize orders can be placed on
+                = succeed(".") do
+                  = nice_date(@active_event.allow_prize_cart_ordering_at) 
+              %br
               = button_to "ORDER MY PRIZES", "#", disabled: @active_event.allow_prize_cart_ordering_at < Date.today ? false : true, class: 'btn btn-success btn-lg'
-          %br
-          - unless @active_event.allow_prize_cart_ordering_at.blank?
-            .card-text.text-xs-center.small.text-muted
-              Orders can be placed once
-              = @active_event.name
-              ends on
-              = succeed(".") do
-                = @active_event.allow_prize_cart_ordering_at.strftime("%B %d")
-              
+             
 
