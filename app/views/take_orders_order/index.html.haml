@@ -19,6 +19,7 @@
       %td
         - order_quantity = quantity - inventory
         - order_quantity = 0 if order_quantity < 0
+        = order_quantity
       %td= number_to_currency(product.retail_price)
       %td
         = number_to_currency(order_quantity * product.retail_price)
