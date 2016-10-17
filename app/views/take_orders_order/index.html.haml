@@ -1,21 +1,29 @@
 %table.table.table-sm
   %tr
     %th Product
-    %th Quantity
+    %th Orders
+    %th
+      Take Order
+      %br
+      Inventory
+    %td Order
     %td Price
     %td Amount
   - @grand_total = 0
   - @products_to_order.each do |product_id, quantity|
     - product = @active_event.products.find(product_id)
-    - @grand_total += quantity * product.retail_price
     %tr
       %td= product.name
       %td= quantity
+      %td
+        - inventory = product.stocks.take_orders.sum(:quantity)
+        = inventory
+      %td= quantity - inventory
       %td= number_to_currency(product.retail_price)
-      %td= number_to_currency(quantity * product.retail_price)
+      %td
+        = number_to_currency((quantity - inventory) * product.retail_price)
+        - @grand_total += (quantity - inventory) * product.retail_price
 
   %tr
-    %td
-    %td
-    %td
+    %td(colspan=5)
     %td= number_to_currency(@grand_total)
