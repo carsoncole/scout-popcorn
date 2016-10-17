@@ -9,6 +9,7 @@
   - @grand_total = 0
   - @products_to_order.each do |product_id, quantity|
     - product = @active_event.products.find(product_id)
+    - next unless product.is_sourced_from_bsa
     %tr
       %td= product.name
       %td= quantity
