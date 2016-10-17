@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get 'take_orders_order/index'
+
   resources :prize_carts
 
   post 'order-prizes' => 'scout_prize_cart#order-prizes', as: 'order_prizes'

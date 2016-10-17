@@ -52,6 +52,7 @@
                   %li= link_to "Inventory Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
                   %li= link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger'}"
                   %li= link_to "Take Orders Order", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
+                  %li= link_to "Take Orders Order", take_orders_order_index_path, class: "dropdown-item #{'active' if controller_name =='take_orders_order'}"
                   %li= link_to "Inventory Returns", inventory_returns_path, class: "dropdown-item #{'active' if controller_name =='stocks' && action_name == 'inventory_returns'}"
                   %li= link_to "Final Unit Settlement Form", final_unit_settlement_form_path, class: "dropdown-item #{'active' if controller_name =='ledgers' && action_name == 'final_unit_settlement_form'}"
                   %li= link_to "Prize Carts", prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
