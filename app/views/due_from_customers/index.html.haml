@@ -1,0 +1,21 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        %table.table
+          %tr
+            %th Envelope
+            %th
+            %th Customer
+            %th Amount
+          - @due_from_customers.each do |due|
+            %tr
+              %td= due.take_order.envelope.name
+              %td= link_to "Take Order", take_order_path(due.take_order_id) if due.take_order_id
+              %td= due.take_order.customer_name
+              %td= number_to_currency(due.take_order.value)
+
+          %tr
+            %td(colspan=3)
+            %td= number_to_currency(@due_from_customers.sum(:amount))
+

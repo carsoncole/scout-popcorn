@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'take_orders_order/index'
 
   resources :prize_carts
+  resources :due_from_customers, only: :index
 
   post 'order-prizes' => 'scout_prize_cart#order-prizes', as: 'order_prizes'
   post "approve-prize-cart/:id" => "prize_carts#approve", as: 'approve_prize_cart'

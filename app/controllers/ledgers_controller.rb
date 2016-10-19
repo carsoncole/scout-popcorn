@@ -20,6 +20,7 @@ class LedgersController < ApplicationController
   def new
     @ledger = Ledger.new
     @accounts = @active_event.accounts.order(:name)
+    @take_order_ids = @active_event.take_orders.joins(:account).where("accounts.name = 'Money due from Customer'").map{|to|["Take Order: #{to.id} - #{to.customer_name}",to.id]}
   end
 
   def bank_deposit

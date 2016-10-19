@@ -31,6 +31,11 @@
             .form-group
               = f.label :description
               = f.text_field :description, class: 'form-control'
+            .form-group
+              = f.label "Take order (for money collected)"
+              %br
+              = f.select :take_order_id, options_for_select(@take_order_ids), {}, class: 'form-control'
+
           .form-group
             = f.label :amount
             = f.text_field :amount, class: 'form-control'
