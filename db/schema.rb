@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017002321) do
+ActiveRecord::Schema.define(version: 20161019235920) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20161017002321) do
     t.integer  "created_by"
     t.datetime "bank_deposit_notification_sent_at"
     t.integer  "line_item_id"
+    t.boolean  "is_money_collected"
   end
 
   create_table "online_sales", force: :cascade do |t|

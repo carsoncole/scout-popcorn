@@ -10,8 +10,12 @@ class Account < ApplicationRecord
     Account.where(unit_id: unit.id).where(name: 'Site Sale').first
   end
 
-  def self.take_order(unit)
-    Account.where(unit_id: unit.id).where(name: 'Take Order Cash').first
+  def self.take_order(event)
+    Account.where(event_id: event.id).where(name: 'Take Order Cash').first
+  end
+
+  def self.money_due_from_customer(event)
+    Account.where(event_id: event.id).where(name: 'Money due from Customer').first
   end
 
   def self.is_take_order_eligible

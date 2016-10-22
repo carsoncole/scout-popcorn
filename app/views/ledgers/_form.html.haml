@@ -14,6 +14,7 @@
                   %li= msg
 
           - if @deposit
+            = f.hidden_field :is_bank_deposit, value: 1
             .form-group
               = f.label "From"
               %br
@@ -23,6 +24,13 @@
               = f.label "Deposit to:"
               %br
               = f.collection_select :account_id, @bank_accounts, :id, :name, {}, class: 'form-control'
+          - elsif params[:collect_from_customer]
+            %h2 Collect Money for Take Orders
+            = f.hidden_field :is_money_collected, value: 1 
+            .form-group
+              = f.label "Take Order"
+              %p.text-muted Select the Take Order money was collected for
+              = f.select :take_order_id, options_for_select(@take_order_ids), {}, class: 'form-control'
           - else
             .form-group
               = f.label :account_id
@@ -31,16 +39,10 @@
             .form-group
               = f.label :description
               = f.text_field :description, class: 'form-control'
-            .form-group
-              = f.label "Take order (for money collected)"
-              %br
-              = f.select :take_order_id, options_for_select(@take_order_ids), {}, class: 'form-control'
-
           .form-group
             = f.label :amount
             = f.text_field :amount, class: 'form-control'
-          - if @deposit
-            = f.hidden_field :is_bank_deposit, value: 1
+            
           / - else
           /   .form-group
           /     = f.label "Bank deposit?"

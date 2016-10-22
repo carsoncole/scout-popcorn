@@ -54,8 +54,10 @@ class TakeOrdersController < ApplicationController
   # GET /orders/new
   def new
     @take_order = TakeOrder.new
+    money_due_from_customer_account = @active_event.accounts.where(name: 'Money due from Customer').first
     @take_order.envelope_id = params[:envelope_id] if params[:envelope_id]
     @take_order.scout_id = params[:scout_id] if params[:scout_id]
+    @take_order.account_id = money_due_from_customer_account.id
     @accounts = @active_event.accounts.is_take_order_eligible.order(name: :desc)
   end
 

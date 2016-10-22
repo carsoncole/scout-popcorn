@@ -13,6 +13,9 @@
           %li.nav-item
             = link_to bank_deposit_path, class: 'nav-link' do
               Bank Deposit
+          %li.nav-item
+            = link_to new_ledger_path(collect_from_customer: true), class: 'nav-link' do
+              Collect fr/Customer
           %li.nav-item.dropdown
             = link_to "Bank Accounts", "#", class: 'nav-link dropdown-toggle', 'data-toggle': "dropdown"
             .dropdown-menu

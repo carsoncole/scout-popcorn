@@ -11,11 +11,10 @@
           - @due_from_customers.each do |due|
             %tr
               %td= due.take_order.envelope.name
-              %td= link_to "Take Order", take_order_path(due.take_order_id) if due.take_order_id
+              %td= link_to "Take Order ##{due.take_order_id}", take_order_path(due.take_order_id) if due.take_order_id
               %td= due.take_order.customer_name
-              %td= number_to_currency(due.take_order.value)
+              %td= number_to_currency(due.amount)
 
           %tr
             %td(colspan=3)
             %td= number_to_currency(@due_from_customers.sum(:amount))
-

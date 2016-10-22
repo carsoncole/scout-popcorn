@@ -93,15 +93,23 @@ class LedgersController < ApplicationController
       @contra_ledger.created_by = current_scout.id
       @contra_ledger.save
     end
-    respond_to do |format|
-      if @ledger.save
-        format.html { redirect_to ledgers_path, notice: 'Ledger entry was successfully created.' }
-        format.json { render :show, status: :created, location: @ledger }
-      else
-        format.html { render :new }
-        format.json { render json: @ledger.errors, status: :unprocessable_entity }
-      end
+
+    if @ledger.is_money_collected
+      @ledger.amount = -@ledger.amount
+      @ledger.description = "Money collected from customer"
+      @ledger.account_id = Account.money_due_from_customer(@active_event).id
+      @contra_ledger = Ledger.new(ledger_params)
+      @contra_ledger.created_by = current_scout.id
+      @contra_ledger.account_id = Account.take_order(@active_event).id
+      @contra_ledger.save
     end
+
+    if @ledger.save
+      redirect_to ledgers_path, notice: 'Ledger entry was successfully created.'
+    else
+      render :new
+    end
+
   end
 
   # PATCH/PUT /ledgers/1
@@ -136,6 +144,6 @@ class LedgersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ledger_params
-      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by)
+      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by, :is_money_collected, :take_order_id)
     end
 end
