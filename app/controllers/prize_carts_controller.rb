@@ -49,6 +49,12 @@ class PrizeCartsController < ApplicationController
     end
   end
 
+  def unordered
+    @cart = PrizeCart.find(params[:id])
+    @cart.update(is_ordered_at: nil)
+    redirect_to prize_carts_path, notice: "Prize card was unordered."
+  end
+
   def approve
     @cart = PrizeCart.find(params[:id])
     @cart.update(is_approved_at: Time.now)

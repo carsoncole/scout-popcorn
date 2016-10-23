@@ -19,6 +19,8 @@
                 = button_to "Approve", approve_prize_cart_path(cart.id), class: 'btn btn-success', disabled: current_scout.is_prizes_admin? ? false : true
               - elsif cart.approved?
                 = button_to "Unapprove", unapprove_prize_cart_path(cart.id), class: 'btn btn-info', disabled: current_scout.is_prizes_admin? ? false : true
+              - else
+                = button_to "Unorder", unorder_prize_cart_path(cart.id), class: 'btn btn-info', disabled: current_scout.is_prizes_admin? ? false : true
             .pull-right  
               = button_to prize_cart_path(cart.id), method: :delete, class: 'btn btn-danger', disabled: current_scout.is_prizes_admin? ? false : true do
                 %i.fa.fa-trash
