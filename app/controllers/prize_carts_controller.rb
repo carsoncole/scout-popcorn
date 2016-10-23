@@ -41,6 +41,7 @@ class PrizeCartsController < ApplicationController
   def order_prizes
     @prize_cart = PrizeCart.find(params[:id])
     @prize_cart.update(is_ordered_at: Time.now)
+    PrizeCartMailer.receipt(@prize_cart).deliver_now
     redirect_to prize_cart_path
   end
 

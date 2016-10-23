@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :prize_carts
   resources :due_from_customers, only: :index
 
-  post 'prize_carts/:id' => 'scout_prize_cart#order-prizes', as: 'order_prizes'
+  post 'prize_carts/:id' => 'prize_carts#order_prizes', as: 'order_prizes'
   post "approve-prize-cart/:id" => "prize_carts#approve", as: 'approve_prize_cart'
   post "unapprove-prize-cart/:id" => "prize_carts#unapprove", as: 'unapprove_prize_cart'
   patch "envelopes/assign" => "envelopes#assign", as: 'assign_to_envelope'

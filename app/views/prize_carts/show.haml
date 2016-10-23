@@ -1,5 +1,3 @@
-= @prize_cart.inspect
-= @prize_cart.ordered?
 - unless current_scout.admin?
   .row
     .col-md-2
@@ -119,7 +117,11 @@
 
           .card-text.text-xs-center
             - if @active_event.allow_prize_cart_ordering? && !@prize_cart.ordered?
-              = button_to "ORDER MY PRIZES", "#", class: 'btn btn-success btn-lg'
+              = button_to "ORDER MY PRIZES", prize_cart_path(@prize_cart), class: 'btn btn-success btn-lg'
+            - elsif @active_event.allow_prize_cart_ordering? && @prize_cart.ordered?
+              %b
+                ORDERED
+                = nice_date_time(@prize_cart.is_ordered_at)
             - else
               .text-muted
                 Prize orders can be placed on
@@ -127,5 +129,4 @@
                   = nice_date(@active_event.allow_prize_cart_ordering_at) 
               %br
               = button_to "ORDER MY PRIZES", "#", disabled: @active_event.allow_prize_cart_ordering_at < Date.today ? false : true, class: 'btn btn-success btn-lg'
-             
 

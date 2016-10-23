@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
+  %body
+    %h1{style: 'text-align:center'}
+      Prize Order Received
+
+    %p
+      We have received
+      = succeed("'s") do
+        = @scout.first_name
+      = @event.name
+      prize order. Prizes will be delivered in mid-November.
+
+    %h2 Your Order
+    %ul
+      - total = 0
+      - @prize_cart.cart_prizes.each do |cart_prize|
+        %li= cart_prize.prize.name
+    %p
+      If you have any questions, you can reach us at
+      = mail_to("pack4496@gmail.com")
