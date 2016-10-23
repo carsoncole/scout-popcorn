@@ -2,16 +2,23 @@
   .envelope
     %h3
       = envelope.name
-
+    - money_due_from_customer_account = Account.money_due_from_customer(@active_event)
     %table.table.table-sm.small
       - envelope.take_orders.each do |take_order|
         %tr
+          %td
+            %i.fa.fa-square-o.fa-lg
           %td= take_order.customer_name
           %td.address= take_order.customer_address
           %td.product= take_order.products_and_quantities
           %td.amount= number_to_currency(take_order.value)
           %td.status
             - if take_order.payment_account_id == 6
-              %b COLLECT MONEY
+              - balance = 0
+              - take_order.ledgers.each do |ledger|
+                - next unless ledger.account == money_due_from_customer_account
+                - balance += ledger.amount
+              Balance due:
+              = number_to_currency(balance)
             - else
               PAID IN FULL

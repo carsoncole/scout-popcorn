@@ -38,7 +38,7 @@ class TakeOrdersController < ApplicationController
     end
 
     if params[:pick_sheet]
-      @envelopes = @active_event.envelopes.closed
+      @envelopes = @active_event.envelopes.includes(take_orders: [take_order_line_items: :product]).closed
       render :pick_sheet
     end
 
