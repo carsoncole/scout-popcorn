@@ -103,7 +103,7 @@
 
                   %td.text-xs-right= number_to_currency(scout_prize.prize_amount, precision: 0)
                   %td.text-xs-right.action_button
-                    - unless scout_prize.prize.source == 'bsa-bonus'
+                    - unless scout_prize.prize.source == 'bsa-bonus' || @prize_cart.ordered?
                       = button_to prize_removal_path(scout_prize.id), class: 'btn btn-success' do
                         %i.fa.fa-minus
 
@@ -114,6 +114,7 @@
               .alert.alert-info.text-xs-center
                 Prizes you have chosen will be shown here.           
 
+          = render 'flash'
 
           .card-text.text-xs-center
             - if @active_event.allow_prize_cart_ordering? && !@prize_cart.ordered?

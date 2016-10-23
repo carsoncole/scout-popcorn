@@ -40,9 +40,13 @@ class PrizeCartsController < ApplicationController
 
   def order_prizes
     @prize_cart = PrizeCart.find(params[:id])
-    @prize_cart.update(is_ordered_at: Time.now)
-    PrizeCartMailer.receipt(@prize_cart).deliver_now
-    redirect_to prize_cart_path
+    if @prize_cart.orderable?
+      @prize_cart.update(is_ordered_at: Time.now)
+      PrizeCartMailer.receipt(@prize_cart).deliver_now
+      redirect_to prize_cart_path, notice: 'Successfully ordered prizes.'
+    else
+      redirect_to prize_cart_path, alert: 'There was a problem with your order. Your cart should not have more BSA prizes than the amount of scout sales.'
+    end
   end
 
   def approve
