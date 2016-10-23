@@ -16,9 +16,10 @@ class PrizeCartsController < ApplicationController
   end
 
   def show
+    @prize_cart = current_scout.prize_cart(@active_event)
     Prize.process_bonus_prizes!(current_scout, @active_event) unless current_scout.admin? || params[:recalc]
     @total_sales = current_scout.total_sales(@active_event)
-    @cart_prizes = current_scout.prize_cart(@active_event).cart_prizes.order(:prize_amount)
+    @cart_prizes = @prize_cart.cart_prizes.order(:prize_amount)
     @available_pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).order(amount: :desc)
     @pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).select("MAX(amount), *").group(:group)
     unless (@active_event.prizes.pack.map{|p| p.id} & @cart_prizes.map{|p| p.prize_id }).empty?
