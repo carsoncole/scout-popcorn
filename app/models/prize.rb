@@ -18,7 +18,7 @@ class Prize < ApplicationRecord
     where(source: 'bsa-bonus')
   end
 
-  def self.process_bonus_prizes!(s=nil, event)
+  def self.process_bonus_prizes!(event, s=nil)
     scouts = []
     if s
       scouts << s

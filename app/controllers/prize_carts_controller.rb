@@ -17,7 +17,7 @@ class PrizeCartsController < ApplicationController
 
   def show
     @prize_cart = current_scout.prize_cart(@active_event)
-    Prize.process_bonus_prizes!(current_scout, @active_event) unless current_scout.admin? || params[:recalc]
+    #Prize.process_bonus_prizes!(@active_event, current_scout) unless current_scout.admin? || params[:recalc]
     @total_sales = current_scout.total_sales(@active_event)
     @cart_prizes = @prize_cart.cart_prizes.order(:prize_amount)
     @available_pack_prizes = @active_event.prizes.pack.where("amount <= ?", @total_sales).order(amount: :desc)
