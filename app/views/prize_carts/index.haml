@@ -65,7 +65,20 @@
     .card
       .card-block
         .card-title
-          %h3 Prizes to Order
+          %h3 Prizes - Ordered
+        %table.table.table-sm
+          - @ordered_prizes.each do |key, value|
+            - prize = Prize.find(key)
+            %tr
+              %td= prize.name
+              %td= number_to_currency(prize.amount)
+              %td= value
+
+  .col-md-4
+    .card
+      .card-block
+        .card-title
+          %h3 Prizes - Approved
         %table.table.table-sm
           - @approved_prizes.each do |key, value|
             - prize = Prize.find(key)

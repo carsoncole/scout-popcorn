@@ -12,7 +12,8 @@ class PrizeCartsController < ApplicationController
       @prize_carts = @prize_carts.open
     end
 
-    @approved_prizes = @active_event.prize_carts.joins(cart_prizes: :prize).order("prizes.source, prizes.amount").group('cart_prizes.prize_id').count('cart_prizes.prize_id')
+    @approved_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).order("prizes.source, prizes.amount").group('cart_prizes.prize_id').count('cart_prizes.prize_id')
+    @ordered_prizes = @active_event.prize_carts.ordered.joins(cart_prizes: :prize).order("prizes.source, prizes.amount").group('cart_prizes.prize_id').count('cart_prizes.prize_id')
   end
 
   def show
