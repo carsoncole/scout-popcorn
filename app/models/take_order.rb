@@ -131,7 +131,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def register_money_received_and_product_due!
-    date = self.money_received_at.blank? ? self.created_at || self.money_received_at
+    date = self.money_received_at.blank? ? self.created_at : self.money_received_at
     take_order_line_items.each do |line_item|
       unit = self.event.unit      
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: date, description: "Take Order submitted")
