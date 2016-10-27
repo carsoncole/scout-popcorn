@@ -96,6 +96,10 @@ class TakeOrder < ApplicationRecord
     Scout.find(money_received_by_id).name unless money_received_by_id.blank?
   end
 
+  def reprocess_money_received_and_product_due!
+    reverse_money_received_and_product_due!
+    register_money_received_and_product_due!
+  end
 
   private
 
@@ -133,7 +137,7 @@ class TakeOrder < ApplicationRecord
       
       unless line_item.product.is_pack_donation
         product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
-        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * (1 - event.pack_commission_percentage / 100), date: Date.current, description: "Take Order submitted", line_item_id: line_item.id)
+        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * event.bsa_wholesale_percentage, date: Date.current, description: "Take Order submitted", line_item_id: line_item.id)
       end
     end
   end

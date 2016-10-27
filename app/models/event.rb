@@ -60,6 +60,9 @@ class Event < ApplicationRecord
     envelopes.joins(take_orders: [take_order_line_items: [:product]]).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
+  def bsa_wholesale_percentage
+    1 - pack_commission_percentage / 100
+  end
   
   def allow_prize_cart_ordering?
     allow_prize_cart_ordering_at.blank? || allow_prize_cart_ordering_at < Time.now
