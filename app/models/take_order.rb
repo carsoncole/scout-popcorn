@@ -135,17 +135,17 @@ class TakeOrder < ApplicationRecord
     date = self.envelope.money_received_at.blank? ? self.envelope.created_at : self.envelope.money_received_at
     take_order_line_items.each do |line_item|
       unit = self.event.unit      
-      Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: date, description: "Take Order submitted")
+      Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: date, description: "Take Order submitted", is_take_order_product_related: true)
       
       unless line_item.product.is_pack_donation
         product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
-        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * event.bsa_wholesale_percentage, date: date, description: "Take Order submitted", line_item_id: line_item.id)
+        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * event.bsa_wholesale_percentage, date: date, description: "Take Order submitted", line_item_id: line_item.id, is_take_order_product_related: true)
       end
     end
   end
 
   def reverse_money_received_and_product_due!
-    existing_ledger = Ledger.where(take_order_id: self.id).destroy_all
+    existing_ledger = Ledger.where(take_order_id: self.id, is_take_order_product_related: true).destroy_all
   end
 
   def assign_to_envelope!
