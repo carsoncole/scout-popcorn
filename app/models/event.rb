@@ -19,6 +19,7 @@ class Event < ApplicationRecord
   after_create :create_default_products!
   after_create :create_default_prizes!
   after_create :create_default_accounts!
+  after_save :update_take_orders!, if: Proc.new {|e| e.pack_commission_percentage_changed? }
 
   def self.active
     where(is_active: true)
@@ -130,5 +131,9 @@ class Event < ApplicationRecord
     Account.create_product_due_to_customers!(self)
     Account.create_money_due_to_bsa!(self)
     Account.create_bsa_credit_card!(self)
+  end
+
+  def update_take_orders!
+    take_orders.each {|take_order| take_order.reprocess_money_received_and_product_due!}
   end
 end

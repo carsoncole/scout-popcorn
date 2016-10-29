@@ -1,53 +1,48 @@
 .row
-  .col-md-6
-    .card
-      .card-block
-        .card-title
-          %h1 Events
-        %table.table.card-text.card-text
-          / %thead
-          /   %tr
-          /     - unless current_scout.admin?
-          /       %th Unit
-          /     %th          
-          /     %th
-          /     %th
-          /     %th
-          /     - if current_scout.admin?
-          /       %th
-          /       %th
-          /       %th
+  .col-md-12
+    %p= link_to "Create a new Event", new_event_path
 
-          %tbody
-            - @events.each do |event|
-              %tr
-                - unless current_scout.admin?
-                  %td= event.unit.name
-                %td
-                  - if event == current_scout.default_event
-                    %i.fa.fa-check   
-                %td
-                  - if event == current_scout.default_event
-                    = event.name
-                  - else
-                    = link_to event.name, event
-                %td= event.is_active? ? "" : "Closed"
-                
-                - if current_scout.admin?
-                  %td
-                    = link_to edit_event_path(event) do
-                      %i.fa.fa-pencil.fa-lg
-                  %td
-                    = link_to event, :method => :delete, :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
-                      %i.fa.fa-trash.fa-lg
-            - if current_scout.admin? && @unit
-              %tr
-                %td
-                  = link_to new_event_path do
-                    &nbsp;
-                    %i.fa.fa-plus
-                %td
-                %td
-                %td
-                %td
-                %td
+.row
+  - @events.each do |event|
+    .col-md-6
+      .card
+        .card-header.text-xs-center
+          %h1
+            = event.name
+            = link_to edit_event_path(event) do
+              %i.fa.fa-pencil
+        .card-block
+          %table.table.card-text.card-text
+
+            %tr
+              %th Active
+              %td.text-xs-left
+                - if event.is_active
+                  %i.fa.fa-toggle-on.fa-lg
+                - else
+                  %i.fa.fa-toggle-off.fa-lg
+
+
+            %tr
+              %th Pack commission percentage
+              %td.text-xs-left= number_to_percentage(event.pack_commission_percentage, precision: 2)
+
+            %tr
+              %th Prize cart ordering starts at
+              %td.text-xs-left= nice_date(event.allow_prize_cart_ordering_at) if event.allow_prize_cart_ordering_at
+
+            %tr
+              %th Take orders deadline at
+              %td.text-xs-left= nice_date(event.take_orders_deadline_at) if event.take_orders_deadline_at
+
+            %tr
+              %th Number of Top Sellers
+              %td.text-xs-left= event.number_of_top_sellers
+
+        - if current_scout.is_super_admin?
+          .card-footer
+            .text-xs-center
+              = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
+                %i.fa.fa-trash-o
+                DESTROY THIS EVENT
+

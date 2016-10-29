@@ -3,8 +3,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.order(:is_active, :name)
-    @events = @events.where(unit_id: @unit.id)
+    @events = @unit.events.where(unit_id: @unit.id).order(is_active: :desc)
   end
 
   # GET /events/1
