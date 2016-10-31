@@ -23,6 +23,10 @@ class PrizeCart < ApplicationRecord
     !is_approved_at.blank?
   end
 
+  def ordered_or_approved
+    where("is_approved IS NOT NULL OR is_ordered_at IS NOT NULL")
+  end
+
   def orderable?
     cart_prizes.joins(:prize).where("prizes.source = 'bsa'").sum("prizes.amount") < scout.total_sales(event)
   end
