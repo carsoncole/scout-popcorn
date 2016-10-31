@@ -24,7 +24,7 @@ class PrizeCart < ApplicationRecord
   end
 
   def self.ordered_or_approved
-    where("is_approved IS NOT NULL OR is_ordered_at IS NOT NULL")
+    where("is_approved_at IS NOT NULL OR is_ordered_at IS NOT NULL")
   end
 
   def orderable?
