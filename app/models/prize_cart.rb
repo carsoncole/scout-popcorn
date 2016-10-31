@@ -23,7 +23,7 @@ class PrizeCart < ApplicationRecord
     !is_approved_at.blank?
   end
 
-  def ordered_or_approved
+  def self.ordered_or_approved
     where("is_approved IS NOT NULL OR is_ordered_at IS NOT NULL")
   end
 
