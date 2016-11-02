@@ -11,6 +11,10 @@ class PrizeCart < ApplicationRecord
     where("is_ordered_at IS NOT NULL")
   end
 
+  def self.ordered_and_not_approved
+    ordered.where("is_approved_at IS NULL")
+  end
+
   def self.open
     where(is_ordered_at: nil, is_approved_at: nil)
   end

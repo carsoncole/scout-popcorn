@@ -5,7 +5,7 @@ class PrizeCartsController < ApplicationController
     redirect_to root_path unless current_scout.admin?
     @prize_carts = @active_event.prize_carts.includes(:scout).order("scouts.last_name ASC")
     if params[:ordered]
-      @prize_carts = @prize_carts.ordered
+      @prize_carts = @prize_carts.ordered_and_not_approved
     elsif params[:approved]
       @prize_carts = @prize_carts.approved
     else
