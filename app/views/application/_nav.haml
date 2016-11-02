@@ -56,6 +56,7 @@
                   %li= link_to "Inventory Returns", inventory_returns_path, class: "dropdown-item #{'active' if controller_name =='stocks' && action_name == 'inventory_returns'}"
                   %li= link_to "Final Unit Settlement Form", final_unit_settlement_form_path, class: "dropdown-item #{'active' if controller_name =='ledgers' && action_name == 'final_unit_settlement_form'}"
                   %li= link_to "Prize Carts", prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
+                  %li= link_to "Approved Prize Carts", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
                   %li= link_to "Due from Customers", due_from_customers_path, class: "dropdown-item #{'active' if controller_name == 'due_from_customers'}"
                   %li= link_to "Collect from Customer", new_ledger_path(collect_from_customer: true), class: "dropdown-item #{'active' if controller_name == 'ledgers' && params[:collect_from_customer].present? }"
                   %li= link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"

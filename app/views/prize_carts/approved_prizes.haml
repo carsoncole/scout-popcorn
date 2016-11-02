@@ -1,0 +1,23 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h3 Prizes - Ordered
+        - grand_total = 0
+        %table.table.table-sm
+          - @approved_prizes.each do |key, value|
+            - prize = Prize.find(key)
+            %tr
+              %td= prize.name
+              %td= number_to_currency(prize.amount)
+              %td= value
+              - total = prize.amount * value
+              - grand_total += total
+              %td= number_to_currency(total)
+
+          %tr
+            %td
+            %td
+            %td
+            %td= number_to_currency(grand_total)

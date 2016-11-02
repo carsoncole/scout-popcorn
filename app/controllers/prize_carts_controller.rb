@@ -39,6 +39,10 @@ class PrizeCartsController < ApplicationController
     redirect_to prize_carts_path
   end
 
+  def approved_prizes
+    @approved_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).order("prizes.source, prizes.amount").group('cart_prizes.prize_id').count('cart_prizes.prize_id')
+  end
+
   def order_prizes
     @prize_cart = PrizeCart.find(params[:id])
     if @prize_cart.orderable?
