@@ -3,11 +3,54 @@
     .card
       .card-block
         .card-title
-          %h3 Prizes - Ordered
+          %h1 Prizes - Ordered
+
+        %h3 BSA Prizes
         - grand_total = 0
         %table.table.table-sm
           - @approved_prizes.each do |key, value|
             - prize = Prize.find(key)
+            - next unless prize.source == 'bsa'
+            %tr
+              %td= prize.name
+              %td= number_to_currency(prize.amount)
+              %td= value
+              - total = prize.amount * value
+              - grand_total += total
+              %td= number_to_currency(total)
+
+          %tr
+            %td
+            %td
+            %td
+            %td= number_to_currency(grand_total)
+
+        %h3 Pack Prizes
+        - grand_total = 0
+        %table.table.table-sm
+          - @approved_prizes.each do |key, value|
+            - prize = Prize.find(key)
+            - next unless prize.source == 'pack'
+            %tr
+              %td= prize.name
+              %td= number_to_currency(prize.amount)
+              %td= value
+              - total = prize.amount * value
+              - grand_total += total
+              %td= number_to_currency(total)
+
+          %tr
+            %td
+            %td
+            %td
+            %td= number_to_currency(grand_total)
+
+        %h3 BSA Bonus Prizes
+        - grand_total = 0
+        %table.table.table-sm
+          - @approved_prizes.each do |key, value|
+            - prize = Prize.find(key)
+            - next unless prize.source == 'bsa-bonus'
             %tr
               %td= prize.name
               %td= number_to_currency(prize.amount)
