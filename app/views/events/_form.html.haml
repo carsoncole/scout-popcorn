@@ -25,9 +25,13 @@
             = f.label :is_active
             = f.check_box :is_active, class: 'form-control'
           .form-group
-            = f.label :allow_prize_cart_ordering_at
+            = f.label :prize_cart_ordering_starts_at
             %p.text-muted This date enables/disables the 'Order' prize cart button
-            = f.date_select :allow_prize_cart_ordering_at, {}, class: 'form-control'
+            = f.date_select :prize_cart_ordering_starts_at, {}, class: 'form-control'
+          .form-group
+            = f.label :prize_cart_ordering_ends_at
+            %p.text-muted This date enables/disables the 'Order' prize cart button
+            = f.date_select :prize_cart_ordering_ends_at, {}, class: 'form-control'
           .form-group
             = f.label :take_orders_deadline_at
             %p.text-muted Take Orders can not be entered after this time

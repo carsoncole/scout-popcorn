@@ -24,7 +24,7 @@
         = link_to "Prize Cart", prize_cart_path(@active_event)
     - else
       Prizes can be selected starting on
-      = nice_date(@active_event.allow_prize_cart_ordering_at)
+      = nice_date(@active_event.prize_cart_ordering_starts_at)
       in the 
       = succeed(".") do
         = link_to "Prize Cart", prize_cart_path(@active_event)

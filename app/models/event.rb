@@ -66,7 +66,7 @@ class Event < ApplicationRecord
   end
   
   def allow_prize_cart_ordering?
-    allow_prize_cart_ordering_at.blank? || allow_prize_cart_ordering_at < Time.now
+    prize_cart_ordering_starts_at.blank? || prize_cart_ordering_starts_at < Time.now
   end
 
   def take_orders_allowed?

@@ -9,11 +9,23 @@
      
 
         %ul.nav.nav-tabs
-          %li.nav-item= link_to "Active", scouts_path(active: true), class: "nav-link #{'active' if params[:active] || (params[:administrators].blank? && params[:inactive].blank?) }"
-          %li.nav-item= link_to "Administrators", scouts_path(administrators: true), class: "nav-link #{'active' if params[:administrators]}"
-          %li.nav-item= link_to "Inactive", scouts_path(inactive: true), class: "nav-link #{'active' if params[:inactive]}"
+          %li.nav-item
+            = link_to scouts_path(active: true), class: "nav-link #{'active' if params[:active] || (params[:administrators].blank? && params[:inactive].blank?) }" do
+              Active
+              = surround("(", ")") do
+                = @scouts.length
+          %li.nav-item
+            = link_to scouts_path(administrators: true), class: "nav-link #{'active' if params[:administrators]}" do
+              Administrators
+              = surround("(", ")") do
+                = @administrators.length
+          %li.nav-item
+            = link_to scouts_path(inactive: true), class: "nav-link #{'active' if params[:inactive]}" do
+              Inactive
+              = surround("(", ")") do
+                = @inactive_scouts.length            
         %br
-        - if @scouts && @scouts.any?
+        - unless params[:inactive].present? || params[:administrators].present?
           .table-responsive
             %table.table.card-text
               %thead
@@ -31,6 +43,7 @@
                     %th.hidden-print
 
               %tbody
+                - @scouts = @inactive_scouts if params[:inactive].present?
                 - @scouts.each do |scout|
                   %tr
                     %td
@@ -64,7 +77,7 @@
             = link_to new_scout_path do
               %i.fa.fa-plus
 
-        - elsif @admins && @admins.any?
+        - if params[:administrators].present?
           .table-responsive
             %table.table.card-text
               %thead
@@ -84,7 +97,7 @@
                     %th.hidden-print
 
               %tbody
-                - @admins.each do |scout|
+                - @administrators.each do |scout|
                   %tr
                     %td
                       %i.fa.fa-user

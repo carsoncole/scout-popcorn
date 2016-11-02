@@ -29,7 +29,11 @@
 
             %tr
               %th Prize cart ordering starts at
-              %td.text-xs-left= nice_date(event.allow_prize_cart_ordering_at) if event.allow_prize_cart_ordering_at
+              %td.text-xs-left= nice_date(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
+
+            %tr
+              %th Prize cart ordering ends at
+              %td.text-xs-left= nice_date(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
 
             %tr
               %th Take orders deadline at

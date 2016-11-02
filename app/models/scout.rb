@@ -36,7 +36,11 @@ class Scout < ApplicationRecord
   end
 
   def self.not_admin
-    where("is_super_admin IS NULL OR is_super_admin = ?", false)
+    where("is_super_admin IS NULL OR is_super_admin = ?", false).
+    where("is_take_orders_admin IS NULL OR is_take_orders_admin = ?", false).
+    where("is_site_sales_admin IS NULL OR is_site_sales_admin = ?", false).
+    where("is_prizes_admin IS NULL OR is_prizes_admin = ?", false).
+    where("is_admin IS NULL OR is_admin = ?", false)
   end
 
   def self.active

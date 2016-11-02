@@ -127,7 +127,7 @@
               .text-muted
                 Prize orders can be placed on
                 = succeed(".") do
-                  = nice_date(@active_event.allow_prize_cart_ordering_at) 
+                  = nice_date(@active_event.prize_cart_ordering_starts_at) 
               %br
-              = button_to "ORDER MY PRIZES", "#", disabled: @active_event.allow_prize_cart_ordering_at < Date.today ? false : true, class: 'btn btn-success btn-lg'
+              = button_to "ORDER MY PRIZES", "#", disabled: @active_event.prize_cart_ordering_starts_at < Date.today && @active_event.prize_cart_ordering_ends_at > Date.today ? false : true, class: 'btn btn-success btn-lg'
 

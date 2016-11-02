@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019235920) do
+ActiveRecord::Schema.define(version: 20161102201823) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -49,13 +49,14 @@ ActiveRecord::Schema.define(version: 20161019235920) do
   create_table "events", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "name"
-    t.boolean  "is_active",                                            default: true,   null: false
-    t.datetime "created_at",                                                            null: false
-    t.datetime "updated_at",                                                            null: false
-    t.decimal  "pack_commission_percentage",   precision: 5, scale: 2, default: "32.0"
-    t.date     "allow_prize_cart_ordering_at"
-    t.integer  "number_of_top_sellers",                                default: 5
+    t.boolean  "is_active",                                             default: true,   null: false
+    t.datetime "created_at",                                                             null: false
+    t.datetime "updated_at",                                                             null: false
+    t.decimal  "pack_commission_percentage",    precision: 5, scale: 2, default: "32.0"
+    t.date     "prize_cart_ordering_starts_at"
+    t.integer  "number_of_top_sellers",                                 default: 5
     t.datetime "take_orders_deadline_at"
+    t.date     "prize_cart_ordering_ends_at"
   end
 
   create_table "ledgers", force: :cascade do |t|
@@ -71,6 +72,7 @@ ActiveRecord::Schema.define(version: 20161019235920) do
     t.datetime "bank_deposit_notification_sent_at"
     t.integer  "line_item_id"
     t.boolean  "is_money_collected"
+    t.boolean  "is_take_order_product_related"
   end
 
   create_table "online_sales", force: :cascade do |t|
