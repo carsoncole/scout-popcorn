@@ -14,10 +14,10 @@ class TakeOrder < ApplicationRecord
   
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
-  # before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :remove_from_purchase_order!, if: Proc.new {|t| !t.new_record? && t.status_changed? && t.status == 'in hand'}
-  # before_save :credit_stock!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
+  before_save :credit_stock!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_create :assign_to_envelope!
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
@@ -112,8 +112,9 @@ class TakeOrder < ApplicationRecord
   end
 
   def debit_stock!
+    date = self.envelope.money_received_at.blank? ? self.envelope.created_at : self.envelope.money_received_at
     take_order_line_items.each do |line_item|
-      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: Date.today, created_by: 999)
+      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: date, created_by: 999)
       new_stock_entry.save
     end
   end
