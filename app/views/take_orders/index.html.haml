@@ -59,7 +59,7 @@
               = surround("(", ")") do
                 = @active_event.envelopes.closed.count
         %li.nav-item
-          = link_to take_orders_path(envelopes: 'picked-up'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
+          = link_to take_orders_path(envelopes: 'picked-up'), class: "nav-link #{'active' if params[:envelopes] == 'picked-up'}" do
             Picked Up
             - if current_scout.admin?
               = surround("(", ")") do
@@ -73,8 +73,8 @@
         %br
       .row
         .col-md-12
+          %br
           - @envelopes.each do |envelope|
-            %hr
             %h5
               = link_to envelope_path(envelope) do
                 - if current_scout.admin?
@@ -206,4 +206,6 @@
                       %td.visible-print-block
                       %td.hidden-print
                       %td.hidden-print
+            
+            %hr
             %br
