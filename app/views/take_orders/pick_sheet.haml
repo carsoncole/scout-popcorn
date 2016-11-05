@@ -18,7 +18,7 @@
             %i.fa.fa-square-o.fa-2x
           %td= take_order.customer_name
           %td.address= take_order.customer_address
-          %td= take_order.products_and_quantities
+          %td.product= take_order.products_and_quantities
           %td.amount= number_to_currency(take_order.value)
           %td.status
             - if take_order.payment_account_id == 6

@@ -79,10 +79,14 @@ a.kill {
 div.envelope {
    page-break-after: always !important;
    h1 {
-    font-size: 1.5em;
+    margin-top: 0;
+    font-size: 1.3em;
    } 
    table {
-    font-size: 1em;
+    font-size: 0.9em;
+    tr td.product {
+      width: 30em;
+    }
    }
 
 }
