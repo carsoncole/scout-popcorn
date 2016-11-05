@@ -94,13 +94,18 @@
           .text-xs-center
             = button_to "Close", close_envelope_path(@envelope.id), {disabled: (current_scout.is_take_order_admin? ? false : true), class: 'btn btn-lg btn-danger'}
 
-  - if @envelope.closed? && current_scout.admin?
-    .col-md-1
-    .col-md-4
-      .card
-        .card-block
+  .col-md-1
+  .col-md-4
+    .card
+      .card-block
+        - if @envelope.closed? && current_scout.admin?
           .text-xs-center
             = button_to "Re-Open", open_envelope_path(@envelope.id), {disabled: (current_scout.is_take_order_admin? ? false : true), class: 'btn btn-lg btn-success'}
+
+          - unless @envelope.picked_up? && current_scout.admin?
+            %br
+            .text-xs-center
+              = button_to "Picked Up", picked_up_envelope_path(@envelope.id), {disabled: (current_scout.is_super_admin? ? false : true), class: 'btn btn-lg btn-success'}
 
 .row
   .col-md-6
@@ -120,6 +125,11 @@
           Envelope received by:
           - scout = Scout.find(@envelope.money_received_by_id)
           = scout.name
+          %br
+
+        - if @envelope.product_picked_up_at
+          Product picked up:
+          = nice_date_time(@envelope.product_picked_up_at)
           %br
 
         - if current_scout.admin?

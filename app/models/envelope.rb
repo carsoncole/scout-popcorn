@@ -29,6 +29,10 @@ class Envelope < ApplicationRecord
     status == 'Closed'
   end
 
+  def picked_up?
+    product_picked_up_at != nil
+  end
+
   def name
     scout.name + ' Take Order Envelope #' + id.to_s
   end

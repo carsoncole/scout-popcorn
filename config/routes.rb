@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   patch "envelopes/assign" => "envelopes#assign", as: 'assign_to_envelope'
   post "envelopes/:id/close" => "envelopes#close", as: 'close_envelope'
   post "envelopes/:id/open" => "envelopes#open", as: 'open_envelope'
+  post "envelopes/:id/picked-up" => "envelopes#picked_up", as: 'picked_up_envelope'
   put "envelopes/:envelope_id/remove-take-order/:id" => "envelopes#remove_take_order", as: 'envelope_remove_take_order'
   resources :envelopes do
     resources :take_orders
