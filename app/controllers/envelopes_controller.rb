@@ -53,7 +53,7 @@ class EnvelopesController < ApplicationController
 
   def picked_up
     @envelope = Envelope.find(params[:id])
-    @envelope.update(product_picked_up_at: Time.now)#,money_received_by_id: nil, money_received_at: nil, closed_at: nil)
+    @envelope.update(product_picked_up_at: Time.now, status: 'Picked Up')#,money_received_by_id: nil, money_received_at: nil, closed_at: nil)
     redirect_to envelope_path(@envelope)
   end
 

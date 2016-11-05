@@ -8,11 +8,16 @@
               %i.fa.fa-trash.fa-lg
         .card-title
           %h1
+            = @envelope.name   
             - if @envelope.open?
               %i.fa.fa-folder-open.fa-lg.text-muted
+              Open
+            - elsif @envelope.picked_up?
+              Picked Up
             - else
               %i.fa.fa-folder.fa-lg.text-muted
-            = @envelope.name       
+              Closed
+                
 
 
 
@@ -96,9 +101,10 @@
 
   .col-md-1
   .col-md-4
-    .card
-      .card-block
-        - if @envelope.closed? && current_scout.admin?
+
+    - if ( @envelope.closed? || @envelope.picked_up? ) && current_scout.admin?
+      .card
+        .card-block
           .text-xs-center
             = button_to "Re-Open", open_envelope_path(@envelope.id), {disabled: (current_scout.is_take_order_admin? ? false : true), class: 'btn btn-lg btn-success'}
 

@@ -8,6 +8,7 @@ class Envelope < ApplicationRecord
   after_initialize :init
   before_save :process_if_closed!, if: Proc.new {|e| e.status == 'Closed' && e.status_changed? }
   before_save :reverse_if_reopened!, if: Proc.new {|e| e.status == 'Open' && e.status_changed? }
+  before_save :process_if_picked_up!, if: Proc.new {|e| e.status == 'Picked Up' && e.status_changed? }
 
   def init
     self.status ||= 'Open'
@@ -30,7 +31,7 @@ class Envelope < ApplicationRecord
   end
 
   def picked_up?
-    product_picked_up_at != nil
+    status == 'Picked Up'
   end
 
   def name
@@ -46,6 +47,12 @@ class Envelope < ApplicationRecord
   def process_if_closed!
     take_orders.each do |take_order|
       take_order.update(status: :submitted)
+    end
+  end
+
+  def process_if_picked_up!
+    take_orders.each do |take_order|
+      take_order.update(status: :picked_up)
     end
   end
 

@@ -1,7 +1,8 @@
 class Ledger < ApplicationRecord
   belongs_to :account
   belongs_to :take_order, optional: true
-  belongs_to :line_item, optional: true
+  belongs_to :take_order_line_item, optional: true
+  has_many :stocks
 
   validates :account_id, presence: true
 

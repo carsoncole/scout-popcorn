@@ -14,14 +14,18 @@ class TakeOrder < ApplicationRecord
   
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
-  before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  # before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  before_save :credit_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'picked_up'}
+  before_save :debit_stock_for_pickup!, if: Proc.new { |to| to.status_changed? && to.status == 'picked_up'}
+  before_save :credit_stock_for_reversed_pickup!, if: Proc.new { |to| to.status_changed? && to.status_was == :picked_up}
+
   before_save :remove_from_purchase_order!, if: Proc.new {|t| !t.new_record? && t.status_changed? && t.status == 'in hand'}
   before_save :credit_stock!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_create :assign_to_envelope!
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
-
+  
   def value
     take_order_line_items.inject(0) {|sum,line_item| sum + line_item.value}
   end
@@ -163,6 +167,25 @@ class TakeOrder < ApplicationRecord
     if envelope && scout_id != envelope.scout_id
       errors.add(:scout_id, "must match the Scout on the Envelope.")
     end
+  end
+
+  def credit_product_due!
+    product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
+    product_due_ledgers = Ledger.where(take_order_id: self.id, is_take_order_product_related: true, account_id: product_due_to_customers_account.id)
+    product_due_ledgers.each do |ledger|
+      Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: -ledger.amount, date: Date.today, description: "Take Order picked up", line_item_id: ledger.line_item_id, is_take_order_product_related: true)
+    end
+  end
+
+  def debit_stock_for_pickup!
+    product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
+    take_order_line_items.each do |line_item|
+      new_stock_entry = Stock.create(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: Date.today, created_by: 999, is_pickup: true)
+    end
+  end
+
+  def credit_stock_for_reversed_pickup!
+    stocks.pickups.destroy_all
   end
 
 end
