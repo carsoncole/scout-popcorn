@@ -30,6 +30,10 @@ class Envelope < ApplicationRecord
     status == 'Closed'
   end
 
+  def self.picked_up
+    where(status: 'Picked Up')
+  end
+
   def picked_up?
     status == 'Picked Up'
   end
