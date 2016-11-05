@@ -26,9 +26,8 @@
               - take_order.ledgers.each do |ledger|
                 - next unless ledger.account == money_due_from_customer_account
                 - balance += ledger.amount
-              Due:
-              = number_to_currency(balance)
               %i.fa.fa-square-o.fa-2x
+              = number_to_currency(balance)  
             - else
               %i.fa.fa-check-square-o.fa-2x
 
