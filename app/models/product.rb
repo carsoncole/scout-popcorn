@@ -21,6 +21,10 @@ class Product < ApplicationRecord
     where(is_physical_inventory: true)
   end
 
+  def physical?
+    is_physical_inventory == true
+  end
+
   def self.is_sourced_from_bsa
     where(is_sourced_from_bsa: true)
   end
