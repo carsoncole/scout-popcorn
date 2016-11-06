@@ -142,7 +142,7 @@ class TakeOrder < ApplicationRecord
       unit = self.event.unit      
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: date, description: "Take Order submitted", is_take_order_product_related: true)
       
-      unless line_item.product.is_pack_donation || !line_item.product.physical?
+      if line_item.product.physical?
         product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
         Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * event.bsa_wholesale_percentage, date: date, description: "Take Order submitted", line_item_id: line_item.id, is_take_order_product_related: true)
       end
