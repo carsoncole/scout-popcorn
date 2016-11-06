@@ -26,7 +26,7 @@ class Stock < ApplicationRecord
 
   def self.wholesale_value(unit, event)
     value = 0
-    unit.stocks.joins(:product).where("products.is_physical_inventory = ?",true).where.not("products.is_pack_donation = ?", true).group(:product_id).sum(:quantity).each do |product_id,quantity|
+    unit.stocks.joins(:product).where("products.is_physical_inventory = ?",true).where("products.is_pack_donation = ? OR products.is_pack_donation IS NULL", false).group(:product_id).sum(:quantity).each do |product_id,quantity|
       product = Product.find(product_id)
       value += product.retail_price * quantity
     end
