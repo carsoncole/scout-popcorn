@@ -40,11 +40,13 @@
                 %th
                 %th.text-xs-center Quantity
                 %th Retail Price
-                %th.text-xs-right Retail Value
+                %th Retail
+                %th Wholesale
 
 
             %tbody
-              - total = 0
+              - total_retail = 0
+              - total_wholesale = 0
               - @stocks_hash.each do |key, value|
                 - product = Product.find(key)
                 - next if product.is_pack_donation?
@@ -57,10 +59,12 @@
                   %td.text-xs-center= quantity
                   / %td= location.titleize if location
                   %td= number_to_currency(product.retail_price)
-                  %td.text-xs-right
-                    - total += quantity * product.retail_price
+                  %td
+                    - total_retail += quantity * product.retail_price
                     = number_to_currency(quantity * product.retail_price)
-
+                  %td
+                    - total_wholesale += quantity * product.retail_price * (@active_event.pack_commission_percentage / 100)
+                    = number_to_currency(quantity * product.retail_price * (@active_event.pack_commission_percentage / 100))
                     
               %tr.hidden-print
                 %td
@@ -69,6 +73,7 @@
                   .visible-print-block= nice_date_time(Time.current)
                 %td
                 %td
-                %td.text-xs-right= number_to_currency(total)
+                %td= number_to_currency(total_retail)
+                %td= number_to_currency(total_wholesale)
 
 
