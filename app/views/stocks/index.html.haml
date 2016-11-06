@@ -63,8 +63,8 @@
                     - total_retail += quantity * product.retail_price
                     = number_to_currency(quantity * product.retail_price)
                   %td
-                    - total_wholesale += quantity * product.retail_price * (@active_event.pack_commission_percentage / 100)
-                    = number_to_currency(quantity * product.retail_price * (@active_event.pack_commission_percentage / 100))
+                    - total_wholesale += quantity * product.retail_price * (1 - @active_event.pack_commission_percentage / 100)
+                    = number_to_currency(quantity * product.retail_price * (1 - @active_event.pack_commission_percentage / 100))
                     
               %tr.hidden-print
                 %td
