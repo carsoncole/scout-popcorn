@@ -3,6 +3,7 @@ class Event < ApplicationRecord
   has_many :purchase_orders
   has_many :prizes
   has_many :products
+  has_many :stocks, dependent: :destroy
   has_many :take_orders, dependent: :destroy
   has_many :site_sales, dependent: :destroy
   has_many :line_items, through: :take_orders
@@ -51,9 +52,9 @@ class Event < ApplicationRecord
 
   def total_take_orders(is_turned_in: true)
     if is_turned_in
-      envelopes.closed.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
+      envelopes.closed_or_picked_up.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
     else
-      envelopes.closed.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
+      envelopes.closed_or_picked_up.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
     end
   end
 
