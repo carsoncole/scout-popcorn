@@ -18,6 +18,11 @@
               - total = prize.amount * value
               - grand_total += total
               %td= number_to_currency(total)
+            %tr
+              %td(colspan=3)
+                = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where("cart_prizes.prize_id = ?", prize.id).map {|cp| cp.scout.name }.joins(", ")
+
+              %td
 
           %tr
             %td
