@@ -2,7 +2,13 @@
   .col-md-12
     .card
       .card-block
-        %table.table
+        .card-title
+          %h3
+            = @unit.name
+            = @active_event.name
+          %h1            
+            Due From Customers
+        %table.table.table-sm
           %tr
             %th Envelope
             %th
