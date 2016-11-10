@@ -3,13 +3,13 @@ class SiteSalePaymentMethodsController < ApplicationController
   
   def new
     @site_sale_payment_method = @site_sale.site_sale_payment_methods.build
-    @accounts = @unit.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
+    @accounts = @active_event.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
   end
 
   def edit
     @site_sale_payment_method = @site_sale.site_sale_payment_methods.find(params[:id])
     modified_used_method_id = used_method_ids - [@site_sale_payment_method.account_id]
-    @accounts = @unit.accounts.is_site_sale_eligible.where.not(id: modified_used_method_id).order(:name)
+    @accounts = @active_event.accounts.is_site_sale_eligible.where.not(id: modified_used_method_id).order(:name)
   end
 
   def update
@@ -19,7 +19,7 @@ class SiteSalePaymentMethodsController < ApplicationController
       if @site_sale_payment_method.update(site_sale_payment_method_params)
         format.html { redirect_to @site_sale  }
       else
-        @accounts = @unit.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
+        @accounts = @active_event.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
         format.html { render :edit }
       end
     end
@@ -30,7 +30,7 @@ class SiteSalePaymentMethodsController < ApplicationController
     if @site_sale_payment_method.save
       redirect_to @site_sale
     else
-      @accounts = @unit.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
+      @accounts = @active_event.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
       render :new
     end
   end
