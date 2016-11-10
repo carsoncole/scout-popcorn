@@ -12,6 +12,11 @@
         %h3 BSA Prizes
         - grand_total = 0
         %table.table.table-sm
+          %tr
+            %th Prize
+            %th Sales Level
+            %th Qty
+            %th Sales Accounted For
           - @approved_prizes.each do |key, value|
             - prize = Prize.find(key)
             - next unless prize.source == 'bsa'
@@ -22,9 +27,8 @@
               - total = prize.amount * value
               - grand_total += total
               %td= number_to_currency(total)
-            %tr
-              %td
-              %td(colspan=3)
+            %tr.small
+              %td(colspan=4)
                 %i
                   = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where("cart_prizes.prize_id = ?", prize.id).map {|cp| cp.scout.name }.join(", ")
 
