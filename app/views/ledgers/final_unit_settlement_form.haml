@@ -3,7 +3,11 @@
     .card
       .card-block
         .card-title
-          %h1 Final Unit Settlement Form
+          %h3
+            = @unit.name
+            = @active_event.name
+          %h1            
+            Final Unit Settlement Form
         %table.table.table-sm
           - @due_to_bsa_ledgers.each do |ledger|
             %tr
