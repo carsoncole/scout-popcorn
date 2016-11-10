@@ -31,8 +31,8 @@
 
           %tr
             %th.top Total payments
-            %td.top.text-xs-right= number_to_currency(@bsa_credit_card_cash)
+            %td.top.text-xs-right= number_to_currency(@bsa_credit_card_cash + @bsa_online_credits)
 
           %tr
             %th.top.bottom-double Balance due
-            %td.top.bottom-double.text-xs-right= number_to_currency((@due_to_bsa || 0) - (@bsa_credit_card_cash||0))
+            %td.top.bottom-double.text-xs-right= number_to_currency((@due_to_bsa || 0) - (@bsa_credit_card_cash||0) - (@bsa_online_credits || 0))
