@@ -22,6 +22,10 @@
             %td.text-xs-right
 
           %tr
+            %td Total BSA Online sales (net amount)
+            %td.text-xs-right= number_to_currency(@bsa_online_credits)
+
+          %tr
             %td Total BSA credit card payments
             %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
 

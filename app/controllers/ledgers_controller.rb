@@ -36,6 +36,7 @@ class LedgersController < ApplicationController
     @due_to_bsa_ledgers = Ledger.joins(account: :event).where("event_id = ? AND accounts.name = 'Due to BSA'", @active_event.id)#(@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
     @due_to_bsa= (@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
     @bsa_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance if @active_event.accounts.where(name: 'BSA Credit Card').any?
+    @bsa_online_credits = @active_event.total_online_sales * (@active_event.pack_commission_percentage/100)
   end
 
   def balance_sheet
