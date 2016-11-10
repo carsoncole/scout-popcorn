@@ -36,7 +36,7 @@ class LedgersController < ApplicationController
     @due_to_bsa_ledgers = Ledger.joins(account: :event).where("event_id = ? AND accounts.name = 'Due to BSA'", @active_event.id)#(@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
     @due_to_bsa= (@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
     @bsa_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance if @active_event.accounts.where(name: 'BSA Credit Card').any?
-    @bsa_online_credits = @active_event.total_online_sales * (@active_event.pack_commission_percentage/100)
+    @bsa_online_credits = @active_event.total_online_sales * (@active_event.online_commission_percentage/100)
   end
 
   def balance_sheet
@@ -49,7 +49,7 @@ class LedgersController < ApplicationController
     @union_bank_cash = @active_event.accounts.where(name: 'Union Bank').first.balance if @active_event.accounts.where(name: 'Union Bank').first
     @popcorn_inventory = Stock.wholesale_value(@unit, @active_event)
     @due_from_customers = (@active_event.accounts.where(name: 'Money due from Customer').first.balance if @active_event.accounts.where(name: 'Money due from Customer').any?) || 0
-    @bsa_online_credits = @active_event.total_online_sales * (@active_event.pack_commission_percentage/100)
+    @bsa_online_credits = @active_event.total_online_sales * (@active_event.online_commission_percentage/100)
     @total_assets = (@take_order_cash || 0) + (@site_sale_cash||0) + (@square_cash||0) + (@bsa_credit_card_cash||0) + (@union_bank_cash||0) + (@popcorn_inventory||0) + (@due_from_customers||0) + (@bsa_online_credits||0)
     @due_to_bsa = (@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
     @product_due_to_customers = (@active_event.accounts.where(name: 'Product due to Customers').first.balance if @active_event.accounts.where(name: 'Product due to Customers').first) || 0

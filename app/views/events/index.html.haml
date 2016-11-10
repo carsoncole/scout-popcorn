@@ -24,9 +24,12 @@
 
 
             %tr
-              %th Pack commission percentage
+              %th Commission percentage
               %td.text-xs-left= number_to_percentage(event.pack_commission_percentage, precision: 2)
 
+            %tr
+              %th Online commission percentage
+              %td.text-xs-left= number_to_percentage(event.online_commission_percentage, precision: 2)
             %tr
               %th Prize cart ordering starts at
               %td.text-xs-left= nice_date(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at

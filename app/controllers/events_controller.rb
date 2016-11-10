@@ -70,6 +70,6 @@ class EventsController < ApplicationController
 
   private
     def event_params
-      params.require(:event).permit(:unit_id, :name, :is_active, :pack_commission_percentage, :prize_cart_ordering_starts_at, :prize_cart_ordering_ends_at, :number_of_top_sellers, :take_orders_deadline_at)
+      params.require(:event).permit(:unit_id, :name, :is_active, :pack_commission_percentage, :prize_cart_ordering_starts_at, :prize_cart_ordering_ends_at, :number_of_top_sellers, :take_orders_deadline_at, :online_commission_percentage)
     end
 end
