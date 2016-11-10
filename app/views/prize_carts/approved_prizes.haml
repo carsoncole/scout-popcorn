@@ -13,7 +13,7 @@
         - grand_total = 0
         %table.table.table-sm
           %tr
-            %th Prize
+            %th.prize Prize
             %th Sales Level
             %th Qty
             %th Sales Accounted For
@@ -21,7 +21,7 @@
             - prize = Prize.find(key)
             - next unless prize.source == 'bsa'
             %tr
-              %td= prize.name
+              %td.prize= prize.name
               %td= number_to_currency(prize.amount)
               %td= value
               - total = prize.amount * value
@@ -33,7 +33,7 @@
                   = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where("cart_prizes.prize_id = ?", prize.id).map {|cp| cp.scout.name }.join(", ")
 
           %tr
-            %td
+            %td.prize
             %td
             %td
             %td= number_to_currency(grand_total)
@@ -41,19 +41,28 @@
         %h3 Pack Prizes
         - grand_total = 0
         %table.table.table-sm
+          %tr
+            %th.prize Prize
+            %th Sales Level
+            %th Qty
+            %th Sales Accounted For
           - @approved_prizes.each do |key, value|
             - prize = Prize.find(key)
             - next unless prize.source == 'pack'
             %tr
-              %td= prize.name
+              %td.prize= prize.name
               %td= number_to_currency(prize.amount)
               %td= value
               - total = prize.amount * value
               - grand_total += total
               %td= number_to_currency(total)
+            %tr.small
+              %td(colspan=4)
+                %i
+                  = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where("cart_prizes.prize_id = ?", prize.id).map {|cp| cp.scout.name }.join(", ")
 
           %tr
-            %td
+            %td.prize
             %td
             %td
             %td= number_to_currency(grand_total)
@@ -61,19 +70,28 @@
         %h3 BSA Bonus Prizes
         - grand_total = 0
         %table.table.table-sm
+          %tr
+            %th.prize Prize
+            %th Sales Level
+            %th Qty
+            %th Sales Accounted For
           - @approved_prizes.each do |key, value|
             - prize = Prize.find(key)
             - next unless prize.source == 'bsa-bonus'
             %tr
-              %td= prize.name
+              %td.prize= prize.name
               %td= number_to_currency(prize.amount)
               %td= value
               - total = prize.amount * value
               - grand_total += total
               %td= number_to_currency(total)
+            %tr.small
+              %td(colspan=4)
+                %i
+                  = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where("cart_prizes.prize_id = ?", prize.id).map {|cp| cp.scout.name }.join(", ")
 
           %tr
-            %td
+            %td.prize
             %td
             %td
             %td= number_to_currency(grand_total)
