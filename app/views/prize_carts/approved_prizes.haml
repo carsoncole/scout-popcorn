@@ -3,7 +3,11 @@
     .card
       .card-block
         .card-title
-          %h1 Prizes - Ordered
+          %h3
+            = @unit.name
+            = @active_event.name
+          %h1            
+            Prizes Approved
 
         %h3 BSA Prizes
         - grand_total = 0
@@ -19,10 +23,10 @@
               - grand_total += total
               %td= number_to_currency(total)
             %tr
-              %td(colspan=3)
-                = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where("cart_prizes.prize_id = ?", prize.id).map {|cp| cp.scout.name }.join(", ")
-
               %td
+              %td(colspan=3)
+                %i
+                  = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).where("cart_prizes.prize_id = ?", prize.id).map {|cp| cp.scout.name }.join(", ")
 
           %tr
             %td
