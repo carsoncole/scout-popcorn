@@ -26,7 +26,10 @@
       = nice_date(@active_event.prize_cart_ordering_starts_at)
     %br
     %br
-    %p.card-text The deadline to enter prize orders is October 30.
+    %p.card-text
+      The deadline to enter prize orders is
+      = succeed(".") do
+        = nice_date(@active_event.prize_cart_ordering_ends_at)
 
 
 
