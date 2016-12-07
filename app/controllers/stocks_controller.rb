@@ -4,9 +4,9 @@ class StocksController < ApplicationController
   # GET /stocks
   # GET /stocks.json
   def index
-    @stocks_query = @unit.stocks.joins(:product).order(:location, 'products.name')
-    @stocks = @unit.stocks.joins(:product).order('products.name')
-    @locations = @unit.stocks.order(location: :desc).group(:location)
+    @stocks_query = @active_event.stocks.joins(:product).order(:location, 'products.name')
+    @stocks = @active_event.stocks.joins(:product).order('products.name')
+    @locations = @active_event.stocks.order(location: :desc).group(:location)
     if params[:location]
       @stocks_query = @stocks_query.where(location: params[:location])
     elsif params[:all]
@@ -21,7 +21,7 @@ class StocksController < ApplicationController
     end
 
     @stocks_hash = @stocks_query.group(:product_id).sum(:quantity)
-    @locations = @unit.stocks.order(location: :desc).group(:location)
+    @locations = @active_event.stocks.order(location: :desc).group(:location)
   end
 
   # GET /stocks/1
@@ -45,11 +45,11 @@ class StocksController < ApplicationController
   end
 
   def ledger
-    @stocks = @unit.stocks.order(date: :desc, id: :desc).page(params[:page]).per(50)
+    @stocks = @active_event.stocks.order(date: :desc, id: :desc).page(params[:page]).per(50)
     @stocks = @stocks.where(location: params[:location]) if params[:location]
     @stocks = @stocks.where(product_id: params[:product_id]) if params[:product_id]
     @stocks = @stocks.where(take_order_id: params[:take_order_id]) if params[:take_order_id]
-    @locations = @unit.stocks.group(:location)
+    @locations = @active_event.stocks.group(:location)
   end
 
   def inventory_returns
@@ -65,14 +65,14 @@ class StocksController < ApplicationController
       if stock_params[:movement_with_warehouse] == "1"
         movement_with_warehouse = true
         stock_params.delete :movement_with_warehouse
-        @corresponding_stock = @unit.stocks.build(stock_params)
+        @corresponding_stock = @active_event.stocks.build(stock_params)
         @corresponding_stock.quantity = - @corresponding_stock.quantity
         @corresponding_stock.location = 'warehouse'
         @corresponding_stock.created_by = current_scout.id
         @corresponding_stock.save
       end
 
-      @stock = @unit.stocks.build(stock_params)
+      @stock = @active_event.stocks.build(stock_params)
       @stock.created_by = current_scout.id
 
       if @stock.save

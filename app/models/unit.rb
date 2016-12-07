@@ -1,6 +1,5 @@
 class Unit < ApplicationRecord
   has_many :scouts, dependent: :destroy
-  has_many :stocks, dependent: :destroy
   has_many :prizes, through: :events
   has_many :payment_methods
   has_many :events, dependent: :destroy

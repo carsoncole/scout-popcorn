@@ -1,16 +1,20 @@
 class Stock < ApplicationRecord
   belongs_to :product
   belongs_to :take_order, optional: true
-  validates :product_id, :location, :quantity, presence: true
+  belongs_to :site_sale, optional: true
+  validates :product_id, :location, :quantity, :date, presence: true
 
   attr_accessor :movement_with_warehouse
 
   LOCATIONS = [
     'warehouse',
-    'site sale',
-    'take orders',
-    'distribution boxes'
+    'site sales',
+    'take orders'
     ]
+
+  def self.warehouse
+    where(location: 'site sale')
+  end
 
   def self.site_sales
     where(location: 'site sale')
@@ -26,7 +30,7 @@ class Stock < ApplicationRecord
 
   def self.wholesale_value(unit, event)
     value = 0
-    unit.stocks.joins(:product).where("products.is_physical_inventory = ?",true).where("products.is_pack_donation = ? OR products.is_pack_donation IS NULL", false).group(:product_id).sum(:quantity).each do |product_id,quantity|
+    event.stocks.joins(:product).where("products.is_physical_inventory = ?",true).where("products.is_pack_donation = ? OR products.is_pack_donation IS NULL", false).group(:product_id).sum(:quantity).each do |product_id,quantity|
       product = Product.find(product_id)
       value += product.retail_price * quantity
     end

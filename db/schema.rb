@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105152411) do
+ActiveRecord::Schema.define(version: 20161110013845) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -45,7 +45,6 @@ ActiveRecord::Schema.define(version: 20161105152411) do
     t.datetime "updated_at",           null: false
     t.integer  "created_by"
     t.datetime "product_picked_up_at"
-    t.string   "product_picked_up_by"
   end
 
   create_table "events", force: :cascade do |t|
@@ -59,6 +58,7 @@ ActiveRecord::Schema.define(version: 20161105152411) do
     t.integer  "number_of_top_sellers",                                 default: 5
     t.datetime "take_orders_deadline_at"
     t.date     "prize_cart_ordering_ends_at"
+    t.decimal  "online_commission_percentage",  precision: 5, scale: 2, default: "35.0"
   end
 
   create_table "ledgers", force: :cascade do |t|
@@ -206,7 +206,6 @@ ActiveRecord::Schema.define(version: 20161105152411) do
   end
 
   create_table "stocks", force: :cascade do |t|
-    t.integer  "unit_id"
     t.integer  "product_id"
     t.integer  "quantity"
     t.string   "location"
@@ -219,6 +218,7 @@ ActiveRecord::Schema.define(version: 20161105152411) do
     t.boolean  "is_transfer_from_bsa"
     t.date     "date"
     t.boolean  "is_pickup"
+    t.integer  "event_id"
   end
 
   create_table "take_order_line_items", force: :cascade do |t|
