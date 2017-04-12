@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110013845) do
+ActiveRecord::Schema.define(version: 20170412205528) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -53,12 +53,13 @@ ActiveRecord::Schema.define(version: 20161110013845) do
     t.boolean  "is_active",                                             default: true,   null: false
     t.datetime "created_at",                                                             null: false
     t.datetime "updated_at",                                                             null: false
-    t.decimal  "pack_commission_percentage",    precision: 5, scale: 2, default: "32.0"
+    t.decimal  "unit_commission_percentage",    precision: 5, scale: 2, default: "32.0"
     t.date     "prize_cart_ordering_starts_at"
     t.integer  "number_of_top_sellers",                                 default: 5
     t.datetime "take_orders_deadline_at"
     t.date     "prize_cart_ordering_ends_at"
     t.decimal  "online_commission_percentage",  precision: 5, scale: 2, default: "35.0"
+    t.boolean  "is_prizes_enabled",                                     default: true
   end
 
   create_table "ledgers", force: :cascade do |t|

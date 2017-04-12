@@ -29,19 +29,20 @@
                 %li= link_to "Site Sales", site_sales_path, class: "dropdown-item #{'active' if controller_name == 'site_sales'}"
                 %li= link_to "Online Sales", online_sales_path, class: "dropdown-item #{'active' if controller_name == 'online_sales'}"
 
-            %li.nav-item.btn-group
-              = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['prizes'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
-                Prizes
-                %span.caret
-              %ul.dropdown-menu          
-                %li= link_to "Prizes", prizes_path, class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'index' }"
-                - unless current_scout.admin?
-                  %li
-                    = link_to prize_cart_path(current_scout.prize_cart(@active_event)), class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'cart'}" do
-                      %i.fa.fa-shopping-cart
-                      Prize Cart
-                - if current_scout.admin?
-                  %li= link_to "Prize Carts", prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
+            - if @active_event.prizes?
+              %li.nav-item.btn-group
+                = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['prizes'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
+                  Prizes
+                  %span.caret
+                %ul.dropdown-menu          
+                  %li= link_to "Prizes", prizes_path, class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'index' }"
+                  - unless current_scout.admin?
+                    %li
+                      = link_to prize_cart_path(current_scout.prize_cart(@active_event)), class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'cart'}" do
+                        %i.fa.fa-shopping-cart
+                        Prize Cart
+                  - if current_scout.admin?
+                    %li= link_to "Prize Carts", prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
             %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
           - if current_scout.admin?
             %li.nav-item.btn-group
