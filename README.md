@@ -2,9 +2,9 @@
 
 Corn Cub is for managing and for promoting involvement in a Scout popcorn fundraiser. 
 
-*For Scouts*, they can track their progress, prizes they might have earned, and manage orders and deliveries.
+For **Scouts**, they can track their progress, prizes they might have earned, and manage orders and deliveries.
 
-*For Leaders*, Corncub provides a financial accounting and inventory management system. With Corncub, you will always know how much inventory you have, where it is, and how much your unit has earned.
+For **Leaders**, Corncub provides a financial accounting and inventory management system. With Corncub, you will always know how much inventory you have, where it is, and how much your unit has earned.
 
 Through their own accounts, Scouts can view their sales progress in door-to-door (Take Order) sales and hours they have contributed towards Site Sales.
 
@@ -12,7 +12,7 @@ Corn Cub also provides comprehensive management tools, including an Income State
 
 ## Installation
 
-This application has no external requirements and can be run on a single instance. `Bundle Install` will install all required gems.
+This is a Ruby on Rails application. Simply `bundle install` will install dependencies and then `Rails server` will launch the application.
 
 ### Dependencies
 
