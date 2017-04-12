@@ -80,5 +80,8 @@
 
             %table.table.card-text
               %tr
+                %th.top.bottom-double Retained earnings
+                %th.top.bottom-double.text-xs-right= number_to_currency(-@other_expenses)
+              %tr
                 %th.top.bottom-double Equity
-                %th.top.bottom-double.text-xs-right= number_to_currency(@total_equity)
+                %th.top.bottom-double.text-xs-right= number_to_currency(@total_equity - @other_expenses)

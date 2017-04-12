@@ -6,7 +6,7 @@ class Event < ApplicationRecord
   has_many :stocks, dependent: :destroy
   has_many :take_orders, dependent: :destroy
   has_many :site_sales, dependent: :destroy
-  has_many :line_items, through: :take_orders
+  has_many :take_order_line_items, through: :take_orders
   has_many :scout_site_sales, through: :site_sales
   has_many :take_order_purchase_orders
   has_many :purchase_orders, dependent: :destroy
@@ -15,17 +15,19 @@ class Event < ApplicationRecord
   has_many :accounts
   has_many :prize_carts
 
-  validates :name, :pack_commission_percentage, :number_of_top_sellers, presence: true
+  validates :name, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
+  validates :number_of_top_sellers, numericality: { integer_only: true }
+  validates :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100, }
 
-  after_create :create_default_products!
-  after_create :create_default_prizes!
+  #after_create :create_default_products!
+  #after_create :create_default_prizes!
   after_create :create_default_accounts!
-  after_save :update_take_orders!, if: Proc.new {|e| e.pack_commission_percentage_changed? }
+  after_save :update_take_orders!, if: Proc.new {|e| e.unit_commission_percentage_changed? }
 
   def self.active
     where(is_active: true)
   end
-
+ 
   def open_take_order_purchase_order
     open = take_order_purchase_orders.where(status: 'open').first
     unless open
@@ -63,7 +65,7 @@ class Event < ApplicationRecord
   end
 
   def bsa_wholesale_percentage
-    1 - pack_commission_percentage / 100
+    1 - unit_commission_percentage / 100
   end
   
   def allow_prize_cart_ordering?
@@ -79,7 +81,7 @@ class Event < ApplicationRecord
   end
 
   def cost_of_goods_sold
-    total_product_sales * (1 - pack_commission_percentage / 100)
+    total_product_sales * (1 - unit_commission_percentage / 100)
   end
 
   def bank_account?
@@ -101,6 +103,10 @@ class Event < ApplicationRecord
     else
       0
     end
+  end
+
+  def prizes?
+    is_prizes_enabled
   end
 
   def total_product_sales

@@ -3,7 +3,9 @@
 one:
   unit_id: 1
   name: MyString
+  unit_commission_percentage: 30
 
 two:
   unit_id: 1
   name: MyString
+  unit_commission_percentage: 30

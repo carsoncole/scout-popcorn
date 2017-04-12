@@ -2,6 +2,7 @@ class Stock < ApplicationRecord
   belongs_to :product
   belongs_to :take_order, optional: true
   belongs_to :site_sale, optional: true
+  belongs_to :event
   validates :product_id, :location, :quantity, :date, presence: true
 
   attr_accessor :movement_with_warehouse
@@ -34,7 +35,7 @@ class Stock < ApplicationRecord
       product = Product.find(product_id)
       value += product.retail_price * quantity
     end
-    value = value * (1 - event.pack_commission_percentage / 100 )
+    value = value * (1 - event.unit_commission_percentage / 100 )
     value
   end
 
