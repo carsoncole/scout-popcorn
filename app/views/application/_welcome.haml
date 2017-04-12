@@ -2,13 +2,10 @@
 .card
   .card-block
     .card-title
-      %h1 
-        Hello
-        = succeed("!") do
-          = current_scout.first_name
+      %h1= @active_event.name
     
 
-    %h2= @active_event.name
+
 
     / %p
     /   Here are important dates to remember for our
