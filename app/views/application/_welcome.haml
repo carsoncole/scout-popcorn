@@ -6,31 +6,34 @@
         Hello
         = succeed("!") do
           = current_scout.first_name
-  
-    %p
-      Here are important dates to remember for our
-      = succeed("event:") do
-        %b
-          = @active_event.name
+    
+
+    %h2= @active_event.name
+
+    / %p
+    /   Here are important dates to remember for our
+    /   = succeed("event:") do
+    /     %b
+    /       = @active_event.name
  
 
 
-    - if @active_event.prizes?
-      - if @active_event.allow_prize_cart_ordering?
-        %span.tag.tag-danger
-          IMPORTANT      
-        Scouts can now select their prizes in the
-        = succeed(".") do
-          = link_to "Prize Cart", prize_cart_path(@active_event)
-      - else
-        Prizes can be selected:
-        = nice_date(@active_event.prize_cart_ordering_starts_at)
-      %br
-      %br
-      %p.card-text
-        The deadline to enter prize orders is
-        = succeed(".") do
-          = nice_date(@active_event.prize_cart_ordering_ends_at) if @active_event.prize_cart_ordering_ends_at
+    / - if @active_event.prizes?
+    /   - if @active_event.allow_prize_cart_ordering?
+    /     %span.tag.tag-danger
+    /       IMPORTANT      
+    /     Scouts can now select their prizes in the
+    /     = succeed(".") do
+    /       = link_to "Prize Cart", prize_cart_path(@active_event)
+    /   - else
+    /     Prizes can be selected:
+    /     = nice_date(@active_event.prize_cart_ordering_starts_at)
+    /   %br
+    /   %br
+    /   %p.card-text
+    /     The deadline to enter prize orders is
+    /     = succeed(".") do
+    /       = nice_date(@active_event.prize_cart_ordering_ends_at) if @active_event.prize_cart_ordering_ends_at
 
 
 
