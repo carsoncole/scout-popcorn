@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :resources
   get 'take_orders_order/index'
 
   resources :prize_carts
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
   resources :stocks
   resources :events do
     resources :scout_site_sales
+    resources :resources
   end
   post "prize-cart/selection/:id" => "prize_carts#selection", as: 'prize_selection'
   post "prize-cart/removal/:id" => "prize_carts#removal", as: 'prize_removal'

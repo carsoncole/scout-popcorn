@@ -22,6 +22,20 @@
                 - else
                   %i.fa.fa-toggle-off.fa-lg
 
+            %tr
+              %th
+                Resources
+
+              %td.text-xs-left
+                = link_to new_event_resource_path(event) do
+                  %fa.fa.fa-plus
+                %br
+                - event.resources.each do |resource|
+                  = link_to resource.url, target: '_blank' do
+                    = resource.name
+                  = link_to event_resource_path(event, resource), method: :delete do
+                    %i.fa.fa-trash
+                  %br
 
             %tr
               %th Commission percentage

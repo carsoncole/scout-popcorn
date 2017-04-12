@@ -14,6 +14,7 @@ class Event < ApplicationRecord
   has_many :envelopes
   has_many :accounts
   has_many :prize_carts
+  has_many :resources
 
   validates :name, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
   validates :number_of_top_sellers, numericality: { integer_only: true }

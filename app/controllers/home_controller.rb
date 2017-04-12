@@ -29,6 +29,7 @@ class HomeController < ApplicationController
         break if @top_sellers.count == @active_event.number_of_top_sellers && seller[1] < @top_sellers.last[1]
         @top_sellers << seller
       end
+      @resources = @active_event.resources
     end
   end
 
