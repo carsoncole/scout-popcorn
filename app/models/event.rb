@@ -1,8 +1,8 @@
 class Event < ApplicationRecord
   belongs_to :unit
-  has_many :purchase_orders
-  has_many :prizes
-  has_many :products
+  has_many :purchase_orders, dependent: :destroy
+  has_many :prizes, dependent: :destroy
+  has_many :products, dependent: :destroy
   has_many :stocks, dependent: :destroy
   has_many :take_orders, dependent: :destroy
   has_many :site_sales, dependent: :destroy
@@ -11,10 +11,10 @@ class Event < ApplicationRecord
   has_many :take_order_purchase_orders
   has_many :purchase_orders, dependent: :destroy
   has_many :online_sales, dependent: :destroy
-  has_many :envelopes
-  has_many :accounts
-  has_many :prize_carts
-  has_many :resources
+  has_many :envelopes, dependent: :destroy
+  has_many :accounts, dependent: :destroy
+  has_many :prize_carts, dependent: :destroy
+  has_many :resources, dependent: :destroy
 
   validates :name, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
   validates :number_of_top_sellers, numericality: { integer_only: true }

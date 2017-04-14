@@ -9,8 +9,6 @@ class Unit < ApplicationRecord
   has_many :take_order_purchase_orders
   has_many :ledgers, through: :accounts
 
-  attr_accessor :first_name, :last_name, :email
-
   validates :name, presence: true
   validates :treasurer_email, format: /@/, unless: Proc.new {|u| u.treasurer_email.blank? }
   validates :treasurer_first_name, presence: true, unless: Proc.new {|u| u.treasurer_email.blank? }
