@@ -3,7 +3,7 @@
     .card
       .card-block
         .card-title
-          %h1 Unit Info
+          %h2 Unit Info
 
         = form_for @unit do |f|
           - if @unit.errors.any?
@@ -16,30 +16,30 @@
           .form-group
             = f.label :name
             = f.text_field :name, placeholder: 'Pack 999', class: 'form-control'
-          .form-group
-            = f.label :street_address
-            = f.text_field :street_address_1, class: 'form-control'
-          .form-group
-            = f.label :street_address
-            = f.text_field :street_address_2, class: 'form-control'
-          .form-group
-            = f.label :city
-            = f.text_field :city, class: 'form-control'
-          .form-group
-            = f.label :state
-            %br
-            = f.select :state_postal_code, StatesHelper.us_states, {}, class: 'form-control'
-          .form-group
-            = f.label :zip_code
-            = f.text_field :zip_code, class: 'form-control'
+          / .form-group
+          /   = f.label :street_address
+          /   = f.text_field :street_address_1, class: 'form-control'
+          / .form-group
+          /   = f.label :street_address
+          /   = f.text_field :street_address_2, class: 'form-control'
+          / .form-group
+          /   = f.label :city
+          /   = f.text_field :city, class: 'form-control'
+          / .form-group
+          /   = f.label :state
+          /   %br
+          /   = f.select :state_postal_code, StatesHelper.us_states, {}, class: 'form-control'
+          / .form-group
+          /   = f.label :zip_code
+          /   = f.text_field :zip_code, class: 'form-control'
 
           %br
           %hr
 
-          %h3 Banking
+          %h4 Banking
 
           %p
-            Enter Unit Treasurer to receive bank deposit notifications
+            Enter Unit Treasurer for bank deposit notifications
           .form-group
             = f.label :treasurer_first_name
             = f.text_field :treasurer_first_name, class: 'form-control'

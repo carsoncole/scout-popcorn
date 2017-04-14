@@ -4,10 +4,10 @@
 
 .row
   - @events.each do |event|
-    .col-md-6
+    .col-md-4
       .card
         .card-header.text-xs-center
-          %h1
+          %h3
             = event.name
             = link_to edit_event_path(event) do
               %i.fa.fa-pencil
@@ -16,7 +16,7 @@
 
             %tr
               %th Active
-              %td.text-xs-left
+              %td.text-xs-right
                 - if event.is_active
                   %i.fa.fa-toggle-on.fa-lg
                 - else
@@ -25,10 +25,6 @@
             %tr
               %th
                 Resources
-
-              %td.text-xs-left
-                = link_to new_event_resource_path(event) do
-                  %fa.fa.fa-plus
                 %br
                 - event.resources.each do |resource|
                   = link_to resource.url, target: '_blank' do
@@ -36,36 +32,41 @@
                   = link_to event_resource_path(event, resource), method: :delete do
                     %i.fa.fa-trash
                   %br
+              %td.text-xs-right
+                = link_to new_event_resource_path(event) do
+                  %fa.fa.fa-plus
+                %br
+
 
             %tr
-              %th Commission percentage
-              %td.text-xs-left= number_to_percentage(event.unit_commission_percentage, precision: 2)
+              %th Commission %:
+              %td.text-xs-right= number_to_percentage(event.unit_commission_percentage, precision: 2)
 
             %tr
-              %th Online commission percentage
-              %td.text-xs-left= number_to_percentage(event.online_commission_percentage, precision: 2)
+              %th Online commission %:
+              %td.text-xs-right= number_to_percentage(event.online_commission_percentage, precision: 2)
 
             - if event.prizes?
               %tr
-                %th Prize cart ordering starts at
-                %td.text-xs-left= nice_date(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
+                %th Prize cart ordering starts:
+                %td.text-xs-right= nice_date_compact(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
 
               %tr
-                %th Prize cart ordering ends at
-                %td.text-xs-left= nice_date(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
+                %th Prize cart ordering ends:
+                %td.text-xs-right= nice_date_compact(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
             - else
               %tr
                 %th Prizes
-                %td.text-xs-left Disabled
+                %td.text-xs-right Disabled
 
               
             %tr
-              %th Take orders deadline at
-              %td.text-xs-left= nice_date(event.take_orders_deadline_at) if event.take_orders_deadline_at
+              %th Take orders deadline:
+              %td.text-xs-right= nice_date_compact(event.take_orders_deadline_at) if event.take_orders_deadline_at
 
             %tr
-              %th Number of Top Sellers
-              %td.text-xs-left= event.number_of_top_sellers
+              %th Number of Top Sellers:
+              %td.text-xs-right= event.number_of_top_sellers
 
         - if current_scout.is_super_admin?
           .card-footer
@@ -73,4 +74,3 @@
               = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
                 %i.fa.fa-trash-o
                 DESTROY THIS EVENT
-
