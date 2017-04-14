@@ -3,7 +3,7 @@
   .col-md-6
     .card
       .card-block
-        %h1.display-4.text-xs-center Corn Cub
+        %h1.display-4.text-xs-center= Rails.configuration.application_name || 'Corn Cub'
         .text-xs-center= image_tag "kettle-corn-microwave.jpg", class: 'img-fluid m-x-auto'
 
         = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
@@ -31,4 +31,5 @@
         %br
 
         = render "devise/shared/links"
-        = link_to "Sign Up Your Unit", new_unit_path
+        - if Rails.configuration.allow_for_multiple_units
+          = link_to "Sign Up Your Unit", new_unit_path

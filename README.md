@@ -22,6 +22,22 @@ Rails 5.0, Ruby 2.3
 
 This application uses Sqlite. Under heavier concurrant requests, it may be advisable to use a more robust database.
 
+### Config
+
+In application.rb, you can set the following:
+
+- config.application_name = 'Corn Cub'
+- config.allow_for_multiple_units = false
+
+## How to
+
+This application can be used for one or many Scout units.
+
+### Features
+
+Deposits will result in notification emails being sent out to the Treasurer email address on a Unit.
+
+
 ## Author / License
 
 Corn Cub was developed by Carson Cole. It is free to use and be modified as you see fit. It uses the GNU GENERAL PUBLIC LICENSE.
