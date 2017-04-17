@@ -29,6 +29,8 @@ In application.rb, you can set the following:
 - config.application_name = 'Corn Cub'
 - config.allow_for_multiple_units = false
 
+If you want to run the application for just one Scout unit, change 'config.allow_for_multiple_unit' to 'true'.
+
 ## How to
 
 This application can be used for one or many Scout units.
