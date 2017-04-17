@@ -1,33 +1,27 @@
-
 .card
   .card-block
     .card-title
-      %h1 Get Started
+      %h2 Get started
 
-    %ul.list_group.card-text
-      %li.list-group-item
-        %i.fa.fa-circle-thin
-        = link_to "Create an Event", new_event_path
-        - if @active_event
-          %i.fa.fa-check 
-          Done
+    %ol
+      - unless @active_event
+        %li
+          = link_to "Create an Event", new_event_path
 
-      %li.list-group-item
-        %i.fa.fa-circle-thin    
-        = link_to "Add a Bank Account", new_account_path
-        - if @active_event.bank_account?
-          %i.fa.fa-check 
-          Done
+      - unless @unit.treasurer?
+        %li  
+          = link_to "Add a Treasurer", edit_unit_path(@unit)
+      
+      - unless @active_event && @active_event.bank_account?
+        - if @active_event && !@active_event.bank_account? 
+          %li
+            = link_to "Add a Bank Account", new_account_path
+        - else
+          %li
+            Add a Bank Account
 
-
-      %li.list-group-item
-        %i.fa.fa-circle-thin    
-        = link_to "Add a Treasurer", edit_unit_path(@unit)
-        - if @unit.treasurer?
-          %i.fa.fa-check 
-          Done
-        .text-muted Your Unit Treasurer will be notified all bank deposits
-
-      %li.list-group-item
-        %i.fa.fa-circle-thin    
-        Invite Scouts to sign up
+      %li  
+        - if @unit.invitable?
+          = link_to "Invite Scouts to sign up", invite_scouts_path
+        - else
+          Invite Scouts to sign up

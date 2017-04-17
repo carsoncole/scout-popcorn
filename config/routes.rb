@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get 'help/index'
 
   root "home#index"
+  get 'home/invite_scouts' => 'home#invite_scouts', as: 'invite_scouts'
+
   devise_for :scouts, :controllers => { registrations: 'registrations' }
   resources :units
   resources :scouts do

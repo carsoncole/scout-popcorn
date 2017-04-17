@@ -3,7 +3,7 @@
     .card
       .card-block
         .card-title
-          %h1 New Corn Cub Unit
+          %h2 Unit details
 
         = form_for @unit do |f|
           - if @unit.errors.any?
@@ -14,30 +14,12 @@
                   %li= msg
           
           .form-group
-            = f.label :name
+            = f.label :unit_name
             = f.text_field :name, placeholder: 'Pack 999', class: 'form-control'
-          / .form-group
-          /   = f.label :street_address
-          /   = f.text_field :street_address_1, class: 'form-control'
-          / .form-group
-          /   = f.label :street_address
-          /   = f.text_field :street_address_2, class: 'form-control'
-          / .form-group
-          /   = f.label :city
-          /   = f.text_field :city, class: 'form-control'
-          / .form-group
-          /   = f.label :state
-          /   %br
-          /   = f.select :state_postal_code, StatesHelper.us_states, {}, class: 'form-control'
-          / .form-group
-          /   = f.label :zip_code
-          /   = f.text_field :zip_code, class: 'form-control'
 
           %br
-          %hr
-          %br
 
-          %h2 Administrator
+          %h4 Administrator
 
           .form-group
             = f.label :first_name

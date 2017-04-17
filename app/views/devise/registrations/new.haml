@@ -32,7 +32,7 @@
           .form-group
             = f.label :unit
             %br
-            = f.collection_select :unit_id, Unit.all, :id, :name, {}, class: 'form-control'
+            = f.collection_select :unit_id, @units, :id, :name, {}, class: 'form-control'
 
           .form-group
             = f.label :password

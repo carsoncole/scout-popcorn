@@ -1,5 +1,12 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  def new
+    @units = Unit.all.order(:name)
+    super
+  end
+
+
+
   protected
 
   def sign_up_params

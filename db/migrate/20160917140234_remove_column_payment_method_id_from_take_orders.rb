@@ -1,5 +1,0 @@
-class RemoveColumnPaymentMethodIdFromTakeOrders < ActiveRecord::Migration[5.0]
-  def change
-    remove_column :take_orders, :payment_method_id, :integer
-  end
-end

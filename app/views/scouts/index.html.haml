@@ -5,13 +5,13 @@
     .card
       .card-block
         .card-title
-          %h2 Scouts
+          %h3 Scouts / Administrators
      
 
         %ul.nav.nav-tabs
           %li.nav-item
             = link_to scouts_path(active: true), class: "nav-link #{'active' if params[:active] || (params[:administrators].blank? && params[:inactive].blank?) }" do
-              Active
+              Scouts
               = surround("(", ")") do
                 = @scouts.length
           %li.nav-item
@@ -72,11 +72,6 @@
                           = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                             %span.fa.fa-trash.fa-lg
                     
-          %br
-          .hidden-print
-            = link_to new_scout_path do
-              %i.fa.fa-plus
-
         - if params[:administrators].present?
           .table-responsive
             %table.table.card-text
@@ -130,7 +125,11 @@
                         = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                           %span.fa.fa-trash.fa-lg
                     
-          %br
-          .hidden-print
-            = link_to new_scout_path do
-              %i.fa.fa-plus
+.row
+  .col-md-4
+    .card
+      .card-block    
+        .hidden-print      
+          = link_to new_scout_path do
+            %i.fa.fa-plus
+            Add a new Scout/Administrator

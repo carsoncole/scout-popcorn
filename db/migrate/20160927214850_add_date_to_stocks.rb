@@ -8,6 +8,6 @@ class AddDateToStocks < ActiveRecord::Migration[5.0]
   end
 
   def down
-    removed_column :stocks, :date
+    remove_column :stocks, :date
   end
 end

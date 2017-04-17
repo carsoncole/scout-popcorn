@@ -1,22 +1,28 @@
 .row
   .col-md-6
     .card
+
       .card-block
         .card-title
-          %h1= @unit.name
-
-        %p
-          = link_to edit_unit_path do
-            %i.fa.fa-pencil
+          %h3
+            = @unit.name
+            = link_to edit_unit_path do
+              %i.fa.fa-pencil
 
         %table.table
           %tr
-            %th Treasurer
+            %th Treasurer:
             %td.text-xs-right= @unit.treasurer_name
 
           %tr
-            %th Treasuer Email
+            %th Treasuer Email:
             %td.text-xs-right= @unit.treasurer_email
+
+        - if current_scout.is_super_admin?
+          .text-xs-center
+            = link_to @unit, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in your Unit and all event information to be deleted, including your adminstrator account. This action in NON-RECOVERABLE!' } do
+              %i.fa.fa-trash-o
+              DESTROY UNIT
 
 
 

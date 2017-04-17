@@ -44,15 +44,31 @@
                   - if current_scout.admin?
                     %li= link_to "Prize Carts", prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
             %li.nav-item= link_to "Products", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
+            - if current_scout.admin?
+              %li.nav-item.btn-group
+                = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
+                  Stock
+                  %span.caret                   
+                %ul.dropdown-menu
+                  - if @active_event
+                    %li= link_to "Stock", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
+                    %li= link_to "Stock Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+
+
+
+
           - if current_scout.admin?
-            %li.nav-item.btn-group
-              = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
-                Stock
-                %span.caret                   
-              %ul.dropdown-menu
-                - if @active_event
-                  %li= link_to "Stock", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
-                  %li= link_to "Stock Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+            - if @active_event   
+              %li.nav-item.btn-group
+               
+                = link_to "#", class: "dropdown-toggle nav-link #{'active' if ['balance_sheet', 'income_statement'].include? action_name}",  "data-toggle": "dropdown", 'role': "button" do
+                  Financials
+                  %span.caret
+                %ul.dropdown-menu
+                  %li= link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
+                  %li= link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
+
+
 
             %li.nav-item.btn-group
               = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
@@ -70,20 +86,12 @@
                   %li= link_to "Due from Customers", due_from_customers_path, class: "dropdown-item #{'active' if controller_name == 'due_from_customers'}"
                   %li= link_to "Collect from Customer", new_ledger_path(collect_from_customer: true), class: "dropdown-item #{'active' if controller_name == 'ledgers' && params[:collect_from_customer].present? }"
                   %li= link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
-                %li= link_to "Scouts", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
+                %li= link_to "Scouts/Administrators", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
                 %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
                 - if @unit && !@unit.new_record?
                   %li= link_to "Unit", unit_path(@unit), class: "dropdown-item #{'active' if controller_name == 'units' && action_name != 'index' }"
             
-            - if @active_event   
-              %li.nav-item.btn-group
-               
-                = link_to "#", class: "dropdown-toggle nav-link #{'active' if ['balance_sheet', 'income_statement'].include? action_name}",  "data-toggle": "dropdown", 'role': "button" do
-                  Financials
-                  %span.caret
-                %ul.dropdown-menu
-                  %li= link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
-                  %li= link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
+
 
           %li.nav-item
             = link_to help_index_path, class: "nav-link #{'active' if controller_name == 'help'}" do

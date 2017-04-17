@@ -1,17 +1,14 @@
 .row
-  .col-md-12
-    %p= link_to "Create a new Event", new_event_path
-
-.row
   - @events.each do |event|
     .col-md-4
       .card
-        .card-header.text-xs-center
-          %h3
-            = event.name
-            = link_to edit_event_path(event) do
-              %i.fa.fa-pencil
         .card-block
+          .text-xs-center
+            .card-title 
+              %h3
+                = event.name
+                = link_to edit_event_path(event) do
+                  %i.fa.fa-pencil
           %table.table.card-text.card-text
 
             %tr
@@ -68,9 +65,15 @@
               %th Number of Top Sellers:
               %td.text-xs-right= event.number_of_top_sellers
 
-        - if current_scout.is_super_admin?
-          .card-footer
+          - if current_scout.is_super_admin?
+
             .text-xs-center
               = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
                 %i.fa.fa-trash-o
                 DESTROY THIS EVENT
+
+
+  .col-md-2
+    .card
+      .card-block
+        %p.card-text= link_to "Create a new Event", new_event_path

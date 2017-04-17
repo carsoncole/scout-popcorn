@@ -1,8 +1,9 @@
 
-.card
-  .card-block
-    .card-title
-      %h1= @active_event.name
+- if @active_event
+  .card
+    .card-block
+      .card-title  
+        %h1= @active_event.name
     
 
 

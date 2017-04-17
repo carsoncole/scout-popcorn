@@ -15,15 +15,15 @@ ActiveRecord::Schema.define(version: 20170412220753) do
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "name"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.string   "account_type"
+    t.integer  "event_id"
+    t.boolean  "is_cash"
     t.boolean  "is_take_order_eligible",      default: false
     t.boolean  "is_site_sale_eligible",       default: false
     t.boolean  "is_bank_account_depositable", default: false
-    t.string   "account_type"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.boolean  "is_credit_card"
-    t.boolean  "is_cash"
-    t.integer  "event_id"
   end
 
   create_table "cart_prizes", force: :cascade do |t|
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20170412220753) do
     t.string   "parent_last_name"
     t.string   "email"
     t.integer  "default_event_id"
+    t.boolean  "is_active",              default: true
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "encrypted_password",     default: "",    null: false
@@ -175,9 +176,6 @@ ActiveRecord::Schema.define(version: 20170412220753) do
     t.string   "last_sign_in_ip"
     t.boolean  "is_admin"
     t.boolean  "is_super_admin"
-    t.boolean  "is_active",              default: true
-    t.boolean  "is_take_order_admin",    default: false
-    t.boolean  "is_site_sale_admin",     default: false
     t.boolean  "is_take_orders_admin",   default: false
     t.boolean  "is_site_sales_admin",    default: false
     t.boolean  "is_online_sales_admin",  default: false
@@ -247,6 +245,7 @@ ActiveRecord::Schema.define(version: 20170412220753) do
     t.string   "customer_name"
     t.string   "customer_address"
     t.string   "customer_email"
+    t.integer  "payment_account_id"
     t.decimal  "total_value",              precision: 5, scale: 2
     t.integer  "money_received_by_id"
     t.datetime "money_received_at"
@@ -255,7 +254,6 @@ ActiveRecord::Schema.define(version: 20170412220753) do
     t.datetime "receipt_sent_at"
     t.boolean  "is_paid_by_credit_card",                           default: false
     t.integer  "credit_card_order_number"
-    t.integer  "payment_account_id"
     t.string   "square_reciept_url"
     t.integer  "envelope_id"
     t.string   "note"
