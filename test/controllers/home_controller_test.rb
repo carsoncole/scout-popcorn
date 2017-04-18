@@ -19,4 +19,10 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "th.online_sales"
   end
 
+  test "should show top sellers" do
+    follow_redirect!
+    assert_select "h3", "Top Sellers"
+  end
+
+
 end

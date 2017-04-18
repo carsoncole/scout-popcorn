@@ -1,0 +1,20 @@
+- if @active_event
+  .card
+    .card-block
+      .card-title
+        %h3.text-xs-center
+          %i.fa.fa-star.fa-log
+          Top Sellers
+          %i.fa.fa-star.fa-log
+
+      - if @top_sellers.any?
+        
+        .table-responsive
+          %table.table
+            - @top_sellers.each do |top_seller|
+              - scout = Scout.find(top_seller[0])
+              %tr
+                %th= scout.name
+                %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
+      - else
+        %p.card-text.text-xs-center No sales posted yet.
