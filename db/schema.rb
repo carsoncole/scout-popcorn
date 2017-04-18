@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412220753) do
+ActiveRecord::Schema.define(version: 20170418202709) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -60,6 +60,9 @@ ActiveRecord::Schema.define(version: 20170412220753) do
     t.date     "prize_cart_ordering_ends_at"
     t.decimal  "online_commission_percentage",  precision: 5, scale: 2, default: "35.0"
     t.boolean  "is_prizes_enabled",                                     default: true
+    t.boolean  "is_online_enabled",                                     default: true
+    t.boolean  "is_take_orders_enabled",                                default: true
+    t.boolean  "is_site_sales_enabled",                                 default: true
   end
 
   create_table "ledgers", force: :cascade do |t|

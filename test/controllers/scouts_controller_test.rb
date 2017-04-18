@@ -21,14 +21,10 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".event_selection", false
   end
 
-  # setup do
-  #   @scout = scouts(:one)
-  # end
-
-  # test "should get index" do
-  #   get scouts_url
-  #   assert_response :success
-  # end
+  test "should successfully login and redirect" do
+    follow_redirect!
+    assert_select "h2", "Popcorn 2017"
+  end
 
   # test "should get new" do
   #   get new_scout_url
