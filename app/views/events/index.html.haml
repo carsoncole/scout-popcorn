@@ -40,6 +40,12 @@
               %td.text-xs-right= number_to_percentage(event.unit_commission_percentage, precision: 2)
 
             %tr
+              %th Online is enabled?
+              %td.text-xs-right
+                - if event.is_online_enabled
+                  %i.fa.fa-check
+
+            %tr
               %th Online commission %:
               %td.text-xs-right= number_to_percentage(event.online_commission_percentage, precision: 2)
 

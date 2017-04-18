@@ -19,16 +19,25 @@
             = f.label :name
             = f.text_field :name, placeholder: 'Popcorn 2018', class: 'form-control'
           .form-group
+            = f.label :is_active
+            = f.check_box :is_active, class: 'form-control'
+          .form-group
             = f.label :unit_commission_percentage
             %p.small.text-muted Enter '35' for 35%.
             = f.text_field :unit_commission_percentage, class: 'form-control'
+          .form-group
+            = f.label :is_online_enabled
+            = f.check_box :is_online_enabled, class: 'form-control'
           .form-group
             = f.label :online_commission_percentage
             %p.small.text-muted Enter '35' for 35%.
             = f.text_field :online_commission_percentage, class: 'form-control'
           .form-group
-            = f.label :is_active
-            = f.check_box :is_active, class: 'form-control'
+            = f.label :is_take_orders_enabled
+            = f.check_box :is_take_orders_enabled, class: 'form-control'
+          .form-group
+            = f.label :is_site_sales_enabled
+            = f.check_box :is_site_sales_enabled, class: 'form-control'
           .form-group
             = f.label :are_prizes_enabled
             = f.check_box :is_prizes_enabled, class: 'form-control'
