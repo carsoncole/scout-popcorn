@@ -1,6 +1,26 @@
 require 'test_helper'
 
 class ScoutsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    sign_in scouts(:one)
+  end
+
+
+  test "should show multiple possible events in profile edit" do
+    event = Event.create(name: 'Some Event', is_active: true, unit_id: units(:one).id)
+    scout = scouts(:one)
+    get edit_scout_url(scout)
+    assert_response :success
+    assert_select ".event_selection", 1
+  end
+
+  test "scout profile should not allow editing event if only one available" do
+    scout = scouts(:one)
+    get edit_scout_url(scout)
+    assert_response :success
+    assert_select ".event_selection", false
+  end
+
   # setup do
   #   @scout = scouts(:one)
   # end

@@ -13,7 +13,7 @@ class Scout < ApplicationRecord
 
   validates :first_name, :last_name, :email, :unit_id, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
-  
+
   before_save :fix_name!
   before_save :check_super_admin_rights!, if: Proc.new {|s| s.is_super_admin_changed? }
   after_create :set_event!

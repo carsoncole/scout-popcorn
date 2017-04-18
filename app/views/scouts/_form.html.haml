@@ -30,7 +30,7 @@
               = f.password_field :password_confirmation, class: 'form-control'
 
           - if current_scout.unit.events.active.size > 1
-            .form-group
+            .form-group.event_selection
               = f.label :event
               - if current_scout.admin?
                 %span= link_to "(New Event)", new_event_path

@@ -6,3 +6,4 @@ one:
   last_name: Jones
   unit: one
   event: one
+  encrypted_password: <%= Devise::Encryptor.digest(Scout, 'password') %> # password
