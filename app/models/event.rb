@@ -20,6 +20,8 @@ class Event < ApplicationRecord
   validates :number_of_top_sellers, numericality: { integer_only: true }
   validates :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100, }
 
+  after_create :set_events_for_scouts!
+  after_update :set_events_for_scouts!, if: Proc.new {|e| e.is_active_changed? && e.is_active }
   #after_create :create_default_products!
   #after_create :create_default_prizes!
   after_create :create_default_accounts!
@@ -130,6 +132,10 @@ class Event < ApplicationRecord
     Prize.default.each do |prize|
       self.prizes.where(name: prize.name).first_or_create(name: prize.name, amount: prize.amount, url: prize.url, source: prize.source, source_id: prize.source_id, is_by_level: prize.is_by_level, description: prize.description)
     end   
+  end
+
+  def set_events_for_scouts!
+    unit.scouts.where(event_id: nil).update_all(event_id: self.id) if is_active
   end
 
   def create_default_accounts!

@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     cookies[:event_id] = @event.id
-    current_scout.update(default_event_id: @event.id)
+    current_scout.update(event_id: @event.id)
     redirect_to events_path
   end
 
@@ -32,7 +32,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        current_scout.update(default_event_id: @event.id)
+        current_scout.update(event_id: @event.id)
         format.html { redirect_to events_path, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else

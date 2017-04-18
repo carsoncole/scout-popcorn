@@ -1,9 +1,15 @@
 
-- if @active_event
-  .card
-    .card-block
-      .card-title  
-        %h1= @active_event.name
+
+.card
+  .card-block
+    - if @active_event
+      .card-title 
+        %h2= @active_event.name
+    - else
+      %p
+        Please select an
+        = link_to "event", scout_path(current_scout)
+
     
 
 

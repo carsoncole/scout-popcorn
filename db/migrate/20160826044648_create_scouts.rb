@@ -7,7 +7,7 @@ class CreateScouts < ActiveRecord::Migration[5.0]
       t.string :parent_first_name
       t.string :parent_last_name
       t.string :email
-      t.integer :default_event_id
+      t.integer :event_id
       t.boolean :is_active, default: true
       t.timestamps
     end

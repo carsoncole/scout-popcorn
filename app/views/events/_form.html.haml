@@ -1,5 +1,6 @@
 .row
-  .col-md-6
+  .col-md-4
+  .col-md-4
     .card
       .card-block
         .card-title
@@ -33,17 +34,17 @@
             = f.check_box :is_prizes_enabled, class: 'form-control'
 
           .form-group
-            = f.label :prize_cart_ordering_starts_at
-            %p.text-muted This date enables/disables the 'Order' prize cart button
-            = f.date_select :prize_cart_ordering_starts_at, {include_blank: true}, class: 'form-control'
+            = f.label :prize_cart_ordering_starts
+            %p.text-muted This date enables the 'Order' prize cart button
+            = f.date_select :prize_cart_ordering_starts_at, {include_blank: true, start_year: 2017}, class: 'form-control'
           .form-group
-            = f.label :prize_cart_ordering_ends_at
-            %p.text-muted This date enables/disables the 'Order' prize cart button
-            = f.date_select :prize_cart_ordering_ends_at, {include_blank: true}, class: 'form-control'
+            = f.label :prize_cart_ordering_ends
+            %p.text-muted This date disables the 'Order' prize cart button
+            = f.date_select :prize_cart_ordering_ends_at, {include_blank: true, start_year: 2017}, class: 'form-control'
           .form-group
-            = f.label :take_orders_deadline_at
+            = f.label :take_orders_deadline
             %p.text-muted Take Orders can not be entered after this time
-            = f.datetime_select :take_orders_deadline_at, {include_blank: true},  class: 'form-control'
+            = f.datetime_select :take_orders_deadline_at, {include_blank: true, start_year: 2017},  class: 'form-control'
           .form-group
             = f.label :number_of_top_sellers
             = f.number_field :number_of_top_sellers, class: 'form-control'

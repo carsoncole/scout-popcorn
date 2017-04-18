@@ -10,6 +10,13 @@ Through their own accounts, Scouts can view their sales progress in door-to-door
 
 Corn Cub also provides comprehensive management tools, including an Income Statement, Balance Sheet, Take Order Purchase Order and Final BSA Settlement Form. It also notifies your Unit Treasurer every time a bank deposit is made from Popcorn sales.
 
+## Features
+
+- Corncub can be used for one or more Scout units. If only for one unit, set `config.allow_for_multiple_units` to `true`.
+
+- Bank deposits will result in notification emails being sent out to the Treasurer email address on a Unit.
+
+
 ## Installation
 
 This is a Ruby on Rails application. Simply `bundle install` will install dependencies and then `Rails server` will launch the application.
@@ -32,14 +39,6 @@ config.allow_for_multiple_units = false
 ```
 
 If you want to run the application for just one Scout unit, change `config.allow_for_multiple_unit` to `true`.
-
-## How to
-
-This application can be used for one or many Scout units.
-
-### Features
-
-Deposits will result in notification emails being sent out to the Treasurer email address on a Unit.
 
 
 ## Author / License

@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'minitest/autorun'
 
 class UnitTest < ActiveSupport::TestCase
   test "should not save without name" do

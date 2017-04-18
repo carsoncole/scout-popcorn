@@ -19,11 +19,12 @@
               Administrators
               = surround("(", ")") do
                 = @administrators.length
-          %li.nav-item
-            = link_to scouts_path(inactive: true), class: "nav-link #{'active' if params[:inactive]}" do
-              Inactive
-              = surround("(", ")") do
-                = @inactive_scouts.length            
+          - if @inactive_scouts.length != 0
+            %li.nav-item
+              = link_to scouts_path(inactive: true), class: "nav-link #{'active' if params[:inactive]}" do
+                Inactive
+                = surround("(", ")") do
+                  = @inactive_scouts.length            
         %br
         - unless params[:inactive].present? || params[:administrators].present?
           .table-responsive
@@ -35,11 +36,11 @@
                   %th Site Sales
                   %th Online
                   %th Total Sales
+                  %th Event
                   %th Last Sign In
                   %th Sign In Count
                   - if current_scout.admin?
                     %th
-                    %th.hidden-print
                     %th.hidden-print
 
               %tbody
@@ -50,24 +51,24 @@
                       %i.fa.fa-user
                       = link_to scout.name, scout_path(scout)
                     %td
-                      - unless scout.is_admin?
+                      - unless scout.is_admin? || @active_event.nil?
                         = link_to number_to_currency(TakeOrder.scout_sales(scout, @active_event), precision: 0), take_orders_path(scout_id: scout.id)
                     %td
-                      - unless scout.is_admin?
+                      - unless scout.is_admin? || @active_event.nil?
                         = link_to number_to_currency(scout.total_site_sales(@active_event), precision: 0), site_sales_path(scout_id: scout.id)
                     %td
-                      - unless scout.is_admin?
+                      - unless scout.is_admin? || @active_event.nil?
                         = link_to number_to_currency(scout.total_online_sales(@active_event), precision: 0), online_sales_path(scout_id: scout.id)
                     %td
-                      - unless scout.is_admin?
+                      - unless scout.is_admin? || @active_event.nil?
                         = number_to_currency(scout.total_sales(@active_event), precision: 0)
+                    %td= scout.event.name if scout.event
                     %td= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
                     %td= scout.sign_in_count
                     - if current_scout.admin?
                       %td.hidden-print
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
-                      %td.hidden-print
                         - if scout.is_active?
                           = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                             %span.fa.fa-trash.fa-lg

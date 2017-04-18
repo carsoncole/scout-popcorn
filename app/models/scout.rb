@@ -2,6 +2,7 @@ class Scout < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   belongs_to :unit
+  belongs_to :event, optional: true
   has_many :take_orders
   has_many :events, through: :unit
   has_many :site_sales, through: :scout_site_sales
@@ -15,7 +16,7 @@ class Scout < ApplicationRecord
   
   before_save :fix_name!
   before_save :check_super_admin_rights!, if: Proc.new {|s| s.is_super_admin_changed? }
-  after_create :set_default_event!
+  after_create :set_event!
   after_create :set_if_admin!
   after_create :send_registration_email!
   after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
@@ -94,12 +95,8 @@ class Scout < ApplicationRecord
     online_sales.where(event_id: event.id).sum(:amount)
   end
 
-  def default_event
-    Event.find(default_event_id) rescue nil
-  end
-
-  def set_default_event!
-    update(default_event_id: unit.events.active.last.id) if unit.events && unit.events.active && unit.events.active.last
+  def set_event!
+    update(event_id: unit.events.active.last.id) if unit.events && unit.events.active && unit.events.active.last
   end
 
   def event_site_sale_hours_worked(event)

@@ -11,8 +11,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless current_scout.admin?
   end
 
-  private
-
   def set_unit
     if current_scout
       @unit = current_scout.unit
@@ -29,8 +27,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_event
-    if @active_event = current_scout.default_event
-      cookies[:event_id] = current_scout.default_event_id
+    if @active_event = current_scout.event
+      cookies[:event_id] = current_scout.event_id
     end
   end
 end

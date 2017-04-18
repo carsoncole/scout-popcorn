@@ -29,12 +29,12 @@
               = f.label :password_confirmation
               = f.password_field :password_confirmation, class: 'form-control'
 
-          
-          .form-group
-            = f.label :event
-            - if current_scout.admin?
-              %span= link_to "(New Event)", new_event_path
-            = f.collection_select :default_event_id, @unit.events.order(:name), :id, :name, {:include_blank => "Please select"}, class: 'form-control'
+          - if current_scout.unit.events.active.size > 1
+            .form-group
+              = f.label :event
+              - if current_scout.admin?
+                %span= link_to "(New Event)", new_event_path
+              = f.collection_select :event_id, @unit.events.order(:name), :id, :name, {:include_blank => "Please select"}, class: 'form-control'
 
           .form-group
             = f.label :email

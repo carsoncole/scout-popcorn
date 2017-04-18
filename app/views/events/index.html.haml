@@ -15,9 +15,9 @@
               %th Active
               %td.text-xs-right
                 - if event.is_active
-                  %i.fa.fa-toggle-on.fa-lg
+                  %i.fa.fa-toggle-on.fa-lg.text-success
                 - else
-                  %i.fa.fa-toggle-off.fa-lg
+                  %i.fa.fa-toggle-off.fa-lg.text-danger
 
             %tr
               %th
@@ -73,7 +73,10 @@
                 DESTROY THIS EVENT
 
 
-  .col-md-2
+  .col-md-4
     .card
       .card-block
-        %p.card-text= link_to "Create a new Event", new_event_path
+        %p.card-text
+          = link_to new_event_path do
+            %i.fa.fa-plus
+            Create a new Event

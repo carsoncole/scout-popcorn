@@ -1,11 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  unit_id: 1
-  name: MyString
-  unit_commission_percentage: 30
+  unit: one
+  name: Popcorn 2017
 
 two:
-  unit_id: 1
-  name: MyString
-  unit_commission_percentage: 30
+  unit: one
+  name: Popcorn 2018

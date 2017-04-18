@@ -5,7 +5,6 @@
         .card-title
           .pull-right
             = link_to edit_scout_path(@scout) do
-              = "Set Event" unless @scout.default_event
               %i.fa.fa-pencil
           %h3
             = @scout.name
@@ -28,8 +27,8 @@
         %li.list-group-item
           %i.fa.fa-calendar.fa-lg
           &nbsp;
-          - if @scout.default_event
-            = @scout.default_event.name
+          - if @scout.event
+            = @scout.event.name
           - else
             = link_to "Set Event", edit_scout_path(@scout)
         %li.list-group-item
