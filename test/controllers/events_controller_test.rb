@@ -2,13 +2,6 @@ require 'test_helper'
 
 class EventsControllerTest < ActionDispatch::IntegrationTest
 
-  test "scout has an assigned event on creating new event" do
-    scout = scouts(:one)
-    scout.update(event_id: nil)
-    event = Event.create(name: 'Popcorn 2020', unit_id: scout.unit_id, is_active: true)
-    scout.reload
-    assert_equal scout.event_id, event.id
-  end
 
 
 

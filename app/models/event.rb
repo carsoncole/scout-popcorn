@@ -16,7 +16,7 @@ class Event < ApplicationRecord
   has_many :prize_carts, dependent: :destroy
   has_many :resources, dependent: :destroy
 
-  validates :name, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
+  validates :name, :unit_id, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
   validates :number_of_top_sellers, numericality: { integer_only: true }
   validates :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100, }
 
@@ -25,6 +25,7 @@ class Event < ApplicationRecord
   #after_create :create_default_products!
   #after_create :create_default_prizes!
   after_create :create_default_accounts!
+  after_destroy :reset_events_for_scouts!
   after_save :update_take_orders!, if: Proc.new {|e| e.unit_commission_percentage_changed? }
 
   def self.active
@@ -136,6 +137,10 @@ class Event < ApplicationRecord
 
   def set_events_for_scouts!
     unit.scouts.where(event_id: nil).update_all(event_id: self.id) if is_active
+  end
+
+  def reset_events_for_scouts!
+    unit.scouts.where(event_id: self.id).update_all(event_id: nil)
   end
 
   def create_default_accounts!
