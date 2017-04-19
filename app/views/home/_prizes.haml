@@ -1,0 +1,22 @@
+- if @active_event.is_prizes_enabled
+  .card
+    .card-block
+      .card-title
+        %h5 Prizes
+
+      %div.card-text
+        = link_to prizes_path do
+          See the prizes!
+          %i.fa.fa-bullhorn
+          %i.fa.fa-soccer-ball-o
+          %i.fa.fa-rocket
+          %i.fa.fa-gamepad
+          %i.fa.fa-gift
+      - if @active_event.prize_cart_ordering_starts_at < Time.now && @active_event.prize_cart_ordering_ends_at > Time.now
+        %hr
+        %div.card-text
+          = link_to prize_cart_path(current_scout.prize_cart(@active_event)) do
+            Order prizes
+            %i.fa.fa-long-arrow-right
+            %i.fa.fa-shopping-cart
+            Prize Cart

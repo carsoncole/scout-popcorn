@@ -1,11 +1,12 @@
-.card
-  .card-block
-    .card-title
-      %h5 Additional info
+- if @active_event && @resources.any?
+  .card
+    .card-block
+      .card-title
+        %h5 Additional info
 
-    %ul
-      - @resources.each do |resource|
-        %li.resource
-          = link_to resource.url do
-            = resource.name
-            %i.fa.fa-external-link
+      %ul
+        - @resources.each do |resource|
+          %li.resource
+            = link_to resource.url do
+              = resource.name
+              %i.fa.fa-external-link
