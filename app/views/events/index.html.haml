@@ -22,32 +22,28 @@
             %tr
               %th
                 Resources
-                %br
-                - event.resources.each do |resource|
-                  = link_to resource.url, target: '_blank' do
-                    = resource.name
-                  = link_to event_resource_path(event, resource), method: :delete do
-                    %i.fa.fa-trash.fa-lg
-                  %br
+
               %td.text-xs-right
-                = link_to new_event_resource_path(event) do
-                  %fa.fa.fa-plus.fa-lg
-                %br
+                = link_to resources_path do
+                  %i.fa.fa-eye.fa-lg
 
 
             %tr
               %th Commission %:
               %td.text-xs-right= number_to_percentage(event.unit_commission_percentage, precision: 2)
 
+
+            %tr
+              %th Online commission %:
+              %td.text-xs-right= number_to_percentage(event.online_commission_percentage, precision: 2)
+
+
+
             %tr
               %th Online is enabled?
               %td.text-xs-right
                 - if event.is_online_enabled
                   %i.fa.fa-check
-
-            %tr
-              %th Online commission %:
-              %td.text-xs-right= number_to_percentage(event.online_commission_percentage, precision: 2)
 
             - if event.prizes?
               %tr
@@ -60,12 +56,31 @@
             - else
               %tr
                 %th Prizes
-                %td.text-xs-right Disabled
+                %td.text-xs-right
+                  - if event.is_prizes_enabled?
+                    %i.fa.fa-check
+            %tr
+              %th Site Sales enabled?
+              %td.text-xs-right
+                - if event.is_site_sales_enabled
+                  %i.fa.fa-check
+              
 
+            %tr
+              %th Take Orders is enabled?
+              %td.text-xs-right
+                - if event.is_take_orders_enabled
+                  %i.fa.fa-check
               
             %tr
-              %th Take orders deadline:
+              %th Take Orders deadline:
               %td.text-xs-right= nice_date_compact(event.take_orders_deadline_at) if event.take_orders_deadline_at
+
+            %tr
+              %th Show Top Sellers:
+              %td.text-xs-right
+                - if event.show_top_sellers
+                  %i.fa.fa-check
 
             %tr
               %th Number of Top Sellers:

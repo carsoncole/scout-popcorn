@@ -15,7 +15,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/new
   def new
-    @resource = @event.resources.build
+    @resource = @active_event.resources.build
   end
 
   # GET /resources/1/edit
