@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
-  before_action :set_event, only: [:new, :show, :edit, :update, :destroy]
+  # before_action :set_event, only: [:index, :new, :show, :edit, :update, :destroy]
 
   # GET /resources
   # GET /resources.json
@@ -26,7 +26,6 @@ class ResourcesController < ApplicationController
   # POST /resources.json
   def create
     @resource = Resource.new(resource_params)
-    @event = @resource.event
 
     respond_to do |format|
       if @resource.save
@@ -42,11 +41,9 @@ class ResourcesController < ApplicationController
   def update
     respond_to do |format|
       if @resource.update(resource_params)
-        format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
-        format.json { render :show, status: :ok, location: @resource }
+        format.html { redirect_to resources_path, notice: 'Resource was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,9 +64,9 @@ class ResourcesController < ApplicationController
       @resource = Resource.find(params[:id])
     end
 
-    def set_event
-      @event = Event.find(params[:event_id])
-    end
+    # def set_event
+    #   @event = Event.find(params[:event_id])
+    # end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params

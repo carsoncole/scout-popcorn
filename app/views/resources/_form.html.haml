@@ -5,8 +5,6 @@
       %ul
         - @resource.errors.full_messages.each do |msg|
           %li= msg
-  
-  = f.hidden_field :event_id, value: @event.id
 
   .form-group
     = f.label :name
@@ -15,4 +13,4 @@
     = f.label :url
     = f.text_field :url, class: 'form-control'
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class: 'btn'

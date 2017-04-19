@@ -3,7 +3,7 @@
     .card
       .card-block
         .card-title
-          %h2 Unit Info
+          %h2 Unit Details
 
         = form_for @unit do |f|
           - if @unit.errors.any?
@@ -34,12 +34,11 @@
           /   = f.text_field :zip_code, class: 'form-control'
 
           %br
-          %hr
+          %h4 Treasurer Notifications
 
-          %h4 Banking
-
-          %p
-            Enter Unit Treasurer for bank deposit notifications
+          %p.small
+            %i.fa.fa-info-circle
+            Entering Treasurer details here will result in email notifications of the dates and amounts of money when deposited into a unit bank account.
           .form-group
             = f.label :treasurer_first_name
             = f.text_field :treasurer_first_name, class: 'form-control'

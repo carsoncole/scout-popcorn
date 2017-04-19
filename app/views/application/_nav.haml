@@ -93,6 +93,7 @@
                   %li= link_to "Due from Customers", due_from_customers_path, class: "dropdown-item #{'active' if controller_name == 'due_from_customers'}"
                   %li= link_to "Collect from Customer", new_ledger_path(collect_from_customer: true), class: "dropdown-item #{'active' if controller_name == 'ledgers' && params[:collect_from_customer].present? }"
                   %li= link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
+                  %li= link_to "Resources", resources_path, class: "dropdown-item #{'active' if controller_name == 'resources'}"
                 %li= link_to "Scouts/Administrators", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
                 %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
                 - if @unit && !@unit.new_record?

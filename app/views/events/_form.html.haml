@@ -1,11 +1,12 @@
 .row
-  .col-md-4
-  .col-md-4
+  .col-md-6
     .card
       .card-block
         .card-title
-          %h3
+          %h2
             Event
+
+        
 
         = form_for @event do |f|
           - if @event.errors.any?
@@ -15,33 +16,55 @@
                 - @event.errors.full_messages.each do |msg|
                   %li= msg
 
+
           .form-group
             = f.label :name
             = f.text_field :name, placeholder: 'Popcorn 2018', class: 'form-control'
           .form-group
             = f.label :is_active
+            %p.card-text.small.text-muted When 'Active' an event is viewable by Unit scouts.
             = f.check_box :is_active, class: 'form-control'
+          
+          %br
+          %h4 Commissions
+
           .form-group
             = f.label :unit_commission_percentage
             %p.small.text-muted Enter '35' for 35%.
             = f.text_field :unit_commission_percentage, class: 'form-control'
-          .form-group
-            = f.label :is_online_enabled
-            = f.check_box :is_online_enabled, class: 'form-control'
+
           .form-group
             = f.label :online_commission_percentage
             %p.small.text-muted Enter '35' for 35%.
             = f.text_field :online_commission_percentage, class: 'form-control'
-          .form-group
-            = f.label :is_take_orders_enabled
-            = f.check_box :is_take_orders_enabled, class: 'form-control'
-          .form-group
-            = f.label :is_site_sales_enabled
-            = f.check_box :is_site_sales_enabled, class: 'form-control'
-          .form-group
-            = f.label :are_prizes_enabled
-            = f.check_box :is_prizes_enabled, class: 'form-control'
 
+          %br
+          %h4 Features
+          .row
+            .col-md-4
+
+              .form-group
+                = f.label :take_orders
+                = f.check_box :is_take_orders_enabled, class: 'form-control'
+            .col-md-4
+              .form-group
+                = f.label :site_sales
+                = f.check_box :is_site_sales_enabled, class: 'form-control'
+            .col-md-4
+              .form-group
+                = f.label :online_ordering
+                = f.check_box :is_online_enabled, class: 'form-control'
+            .col-md-4
+              .form-group
+                = f.label :prizes
+                = f.check_box :is_prizes_enabled, class: 'form-control'
+            .col-md-4
+              .form-group
+                = f.label :show_top_sellers
+                = f.check_box :show_top_sellers, class: 'form-control'
+
+          %br
+          %h4 Important Dates
           .form-group
             = f.label :prize_cart_ordering_starts
             %p.text-muted This date enables the 'Order' prize cart button

@@ -1,6 +1,6 @@
 .row
   - @events.each do |event|
-    .col-md-4
+    .col-md-6
       .card
         .card-block
           .text-xs-center
@@ -27,11 +27,11 @@
                   = link_to resource.url, target: '_blank' do
                     = resource.name
                   = link_to event_resource_path(event, resource), method: :delete do
-                    %i.fa.fa-trash
+                    %i.fa.fa-trash.fa-lg
                   %br
               %td.text-xs-right
                 = link_to new_event_resource_path(event) do
-                  %fa.fa.fa-plus
+                  %fa.fa.fa-plus.fa-lg
                 %br
 
 
@@ -76,13 +76,11 @@
             .text-xs-center
               = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
                 %i.fa.fa-trash-o
-                DESTROY THIS EVENT
+                DESTROY EVENT
 
 
-  .col-md-4
-    .card
-      .card-block
-        %p.card-text
-          = link_to new_event_path do
-            %i.fa.fa-plus
-            Create a new Event
+.row
+  .col-md-6
+    = link_to new_event_path do
+      %i.fa.fa-plus.fa-lg
+      Add a new Event

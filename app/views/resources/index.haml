@@ -1,0 +1,27 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        %h3.card-title Resources
+
+        %p.small.text-muted.card-text
+          %i.fa.fa-info-circle
+          Resources are listed on the dashboard of all Scouts and provide either a link or download of additional information, which could be a prize form, council information etc.
+
+        %table.table
+          - @resources.each do |resource|
+            %tr
+              %th= resource.name
+              %td
+                = link_to resource.url, target: '_blank' do
+                  = resource.url
+                  %i.fa.fa-external-link
+              %td
+                = link_to edit_resource_path(resource) do
+                  %i.fa.fa-pencil.fa-lg
+                = link_to resource_path(resource), method: :delete do
+                  %i.fa.fa-trash.fa-lg
+
+        %p.card-text
+          = link_to new_resource_path do
+            %i.fa.fa-plus.fa-lg

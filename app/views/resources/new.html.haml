@@ -1,9 +1,14 @@
-%h2 
-  New
-  = @event.name
-  resource
-%p Enter a resource for users, such as a prize form, instructions etc.
+.row
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h2 
+            New
+            = @event.name
+            resource
+        %p.small
+          %i.fa.fa-info-circle
+          You can add resources for users to link to or download, such as a prize form, instructions etc.
 
-= render 'form'
-
-= link_to 'Back', resources_path
+        = render 'form'

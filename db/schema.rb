@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418202709) do
+ActiveRecord::Schema.define(version: 20170419210244) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "unit_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20170418202709) do
     t.boolean  "is_online_enabled",                                     default: true
     t.boolean  "is_take_orders_enabled",                                default: true
     t.boolean  "is_site_sales_enabled",                                 default: true
+    t.boolean  "show_top_sellers",                                      default: true
   end
 
   create_table "ledgers", force: :cascade do |t|
