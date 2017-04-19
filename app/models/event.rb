@@ -116,7 +116,7 @@ class Event < ApplicationRecord
   end
 
   def prizes?
-    is_prizes_enabled
+    is_prizes_enabled && prizes.any?
   end
 
   def total_product_sales

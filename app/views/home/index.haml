@@ -5,7 +5,7 @@
   .col-md-4
     - if current_scout.admin?
       = render 'get_started' unless @active_event && @active_event.set_up?
-
+    
     = render 'top_sellers'
     = render 'prizes'
   .col-md-4
