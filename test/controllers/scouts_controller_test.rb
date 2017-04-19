@@ -23,7 +23,7 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
 
   test "should successfully login and redirect" do
     follow_redirect!
-    assert_select "h2", "Popcorn 2017"
+    assert_select "span.event-name", "Popcorn 2017"
   end
 
   # test "should get new" do

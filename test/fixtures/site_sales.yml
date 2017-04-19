@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  event_id: 1
+  event: one
   name: MyString
+  date: 2017-01-01
 
 two:
-  event_id: 1
+  event: one
   name: MyString
+  date: 2017-01-02

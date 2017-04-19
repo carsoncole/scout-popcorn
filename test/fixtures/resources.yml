@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  event_id: 1
-  name: MyString
-  url: MyString
+  event: one
+  name: Some resource
+  url: http://www.example.com
 
 two:
-  event_id: 1
-  name: MyString
-  url: MyString
+  event: one
+  name: Ibm.com
+  url: http://www.example.com

@@ -13,7 +13,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   test "should show Scout sales table" do
     follow_redirect!
-    assert_select "h2", "My Sales"
+    assert_select "h3", "My Sales"
     assert_select "th.take_orders"
     assert_select "th.site_sales"
     assert_select "th.online_sales"
@@ -24,5 +24,15 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "h3", "Top Sellers"
   end
 
+  test "should show resources" do
+    follow_redirect!
+    assert_select "h5", "Additional info"
+    assert_select "li.resource", 2
+  end
+
+  test "should show important dates" do
+    follow_redirect!
+    assert_select "table.important_dates"
+  end
 
 end

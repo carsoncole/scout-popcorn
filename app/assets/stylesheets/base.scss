@@ -16,6 +16,14 @@ a.kill {
   color: #ffffff;
 }
 
+.navbar-brand {
+  a {
+    color: #fff
+
+  }
+  a:hover { text-decoration: none; }
+}
+
 #error_explanation {
   margin-bottom: 2em;
   background-color: #f0f0f0;

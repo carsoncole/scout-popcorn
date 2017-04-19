@@ -6,7 +6,11 @@
           
       .collapse.navbar-toggleable-xs#exCollapsingNavbar2
         .navbar-brand
-          = Rails.configuration.application_name || 'Corn Cub'
+          = link_to root_path do
+            = Rails.configuration.application_name || "Corn Cub"
+            - if @active_event
+              = "|"
+              %span.event-name= @active_event.name
           / - if @unit && !@unit.new_record?
           /   = '| '
           /   = link_to @unit.name, unit_path(@unit)

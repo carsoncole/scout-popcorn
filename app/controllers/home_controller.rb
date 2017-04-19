@@ -29,6 +29,7 @@ class HomeController < ApplicationController
         @top_sellers << seller
       end
       @resources = @active_event.resources
+      @site_sales = @active_event.site_sales.where("date > ?", Time.now).order(date: :asc)
     end
   end
 

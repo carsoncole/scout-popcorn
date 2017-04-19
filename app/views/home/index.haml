@@ -6,7 +6,7 @@
       .card
         .card-block
           .card-title
-            %h2
+            %h3
               My Sales     
           
           - grand_total = 0
@@ -82,19 +82,15 @@
       = render 'get_started' unless @active_event && @active_event.set_up?
 
     = render 'top_sellers'
-
+  .col-md-4
+    = render 'site_sales'
+    - if @active_event && @resources.any?
+      = render 'resources'
 
 .row
-  - if @active_event && @resources.any?
+  - if @active_event
     .col-md-4
-      .card
-        .card-block
-          .card-title
-            %h5 Additional info
+      = render 'important_dates'
 
-          %ul
-            - @resources.each do |resource|
-              %li
-                = link_to resource.url do
-                  = resource.name
-                  %i.fa.fa-external-link
+
+

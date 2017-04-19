@@ -1,0 +1,11 @@
+.card
+  .card-block
+    .card-title
+      %h5 Additional info
+
+    %ul
+      - @resources.each do |resource|
+        %li.resource
+          = link_to resource.url do
+            = resource.name
+            %i.fa.fa-external-link
