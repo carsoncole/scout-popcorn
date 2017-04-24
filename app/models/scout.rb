@@ -1,6 +1,6 @@
 class Scout < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  has_secure_password
+
   belongs_to :unit
   belongs_to :event, optional: true
   has_many :take_orders
@@ -11,15 +11,18 @@ class Scout < ApplicationRecord
   has_many :envelopes
   has_many :prize_carts
 
-  validates :first_name, :last_name, :email, :unit_id, presence: true
-  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  # attr_accessor :password, :password_confirmation
+
+  validates :first_name, :last_name, :unit_id, presence: true
+  # validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create , presence: true, uniqueness: true}
+  # validates :password, length: { :in => 6..20, :on => :create }
 
   before_save :fix_name!
   before_save :check_super_admin_rights!, if: Proc.new {|s| s.is_super_admin_changed? }
   after_create :set_event!
   after_create :set_if_admin!
-  after_create :send_registration_email!
-  after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
+  # after_create :send_registration_email!
+  # after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
   after_create :create_prize_cart!
 
   ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'],['keri', 'pinzon']]

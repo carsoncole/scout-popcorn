@@ -1,20 +1,22 @@
 .row
   .col-md-4
-    = render 'welcome'
-    = render 'my_sales'
-  .col-md-4
     - if current_scout.admin?
       = render 'get_started' unless @active_event && @active_event.set_up?
-    
-    = render 'top_sellers'
-    = render 'prizes'
+    = render 'my_sales'
   .col-md-4
-    = render 'site_sales'
-    = render 'resources'
+
+    - if @active_event
+      = render 'top_sellers'
+      = render 'prizes'
+  .col-md-4
+    - if @active_event
+      = render 'site_sales'
+      = render 'resources'
 
 .row
   .col-md-4
-    = render 'important_dates'
+    - if @active_event
+      = render 'important_dates'
 
 
 

@@ -1,13 +1,13 @@
 .row
-  .col-md-4
-  .col-md-4
+  .col-md-3
+  .col-md-6
     .card
       .card-block
         %h1.display-4.text-xs-center= Rails.configuration.application_name || 'Corn Cub'
         .text-xs-center= image_tag "kettle-corn-microwave.jpg", class: 'img-fluid m-x-auto'
 
         - unless Unit.all.empty?
-          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          = form_for session_path do |f|
             .form-group
               .field
                 = f.label :email
@@ -21,14 +21,14 @@
 
             .actions
               = f.submit "Log in", class: 'btn btn-success'
-              - if devise_mapping.registerable? && controller_name != 'registrations' && Unit.all.any?
-                &nbsp; or,
-                = link_to new_registration_path(resource_name), class: 'sign_up_link' do
-                  Sign up
-                %br
+              / - if devise_mapping.registerable? && controller_name != 'registrations' && Unit.all.any?
+              /   &nbsp; or,
+              /   = link_to new_registration_path(resource_name), class: 'sign_up_link' do
+              /     Sign up
+              /   %br
 
         %br
 
-        = render "devise/shared/links"
+        / # = render "devise/shared/links"
         - if Rails.configuration.allow_for_multiple_units || Unit.all.empty?
           = link_to "Sign Up Your Unit", new_unit_path, class: 'sign-up-your-unit'

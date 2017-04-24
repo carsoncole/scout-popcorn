@@ -20,7 +20,6 @@ class EventTest < ActiveSupport::TestCase
     assert_equal [:unit_commission_percentage, :online_commission_percentage].sort, @event.errors.keys.sort
   end
 
-
   test "scout has an assigned event on creating new event" do
     scout = scouts(:one)
     scout.update(event_id: nil)

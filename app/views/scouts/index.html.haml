@@ -28,17 +28,18 @@
         %br
         - unless params[:inactive].present? || params[:administrators].present?
           .table-responsive
-            %table.table.card-text
+            %table.table.card-text.table-sm
               %thead
-                %tr
-                  %th Name
+                %tr.small
+                  %th
                   %th Take Orders
                   %th Site Sales
                   %th Online
-                  %th Total Sales
+                  %th Total
                   %th Event
+                  %th Email
                   %th Last Sign In
-                  %th Sign In Count
+                  %th Sign Ins
                   - if current_scout.admin?
                     %th
                     %th.hidden-print
@@ -63,8 +64,9 @@
                       - unless scout.is_admin? || @active_event.nil?
                         = number_to_currency(scout.total_sales(@active_event), precision: 0)
                     %td= scout.event.name if scout.event
-                    %td= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
-                    %td= scout.sign_in_count
+                    %td= scout.email
+                    %td= scout.last_sign_in_at.strftime('%b %d %I:%M%p') if scout.last_sign_in_at
+                    %td.text-xs-center= scout.sign_in_count
                     - if current_scout.admin?
                       %td.hidden-print
                         = link_to edit_scout_path(scout) do
@@ -116,7 +118,7 @@
                     %td
                       - if scout.is_super_admin?
                         %i.fa.fa-check
-                    %td= nice_date_time_compact(scout.last_sign_in_at)
+                    %td= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
                     %td= scout.sign_in_count
                     - if current_scout.admin?
                       %td.hidden-print

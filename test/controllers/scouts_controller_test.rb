@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ScoutsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in scouts(:one)
+    post '/sessions', params: { email: 'mary@example.com', password: 'password'}
   end
 
 

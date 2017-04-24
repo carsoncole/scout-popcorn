@@ -3,7 +3,8 @@
   = render 'head'
   
   %body
-    .hidden_print=render 'application/nav' if scout_signed_in?
+    .hidden_print=render 'nav'
+    %br
     .container
       .hidden_print= render 'flash'
       = yield

@@ -1,11 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  quantity: 1
-  retail_price: 9.99
+  name: White Popcorn
+  retail_price: 10
+  event: one
+  is_physical_inventory: true
 
 two:
-  name: MyString
-  quantity: 1
-  retail_price: 9.99
+  name: Plain Popcorn
+  retail_price: 10
+  event: one
+  is_physical_inventory: true
+
+three:
+  name: Caramel Popcorn
+  retail_price: 15
+  event: one
+  is_physical_inventory: true
+
+four:
+  name: Variety Popcorn Collection
+  retail_price: 45
+  event: one
+  is_physical_inventory: true

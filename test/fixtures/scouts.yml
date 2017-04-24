@@ -6,7 +6,7 @@ one:
   last_name: Jones
   unit: one
   event: one
-  encrypted_password: <%= Devise::Encryptor.digest(Scout, 'password') %> # password
+  password_digest: <%= BCrypt::Password.create "password" %> # password
 
 two: 
   parent_first_name: Sam
@@ -16,7 +16,7 @@ two:
   last_name: Jones
   unit: one
   event: one
-  encrypted_password: <%= Devise::Encryptor.digest(Scout, 'password') %> # password
+  password_digest: <%= BCrypt::Password.create "password" %>  # password
 
 three: 
   parent_first_name: Mary
@@ -26,4 +26,4 @@ three:
   last_name: Jones
   unit: one
   event: one
-  encrypted_password: <%= Devise::Encryptor.digest(Scout, 'password') %> # password
+  password_digest: <%= BCrypt::Password.create "password" %>  # password

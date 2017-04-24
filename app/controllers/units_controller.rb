@@ -1,7 +1,8 @@
 class UnitsController < ApplicationController
   helper StatesHelper
   before_action :set_unit, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_scout!, only: [:new, :create]
+  skip_before_action :authorize, only: [:new, :create]
+  layout 'sessions', only: [:new, :create]
 
   # GET /units/1
   # GET /units/1.json
@@ -12,6 +13,7 @@ class UnitsController < ApplicationController
   # GET /units/new
   def new
     @unit = Unit.new
+    @unit.scouts.build
   end
 
   # GET /units/1/edit
@@ -22,15 +24,16 @@ class UnitsController < ApplicationController
   # POST /units.json
   def create
     @unit = Unit.new(unit_params)
+    puts unit_params[:scouts_attributes]
+    puts "*"
     if @unit.save
-      @scout = @unit.scouts.new(first_name: unit_params[:first_name], last_name: unit_params[:last_name], unit_id: @unit.id, email: unit_params[:email], password:  'robert', password_confirmation: 'robert', is_super_admin: true)
+      @scout = @unit.scouts.new(first_name: scout_params[:first_name], last_name: scout_params[:last_name], unit_id: @unit.id, email: scout_params[:email], password:  scout_params[:password], password_confirmation: scout_params[:password_confirmation], is_super_admin: true)
       if @scout.save
         redirect_to root_path, notice: 'Unit was successfully created.'
       else
         render :new, notice: @scout.errors.full_messages
       end
     else
-      puts @unit.errors.full_messages
       render :new, notice: @unit.errors.full_messages
     end
   end
@@ -69,4 +72,9 @@ class UnitsController < ApplicationController
     def unit_params
       params.require(:unit).permit(:name, :street_address_1, :street_address_2, :city, :zip_code, :state_postal_code, :treasurer_first_name, :treasurer_last_name, :treasurer_email, :first_name, :last_name, :email)
     end
+
+    def scout_params
+      params.require(:scout).permit( :password, :password_confirmation, :first_name, :last_name, :email )
+    end
 end
+

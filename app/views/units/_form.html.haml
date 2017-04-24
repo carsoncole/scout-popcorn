@@ -5,50 +5,51 @@
         .card-title
           %h2 Unit details
 
-        = form_for @unit do |f|
-          - if @unit.errors.any?
-            #error_explanation
-              %h2= "#{pluralize(@unit.errors.count, "error")} prohibited this unit from being saved:"
-              %ul
-                - @unit.errors.full_messages.each do |msg|
-                  %li= msg
+        = form_tag units_path, method: :post do
+          / - if @unit.errors.any?
+          /   #error_explanation
+          /     %h2= "#{pluralize(@unit.errors.count, "error")} prohibited this unit from being saved:"
+          /     %ul
+          /       - @unit.errors.full_messages.each do |msg|
+          /         %li= msg
           
           .form-group
-            = f.label :unit_name
-            = f.text_field :name, placeholder: 'Pack 999', class: 'form-control'
+            = label_tag :unit_name
+            
+            = text_field :unit, :name, placeholder: 'Pack 999', class: 'form-control'
 
           %br
 
           %h4 Administrator
 
           .form-group
-            = f.label :first_name
-            = f.text_field :first_name, class: 'form-control'
+            = label_tag :first_name
+            = text_field :scout, :first_name, class: 'form-control'
 
           .form-group
-            = f.label :last_name
-            = f.text_field :last_name, class: 'form-control'
+            = label_tag :last_name
+            = text_field :scout, :last_name, class: 'form-control'
 
           .form-group
-            = f.label :email
-            = f.text_field :email, class: 'form-control'
+            = label_tag :email
+            = text_field :scout, :email, class: 'form-control'
 
           .form-group
-            = f.label :password
+            = label_tag :password
             - if @minimum_password_length
               %em
                 = surround("(", ")") do
                   = @minimum_password_length
                   characters minimum.
 
-            = f.password_field :password, autocomplete: "off",class: 'form-control'
+            = password_field :scout, :password, autocomplete: "off",class: 'form-control'
 
           .form-group
-            = f.label :password_confirmation
-            = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+            = label_tag :password_confirmation
+            = password_field :scout,:password_confirmation, autocomplete: "off", class: 'form-control'
 
           %hr
 
 
           .actions
-            = f.submit 'Save', class: 'btn btn-success'
+            = submit_tag 'Save', class: 'btn btn-success'

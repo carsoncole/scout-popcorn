@@ -165,27 +165,24 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.string   "parent_first_name"
     t.string   "parent_last_name"
     t.string   "email"
+    t.string   "password_digest",        default: "",    null: false
     t.integer  "event_id"
-    t.boolean  "is_active",              default: true
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.boolean  "is_active",              default: true
     t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.boolean  "is_admin"
-    t.boolean  "is_super_admin"
     t.boolean  "is_take_orders_admin",   default: false
     t.boolean  "is_site_sales_admin",    default: false
     t.boolean  "is_online_sales_admin",  default: false
-    t.boolean  "is_prizes_admin"
-    t.index ["email"], name: "index_scouts_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_scouts_on_reset_password_token", unique: true
+    t.boolean  "is_prizes_admin",        default: false
+    t.boolean  "is_super_admin"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "site_sale_line_items", force: :cascade do |t|

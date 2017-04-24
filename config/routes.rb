@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
-  
+  root "sessions#new"
+  get '/home' => 'home#index', as: 'home'
+
   resources :resources
   get 'take_orders_order/index'
+
+
+  resources :sessions
+  get 'signup', to: 'scouts#new', as: 'signup'
+  get 'login', to: 'sessions#new', as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'forgot_password', to: 'scouts#forgot_password', as: 'forgot_password'
 
   resources :prize_carts
   resources :due_from_customers, only: :index
@@ -28,10 +37,9 @@ Rails.application.routes.draw do
   resources :payment_methods
   get 'help/index'
 
-  root "home#index"
+
   get 'home/invite_scouts' => 'home#invite_scouts', as: 'invite_scouts'
 
-  devise_for :scouts, :controllers => { registrations: 'registrations' }
   resources :units
   resources :scouts do
     get 'update-password' => 'scouts#update_password', as: 'update_password'
@@ -61,7 +69,7 @@ Rails.application.routes.draw do
   post "prize-cart/removal/:id" => "prize_carts#removal", as: 'prize_removal'
   resources :prizes
   resources :products
-  resources :home, only: :index
+
   resources :top_sellers, only: :index
   resources :purchase_orders, :take_order_purchase_orders
   resources :summary_orders

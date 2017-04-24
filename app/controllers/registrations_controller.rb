@@ -5,6 +5,11 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+  def create
+    @units = Unit.all.order(:name)
+    super
+  end
+
 
 
   protected

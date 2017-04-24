@@ -1,6 +1,6 @@
 .row
   .col-md-12
-    %h1 Products
+    %h2 Products
 
 
 
@@ -11,36 +11,29 @@
         .card
           .card-block
             .card-title
-              %h5.h5= product.name
+              %h5.h5.text-xs-center= product.name
 
-            - if product.url
+            - if product.url.present?
               .text-xs-center= image_tag product.url, height: 200, class: 'img-rounded img-fluid m-x-auto d-block'
               %br
+            - else
+              %p.text-xs-center.product-image
+                %i.fa.fa-cube.fa-lg
             
             %h5.text-xs-center= number_to_currency(product.retail_price)
             - if current_scout.admin?
-              .small
-                Short name:
-                = product.short_name
-              = link_to 'Show', product
-              = link_to 'Edit', edit_product_path(product)
-              = link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
+              .text-xs-right
+                = link_to 'Details', product
+                = link_to edit_product_path(product) do
+                  %i.fa.fa-pencil.fa-lg
+
+                = link_to product, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  %i.fa.fa-trash.fa-lg
 
 .row
-  - if current_scout.admin?
-    .col-md-4
-      .card.card-block.text-xs-center
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
-        = link_to new_product_path do
-          %fa.fa.fa-plus.fa-lg
-        %br
-        %br
-        %br
-        %br
-        %br
-        %br
+  .col-md-4
+    - if current_scout.admin?
+      = link_to new_product_path do
+        %fa.fa.fa-plus.fa-lg
+        Add new product
+

@@ -1,8 +1,8 @@
 - if @active_event && @active_event.number_of_top_sellers && @active_event.number_of_top_sellers > 0 && @active_event.show_top_sellers
-  .card
+  .card.top-sellers
     .card-block
-      .card-title
-        %h3.text-xs-center
+      .card-title.text-center
+        %h3
           %i.fa.fa-trophy.fa-lg
           Top Sellers
           %i.fa.fa-trophy.fa-lg
@@ -17,4 +17,6 @@
                 %th= scout.name
                 %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
       - else
-        %p.card-text.text-xs-center No sales posted yet.
+        %p.card-text.text-center No sales posted yet.
+
+  %br

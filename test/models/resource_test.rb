@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ResourceTest < ActiveSupport::TestCase
   def setup
-    @resource = Resource.new(name: 'Some Event 20XX', url: "http://example.com")
+    @resource = Resource.new(name: 'Some Event 20XX', url: "http://example.com", event_id: events(:one).id)
   end
 
   test "for invalid URL" do

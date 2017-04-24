@@ -1,10 +1,11 @@
-.card
-  .card-block
-    .card-title
-      %h5 Upcoming Site Sales
+- if @active_event
+  .card
+    .card-block
+      .card-title
+        %h5 Upcoming Site Sales
 
-    %table.table
-      - @site_sales.each do |site_sale|
-        %tr
-          %td= site_sale.name
-          %td.text-xs-right= site_sale.date.strftime('%b %e')
+      %table.table
+        - @site_sales.each do |site_sale|
+          %tr
+            %td= site_sale.name
+            %td.text-xs-right= site_sale.date.strftime('%b %e')

@@ -4,7 +4,8 @@ class Unit < ApplicationRecord
   has_many :events, dependent: :destroy
   has_many :ledgers, through: :accounts
 
-  attr_accessor :email, :first_name, :last_name
+
+  accepts_nested_attributes_for :scouts
 
   scope :active, -> { joins(:events).where("events.is_active = ?", true) }
 

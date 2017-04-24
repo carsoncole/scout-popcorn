@@ -1,4 +1,9 @@
 module ApplicationHelper
+
+  def current_scout
+    @current_scout
+  end
+
   def nice_date(date)
     date.strftime("%B %d, %Y")
   end

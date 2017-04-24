@@ -24,11 +24,11 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 gem 'haml-rails'
-gem 'bootstrap', '~> 4.0.0.alpha3'
+gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'font-awesome-sass'
-gem 'devise'
 gem 'kaminari'
 gem 'exception_notification'
+gem 'bcrypt', '~> 3.1.11'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'

@@ -1,0 +1,33 @@
+.row
+  .col-md-3
+  .col-md-6
+    .card
+      .card-block
+        %h1.display-4.text-xs-center= Rails.configuration.application_name || 'Corn Cub'
+        .text-xs-center= image_tag "kettle-corn-microwave.jpg", class: 'img-fluid m-x-auto'
+
+        - unless Unit.all.empty?
+          = form_tag '/sessions' do
+            .form-group
+              .field
+                = label_tag :email
+                %br
+                = email_field '', :email, autofocus: true, class: 'form-control'
+            .form-group
+              .field
+                = label_tag :password
+                %br
+                = password_field '', :password, autocomplete: "off", class: 'form-control'
+
+            .actions
+              = submit_tag "Log in", class: 'btn btn-success'
+              , or
+              = link_to "Sign Up", signup_path, class: 'sign_up_link'
+
+        %br
+
+        / # = render "devise/shared/links"
+        - if Rails.configuration.allow_for_multiple_units || Unit.all.empty?
+          = link_to "Sign Up Your Unit", new_unit_path, class: 'sign-up-your-unit'
+          %br
+        = link_to "Forget your password?", forgot_password_path

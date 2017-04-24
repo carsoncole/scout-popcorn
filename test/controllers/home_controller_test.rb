@@ -3,7 +3,7 @@ require 'test_helper'
 class HomeControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    sign_in scouts(:one)
+    post '/sessions', params: { email: 'mary@example.com', password: 'password'}
   end
 
   test "should get root" do

@@ -6,7 +6,7 @@ class Product < ApplicationRecord
   has_many :site_sales, through: :site_sale_line_items
   has_many :stocks
 
-  validates :name, :retail_price, :quantity, presence: true
+  validates :name, :retail_price, presence: true
 
 
   def self.default

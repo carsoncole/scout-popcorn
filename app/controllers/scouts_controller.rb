@@ -1,5 +1,7 @@
 class ScoutsController < ApplicationController
   before_action :set_scout, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authorize, only: [:new, :create, :forgot_password]
+  layout 'sessions', only: [:new, :create, :forgot_password]
 
   # GET /scouts
   # GET /scouts.json
@@ -20,6 +22,7 @@ class ScoutsController < ApplicationController
   # GET /scouts/new
   def new
     @scout = Scout.new
+    @units = Unit.active.order(:name)
   end
 
   # GET /scouts/1/edit
@@ -29,18 +32,15 @@ class ScoutsController < ApplicationController
   # POST /scouts
   # POST /scouts.json
   def create
-    @scout = Scout.build(scout_params)
-    @scout.unit_id = 1
+    @scout = Scout.new(scout_params)
 
-    respond_to do |format|
-      if @scout.save
-        format.html { redirect_to @scout, notice: 'Scout was successfully created.' }
-        format.json { render :show, status: :created, location: @scout }
-      else
-        format.html { render :new }
-        format.json { render json: @scout.errors, status: :unprocessable_entity }
-      end
+    if @scout.save
+      redirect_to root_path, notice: 'Scout was successfully created. Please login to continue'
+    else
+      @units = Unit.active.order(:name)
+      render :new
     end
+
   end
 
   def update_password
@@ -68,6 +68,9 @@ class ScoutsController < ApplicationController
     redirect_to scouts_path, notice: 'Scout was successfully moved to "inactive".'
   end
 
+  def forgot_password
+  end
+
   private
     def set_scout
       if @unit
@@ -79,6 +82,6 @@ class ScoutsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scout_params
-      params.require(:scout).permit(:first_name, :last_name, :email, :parent_first_name, :parent_last_name, :password, :password_confirmation, :event_id, :is_active, :is_site_sales_admin, :is_take_orders_admin, :is_online_sales_admin, :is_admin, :is_super_admin, :is_prizes_admin)
+      params.require(:scout).permit(:first_name, :last_name, :email, :parent_first_name, :parent_last_name, :password, :password_confirmation, :event_id, :is_active, :is_site_sales_admin, :is_take_orders_admin, :is_online_sales_admin, :is_admin, :is_super_admin, :is_prizes_admin, :password_digest, :unit_id)
     end
 end

@@ -1,54 +1,45 @@
+$blue: #003F87;
+$yellow: #FCD116;
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin-top: 5em;
   background-color: #efefef;
 }
 .page-title {
   margin-bottom: 1.5em;
 }
-a.kill {
-  color: #FCD116;
-  &:visited {
-    color: #FCD116;
-  }
-}
-.navbar-toggler {
-  color: #ffffff;
-}
 
 .navbar-brand {
-  a {
-    color: #fff
-
-  }
+  a { color: $yellow;}
   a:hover { text-decoration: none; }
 }
 
+.product-image {
+  font-size: 3em;
+}
+
+.card.top-sellers .card-title {
+  color: $blue;
+
+  .fa-trophy {
+    color: $yellow;
+  }
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+  .label {
+    background-color: transparent;
+  }
+}
+
 #error_explanation {
-  margin-bottom: 2em;
-  background-color: #f0f0f0;
-}
-
-#error_explanation h4 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  margin: -7px;
-  background-color: #c00;
-  color: #fff;
-}
-
-#error_explanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 5px;
-}
-
-#error_explanation ul {
-  margin: 0.5em 0 0 0;
-  li {
-    margin-top: 0.25em;
-    list-style: square;
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
   }
 }
 
