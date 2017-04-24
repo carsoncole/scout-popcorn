@@ -23,7 +23,8 @@ class EventTest < ActiveSupport::TestCase
   test "scout has an assigned event on creating new event" do
     scout = scouts(:one)
     scout.update(event_id: nil)
-    event = Event.create(name: 'Popcorn 2020', unit_id: scout.unit_id, is_active: true)
+    event = Event.new(name: 'Popcorn 2020', unit_id: scout.unit_id, is_active: true)
+    assert event.save
     scout.reload
     assert_equal scout.event_id, event.id
   end

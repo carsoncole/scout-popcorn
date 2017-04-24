@@ -6,8 +6,16 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     post '/sessions', params: { email: 'mary@example.com', password: 'password'}
   end
 
-  test "should get root" do
+  test "should get root sign in when not logged in" do
+    get logout_path
     get root_url
+    assert_response :success
+  end
+
+  test "should get dashboard when logged in" do
+    get root_url
+    assert_response :redirect
+    follow_redirect!
     assert_response :success
   end
 
@@ -21,12 +29,12 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   test "should show top sellers" do
     follow_redirect!
-    assert_select "h3", "Top Sellers"
+    assert_select "h5", "Top Sellers"
   end
 
   test "should show resources" do
     follow_redirect!
-    assert_select "h5", "Additional info"
+    assert_select "h5", "More info"
     assert_select "li.resource", 2
   end
 

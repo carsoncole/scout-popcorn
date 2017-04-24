@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :authorize
 
   def new
+    redirect_to home_path if current_scout
     @scout = Scout.new
   end
 
