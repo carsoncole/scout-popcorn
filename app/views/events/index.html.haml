@@ -3,7 +3,7 @@
     .col-md-6
       .card
         .card-block
-          .text-xs-center
+          .text-center
             .card-title 
               %h3
                 = event.name
@@ -12,83 +12,82 @@
           %table.table.card-text.card-text
 
             %tr
-              %th Active
-              %td.text-xs-right
-                - if event.is_active
-                  %i.fa.fa-toggle-on.fa-lg.text-success
-                - else
-                  %i.fa.fa-toggle-off.fa-lg.text-danger
+              %th Commission %:
+              %td.text-right= number_to_percentage(event.unit_commission_percentage, precision: 2)
+
+
+            %tr
+              %th Online commission %:
+              %td.text-right= number_to_percentage(event.online_commission_percentage, precision: 2)
+
 
             %tr
               %th
                 Resources
 
-              %td.text-xs-right
+              %td.text-right
                 = link_to resources_path do
                   %i.fa.fa-eye.fa-lg
 
 
             %tr
-              %th Commission %:
-              %td.text-xs-right= number_to_percentage(event.unit_commission_percentage, precision: 2)
-
-
-            %tr
-              %th Online commission %:
-              %td.text-xs-right= number_to_percentage(event.online_commission_percentage, precision: 2)
-
-
-
-            %tr
               %th Online is enabled?
-              %td.text-xs-right
+              %td.text-right
                 - if event.is_online_enabled
                   %i.fa.fa-check
 
             - if event.prizes?
               %tr
                 %th Prize cart ordering starts:
-                %td.text-xs-right= nice_date_compact(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
+                %td.text-right= nice_date_compact(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
 
               %tr
                 %th Prize cart ordering ends:
-                %td.text-xs-right= nice_date_compact(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
+                %td.text-right= nice_date_compact(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
             - else
               %tr
                 %th Prizes
-                %td.text-xs-right
+                %td.text-right
                   - if event.is_prizes_enabled?
                     %i.fa.fa-check
             %tr
               %th Site Sales enabled?
-              %td.text-xs-right
+              %td.text-right
                 - if event.is_site_sales_enabled
                   %i.fa.fa-check
               
 
             %tr
               %th Take Orders is enabled?
-              %td.text-xs-right
+              %td.text-right
                 - if event.is_take_orders_enabled
                   %i.fa.fa-check
               
             %tr
               %th Take Orders deadline:
-              %td.text-xs-right= nice_date_compact(event.take_orders_deadline_at) if event.take_orders_deadline_at
+              %td.text-right= nice_date_compact(event.take_orders_deadline_at) if event.take_orders_deadline_at
 
             %tr
               %th Show Top Sellers:
-              %td.text-xs-right
+              %td.text-right
                 - if event.show_top_sellers
                   %i.fa.fa-check
 
             %tr
               %th Number of Top Sellers:
-              %td.text-xs-right= event.number_of_top_sellers
+              %td.text-right= event.number_of_top_sellers
 
           - if current_scout.is_super_admin?
 
-            .text-xs-center
+            .text-center
+              - if event.is_active?
+                = link_to event_archive_path(event), class: 'btn btn-warning', :data => { :confirm => 'WARNING - Archiving an Event will remove it from the Dashboard of all Scouts. No information is destroyed. Unarchiving an Event will return it to their Dashboard.' } do
+                  %i.fa.fa-trash-o
+                  ARCHIVE EVENT
+              - else
+                = link_to event_archive_path(event, unarchive: true), class: 'btn btn-info', :data => { :confirm => 'Un-archiving an Event will return this Event to the Dashboard of all Unit Scouts.' } do
+                  %i.fa.fa-trash-o
+                  UN-ARCHIVE EVENT
               = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
                 %i.fa.fa-trash-o
                 DESTROY EVENT

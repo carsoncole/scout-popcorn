@@ -68,8 +68,18 @@ class EventsController < ApplicationController
     end
   end
 
+  def archive
+    @event = Event.find(params[:event_id])
+    if params[:unarchive]
+      @event.update(is_active: true)
+    else
+      @event.update(is_active: false)
+    end
+    redirect_to events_path
+  end
+
   private
     def event_params
-      params.require(:event).permit(:unit_id, :name, :is_active, :unit_commission_percentage, :prize_cart_ordering_starts_at, :prize_cart_ordering_ends_at, :number_of_top_sellers, :take_orders_deadline_at, :online_commission_percentage, :is_prizes_enabled, :is_online_enabled, :is_take_orders_enabled, :is_site_sales_enabled, :show_top_sellers)
+      params.require(:event).permit(:unit_id, :name, :is_active, :unit_commission_percentage, :prize_cart_ordering_starts_at, :prize_cart_ordering_ends_at, :number_of_top_sellers, :take_orders_deadline_at, :online_commission_percentage, :is_prizes_enabled, :is_online_enabled, :is_take_orders_enabled, :is_site_sales_enabled, :show_top_sellers, :contact_person_email)
     end
 end

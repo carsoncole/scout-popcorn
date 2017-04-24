@@ -9,6 +9,10 @@ body {
   margin-bottom: 1.5em;
 }
 
+h5 {
+  color: $blue;
+}
+
 .navbar-brand {
   a { color: $yellow;}
   a:hover { text-decoration: none; }

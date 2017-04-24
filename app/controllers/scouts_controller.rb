@@ -35,7 +35,7 @@ class ScoutsController < ApplicationController
     @scout = Scout.new(scout_params)
 
     if @scout.save
-      redirect_to root_path, notice: 'Scout was successfully created. Please login to continue'
+      redirect_to root_path, notice: 'Your account was successfully created. Please login to continue'
     else
       @units = Unit.active.order(:name)
       render :new

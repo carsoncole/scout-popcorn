@@ -20,6 +20,8 @@ class Event < ApplicationRecord
   validates :number_of_top_sellers, numericality: { integer_only: true }
   validates :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100, }
 
+  scope :active, -> { where(is_active: true) }
+
   after_create :set_events_for_scouts!
   after_update :set_events_for_scouts!, if: Proc.new {|e| e.is_active_changed? && e.is_active }
   #after_create :create_default_products!
@@ -27,10 +29,7 @@ class Event < ApplicationRecord
   after_create :create_default_accounts!
   after_destroy :reset_events_for_scouts!
   after_save :update_take_orders!, if: Proc.new {|e| e.unit_commission_percentage_changed? }
-
-  def self.active
-    where(is_active: true)
-  end
+  after_update :reset_default_events!, if: Proc.new {|e| e.is_active_changed? && e.is_active == false }
  
   def open_take_order_purchase_order
     open = take_order_purchase_orders.where(status: 'open').first
@@ -156,6 +155,15 @@ class Event < ApplicationRecord
     Account.create_product_due_to_customers!(self)
     Account.create_money_due_to_bsa!(self)
     Account.create_bsa_credit_card!(self)
+  end
+
+  def reset_default_events!
+    new_default_event = unit.events.active.last
+    if new_default_event
+      unit.scouts.where(event_id: self.id).update_all(event_id: new_default_event.id)
+    else
+      unit.scouts.where(event_id: self.id).update_all(event_id: nil)
+    end
   end
 
   def update_take_orders!

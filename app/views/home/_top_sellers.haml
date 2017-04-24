@@ -1,22 +1,23 @@
 - if @active_event && @active_event.number_of_top_sellers && @active_event.number_of_top_sellers > 0 && @active_event.show_top_sellers
   .card.top-sellers
     .card-block
-      .card-title.text-center
-        %h3
-          %i.fa.fa-trophy.fa-lg
-          Top Sellers
-          %i.fa.fa-trophy.fa-lg
+      %h5.card-title.text-center
+        %i.fa.fa-trophy.fa-lg
+        Top Sellers
+        %i.fa.fa-trophy.fa-lg
 
       - if @top_sellers.any?
         
         .table-responsive
-          %table.table
+          %table.table.card-text
             - @top_sellers.each do |top_seller|
               - scout = Scout.find(top_seller[0])
               %tr
                 %th= scout.name
                 %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
       - else
-        %p.card-text.text-center No sales posted yet.
-
+        %p.card-text.text-center
+          We will post the 
+          = @active_event.number_of_top_sellers
+          top selling Scouts here!
   %br

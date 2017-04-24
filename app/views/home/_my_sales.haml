@@ -1,12 +1,11 @@
 - if @active_event
   .card
     .card-block
-      .card-title
-        %h3
-          My Sales     
+      %h3.card-title
+        My Sales     
       
       - grand_total = 0
-      %table.table
+      %table.table.card-text
         - if @active_event.is_take_orders_enabled?
           %tr
             %th.take_orders(colspan=2)

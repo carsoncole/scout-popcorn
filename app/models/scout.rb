@@ -14,8 +14,10 @@ class Scout < ApplicationRecord
   # attr_accessor :password, :password_confirmation
 
   validates :first_name, :last_name, :unit_id, presence: true
-  # validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create , presence: true, uniqueness: true}
-  # validates :password, length: { :in => 6..20, :on => :create }
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
+  validates :email, uniqueness: true
+
+  validates :password, length: { :in => 6..70 }
 
   before_save :fix_name!
   before_save :check_super_admin_rights!, if: Proc.new {|s| s.is_super_admin_changed? }

@@ -1,10 +1,9 @@
 - if @active_event && @resources.any?
   .card
     .card-block
-      .card-title
-        %h5 Additional info
+      %h5.card-title More info
 
-      %ul
+      %ul.card-text
         - @resources.each do |resource|
           %li.resource
             = link_to resource.url do

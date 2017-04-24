@@ -7,16 +7,12 @@
 
     - if @active_event
       = render 'top_sellers'
+      %br
       = render 'prizes'
   .col-md-4
     - if @active_event
-      = render 'site_sales'
-      = render 'resources'
-
-.row
-  .col-md-4
-    - if @active_event
+      - if @active_event.is_site_sales_enabled?
+        = render 'site_sales'
+        %br
       = render 'important_dates'
-
-
-
+      = render 'resources'

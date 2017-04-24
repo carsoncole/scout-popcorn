@@ -25,7 +25,7 @@ class ResourcesController < ApplicationController
   # POST /resources
   # POST /resources.json
   def create
-    @resource = Resource.new(resource_params)
+    @resource = @active_event.resources.build(resource_params)
 
     respond_to do |format|
       if @resource.save

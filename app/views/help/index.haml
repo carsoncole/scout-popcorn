@@ -1,24 +1,31 @@
 .row
-  .col-md-12
+  .col-md-2
+  .col-md-8
     .card
       .card-block
         .card-title
-          %h1 Help
+          %h2 Help
 
 
         %br
-        %h2 General
-        %h5 Q. What is the timeline?
-        %ul
-          %li September 1 - October 16 Popcorn Sales event
-          %li October 16 - Take Orders forms/collection envelopes due by 7pm
-          %li October 30 - Prize selection by Scouts due
-          %li November 5 - Take Order distribution to customers by Scouts
+        %h4 General
+        - if @active_event.take_orders_deadline_at
+          %h5 Q. What is the timeline?
+          %ul
 
-        %h5 Q. Who can I ask if I have questions?
-        %p= mail_to "carson.cole@gmail.com"
-        %br
-        %h2 Door-to-Door Take Orders
+            %li
+              = @active_event.take_orders_deadline_at.strftime("%B %d")
+              = "- Deadline for last Take Order forms/collection envelopes due"
+          - if @active_event.prize_cart_ordering_ends_at
+            %li
+              = @active_event.prize_cart_ordering_ends_at.strftime("%B %d")
+              = "- Prize selection is due"            
+
+        - if @active_event.contact_person_email?
+          %h5 Q. Who can I ask if I have questions?
+          %p= mail_to @active_event.contact_person_email
+          %br
+        %h4 Door-to-Door Take Orders
         %h5 Q. How do I do door-to-door sales?
         %p With door-to-door sales you'll be interacting with your neighbors, and since you are asking for their support, its important to proudly wear your full Scout uniform. Bring your order form, and introduce yourself. You could say "Hello, my name is John, and I am a Cub Scout with Pack 4496. I am raising money through the sale of popcorn for our Pack and to help me go to summer camp. Can I show you the popcorn we have?"
 
@@ -48,7 +55,7 @@
         %p Take Order order forms/collection envelopes are due by October 16. We are transmitting the orders by midnight on October 16, so any orders received after that will need to be returned.
 
         %br
-        %h2 Site Sales
+        %h4 Site Sales
         %h5 Q. Where do I sign up for Site Sales?
         %p= link_to "Google Site Sale Signup Sheet", "https://docs.google.com/spreadsheets/u/1/d/1yO7KX0E3OBasg2bCso0RZa74kTxiG-glYkt9b7PW5MY/edit?ts=57bf7d5d#gid=0"
 
@@ -56,13 +63,13 @@
         %p Yes. We'll take all of revenues from Site Sales, divide them by the total hours worked and multiply the result by the number of hours your worked.
    
         %br
-        %h2 Online Sales
+        %h4 Online Sales
         %h5 Q. Can I offer online sales to my distant relatives?
         %p
           Scouts can also direct friends/relatives to the Trails End website to do online orders, in which Scouts will get credit. To do this you need to register them for a unique ID. There is a registration link on their home page or go here:
           = link_to "https://www.trails-end.com/Home/Register", "https://www.trails-end.com/Home/Register", target: "_blank"
           Any orders placed on the Trails-End.com website with that Scout ID, will be credited to the Scout and will show up in Corn Cub.    
         / %br
-        / %h2 Direct Sales  
+        / %h4 Direct Sales  
         / %h5 Q. What are direct sales?
         / %p Direct sales are sales of product that you directly sell to your neighbor without taking an order. This requires to have the product on hand.

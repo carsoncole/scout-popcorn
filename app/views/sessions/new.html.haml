@@ -21,8 +21,9 @@
 
             .actions
               = submit_tag "Log in", class: 'btn btn-success'
-              , or
-              = link_to "Sign Up", signup_path, class: 'sign_up_link'
+              - if Unit.active.any?
+                , or
+                = link_to "Sign Up", signup_path, class: 'sign_up_link'
 
         %br
 

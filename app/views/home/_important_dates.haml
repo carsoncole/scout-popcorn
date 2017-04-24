@@ -3,15 +3,16 @@
     .card-block
       %h5.card-title Important Dates
 
-      %table.table.table-compact.important_dates
+      %ul.important_dates.card-text
         - if @active_event.take_orders_deadline_at && @active_event.is_take_orders_enabled
-          %tr
-            %th Take orders end:
-            %td.text-xs-right= @active_event.take_orders_deadline_at.strftime("%b %e")
+          %li
+            Take orders end:
+            = @active_event.take_orders_deadline_at.strftime("%b %e")
         - if @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_ends_at && @active_event.is_prizes_enabled
-          %tr
-            %th Prize ordering:
-            %td.text-xs-right
-              = @active_event.prize_cart_ordering_starts_at.strftime("%b %e")
-              = '-'
-              = @active_event.prize_cart_ordering_ends_at.strftime("%d")
+          %li
+            Prize ordering:
+            = @active_event.prize_cart_ordering_starts_at.strftime("%b %e")
+            = '-'
+            = @active_event.prize_cart_ordering_ends_at.strftime("%d")
+
+  %br

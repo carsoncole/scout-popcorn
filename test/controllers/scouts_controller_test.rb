@@ -40,9 +40,17 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_select "option", "Pack 100"
   end
 
+  test "should not allow scout with non-unique email" do
+    get signup_path
+    assert_difference('Scout.count', 0) do
+      post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'mary@example.com', password: 'password' } }
+    end
+    assert_equal css_select('ul.errors>li').last.content, 'Email has already been taken'
+  end
+
   test "should create scout" do
     assert_difference('Scout.count') do
-      post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'john@example.com', password: 'password' } }
+      post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'test@example.com', password: 'password' } }
     end
 
     assert_redirected_to root_path

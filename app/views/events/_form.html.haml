@@ -21,9 +21,13 @@
             = f.label :name
             = f.text_field :name, placeholder: 'Popcorn 2018', class: 'form-control'
           .form-group
-            = f.label :is_active
-            %p.card-text.small.text-muted When 'Active' an event is viewable by Unit scouts.
-            = f.check_box :is_active, class: 'form-control'
+            = f.label :contact_person_email
+            = f.text_field :contact_person_email, placeholder: 'Email', class: 'form-control'
+
+          / .form-group
+          /   = f.label :is_active
+          /   %p.card-text.small.text-muted When 'Active' an event is viewable by Unit scouts.
+          /   = f.check_box :is_active, class: 'form-control'
           
           %br
           %h4 Commissions

@@ -51,19 +51,20 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.integer  "unit_id"
     t.string   "name"
     t.boolean  "is_active",                                             default: true,   null: false
+    t.string   "contact_person_email"
+    t.datetime "take_orders_deadline_at"
+    t.date     "prize_cart_ordering_starts_at"
+    t.boolean  "is_online_enabled",                                     default: true
+    t.boolean  "is_take_orders_enabled",                                default: true
+    t.boolean  "is_prizes_enabled",                                     default: true
+    t.boolean  "show_top_sellers",                                      default: true
+    t.boolean  "is_site_sales_enabled",                                 default: true
+    t.integer  "number_of_top_sellers",                                 default: 5
     t.datetime "created_at",                                                             null: false
     t.datetime "updated_at",                                                             null: false
     t.decimal  "unit_commission_percentage",    precision: 5, scale: 2, default: "32.0"
-    t.date     "prize_cart_ordering_starts_at"
-    t.integer  "number_of_top_sellers",                                 default: 5
-    t.datetime "take_orders_deadline_at"
     t.date     "prize_cart_ordering_ends_at"
     t.decimal  "online_commission_percentage",  precision: 5, scale: 2, default: "35.0"
-    t.boolean  "is_prizes_enabled",                                     default: true
-    t.boolean  "is_online_enabled",                                     default: true
-    t.boolean  "is_take_orders_enabled",                                default: true
-    t.boolean  "is_site_sales_enabled",                                 default: true
-    t.boolean  "show_top_sellers",                                      default: true
   end
 
   create_table "ledgers", force: :cascade do |t|

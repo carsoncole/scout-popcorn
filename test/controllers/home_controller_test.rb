@@ -32,7 +32,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   test "should show important dates" do
     follow_redirect!
-    assert_select "table.important_dates"
+    assert_select "ul.important_dates"
   end
 
 end
