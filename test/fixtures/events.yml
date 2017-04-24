@@ -3,4 +3,11 @@
 one:
   unit: one
   name: Popcorn 2017
+  is_active: true
   take_orders_deadline_at: 2017-11-01
+
+two:
+  unit: one
+  name: Popcorn 2018
+  is_active: false
+  take_orders_deadline_at: 2018-11-01

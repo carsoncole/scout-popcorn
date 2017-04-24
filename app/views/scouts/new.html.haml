@@ -19,15 +19,7 @@
               %i.fa.fa-info-circle
               Each Scout/Administrator must have an unique Email.
             = f.email_field :email, autofocus: true, placeholder: "Parent/Scout email", class: 'form-control'
-
-          / .form-group
-          /   = f.label :parent_first_name
-          /   = f.text_field :parent_first_name, placeholder: "Parent first name",class: 'form-control'
-
-          / .form-group
-          /   = f.label :parent_last_name
-          /   = f.text_field :parent_last_name, placeholder: "Parent last name",class: 'form-control'  
-
+            
           .form-group
             = f.label :scout_first_name
             = f.text_field :first_name, placeholder: "First name",class: 'form-control'

@@ -3,6 +3,7 @@ require 'test_helper'
 class ScoutsControllerTest < ActionDispatch::IntegrationTest
   setup do
     post '/sessions', params: { email: 'mary@example.com', password: 'password'}
+    @scout = scouts(:one)
   end
 
 
@@ -26,39 +27,39 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_select "span.event-name", "Popcorn 2017"
   end
 
-  # test "should get new" do
-  #   get new_scout_url
-  #   assert_response :success
-  # end
+  test "should get new" do
+    get signup_path
+    assert_response :success
+  end
 
-  # test "should create scout" do
-  #   assert_difference('Scout.count') do
-  #     post scouts_url, params: { scout: {  } }
-  #   end
+  test "should show #active unit" do
+    get signup_path
+    assert_select "#scout_unit_id" do |element|
+      assert_select element, "option", 2
+    end
+    assert_select "option", "Pack 100"
+  end
 
-  #   assert_redirected_to scout_url(Scout.last)
-  # end
+  test "should create scout" do
+    assert_difference('Scout.count') do
+      post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'john@example.com', password: 'password' } }
+    end
 
-  # test "should show scout" do
-  #   get scout_url(@scout)
-  #   assert_response :success
-  # end
+    assert_redirected_to root_path
+  end
 
-  # test "should get edit" do
-  #   get edit_scout_url(@scout)
-  #   assert_response :success
-  # end
+  test "should show scout" do
+    get scout_url(@scout)
+    assert_response :success
+  end
 
-  # test "should update scout" do
-  #   patch scout_url(@scout), params: { scout: {  } }
-  #   assert_redirected_to scout_url(@scout)
-  # end
+  test "should get edit" do
+    get edit_scout_url(@scout)
+    assert_response :success
+  end
 
-  # test "should destroy scout" do
-  #   assert_difference('Scout.count', -1) do
-  #     delete scout_url(@scout)
-  #   end
-
-  #   assert_redirected_to scouts_url
-  # end
+  test "should update scout" do
+    # patch scout_url(@scout), params: { scout: {  } }
+    # assert_redirected_to scout_url(@scout)
+  end
 end
