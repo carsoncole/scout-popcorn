@@ -7,6 +7,9 @@ class CreateUnits < ActiveRecord::Migration[5.0]
       t.string :city
       t.string :zip_code
       t.string :state_postal_code
+      t.string :treasurer_first_name
+      t.string :treasurer_last_name
+      t.string :treasurer_email
       t.timestamps
     end
   end

@@ -10,6 +10,8 @@ class CreatePrizes < ActiveRecord::Migration[5.0]
       t.string :source_id
       t.boolean :is_by_level
       t.string :url
+      t.string :group
+      t.decimal :cost, precision: 5, scale: 2
 
       t.timestamps
     end

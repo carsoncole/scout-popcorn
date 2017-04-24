@@ -3,6 +3,7 @@ class CreateTakeOrders < ActiveRecord::Migration[5.0]
     create_table :take_orders do |t|
       t.integer :scout_id
       t.integer :event_id
+      t.integer :envelope_id
       t.integer :purchase_order_id
       t.string :status, default: 'received', null: false
       t.string :customer_name
@@ -12,6 +13,9 @@ class CreateTakeOrders < ActiveRecord::Migration[5.0]
       t.decimal :total_value, precision: 5, scale: 2
       t.integer :money_received_by_id
       t.datetime :money_received_at
+      t.boolean :is_paid_by_credit_card, default: false
+      t.integer :credit_card_order_number
+      t.string :none
       t.timestamps
     end
   end

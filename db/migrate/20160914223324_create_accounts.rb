@@ -6,6 +6,7 @@ class CreateAccounts < ActiveRecord::Migration[5.0]
       t.string :account_type
       t.integer :event_id
       t.boolean :is_cash
+      t.boolean :is_credit_card
       t.boolean :is_take_order_eligible, default: false
       t.boolean :is_site_sale_eligible, default: false
       t.boolean :is_bank_account_depositable, default: false
