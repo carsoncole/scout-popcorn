@@ -4,7 +4,7 @@ Corn Cub is for managing and for promoting involvement in a Scout popcorn fundra
 
 For **Scouts**, they can track their progress, prizes they might have earned, and manage orders and deliveries.
 
-For **Leaders**, Corncub provides a financial accounting and inventory management system. With Corncub, you will always know how much inventory you have, where it is, and how much your unit has earned.
+For **Leaders**, Corn Cub provides a financial accounting and inventory management system. With Corncub, you will always know how much inventory you have, where it is, and how much your unit has earned.
 
 Through their own accounts, Scouts can view their sales progress in door-to-door (Take Order) sales and hours they have contributed towards Site Sales.
 
@@ -12,10 +12,17 @@ Corn Cub also provides comprehensive management tools, including an Income State
 
 ## Features
 
-- Corncub can be used for one or more Scout units. If only for one unit, set `config.allow_for_multiple_units` to `true`.
+- Manage Site Sales, where Scouts will get a pro-rata sales credit based on time spent, out of all Site Sales.
+
+- Manage Take Orders, where individual customer orders can be entered, tracked, receipts generated and used for ordering inventory to satify deliveries.
+
+- Manage finances, where you can see sales, expenses, income, and track inventory.
+
+- Manage prizes, so Scouts can see available prizes and order them, based on their own sales and eligibility.
+
+- Can be used for one or more Scout units. If only for one unit, set `config.allow_for_multiple_units` to `true`.
 
 - Bank deposits will result in notification emails being sent out to the Treasurer email address on a Unit.
-
 
 ## Installation
 
