@@ -4,11 +4,12 @@
       %h5.card-title Upcoming Site Sales
 
       - if @site_sales.any?
-        %table.table
+        %ul.card-text
           - @site_sales.each do |site_sale|
-            %tr
-              %td= site_sale.name
-              %td.text-right= site_sale.date.strftime('%b %e')
+            %li
+              = site_sale.name
+              = '-'
+              = site_sale.date.strftime('%b %e')
       - else
         %p.card-text
           No Site Sales have been scheduled.
