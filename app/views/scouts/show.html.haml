@@ -30,7 +30,10 @@
           - if @scout.event
             = @scout.event.name
           - else
-            = link_to "Set Event", edit_scout_path(@scout)
+            - if @scout.unit.events.active.any?
+              = link_to "Set Event", edit_scout_path(@scout)
+            - else
+              No Events available
         %li.list-group-item
           %i.fa.fa-envelope.fa-lg
           &nbsp;

@@ -16,26 +16,26 @@
           .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control'
+          / .form-group
+          /   = f.label :short_name
+          /   = f.text_field :short_name, class: 'form-control'
+          / .form-group
+          /   = f.label :quantity
+          /   = f.number_field :quantity, class: 'form-control'
           .form-group
-            = f.label :short_name
-            = f.text_field :short_name, class: 'form-control'
-          .form-group
-            = f.label :quantity
-            = f.number_field :quantity, class: 'form-control'
-          .form-group
-            = f.label :url
+            = f.label :image_url
             = f.text_field :url, class: 'form-control'
           .form-group
-            = f.label :retail_price
+            = f.label :price
             = f.text_field :retail_price, class: 'form-control'
           .form-group
-            = f.label :is_physical_inventory
+            = f.label :is_held_in_inventory?
             = f.check_box :is_physical_inventory, class: 'form-control'
           .form-group
-            = f.label :is_pack_donation
+            = f.label :is_pack_donation?
             = f.check_box :is_pack_donation, class: 'form-control'
           .form-group
-            = f.label :is_sourced_from_bsa
+            = f.label :is_this_sourced_from_the_bsa?
             = f.check_box :is_sourced_from_bsa, class: 'form-control'
 
           .actions

@@ -7,7 +7,9 @@ class Product < ApplicationRecord
   has_many :stocks
 
   validates :name, :retail_price, presence: true
-
+  validates :retail_price, inclusion: { in: [1], message: "should be set to $1 since this is a Unit donation."}, if: Proc.new {|p| p.is_pack_donation }
+  validates :is_sourced_from_bsa, inclusion: { in: [false], message: "should not be selected since this is a Unit donation"}, if: Proc.new { |p| p.is_sourced_from_bsa && p.is_pack_donation }
+  validates :url, format: {with: /\.(png|jpg)\Z/i}
 
   def self.default
     where(event_id: nil)
