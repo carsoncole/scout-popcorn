@@ -98,7 +98,7 @@
 
 
 
-    %ul.nav.navbar-nav.pull-sm-right
+    %ul.nav.navbar-nav.ml-auto
       %li.nav-item= link_to current_scout.first_name, scout_path(current_scout), class: "nav-link #{'active' if controller_name == 'scouts' && action_name == 'show'}"
       %li.nav-item
         = link_to logout_path, class: "nav-link" do
