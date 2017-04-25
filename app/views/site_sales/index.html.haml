@@ -3,9 +3,7 @@
     .card
       .card-block
         %h2.card-title Site Sales
-        - if current_scout.admin?
-          = link_to new_site_sale_path do
-            %i.fa.fa-plus.fa-lg.hidden-print 
+
         - if @site_sales.any?
           .table-responsive
             %table.table.card-text
@@ -22,8 +20,6 @@
                     %th Credited Sales
                   - if current_scout.admin?
                     %th Status
-                    %th.hidden-print
-                    %th.hidden-print
                     %th.hidden-print
 
               %tbody
@@ -59,17 +55,14 @@
                           %span.tag.tag-danger= site_sale.status.titleize
                         - else
                           %span.tag.tag-success= site_sale.status.titleize
-                      %td.hidden-print
+                      %td.hidden-print.text-right
                         = link_to site_sale do
                           %i.fa.fa-folder-open.fa-lg
-                      %td.hidden-print
                         - if current_scout.admin? && site_sale.open? 
-                          %p
-                            =link_to site_sale_tracking_sheet_path(site_sale) do
-                              %i.fa.fa-print.fa-lg
+                          =link_to site_sale_tracking_sheet_path(site_sale) do
+                            %i.fa.fa-print.fa-lg
 
-                      %td.hidden-print
-                        = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                        = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Site Sale and all entered information. This is NOT reversible.' } do
                           %i.fa.fa-trash.fa-lg
                 %tr
                   %td 
@@ -91,3 +84,7 @@
 
           = paginate @site_sales
 
+
+        - if current_scout.admin?
+          = link_to new_site_sale_path, class: 'card-text new-site-sale-link' do
+            %i.fa.fa-plus.fa-lg.hidden-print 

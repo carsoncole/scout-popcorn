@@ -17,6 +17,12 @@ class OnlineSalesControllerTest < ActionDispatch::IntegrationTest
     assert_equal css_select("tr").size, 3
   end
 
+  test "should show admin new link" do
+    sign_in(scouts(:admin))
+    get online_sales_url
+    assert_select "a.new-online-sale-link", 1
+  end
+
   test "should get new" do
     sign_in(scouts(:admin))
     get new_online_sale_url

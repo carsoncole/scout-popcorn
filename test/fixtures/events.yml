@@ -5,7 +5,7 @@ one:
   take_orders_deadline_at: 2017-11-01
 
 two:
-  unit: one
+  unit: two
   name: Popcorn 2018
   is_active: false
   take_orders_deadline_at: 2018-11-01

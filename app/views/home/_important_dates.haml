@@ -11,8 +11,8 @@
         - if @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_ends_at && @active_event.is_prizes_enabled
           %li
             Prize ordering:
-            = @active_event.prize_cart_ordering_starts_at.strftime("%b %e")
+            = @active_event.prize_cart_ordering_starts_at.strftime("%b %-d")
             = '-'
-            = @active_event.prize_cart_ordering_ends_at.strftime("%d")
+            = @active_event.prize_cart_ordering_ends_at.strftime("%-d")
 
   %br

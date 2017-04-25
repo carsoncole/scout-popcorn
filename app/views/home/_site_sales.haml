@@ -6,10 +6,7 @@
       - if @site_sales.any?
         %ul.card-text
           - @site_sales.each do |site_sale|
-            %li
-              = site_sale.name
-              = '-'
-              = site_sale.date.strftime('%b %e')
+            %li.site_sale
+              = site_sale.name + ' - ' + site_sale.date.strftime('%b %-d')
       - else
-        %p.card-text
-          No Site Sales have been scheduled.
+        %p.card-text No Site Sales have been scheduled.

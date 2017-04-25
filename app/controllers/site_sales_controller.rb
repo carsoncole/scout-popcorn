@@ -27,14 +27,10 @@ class SiteSalesController < ApplicationController
   def create
     @site_sale = @active_event.site_sales.build(site_sale_params)
 
-    respond_to do |format|
-      if @site_sale.save
-        format.html { redirect_to @site_sale, notice: 'Site sale was successfully created.' }
-        format.json { render :show, status: :created, location: @site_sale }
-      else
-        format.html { render :new }
-        format.json { render json: @site_sale.errors, status: :unprocessable_entity }
-      end
+    if @site_sale.save
+      redirect_to site_sales_path, notice: 'Site sale was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -60,10 +56,7 @@ class SiteSalesController < ApplicationController
 
   def destroy
     @site_sale.destroy
-    respond_to do |format|
-      format.html { redirect_to site_sales_url, notice: 'Site sale was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to site_sales_url, notice: 'Site sale was successfully destroyed.'
   end
 
   def tracking_sheet

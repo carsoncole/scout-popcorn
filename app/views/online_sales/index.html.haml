@@ -34,7 +34,6 @@
                           %i.fa.fa-trash.fa-lg
 
         - if current_scout.admin?
-          .card-text
-            %br
-            = link_to new_online_sale_path do
-              %i.fa.fa-plus.fa-lg
+          %br
+          = link_to new_online_sale_path, class: 'card-text new-online-sale-link' do
+            %i.fa.fa-plus.fa-lg

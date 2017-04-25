@@ -27,6 +27,13 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "th.online_sales"
   end
 
+  test "should show Upcoming Site Sales" do
+    follow_redirect!
+    assert_select "h5", "Upcoming Site Sales"
+    assert_select "li.site_sale", 3
+    assert_select "li.site_sale", "Safeway - #{(Date.today + 10.days).strftime('%b %-d')}"
+  end
+
   test "should show top sellers" do
     follow_redirect!
     assert_select "h5", "Top Sellers"

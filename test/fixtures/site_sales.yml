@@ -1,11 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   event: one
-  name: MyString
-  date: 2017-01-01
+  name: Safeway
+  date: <%= Date.today + 10.days %>
 
 two:
   event: one
-  name: MyString
-  date: 2017-01-02
+  name: Walmart
+  date: <%= Date.today + 11.days %>
+
+three:
+  event: one
+  name: Ace Hardware
+  date: <%= Date.today + 12.days %>
+
+four:
+  event: two
+  name: Ace Hardware
+  date: <%= Date.today + 13.days %>

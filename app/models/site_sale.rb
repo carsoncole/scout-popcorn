@@ -1,9 +1,9 @@
 class SiteSale < ApplicationRecord
-  has_many :scout_site_sales
-  has_many :site_sale_line_items
+  has_many :scout_site_sales, dependent: :destroy
+  has_many :site_sale_line_items, dependent: :destroy
   belongs_to :event
   has_many :products, through: :site_sale_line_items
-  has_many :site_sale_payment_methods
+  has_many :site_sale_payment_methods, dependent: :destroy
 
   validates :name, :date, presence: true
 
