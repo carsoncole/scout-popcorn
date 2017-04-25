@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.datetime "money_received_at"
     t.boolean  "is_paid_by_credit_card",                           default: false
     t.integer  "credit_card_order_number"
-    t.string   "none"
+    t.string   "note"
     t.datetime "created_at",                                                            null: false
     t.datetime "updated_at",                                                            null: false
     t.datetime "receipt_sent_at"

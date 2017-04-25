@@ -1,9 +1,9 @@
 .row
-  .col-md-3
-  .col-md-6
+  .col-md-4
+  .col-md-4
     .card
       .card-block
-        %h1.display-3.text-center= Rails.configuration.application_name || 'Corn Cub'
+        %h1.display-6.text-center= Rails.configuration.application_name || 'Corn Cub'
         .text-center= image_tag "kettle-corn-microwave.jpg", width: 250,class: 'img-fluid m-x-auto'
         .card-text
           - unless Unit.all.empty?
@@ -31,4 +31,5 @@
           - if Rails.configuration.allow_for_multiple_units || Unit.all.empty?
             = link_to "Sign Up Your Unit", new_unit_path, class: 'sign-up-your-unit'
             %br
-          = link_to "Forget your password?", forgot_password_path
+          - if Unit.active.any?
+            = link_to "Forget your password?", forgot_password_path

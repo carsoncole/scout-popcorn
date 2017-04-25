@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    scout = Scout.find_by(email: params[:email])
+    scout = Scout.active.find_by(email: params[:email])
     if scout && scout.authenticate(params[:password])
       session[:scout_id] = scout.id
       scout.update(

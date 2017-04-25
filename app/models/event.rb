@@ -118,6 +118,10 @@ class Event < ApplicationRecord
     is_prizes_enabled && prizes.any?
   end
 
+  def products?
+    products.any?
+  end
+
   def total_product_sales
     total_site_sales + total_take_orders - total_site_sale_donations - total_take_order_donations + total_online_sales
   end

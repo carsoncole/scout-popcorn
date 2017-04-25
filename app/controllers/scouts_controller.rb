@@ -7,7 +7,7 @@ class ScoutsController < ApplicationController
   # GET /scouts.json
   def index
     if current_scout.admin?
-      @inactive_scouts = @scouts = @unit.scouts.inactive
+      @inactive_scouts = @unit.scouts.inactive
       @scouts = @unit.scouts.active.not_admin.order(:first_name)
       @administrators = @unit.scouts.active.admin
     end

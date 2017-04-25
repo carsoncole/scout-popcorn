@@ -40,10 +40,11 @@
           = @scout.email
 
         - if current_scout.admin?
-          %li.list-group-item
-            Is active:
-            - if @scout.is_active
-              %i.fa.fa-check
+          - unless @scout.is_active
+            %li.list-group-item.text-danger
+              %i.fa.fa-exclamation-triangle
+              &nbsp;
+              ARCHIVED
 
 
           %li.list-group-item

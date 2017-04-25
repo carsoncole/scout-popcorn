@@ -8,9 +8,6 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   def sign_in(scout)
-    post scout_session_path \
-      'scout[email]'    => scout.email,
-      'scout[password]' => 'password'
+    post '/sessions', params: { email: scout.email, password: 'password'}
   end
-
 end

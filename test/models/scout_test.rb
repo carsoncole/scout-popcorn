@@ -28,4 +28,7 @@ class ScoutTest < ActiveSupport::TestCase
     assert_not @scout.valid?
     assert @scout.errors[:email]
   end
+
+  test "#activity? should be true if any activity" do
+  end
 end

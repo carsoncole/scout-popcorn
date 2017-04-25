@@ -14,7 +14,7 @@
               - scout = Scout.find(top_seller[0])
               %tr
                 %th= scout.name
-                %td.text-xs-right= number_to_currency(top_seller[1], precision: 0)
+                %td.text-right= number_to_currency(top_seller[1], precision: 0)
       - else
         %p.card-text.text-center
           We will post the 

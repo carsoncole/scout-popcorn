@@ -15,7 +15,7 @@ class CreateTakeOrders < ActiveRecord::Migration[5.0]
       t.datetime :money_received_at
       t.boolean :is_paid_by_credit_card, default: false
       t.integer :credit_card_order_number
-      t.string :none
+      t.string :note
       t.timestamps
     end
   end

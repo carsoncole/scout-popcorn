@@ -22,11 +22,11 @@
           - if @inactive_scouts.length != 0
             %li.nav-item
               = link_to scouts_path(inactive: true), class: "nav-link #{'active' if params[:inactive]}" do
-                Inactive
+                Archived
                 = surround("(", ")") do
                   = @inactive_scouts.length            
         %br
-        - unless params[:inactive].present? || params[:administrators].present?
+        - unless params[:administrators].present?
           .table-responsive
             %table.table.card-text.table-sm
               %thead
@@ -125,9 +125,11 @@
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
                       %td.hidden-print
-                        = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                          %span.fa.fa-trash.fa-lg
+                        - unless scout.activity?
+                          = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Scout account and all related information. It is irreversible.' } do
+                            %span.fa.fa-trash.fa-lg
                     
+%br
 .row
   .col-md-4
     .card

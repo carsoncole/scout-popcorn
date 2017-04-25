@@ -1,3 +1,12 @@
+admin:
+  email: admin@example.com
+  first_name: John
+  last_name: Doe
+  unit: one
+  event: one
+  is_admin: true
+  password_digest: <%= BCrypt::Password.create "password" %>
+
 one: 
   parent_first_name: Mary
   parent_last_name: Jones
@@ -26,4 +35,4 @@ three:
   last_name: Jones
   unit: one
   event: one
-  password_digest: <%= BCrypt::Password.create "password" %> 
+  password_digest: <%= BCrypt::Password.create "password" %>

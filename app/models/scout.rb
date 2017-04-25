@@ -80,6 +80,10 @@ class Scout < ApplicationRecord
     is_admin == true
   end
 
+  def activity?
+    true if scout_site_sales.any? || online_sales.any? || take_orders.any?
+  end
+
   def total_site_sales(event)
     event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
   end

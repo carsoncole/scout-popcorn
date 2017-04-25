@@ -2,14 +2,10 @@
   .col-md-12
     .card
       .card-block
-        .card-title
-          %h1.h1 Site Sales
+        %h2.card-title Site Sales
         - if current_scout.admin?
           = link_to new_site_sale_path do
             %i.fa.fa-plus.fa-lg.hidden-print 
-        - unless current_scout.admin?
-          .alert.alert-info
-            All your hours worked at Site Sales will be shown here, with the proportionate sales credit from all Site Sales.
         - if @site_sales.any?
           .table-responsive
             %table.table.card-text

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ScoutsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    post '/sessions', params: { email: 'mary@example.com', password: 'password'}
+    sign_in(scouts(:one))
     @scout = scouts(:one)
   end
 
@@ -64,6 +64,12 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_scout_url(@scout)
     assert_response :success
+  end
+
+  test "should allow destroy if no activity" do
+  end
+
+  test "should not allow destroy if activity" do
   end
 
   test "should update scout" do

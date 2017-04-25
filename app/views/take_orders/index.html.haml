@@ -1,14 +1,8 @@
 .row
   .col-md-12
     .card.card-block
-      .card-title
-        %h1.h1
-          Take Orders
-
-      - unless current_scout.admin?
-        .alert.alert-info
-          Drop off Take-Order order forms and collection envelope as often as you want to any Site Sale and your orders will be shown here. Pick up more order forms and collections envelopes at any
-          =link_to "Site Sale.", site_sales_path
+      %h2.card-title
+        Take Orders
 
       - unless @active_event.take_orders_allowed?
         .alert.alert-warning
@@ -23,7 +17,7 @@
 
       - if current_scout.admin?
         %ul.nav.nav-inline
-          - if @active_event.take_orders_allowed?
+          - if @active_event.take_orders_allowed? 
             %li.nav-item
               = link_to new_envelope_path, class: 'nav-link' do
                 New Envelope
@@ -34,7 +28,7 @@
 
 
 
-      - elsif !current_scout.open_envelope?(@active_event) && @active_event.take_orders_allowed?
+      - elsif !current_scout.open_envelope?(@active_event) && @active_event.take_orders_allowed? && @active_event.products?
         %ul.nav.nav-inline
           %li.nav-item
             = link_to new_envelope_path, class: 'nav-link' do
@@ -44,7 +38,7 @@
         %br
 
    
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs.card-text
         %li.nav-item
           = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
             Open

@@ -43,4 +43,28 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "ul.important_dates"
   end
 
+  test "should show online sales total" do
+    sign_in(scouts(:one))
+    follow_redirect!
+    assert_select "h3", "My Sales"
+    assert_select "td.online_sales_amount", "$125" 
+  end
+
+  test "should show admin online sales total" do
+    sign_in(scouts(:admin))
+    follow_redirect!
+    assert_select "h3", "Sales"
+    assert_select "td.online_sales_amount", "$275" 
+  end
+
+
+  test "should show online sale" do
+    sign_in(scouts(:admin))
+    post online_sales_url, params: { online_sale: { amount: 99, customer_name: 'Santa Claus', description: "Lots of popcorn", event_id: events(:one).id, order_date: '2017-01-01', scout_id: scouts(:one).id} }
+
+    sign_in(scouts(:one))
+    follow_redirect!
+    assert_select "td.online_sales_amount", "$224" 
+  end
+
 end
