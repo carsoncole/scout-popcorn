@@ -14,11 +14,11 @@ class Stock < ApplicationRecord
     ]
 
   def self.warehouse
-    where(location: 'site sale')
+    where(location: 'warehouse')
   end
 
   def self.site_sales
-    where(location: 'site sale')
+    where(location: 'site sales')
   end
 
   def self.take_orders

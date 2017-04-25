@@ -55,7 +55,7 @@
                 - if @site_sale.open?
                   %td
                     - if line_item.product.is_physical_inventory
-                      = @unit.stocks.site_sales.where(product_id: line_item.product_id).sum(:quantity)
+                      = @active_event.stocks.site_sales.where(product_id: line_item.product_id).sum(:quantity)
                     - else
                       N/A
                 %td= number_to_currency( line_item.product.retail_price, precision: 0 )
@@ -81,6 +81,7 @@
               %td= number_to_currency( @total_sales, precision: 0 )
 
 - if current_scout.admin?
+  %br
   .row
     .col-md-1
     .col-md-10
@@ -90,12 +91,14 @@
             .col-md-9
               %p.card-text.text-danger Closing a Site Sale processes inventory and financials. Site Sales can be re-opened for any necessary changes.
             .col-md-3
-              .card-text.text-xs-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
+              .card-text.text-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
           - else
             .col-md-9
               %p.card-text.text-danger Reopening reverses all inventory and financial transactions.
             .col-md-3
-              .card-text.text-xs-center= button_to 'RE-OPEN', site_sale_path(@site_sale, open: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
+              .card-text.text-center= button_to 'RE-OPEN', site_sale_path(@site_sale, open: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
+  %br
+
 .row    
   .col-md-12
     .card
@@ -127,6 +130,8 @@
                     %i.fa.fa-plus.fa-lg.hidden-print
               %td= @total_hours
               %td= number_to_currency(total_credited_sales, precision: 0)
+
+%br
 
 .row    
   .col-md-6

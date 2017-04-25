@@ -1,48 +1,88 @@
 require 'test_helper'
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
-  # setup do
-  #   @product = products(:one)
-  # end
+  setup do
+    @product = products(:one)
+    @product_unused = products(:unused)
+  end
 
-  # test "should get index" do
-  #   get products_url
-  #   assert_response :success
-  # end
+  test "should get index" do
+    sign_in(scouts(:one))
+    get products_url
+    assert_response :success
+  end
 
-  # test "should get new" do
-  #   get new_product_url
-  #   assert_response :success
-  # end
+  test "should not show new link" do
+    sign_in(scouts(:one))
+    get products_url
+    assert_select "fa.fa.fa-plus", false
+  end
 
-  # test "should create product" do
-  #   assert_difference('Product.count') do
-  #     post products_url, params: { product: { name: @product.name, quantity: @product.quantity, retail_price: @product.retail_price } }
-  #   end
+  test "should not show pencil edit link" do
+    sign_in(scouts(:one))
+    get products_url
+    assert_select "i.fa-pencil", false
+  end
 
-  #   assert_redirected_to product_url(Product.last)
-  # end
+  # Admin
 
-  # test "should show product" do
-  #   get product_url(@product)
-  #   assert_response :success
-  # end
+  test "should show products" do
+    sign_in(scouts(:admin))
+    get products_url
+    assert_response :success
+  end
 
-  # test "should get edit" do
-  #   get edit_product_url(@product)
-  #   assert_response :success
-  # end
+  test "should show new link" do
+    sign_in(scouts(:admin))
+    get products_url
+    assert_select "fa.fa.fa-plus"
+  end
 
-  # test "should update product" do
-  #   patch product_url(@product), params: { product: { name: @product.name, quantity: @product.quantity, retail_price: @product.retail_price } }
-  #   assert_redirected_to product_url(@product)
-  # end
+  test "should show pencil edit link" do
+    sign_in(scouts(:admin))
+    get products_url
+    assert_select "i.fa-pencil"
+  end
 
-  # test "should destroy product" do
-  #   assert_difference('Product.count', -1) do
-  #     delete product_url(@product)
-  #   end
+  test "should get new" do
+    sign_in(scouts(:admin))
+    get new_product_url
+    assert_response :success
+  end
 
-  #   assert_redirected_to products_url
-  # end
+  test "should create product" do
+    sign_in(scouts(:admin))
+    assert_difference('Product.count') do
+      post products_url, params: { product: { name: @product.name, quantity: @product.quantity, retail_price: @product.retail_price } }
+    end
+
+    assert_redirected_to products_path
+  end
+
+  test "should show product" do
+    sign_in(scouts(:admin))
+    get product_url(@product)
+    assert_response :success
+  end
+
+  test "should get edit" do
+    sign_in(scouts(:admin))
+    get edit_product_url(@product)
+    assert_response :success
+  end
+
+  test "should update product" do
+    sign_in(scouts(:admin))
+    patch product_url(@product_unused), params: { product: { name: @product_unused.name, quantity: 20, retail_price: @product_unused.retail_price } }
+    assert_redirected_to products_path
+  end
+
+  test "should destroy product" do
+    sign_in(scouts(:admin))
+    assert_difference('Product.count', -1) do
+      delete product_url(@product_unused)
+    end
+
+    assert_redirected_to products_url
+  end
 end

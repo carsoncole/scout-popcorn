@@ -23,3 +23,15 @@ four:
   retail_price: 45
   event: one
   is_physical_inventory: true
+
+unused:
+  name: Cheap Popcorn Collection
+  retail_price: 20
+  event: one
+  is_physical_inventory: true
+
+pack_donation:
+  name: Pack Donation
+  retail_price: 1
+  event: one
+  is_physical_inventory: false

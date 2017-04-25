@@ -1,35 +1,47 @@
 .row
   .col-md-12
-    %h2 Products
+    %h2
+      Products
+      - if params[:inactive]
+        = surround("(", ")") do
+          Inactive
 
     - if @products.empty?
       %p There are no products for this Event.
 
-- @products.each_slice(3) do |batch|
+    - if params[:inactive]
+      %p.card-text= link_to "Products", products_path
+    - else
+      %p.card-text= link_to "Inactive Products", products_path(inactive: true)
+%br
+- @products.each_slice(4) do |batch|
   .row
     - batch.each do |product|
-      .col-md-4
+      .col-md-3
         .card
-          .card-block
+          .card-block.product
             .card-title
-              %h5.h5.text-xs-center= product.name
+              %h6.text-center= product.name
 
-            - if product.url.present?
-              .text-xs-center= image_tag product.url, height: 200, class: 'img-rounded img-fluid m-x-auto d-block'
-              %br
-            - else
-              %p.text-xs-center.product-image
-                %i.fa.fa-cube.fa-lg
+            / - if product.url.present?
+            /   .text-center= image_tag product.url, height: 200, class: 'img-rounded img-fluid m-x-auto d-block'
+            /   %br
+            / - else
+            %p.text-center.product-image
+              %i.fa.fa-shopping-basket.fa-lg
             
-            %h5.text-xs-center= number_to_currency(product.retail_price)
+            %h6.text-center= number_to_currency(product.retail_price)
             - if current_scout.admin?
-              .text-xs-right
-                = link_to 'Details', product
+              .text-right
+                = link_to 'Info', product
                 = link_to edit_product_path(product) do
                   %i.fa.fa-pencil.fa-lg
 
-                = link_to product, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                  %i.fa.fa-trash.fa-lg
+                - unless product.used?
+                  = link_to product, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                    %i.fa.fa-trash.fa-lg
+
+  %br
 
 .row
   .col-md-4

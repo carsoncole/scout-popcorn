@@ -43,7 +43,7 @@
         = link_to 'All products', products_path
 
 
-  .col-md-6
-    .card
-      .card-block.text-xs-center
-        = image_tag @product.url, class: 'img img-responsive'
+  / .col-md-6
+  /   .card
+  /     .card-block.text-xs-center
+  /       = image_tag @product.url, class: 'img img-responsive' rescue nil

@@ -1,28 +1,26 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
-  # GET /products
-  # GET /products.json
   def index
-    @products = @active_event.products
+    @products = @active_event.products.order(:name)
+
+    if params[:inactive] == 'true'
+      @products = @products.where(is_active: false)
+    else
+      @products = @products.active
+    end
   end
 
-  # GET /products/1
-  # GET /products/1.json
   def show
   end
 
-  # GET /products/new
   def new
     @product = Product.new
   end
 
-  # GET /products/1/edit
   def edit
   end
 
-  # POST /products
-  # POST /products.json
   def create
     if @active_event
       @product = @active_event.products.build(product_params)
@@ -30,49 +28,34 @@ class ProductsController < ApplicationController
       @product = Product.new(product_params)
     end
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+    if @product.save
+      redirect_to products_path, notice: 'Product was successfully created.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /products/1
-  # PATCH/PUT /products/1.json
   def update
-    respond_to do |format|
-      if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { render :show, status: :ok, location: @product }
-      else
-        format.html { render :edit }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+    if @product.update(product_params)
+      redirect_to products_path, notice: 'Product was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
   def destroy
     @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to products_url, notice: 'Product was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_product
       @product = Product.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :quantity, :retail_price, :short_name, :url, :is_physical_inventory, :is_pack_donation, :is_sourced_from_bsa)
+      params.require(:product).permit(:name, :quantity, :retail_price, :short_name, :url, :is_physical_inventory, :is_pack_donation, :is_sourced_from_bsa, :is_active)
     end
 end
