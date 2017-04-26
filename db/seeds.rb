@@ -6,27 +6,27 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Scout.create([first_name: 'Carson', last_name: 'Cole', email: 'c@c.com', unit_id: 1, password: 'robert08'])
+Scout.create(first_name: 'Carson', last_name: 'Cole', email: 'c@c.com', unit_id: 1, password: 'robert', is_admin: true)
 
-# Product.create([
-#   {name: 'Chocolatey Caramel Crunch', retail_price: 25, quantity: 1, url: 'chocolatey-caramel-crunch.png'},
-#   {name: 'White Chocolatey Pretzels', retail_price: 25, quantity: 1, url: 'white-chocolatey-pretzels.png'},
-#   {name: 'Seattle Seahawks Tin', retail_price: 25, quantity: 1, url: 'seattle-seahawks-tin.jpg'},
-#   {name: 'Premium Caramel Corn', retail_price: 20, quantity: 1, url: 'premium-caramel-corn.png'},
-#   {name: 'Jalapeno Cheddar Cheese', retail_price: 15, quantity: 1, url: 'jalapeno-cheddar-cheese.jpg'},
-#   {name: 'White Cheddar Cheese Corn', retail_price: 15, quantity: 1, url: 'white-cheddar-cheese.png'},
-#   {name: 'Classic Caramel Corn', retail_price: 10, quantity: 1, url: 'classic-caramel-corn.png'},
-#   {name: 'Popping Corn', retail_price: 10, quantity: 1, url: 'popping-corn.png'},
-#   {name: 'Kettle Corn Microwave', retail_price: 20, quantity: 1, url: 'kettle-corn-microwave.jpg'},
-#   {name: 'Unbelievable Butter Microwave', retail_price: 20, quantity: 1, url: 'unbelievable-butter-microwave.jpg'},
-#   {name: 'Butter Light Microwave', retail_price: 20, quantity: 1, url: 'butter-light-microwave.jpg'},
-#   {name: 'Sweet & Savory Collection', retail_price: 40, quantity: 1, url: 'sweet-and-savory.jpg'},
-#   {name: "Cheese Lover's Collection", retail_price: 30, quantity: 1, url: 'cheese-lovers-collection.jpg'},
-#   {name: "Chocolate Lover's Collection", retail_price: 60, quantity: 1, url: 'chocolate-lovers-collection.png'},
-#   {name: "Popcorn for our Troops Gold Donation", retail_price: 50, quantity: 1, url: 'popcorn-for-troops-50.jpg'},
-#   {name: "Popcorn for our Troops Silver Donation", retail_price: 30, quantity: 1, url: 'popcorn-for-troops-30.jpg'},
-#   {name: "Pack Donation", retail_price: 1, quantity: 1, url: 'pack-donation.png'}
-#   ])
+Product.create([
+  {name: 'Chocolatey Caramel Crunch', retail_price: 25,  url: 'chocolatey-caramel-crunch.png'},
+  {name: 'White Chocolatey Pretzels', retail_price: 25,  url: 'white-chocolatey-pretzels.png'},
+  {name: 'Seattle Seahawks Tin', retail_price: 25,  url: 'seattle-seahawks-tin.jpg'},
+  {name: 'Premium Caramel Corn', retail_price: 20,  url: 'premium-caramel-corn.png'},
+  {name: 'Jalapeno Cheddar Cheese', retail_price: 15,  url: 'jalapeno-cheddar-cheese.jpg'},
+  {name: 'White Cheddar Cheese Corn', retail_price: 15,  url: 'white-cheddar-cheese.png'},
+  {name: 'Classic Caramel Corn', retail_price: 10,  url: 'classic-caramel-corn.png'},
+  {name: 'Popping Corn', retail_price: 10,  url: 'popping-corn.png'},
+  {name: 'Kettle Corn Microwave', retail_price: 20,  url: 'kettle-corn-microwave.jpg'},
+  {name: 'Unbelievable Butter Microwave', retail_price: 20,  url: 'unbelievable-butter-microwave.jpg'},
+  {name: 'Butter Light Microwave', retail_price: 20,  url: 'butter-light-microwave.jpg'},
+  {name: 'Sweet & Savory Collection', retail_price: 40,  url: 'sweet-and-savory.jpg'},
+  {name: "Cheese Lover's Collection", retail_price: 30,  url: 'cheese-lovers-collection.jpg'},
+  {name: "Chocolate Lover's Collection", retail_price: 60,  url: 'chocolate-lovers-collection.png'},
+  {name: "Popcorn for our Troops Gold Donation", retail_price: 50,  url: 'popcorn-for-troops-50.jpg'},
+  {name: "Popcorn for our Troops Silver Donation", retail_price: 30,  url: 'popcorn-for-troops-30.jpg'},
+  {name: "Pack Donation", retail_price: 1,  url: 'pack-donation.png'}
+  ])
 
 # Prize.create([
 #   {name: 'Participation Patch', amount: 25, source: 'bsa', source_id: '633893', source_description: 'Prize Level 1'},
@@ -90,10 +90,10 @@ Unit.create([
   {name: 'Pack 9999', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'}
   ])
 
-# Event.create([
-#   { unit_id: 1, name: 'Popcorn Sales 2016'},
-#   { unit_id: 2, name: 'Popcorn Sales 2016'}
-#   ])
+Event.create([
+  { unit_id: 1, name: 'Popcorn Sales 2016'},
+  { unit_id: 2, name: 'Popcorn Sales 2016'}
+  ])
 
 # 
 # TakeOrder.create([

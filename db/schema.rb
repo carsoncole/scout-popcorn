@@ -13,12 +13,13 @@
 ActiveRecord::Schema.define(version: 20170419210244) do
 
   create_table "accounts", force: :cascade do |t|
-    t.integer  "unit_id"
+    t.integer  "event_id"
     t.string   "name"
     t.string   "account_type"
-    t.integer  "event_id"
+    t.integer  "rank",                        default: 0
     t.boolean  "is_cash"
-    t.boolean  "is_credit_card"
+    t.boolean  "is_credit_card",              default: false
+    t.boolean  "is_due_to_bsa",               default: false
     t.boolean  "is_take_order_eligible",      default: false
     t.boolean  "is_site_sale_eligible",       default: false
     t.boolean  "is_bank_account_depositable", default: false
@@ -121,7 +122,6 @@ ActiveRecord::Schema.define(version: 20170419210244) do
   create_table "products", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
-    t.integer  "quantity"
     t.decimal  "retail_price",          precision: 5, scale: 2
     t.string   "url"
     t.boolean  "is_active",                                     default: true
@@ -174,12 +174,12 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.boolean  "is_admin"
+    t.boolean  "is_admin",               default: false
     t.boolean  "is_take_orders_admin",   default: false
     t.boolean  "is_site_sales_admin",    default: false
     t.boolean  "is_online_sales_admin",  default: false
     t.boolean  "is_prizes_admin",        default: false
-    t.boolean  "is_super_admin"
+    t.boolean  "is_super_admin",         default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end

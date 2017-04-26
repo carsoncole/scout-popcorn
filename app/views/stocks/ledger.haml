@@ -5,10 +5,10 @@
         .card-title
           %h2 Stock Ledger
         - if current_scout.admin?
-          %p
-            = link_to stock_movement_path do
-              %i.fa.fa-print.fa-lg
-              Stock Movement
+          %p.card-test
+            / = link_to stock_movement_path do
+            /   %i.fa.fa-print.fa-lg
+            /   Stock Movement
             %span
               = link_to new_stock_path, class: 'hidden-print' do
                 &nbsp;
@@ -33,7 +33,6 @@
                 %th Qty
                 %th Location
                 %th Created
-                %th
                 %th
 
             %tbody
@@ -66,16 +65,11 @@
                   %td
                     = link_to edit_stock_path(stock) do
                       %i.fa.fa-pencil.fa-lg
-                  %td
                     = link_to stock_path(stock), method: :delete do
                       %i.fa.fa-trash.fa-lg
 
-              %tr
-                %td                
-                  = link_to new_stock_path do
-                    %i.fa.fa-plus.fa-lg
-                %td
-                %td
-                %td
-                %td
+
         = paginate @stocks
+
+        = link_to new_stock_path do
+          %i.fa.fa-plus.fa-lg

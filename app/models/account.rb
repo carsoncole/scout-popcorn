@@ -53,7 +53,7 @@ class Account < ApplicationRecord
   end
 
   def self.create_money_due_from_customers!(event)
-    create(event_id: event.id, name: 'Money due from customers', is_cash: false, is_take_order_eligible: true, account_type: 'Asset')
+    create(event_id: event.id, name: 'Due from Customers', is_cash: false, is_take_order_eligible: true, account_type: 'Asset')
   end
 
   def self.create_product_due_to_customers!(event)
@@ -61,7 +61,7 @@ class Account < ApplicationRecord
   end
 
   def self.create_money_due_to_bsa!(event)
-    create(event_id: event.id, name: 'Money due to BSA', is_cash: false, account_type: 'Liability')
+    create(event_id: event.id, name: 'Due to BSA', is_cash: false, is_due_to_bsa: true, account_type: 'Liability')
   end
 
   def self.create_bsa_credit_card!(event)

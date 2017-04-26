@@ -1,11 +1,39 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   event: one
-  product_id: 1
-  quantity: 1
+  product: one
+  quantity: 1000
+  location: warehouse
+  is_transfer_from_bsa: true
+  date: <%= Date.today %>
 
 two:
   event: one
-  product_id: 1
-  quantity: 1
+  product: two
+  quantity: 1200
+  location: warehouse
+  is_transfer_from_bsa: true
+  date: <%= Date.today %>
+
+three:
+  event: one
+  product: three
+  quantity: 800
+  location: warehouse
+  is_transfer_from_bsa: true
+  date: <%= Date.today %>
+
+four:
+  event: one
+  product: four
+  quantity: 400
+  location: warehouse
+  is_transfer_from_bsa: true
+  date: <%= Date.today %>
+
+five:
+  event: one
+  product: one
+  quantity: 50
+  location: warehouse
+  is_transfer_from_bsa: true
+  date: <%= Date.today + 1.day %>

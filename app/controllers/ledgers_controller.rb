@@ -47,8 +47,8 @@ class LedgersController < ApplicationController
     @bsa_site_sales_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance(site_sales: true) if @active_event.accounts.where(name: 'BSA Credit Card').first
     @bsa_take_orders_credit_card_cash = @active_event.accounts.where(name: 'BSA Credit Card').first.balance(take_orders: true) if @active_event.accounts.where(name: 'BSA Credit Card').first
     @union_bank_cash = @active_event.accounts.where(name: 'Union Bank').first.balance if @active_event.accounts.where(name: 'Union Bank').first
-    @popcorn_inventory = Stock.wholesale_value(@unit, @active_event)
-    @due_from_customers = (@active_event.accounts.where(name: 'Money due from Customer').first.balance if @active_event.accounts.where(name: 'Money due from Customer').any?) || 0
+    @popcorn_inventory = Stock.wholesale_value(@active_event)
+    @due_from_customers = (@active_event.accounts.where(name: 'Due from Customers').first.balance if @active_event.accounts.where(name: 'Dsue from Customer').any?) || 0
     @bsa_online_credits = @active_event.total_online_sales * (@active_event.online_commission_percentage/100)
     @other_expenses = @active_event.accounts.joins(:ledgers).where("accounts.account_type = 'Expense'").sum("ledgers.amount")
 
@@ -58,6 +58,7 @@ class LedgersController < ApplicationController
     @pack_prizes = @active_event.prize_carts.ordered_or_approved.joins(cart_prizes: :prize).where('prizes.source = "pack"').sum('prizes.cost')
     @total_liabilities = @due_to_bsa + @product_due_to_customers + @pack_prizes
     @total_equity = @total_assets - @total_liabilities
+    @liability_accounts = @active_event.accounts.joins(:ledgers).where(account_type: 'Liability').order("accounts.rank")
   end
 
   def income_statement

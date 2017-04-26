@@ -16,39 +16,39 @@
               %tr
 
                 %td(colspan=2) Take Order cash
-                %td.text-xs-right= number_to_currency(@take_order_cash)
+                %td.text-right= number_to_currency(@take_order_cash)
               %tr
                 %td(colspan=2) Site Sale cash
-                %td.text-xs-right= number_to_currency(@site_sale_cash)
+                %td.text-right= number_to_currency(@site_sale_cash)
               %tr
                 %td(colspan=2) BSA credit card payments
-                %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
+                %td.text-right= number_to_currency(@bsa_credit_card_cash)
               %tr
                 %td
                 %td BSA credit card payments (Site Sales)
-                %td.text-xs-right= number_to_currency(@bsa_site_sales_credit_card_cash)
+                %td.text-right= number_to_currency(@bsa_site_sales_credit_card_cash)
               %tr
                 %td
                 %td BSA credit card payments (Take Orders)
-                %td.text-xs-right= number_to_currency(@bsa_take_orders_credit_card_cash)
+                %td.text-right= number_to_currency(@bsa_take_orders_credit_card_cash)
               %tr
                 %td(colspan=2) BSA online accounts receivable
-                %td.text-xs-right= number_to_currency(@bsa_online_credits)
+                %td.text-right= number_to_currency(@bsa_online_credits)
               %tr
                 %td(colspan=2) Square payments
-                %td.text-xs-right= number_to_currency(@square_cash)
+                %td.text-right= number_to_currency(@square_cash)
               %tr
                 %td(colspan=2) Due from Customers
-                %td.text-xs-right= number_to_currency(@due_from_customers)
+                %td.text-right= number_to_currency(@due_from_customers)
               %tr
                 %td(colspan=2) Union Bank deposits
-                %td.text-xs-right= number_to_currency(@union_bank_cash)
+                %td.text-right= number_to_currency(@union_bank_cash)
               %tr
                 %td(colspan=2) Popcorn Inventory
-                %td.text-xs-right= number_to_currency(@popcorn_inventory)
+                %td.text-right= number_to_currency(@popcorn_inventory)
               %tr
                 %th.top.bottom(colspan=2) Total assets
-                %th.top.bottom.text-xs-right= number_to_currency(@total_assets)
+                %th.top.bottom.text-right= number_to_currency(@total_assets)
 
 
       .col-md-6
@@ -58,19 +58,20 @@
       
               %h5 Liabilities
 
-            %table.table.card-text
-              %tr
-                %td Due to BSA
-                %td.text-xs-right= number_to_currency(@due_to_bsa)
-              %tr
-                %td Product due to Customers
-                %td.text-xs-right= number_to_currency(@product_due_to_customers)
-              %tr
-                %td Pack prizes
-                %td.text-xs-right= number_to_currency(@pack_prizes)
+
+            %table.table.card-test
+              - total = 0
+              - @liability_accounts.each do |account|
+                %tr
+                  %td= account.name
+                  %td.text-right
+                    - total += account.ledgers.sum(:amount)
+                    = number_to_currency(total)
+
               %tr
                 %th.top.bottom Total liabilities
-                %th.top.bottom.text-xs-right= number_to_currency(@total_liabilities)
+                %th.top.bottom.text-right= number_to_currency(total)
+
 
       .col-md-6
         .card
@@ -81,7 +82,7 @@
             %table.table.card-text
               %tr
                 %th.top.bottom-double Retained earnings
-                %th.top.bottom-double.text-xs-right= number_to_currency(-@other_expenses)
-              %tr
-                %th.top.bottom-double Equity
-                %th.top.bottom-double.text-xs-right= number_to_currency(@total_equity - @other_expenses)
+                %th.top.bottom-double.text-right= number_to_currency(-@other_expenses)
+              / %tr
+              /   %th.top.bottom-double Equity
+              /   %th.top.bottom-double.text-right= number_to_currency(@total_equity - @other_expenses)

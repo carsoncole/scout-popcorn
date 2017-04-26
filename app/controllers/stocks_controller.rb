@@ -1,18 +1,16 @@
 class StocksController < ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
 
-  # GET /stocks
-  # GET /stocks.json
   def index
     @stocks_query = @active_event.stocks.joins(:product).order(:location, 'products.name')
     @stocks = @active_event.stocks.joins(:product).order('products.name')
     @locations = @active_event.stocks.order(location: :desc).group(:location)
     if params[:location]
       @stocks_query = @stocks_query.where(location: params[:location])
-    elsif params[:all]
-      # use default
-    elsif @locations.any?
-      redirect_to stocks_path(location: @locations.first.location)
+    # elsif params[:all]
+    #   # use default
+    # elsif @locations.any?
+    #   redirect_to stocks_path(location: @locations.first.location)
     end
 
     if params['date(1i)']
@@ -24,18 +22,14 @@ class StocksController < ApplicationController
     @locations = @active_event.stocks.order(location: :desc).group(:location)
   end
 
-  # GET /stocks/1
-  # GET /stocks/1.json
   def show
   end
 
-  # GET /stocks/new
   def new
     @stock = Stock.new
     @products = @active_event.products.order(:name)
   end
 
-  # GET /stocks/1/edit
   def edit
     @products = @active_event.products.order(:name)
   end
@@ -56,8 +50,6 @@ class StocksController < ApplicationController
     @products = @active_event.products.is_sourced_from_bsa.physical.order(:name)
   end
 
-  # POST /stocks
-  # POST /stocks.json
   def create
     if stock_params[:movement_with_warehouse] == true && stock_params[:location] == 'warehouse'
       redirect_to stocks_ledger_path, notice: "Location needs to be different than -warehouse-"
@@ -66,7 +58,7 @@ class StocksController < ApplicationController
         movement_with_warehouse = true
         stock_params.delete :movement_with_warehouse
         @corresponding_stock = @active_event.stocks.build(stock_params)
-        @corresponding_stock.quantity = - @corresponding_stock.quantity
+        @corresponding_stock.quantity = -@corresponding_stock.quantity
         @corresponding_stock.location = 'warehouse'
         @corresponding_stock.created_by = current_scout.id
         @corresponding_stock.save
@@ -84,8 +76,6 @@ class StocksController < ApplicationController
     end
   end 
 
-  # PATCH/PUT /stocks/1
-  # PATCH/PUT /stocks/1.json
   def update
     respond_to do |format|
       if @stock.update(stock_params)
@@ -98,8 +88,6 @@ class StocksController < ApplicationController
     end
   end
 
-  # DELETE /stocks/1
-  # DELETE /stocks/1.json
   def destroy
     @stock.destroy
     respond_to do |format|
@@ -109,12 +97,10 @@ class StocksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_stock
       @stock = Stock.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params
       params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :movement_with_warehouse, :is_transfer_from_bsa, :date)
     end

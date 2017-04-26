@@ -50,7 +50,7 @@
               %span.caret                   
             %ul.dropdown-menu
               - if @active_event
-                %li= link_to "Stock", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
+                %li= link_to "Stock Available", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
                 %li= link_to "Stock Ledger", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
 
 

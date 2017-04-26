@@ -34,4 +34,6 @@ pack_donation:
   name: Pack Donation
   retail_price: 1
   event: one
+  is_pack_donation: true
   is_physical_inventory: false
+  is_sourced_from_bsa: false
