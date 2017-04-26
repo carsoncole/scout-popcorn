@@ -6,26 +6,31 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Unit.create([
+  {name: 'Pack 4496', street_address_1: '425 Rolling Bay Road', city: 'Bainbridge Island', state_postal_code: 'WA', zip_code: '98110'},
+  {name: 'Pack 9999', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'}
+  ])
+
 Scout.create(first_name: 'Carson', last_name: 'Cole', email: 'c@c.com', unit_id: 1, password: 'robert', is_admin: true)
 
 Product.create([
-  {name: 'Chocolatey Caramel Crunch', retail_price: 25,  url: 'chocolatey-caramel-crunch.png'},
-  {name: 'White Chocolatey Pretzels', retail_price: 25,  url: 'white-chocolatey-pretzels.png'},
-  {name: 'Seattle Seahawks Tin', retail_price: 25,  url: 'seattle-seahawks-tin.jpg'},
-  {name: 'Premium Caramel Corn', retail_price: 20,  url: 'premium-caramel-corn.png'},
-  {name: 'Jalapeno Cheddar Cheese', retail_price: 15,  url: 'jalapeno-cheddar-cheese.jpg'},
-  {name: 'White Cheddar Cheese Corn', retail_price: 15,  url: 'white-cheddar-cheese.png'},
-  {name: 'Classic Caramel Corn', retail_price: 10,  url: 'classic-caramel-corn.png'},
-  {name: 'Popping Corn', retail_price: 10,  url: 'popping-corn.png'},
-  {name: 'Kettle Corn Microwave', retail_price: 20,  url: 'kettle-corn-microwave.jpg'},
-  {name: 'Unbelievable Butter Microwave', retail_price: 20,  url: 'unbelievable-butter-microwave.jpg'},
-  {name: 'Butter Light Microwave', retail_price: 20,  url: 'butter-light-microwave.jpg'},
-  {name: 'Sweet & Savory Collection', retail_price: 40,  url: 'sweet-and-savory.jpg'},
-  {name: "Cheese Lover's Collection", retail_price: 30,  url: 'cheese-lovers-collection.jpg'},
-  {name: "Chocolate Lover's Collection", retail_price: 60,  url: 'chocolate-lovers-collection.png'},
-  {name: "Popcorn for our Troops Gold Donation", retail_price: 50,  url: 'popcorn-for-troops-50.jpg'},
-  {name: "Popcorn for our Troops Silver Donation", retail_price: 30,  url: 'popcorn-for-troops-30.jpg'},
-  {name: "Pack Donation", retail_price: 1,  url: 'pack-donation.png'}
+  {name: 'Chocolatey Caramel Crunch', event_id: 1, retail_price: 25,  url: 'chocolatey-caramel-crunch.png'},
+  {name: 'White Chocolatey Pretzels', event_id: 1, retail_price: 25,  url: 'white-chocolatey-pretzels.png'},
+  {name: 'Seattle Seahawks Tin', event_id: 1, retail_price: 25,  url: 'seattle-seahawks-tin.jpg'},
+  {name: 'Premium Caramel Corn', event_id: 1, retail_price: 20,  url: 'premium-caramel-corn.png'},
+  {name: 'Jalapeno Cheddar Cheese', event_id: 1, retail_price: 15,  url: 'jalapeno-cheddar-cheese.jpg'},
+  {name: 'White Cheddar Cheese Corn', event_id: 1, retail_price: 15,  url: 'white-cheddar-cheese.png'},
+  {name: 'Classic Caramel Corn', event_id: 1, retail_price: 10,  url: 'classic-caramel-corn.png'},
+  {name: 'Popping Corn', event_id: 1, retail_price: 10,  url: 'popping-corn.png'},
+  {name: 'Kettle Corn Microwave', event_id: 1, retail_price: 20,  url: 'kettle-corn-microwave.jpg'},
+  {name: 'Unbelievable Butter Microwave', event_id: 1, retail_price: 20,  url: 'unbelievable-butter-microwave.jpg'},
+  {name: 'Butter Light Microwave', event_id: 1, retail_price: 20,  url: 'butter-light-microwave.jpg'},
+  {name: 'Sweet & Savory Collection', event_id: 1, retail_price: 40,  url: 'sweet-and-savory.jpg'},
+  {name: "Cheese Lover's Collection", event_id: 1, retail_price: 30,  url: 'cheese-lovers-collection.jpg'},
+  {name: "Chocolate Lover's Collection", event_id: 1, retail_price: 60,  url: 'chocolate-lovers-collection.png'},
+  {name: "Popcorn for our Troops Gold Donation", event_id: 1, retail_price: 50,  url: 'popcorn-for-troops-50.jpg'},
+  {name: "Popcorn for our Troops Silver Donation", event_id: 1, retail_price: 30,  url: 'popcorn-for-troops-30.jpg'},
+  {name: "Pack Donation", event_id: 1, retail_price: 1,  url: 'pack-donation.png', is_pack_donation: true, is_sourced_from_bsa: false}
   ])
 
 # Prize.create([
@@ -84,11 +89,6 @@ Product.create([
 #   {name: '$600 Bonus Level', amount: 600, source: 'bsa-bonus', source_id: '988100313', description: 'Two Tickets to the Mariners Scout Day Experience', is_by_level: true},
 #   {name: '$1,500 Bonus Level', amount: 1500, source: 'bsa-bonus', source_id: '', description: 'Invitation to party (to be announced)', is_by_level: true}
 #   ])
-
-Unit.create([
-  {name: 'Pack 4496', street_address_1: '425 Rolling Bay Road', city: 'Bainbridge Island', state_postal_code: 'WA', zip_code: '98110'},
-  {name: 'Pack 9999', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'}
-  ])
 
 Event.create([
   { unit_id: 1, name: 'Popcorn Sales 2016'},

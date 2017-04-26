@@ -8,6 +8,7 @@ class CreateLedgers < ActiveRecord::Migration[5.0]
       t.boolean :is_money_collected
       t.integer :take_order_id
       t.integer :site_sale_id
+      t.integer :stock_id
       t.integer :created_at
 
       t.timestamps

@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.boolean  "is_money_collected"
     t.integer  "take_order_id"
     t.integer  "site_sale_id"
+    t.integer  "stock_id"
     t.datetime "created_at",                                                                 null: false
     t.datetime "updated_at",                                                                 null: false
     t.datetime "bank_deposit_notification_sent_at"
@@ -126,9 +127,9 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.string   "url"
     t.boolean  "is_active",                                     default: true
     t.boolean  "is_physical_inventory",                         default: true
-    t.datetime "created_at",                                                   null: false
-    t.datetime "updated_at",                                                   null: false
-    t.boolean  "is_pack_donation"
+    t.boolean  "is_pack_donation",                              default: false
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
     t.boolean  "is_sourced_from_bsa",                           default: true
   end
 

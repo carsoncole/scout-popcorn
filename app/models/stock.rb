@@ -3,6 +3,7 @@ class Stock < ApplicationRecord
   belongs_to :take_order, optional: true
   belongs_to :site_sale, optional: true
   belongs_to :event
+  has_one :ledger, dependent: :destroy
 
   LOCATIONS = [
     'warehouse',
@@ -50,6 +51,6 @@ class Stock < ApplicationRecord
   def create_due_to_bsa!
     account = event.accounts.where(is_due_to_bsa: true).first
     wholesale_amount = quantity * product.retail_price * (1 - (event.unit_commission_percentage / 100))
-    account.ledgers.create(description: 'BSA inventory transfer', amount: wholesale_amount, date: date)
+    account.ledgers.create(description: 'BSA inventory transfer', amount: wholesale_amount, date: date, stock_id: self.id)
   end
 end

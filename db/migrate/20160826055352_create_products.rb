@@ -7,6 +7,7 @@ class CreateProducts < ActiveRecord::Migration[5.0]
       t.string :url
       t.boolean :is_active, default: true
       t.boolean :is_physical_inventory, default: true
+      t.boolean :is_pack_donation, default: false
       t.timestamps
     end
   end

@@ -53,7 +53,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should create product" do
     sign_in(scouts(:admin))
     assert_difference('Product.count') do
-      post products_url, params: { product: { name: @product.name, quantity: @product.quantity, retail_price: @product.retail_price } }
+      post products_url, params: { product: { name: @product.name, retail_price: @product.retail_price } }
     end
 
     assert_redirected_to products_path
@@ -73,7 +73,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update product" do
     sign_in(scouts(:admin))
-    patch product_url(@product_unused), params: { product: { name: @product_unused.name, quantity: 20, retail_price: @product_unused.retail_price } }
+    patch product_url(@product_unused), params: { product: { name: @product_unused.name, retail_price: @product_unused.retail_price } }
     assert_redirected_to products_path
   end
 
