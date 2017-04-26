@@ -5,19 +5,16 @@ class SiteSale < ApplicationRecord
   has_many :products, through: :site_sale_line_items
   has_many :site_sale_payment_methods, dependent: :destroy
 
-  validates :name, :date, presence: true
+  STATUSES = [ 'open', 'closed' ]
+
+  validates :name, :date, :event_id, presence: true
+  validates :status, inclusion: { in: SiteSale::STATUSES }
 
   after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
   after_save :do_ledgers!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
 
   after_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'open'}
   after_save :reverse_ledgers!, if: Proc.new { |to| to.status_changed? && to.status == 'open'}
-
-
-  STATUSES = { 
-      open: { :status => :open, :name => 'Open', description: "Site sales figures not complete"},
-      closed: { status: :closed, :name => 'Closed', description: "Sites sales figures complete" }
-    }
 
   def self.open
     where(status: 'open')

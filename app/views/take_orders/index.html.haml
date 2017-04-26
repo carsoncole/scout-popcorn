@@ -81,9 +81,9 @@
                   %i.fa.fa-envelope
                   Order Form + Envelope
                   - if envelope.open?
-                    %span.tag.tag-info OPEN
+                    %span.badge.badge-info OPEN
                   - elsif envelope.closed?
-                    %span.tag.tag-info TURNED IN
+                    %span.badge.badge-info TURNED IN
   
               - if current_scout.admin? && envelope.open? && @active_event.take_orders_allowed?
                 - if envelope.take_orders.any? 
@@ -164,7 +164,7 @@
                         %td= nice_date_time_less(take_order.created_at)
                         %td
                           - if take_order.status
-                            %span.tag.tag-primary
+                            %span.badge.badge-primary
                               - if take_order.status == 'submitted'
                                 Turned In
                               - elsif take_order.status == 'in hand'

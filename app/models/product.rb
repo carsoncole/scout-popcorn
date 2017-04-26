@@ -13,6 +13,7 @@ class Product < ApplicationRecord
   validates :url, format: {with: /\.(png|jpg)\Z/i}, if: Proc.new {|p| p.url.present? }
 
   before_destroy :disallow_if_used!
+  after_update :remove_from_take_orders!, if: Proc.new { |p| p.is_active_changed? && p.is_active == false }
   before_update :disallow_if_used!, if: Proc.new { |p| p.retail_price_changed? }
 
   scope :active, -> { where(is_active: true )}
@@ -38,7 +39,7 @@ class Product < ApplicationRecord
   end
 
   def self.take_order_left(take_order)
-    Product.where(event_id: take_order.event_id).order(:name).reject{ |p| take_order.products.include? p}
+    Product.active.where(event_id: take_order.event_id).order(:name).reject{ |p| take_order.products.include? p}
   end
 
   def self.site_sale_left(site_sale)
@@ -54,6 +55,11 @@ class Product < ApplicationRecord
       errors.add(:base, "Product can not be modified/destroyed since it has been used." )
     end
 
+  end
+
+  # if a product is made 'inactive', it should be removed from any 'in hand' take orders.
+  def remove_from_take_orders!
+    take_order_line_items.joins(:take_order).where("take_orders.status = 'in hand'").destroy_all
   end
 
 end

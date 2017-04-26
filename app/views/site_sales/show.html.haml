@@ -22,9 +22,9 @@
           .col-md-6
             %h3.text-xs-right
               - if @site_sale.status == 'closed'
-                %span.tag.tag-danger= @site_sale.status.capitalize
+                %span.badge.badge-danger= @site_sale.status.capitalize
               - else
-                %span.tag.tag-success= @site_sale.status.capitalize
+                %span.badge.badge-success= @site_sale.status.capitalize
 
         %table.table
           %thead

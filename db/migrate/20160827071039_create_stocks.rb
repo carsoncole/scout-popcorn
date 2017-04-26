@@ -10,7 +10,8 @@ class CreateStocks < ActiveRecord::Migration[5.0]
       t.integer :take_order_id
       t.integer :site_sale_id
       t.integer :created_by
-      t.boolean :is_transfer_from_bsa
+      t.boolean :is_transfer_from_bsa, default: false
+      t.boolean :is_transfer_from_warehouse, default: false
       t.boolean :is_pickup
       t.integer :ledger_id
       t.timestamps

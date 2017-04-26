@@ -1,7 +1,7 @@
 .row
   .col-md-12
     %h2
-      Products
+      Product Catalog
       - if params[:inactive] && current_scout.admin?
         = surround("(", ")") do
           Inactive
@@ -19,21 +19,19 @@
   .row
     - batch.each do |product|
       .col-md-3
-        .card
-          .card-block.product
+        .card.product
+          .card-block
             .card-title
-              %h6.text-center= product.name
+              %h5.text-center= product.name
 
-            / - if product.url.present?
-            /   .text-center= image_tag product.url, height: 200, class: 'img-rounded img-fluid m-x-auto d-block'
-            /   %br
-            / - else
-            %p.text-center.product-image
-              %i.fa.fa-shopping-basket.fa-lg
+            - if product.url.present?
+              = image_tag product.url, class: 'img-fluid'
             
-            %h6.text-center= number_to_currency(product.retail_price)
+            %p.card-text.text-center
+              Price: 
+              = number_to_currency(product.retail_price)
             - if current_scout.admin?
-              .text-right
+              %p.card-text.text-right
                 = link_to 'Info', product
                 = link_to edit_product_path(product) do
                   %i.fa.fa-pencil.fa-lg

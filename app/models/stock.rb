@@ -17,7 +17,7 @@ class Stock < ApplicationRecord
 
   attr_accessor :movement_with_warehouse
 
-  before_save :update_wholesale_value!, if: Proc.new { |s| s.quantity_changed? }
+  before_save :update_wholesale_value!, if: Proc.new { |s| s.quantity_changed? || s.product_id_changed? }
   after_create :create_due_to_bsa!, if: Proc.new { |s| s.is_transfer_from_bsa }
 
   def self.warehouse

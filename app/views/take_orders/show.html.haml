@@ -8,7 +8,7 @@
               %h3
                 Take Order -
                 = @take_order.scout.name  
-                %span.tag.tag-primary
+                %span.badge.badge-primary
                   - if @take_order.status == 'submitted'
                     Turned In
                   - elsif @take_order.status == 'in hand'

@@ -49,7 +49,7 @@ class TakeOrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @take_order = TakeOrder.find(params[:id])
+    @take_order = @active_event.take_orders.find(params[:id])
     @line_items = @take_order.take_order_line_items
   end
 
@@ -120,7 +120,7 @@ class TakeOrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_take_order
-      @take_order = TakeOrder.find(params[:id])
+      @take_order = @active_event.take_orders.find(params[:id])
     end
 
     def set_page_title

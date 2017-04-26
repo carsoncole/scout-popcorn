@@ -9,7 +9,7 @@
 
           - unless params[:final]
             %h3
-              %span.tag.tag-info= @purchase_order.status.capitalize 
+              %span.badge.badge-info= @purchase_order.status.capitalize 
 
         %p.hidden-print= link_to "Final Purchase Order", purchase_order_path(@purchase_order, final: true)
 

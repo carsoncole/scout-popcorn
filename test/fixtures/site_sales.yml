@@ -1,19 +1,14 @@
-one:
+safeway:
   event: one
   name: Safeway
   date: <%= Date.today + 10.days %>
 
-two:
+walmart:
   event: one
   name: Walmart
   date: <%= Date.today + 11.days %>
 
-three:
+ace:
   event: one
   name: Ace Hardware
   date: <%= Date.today + 12.days %>
-
-four:
-  event: two
-  name: Ace Hardware
-  date: <%= Date.today + 13.days %>

@@ -57,7 +57,7 @@
                     - name = product.name + (product.is_active? ? "" : ' (INACTIVE)')
                     %b= link_to name, product_path(product)
                     - if quantity <= 0 && product.is_physical_inventory
-                      .tag.tag-danger SOLD OUT
+                      .badge.badge-danger SOLD OUT
                   %td.text-center.quantity= quantity
                   %td.text-right= number_to_currency(product.retail_price)
                   %td.text-right

@@ -52,9 +52,9 @@
                     - if current_scout.admin?
                       %td
                         - if site_sale.status == 'closed'
-                          %span.tag.tag-danger= site_sale.status.titleize
+                          %span.badge.badge-danger= site_sale.status.titleize
                         - else
-                          %span.tag.tag-success= site_sale.status.titleize
+                          %span.badge.badge-success= site_sale.status.titleize
                       %td.hidden-print.text-right
                         = link_to site_sale do
                           %i.fa.fa-folder-open.fa-lg

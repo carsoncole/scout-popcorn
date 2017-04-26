@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class SiteSaleTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  setup do
+    @site_sale = SiteSale.new(site_sales(:one))
+  end
+
 end

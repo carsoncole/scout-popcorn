@@ -25,7 +25,7 @@
                   %td= purchase_order.unit.name
                 %td= purchase_order.id
                 %td
-                  %span.tag.tag-info= purchase_order.status.capitalize
+                  %span.badge.badge-info= purchase_order.status.capitalize
                 %td= purchase_order.event.name if purchase_order.event
                 %td= purchase_order.type.gsub("PurchaseOrder","").underscore.titleize
                 %td= purchase_order.ordered_at.to_formatted_s(:long) if purchase_order.ordered_at

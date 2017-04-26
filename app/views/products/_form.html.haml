@@ -16,9 +16,11 @@
           .form-group
             = f.label :name
             = f.text_field :name, class: 'form-control'
-          / .form-group
-          /   = f.label :image_url
-          /   = f.text_field :url, class: 'form-control'
+          .form-group
+            = f.label :image_url
+            = f.text_field :url, class: 'form-control'
+            %i.fa.fa-info-circle.text-muted.small
+              &nbsp; URL to an image located on the Internet.
           .form-group
             = f.label :price            
             = f.text_field :retail_price, disabled: f.object.used? ? true : false, class: 'form-control'

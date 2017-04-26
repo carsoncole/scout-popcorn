@@ -2,15 +2,15 @@
 
 one:
   scout: one
-  site_sale: one
+  site_sale: safeway
   hours_worked: 2
 
 two:
   scout: two
-  site_sale: one
+  site_sale: safeway
   hours_worked: 3
 
 three:
   scout: three
-  site_sale: one
+  site_sale: safeway
   hours_worked: 3

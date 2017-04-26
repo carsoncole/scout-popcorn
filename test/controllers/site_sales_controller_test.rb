@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SiteSalesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @site_sale = site_sales(:one)
+    @site_sale = site_sales(:safeway)
   end
 
   test "should get index" do
