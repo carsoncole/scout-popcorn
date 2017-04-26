@@ -4,7 +4,7 @@
       .card-block
         .card-title
           %h2
-            Stock
+            Inventory
 
             .visible-print-inline
               = "-"
@@ -72,8 +72,7 @@
                 %td
                 %td
                 %td.text-right= number_to_currency(total_retail)
-                %td.text-right.wholesale_value
-                  = number_to_currency(total_wholesale)
+                %td.text-right.wholesale-value= number_to_currency(total_wholesale)
 
         = link_to new_stock_path, class: 'hidden-print' do
           %i.fa.fa-plus.fa-lg

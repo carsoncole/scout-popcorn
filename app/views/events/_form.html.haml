@@ -23,24 +23,24 @@
           .form-group
             = f.label :contact_person_email
             = f.text_field :contact_person_email, placeholder: 'Email', class: 'form-control'
-
-          / .form-group
-          /   = f.label :is_active
-          /   %p.card-text.small.text-muted When 'Active' an event is viewable by Unit scouts.
-          /   = f.check_box :is_active, class: 'form-control'
-          
           %br
           %h4 Commissions
+
+          - if action_name == 'edit'
+            %p= link_to "Modify commission percentage", edit_commission_percentage_path(@active_event)
 
           .form-group
             = f.label :unit_commission_percentage
             %p.small.text-muted Enter '35' for 35%.
-            = f.text_field :unit_commission_percentage, class: 'form-control'
+            = f.text_field :unit_commission_percentage, class: 'form-control', disabled: (action_name == 'new' ? false : true)
 
           .form-group
             = f.label :online_commission_percentage
             %p.small.text-muted Enter '35' for 35%.
-            = f.text_field :online_commission_percentage, class: 'form-control'
+            = f.text_field :online_commission_percentage, class: 'form-control', disabled: (action_name == 'new' ? false : true)
+
+
+
 
           %br
           %h4 Features

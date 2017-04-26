@@ -1,9 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  event: events(:one)
+  event: one
   name: Soimething
 
 two:
-  event: events(:one)
+  event: one
   name: MyString
+
+due_to_bsa:
+  event: one
+  account_type: Liability
+  is_due_to_bsa: true
+  name: Due to BSA

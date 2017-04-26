@@ -1,13 +1,9 @@
 class EventsController < ApplicationController
 
-  # GET /events
-  # GET /events.json
   def index
     @events = @unit.events.where(unit_id: @unit.id).order(is_active: :desc)
   end
 
-  # GET /events/1
-  # GET /events/1.json
   def show
     @event = Event.find(params[:id])
     cookies[:event_id] = @event.id
@@ -15,57 +11,42 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 
-  # GET /events/new
   def new
     @event = Event.new
   end
 
-  # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
   end
 
-  # POST /events
-  # POST /events.json
+  def edit_commission_percentage
+    @event = @active_event
+  end
+
   def create
     @event = @unit.events.build(event_params)
-
-    respond_to do |format|
-      if @event.save
-        current_scout.update(event_id: @event.id)
-        format.html { redirect_to events_path, notice: 'Event was successfully created.' }
-        format.json { render :show, status: :created, location: @event }
-      else
-        format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
-      end
+    if @event.save
+      current_scout.update(event_id: @event.id)
+      redirect_to events_path, notice: 'Event was successfully created.'
+    else
+      frender :new
     end
   end
 
-  # PATCH/PUT /events/1
-  # PATCH/PUT /events/1.json
   def update
     @event = Event.find(params[:id])
-    respond_to do |format|
-      if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
-      else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
-      end
+
+    if @event.update(event_params)
+      redirect_to @event, notice: 'Event was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /events/1
-  # DELETE /events/1.json
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
-    respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to events_url, notice: 'Event was successfully destroyed.'
   end
 
   def archive

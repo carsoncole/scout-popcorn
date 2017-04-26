@@ -2,17 +2,18 @@
   .col-md-12
     %h2
       Products
-      - if params[:inactive]
+      - if params[:inactive] && current_scout.admin?
         = surround("(", ")") do
           Inactive
 
     - if @products.empty?
       %p There are no products for this Event.
 
-    - if params[:inactive]
-      %p.card-text= link_to "Products", products_path
-    - else
-      %p.card-text= link_to "Inactive Products", products_path(inactive: true)
+    - if current_scout.admin?
+      - if params[:inactive]
+        %p.card-text= link_to "Products", products_path
+      - else
+        %p.card-text= link_to "Inactive Products", products_path(inactive: true)
 %br
 - @products.each_slice(4) do |batch|
   .row

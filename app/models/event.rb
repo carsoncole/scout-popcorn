@@ -30,7 +30,8 @@ class Event < ApplicationRecord
   after_destroy :reset_events_for_scouts!
   after_save :update_take_orders!, if: Proc.new {|e| e.unit_commission_percentage_changed? }
   after_update :reset_default_events!, if: Proc.new {|e| e.is_active_changed? && e.is_active == false }
- 
+  after_update :reprocess_all!, if: Proc.new { |e| e.unit_commission_percentage_changed? }
+
   def open_take_order_purchase_order
     open = take_order_purchase_orders.where(status: 'open').first
     unless open
@@ -172,5 +173,13 @@ class Event < ApplicationRecord
 
   def update_take_orders!
     take_orders.each {|take_order| take_order.reprocess_money_received_and_product_due!}
+  end
+
+  def reprocess_all!
+    stocks.each do |stock|
+      next unless stock.ledger_id
+      Ledger.find(stock.ledger_id).destroy
+      stock.create_due_to_bsa!
+    end
   end
 end

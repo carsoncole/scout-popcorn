@@ -11,7 +11,13 @@ Unit.create([
   {name: 'Pack 9999', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'}
   ])
 
-Scout.create(first_name: 'Carson', last_name: 'Cole', email: 'c@c.com', unit_id: 1, password: 'robert', is_admin: true)
+Scout.create([{first_name: 'Carson', last_name: 'Cole', email: 'a@a.com', unit_id: 1, password: 'robert', is_super_admin: true},
+{first_name: 'John', last_name: 'Doe', email: 'b@b.com', unit_id: 1, password: 'robert', is_admin: false} ])
+
+Event.create([
+  { unit_id: 1, name: 'Popcorn Sales 2016'},
+  { unit_id: 2, name: 'Popcorn Sales 2016'}
+  ])
 
 Product.create([
   {name: 'Chocolatey Caramel Crunch', event_id: 1, retail_price: 25,  url: 'chocolatey-caramel-crunch.png'},
@@ -32,6 +38,40 @@ Product.create([
   {name: "Popcorn for our Troops Silver Donation", event_id: 1, retail_price: 30,  url: 'popcorn-for-troops-30.jpg'},
   {name: "Pack Donation", event_id: 1, retail_price: 1,  url: 'pack-donation.png', is_pack_donation: true, is_sourced_from_bsa: false}
   ])
+
+
+Stock.create ([
+  {event_id: 1, product_id: 1, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 36},
+  {event_id: 1, product_id: 2, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 24}, 
+  {event_id: 1, product_id: 3, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 30},
+  {event_id: 1, product_id: 4, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 108},
+  {event_id: 1, product_id: 5, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 24},
+  {event_id: 1, product_id: 6, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 108},
+  {event_id: 1, product_id: 7, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 288},
+  {event_id: 1, product_id: 8, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 108},
+  {event_id: 1, product_id: 9, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 12},
+  {event_id: 1, product_id: 10, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 12},
+  {event_id: 1, product_id: 11, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 12},
+  {event_id: 1, product_id: 12, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 6},
+  {event_id: 1, product_id: 13, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 4}, 
+  {event_id: 1, product_id: 14, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 0}, 
+  {event_id: 2, product_id: 1, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 36},
+  {event_id: 2, product_id: 2, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 24}, 
+  {event_id: 2, product_id: 3, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 30},
+  {event_id: 2, product_id: 4, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 108},
+  {event_id: 2, product_id: 5, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 24},
+  {event_id: 2, product_id: 6, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 108},
+  {event_id: 2, product_id: 7, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 288},
+  {event_id: 2, product_id: 8, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 108},
+  {event_id: 2, product_id: 9, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 12},
+  {event_id: 2, product_id: 10, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 12},
+  {event_id: 2, product_id: 11, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 12},
+  {event_id: 2, product_id: 12, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 6},
+  {event_id: 2, product_id: 13, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 4}, 
+  {event_id: 2, product_id: 14, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today, quantity: 0} 
+  ])
+
+
 
 # Prize.create([
 #   {name: 'Participation Patch', amount: 25, source: 'bsa', source_id: '633893', source_description: 'Prize Level 1'},
@@ -90,10 +130,7 @@ Product.create([
 #   {name: '$1,500 Bonus Level', amount: 1500, source: 'bsa-bonus', source_id: '', description: 'Invitation to party (to be announced)', is_by_level: true}
 #   ])
 
-Event.create([
-  { unit_id: 1, name: 'Popcorn Sales 2016'},
-  { unit_id: 2, name: 'Popcorn Sales 2016'}
-  ])
+
 
 # 
 # TakeOrder.create([

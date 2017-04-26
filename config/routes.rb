@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :prize_carts
   resources :due_from_customers, only: :index
 
+  get 'events/:id/commissions' => 'events#edit_commission_percentage', as: 'edit_commission_percentage'
+
   post 'prize_carts/:id' => 'prize_carts#order_prizes', as: 'order_prizes'
   get 'approved-prizes' => 'prize_carts#approved_prizes', as: 'approved_prizes'
   post "approve-prize-cart/:id" => "prize_carts#approve", as: 'approve_prize_cart'

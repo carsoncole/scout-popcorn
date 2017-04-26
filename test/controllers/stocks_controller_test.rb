@@ -54,24 +54,36 @@ class StocksControllerTest < ActionDispatch::IntegrationTest
   test "wholesale value should balance" do
     sign_in(scouts(:admin))
     get stocks_path
-    assert_select "td.wholesale_value", "$35,700.00"
+    assert_select "td.wholesale-value", "$34,125.00"
   end
 
-  # test "should get edit" do
-  #   get edit_stock_url(@stock)
-  #   assert_response :success
-  # end
+  test "inventory wholesale_value = financials inventory value" do
+    sign_in(scouts(:admin))
+    get stocks_path
+    wholesale_value = (css_select("td.wholesale-value")).first
+    get balance_sheet_path
+    balance_sheet_value = (css_select("td.popcorn-inventory")).first
+    assert_equal wholesale_value.content, balance_sheet_value.content
+  end  
 
-  # test "should update stock" do
-  #   patch stock_url(@stock), params: { stock: { product_id: @stock.product_id, quantity: @stock.quantity, unit_id: @stock.unit_id } }
-  #   assert_redirected_to stock_url(@stock)
-  # end
+  test "should get edit" do
+    sign_in(scouts(:admin))
+    get edit_stock_url(@stock)
+    assert_response :success
+  end
 
-  # test "should destroy stock" do
-  #   assert_difference('Stock.count', -1) do
-  #     delete stock_url(@stock)
-  #   end
+  test "should update stock" do
+    sign_in(scouts(:admin))
+    patch stock_url(@stock), params: { stock: { product_id: @stock.product_id, quantity: @stock.quantity, event_id: @stock.event_id } }
+    assert_redirected_to stocks_ledger_url
+  end
 
-  #   assert_redirected_to stocks_url
-  # end
+  test "should destroy stock" do
+    sign_in(scouts(:admin))
+    assert_difference('Stock.count', -1) do
+      delete stock_url(@stock)
+    end
+
+    assert_redirected_to stocks_ledger_url
+  end
 end

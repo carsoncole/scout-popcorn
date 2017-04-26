@@ -2,7 +2,10 @@ class Ledger < ApplicationRecord
   belongs_to :account
   belongs_to :take_order, optional: true
   belongs_to :take_order_line_item, optional: true
-  has_one :stock, dependent: :destroy
+  belongs_to :stock, optional: true
+  
+  before_destroy { |ledger| 
+  }
 
   validates :account_id, presence: true
 

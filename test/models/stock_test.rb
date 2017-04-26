@@ -18,8 +18,15 @@ class StockTest < ActiveSupport::TestCase
     assert_equal @stock.errors[:location].last, "is not included in the list"
   end
 
-  test "#wholesale_value balances" do
-    assert_equal Stock.wholesale_value(events(:one)), 35700
+  # test "#wholesale_value balances" do
+  #   assert_equal Stock.wholesale_value(events(:one)).to_f, 35700.00
+  # end
+
+  test "#create_due_to_bsa should add to ledger" do
+    @stock.save
+    assert_not_nil @stock.ledger_id
+    assert_equal @stock.wholesale_value, @stock.ledger.amount
+    assert_equal @stock.id, @stock.ledger.stock_id
   end
 
 end

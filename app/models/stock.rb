@@ -5,6 +5,7 @@ class Stock < ApplicationRecord
   belongs_to :event
   has_one :ledger, dependent: :destroy
 
+
   LOCATIONS = [
     'warehouse',
     'site sales',
@@ -16,6 +17,7 @@ class Stock < ApplicationRecord
 
   attr_accessor :movement_with_warehouse
 
+  before_save :update_wholesale_value!, if: Proc.new { |s| s.quantity_changed? }
   after_create :create_due_to_bsa!, if: Proc.new { |s| s.is_transfer_from_bsa }
 
   def self.warehouse
@@ -35,6 +37,8 @@ class Stock < ApplicationRecord
   end
 
   def self.wholesale_value(event)
+    #TODO This may need refactoring to utilize wholesale_value attribute
+
     value = 0
     event.stocks.joins(:product).where("products.is_physical_inventory = ?",true).where("products.is_pack_donation = ? OR products.is_pack_donation IS NULL", false).group(:product_id).sum(:quantity).each do |product_id,quantity|
       product = Product.find(product_id)
@@ -48,9 +52,13 @@ class Stock < ApplicationRecord
     where(is_transfer_from_bsa: true)
   end 
 
+  def update_wholesale_value!
+    self.wholesale_value = quantity * product.retail_price * (1 - event.unit_commission_percentage / 100.00)
+  end
+
   def create_due_to_bsa!
     account = event.accounts.where(is_due_to_bsa: true).first
-    wholesale_amount = quantity * product.retail_price * (1 - (event.unit_commission_percentage / 100))
-    account.ledgers.create(description: 'BSA inventory transfer', amount: wholesale_amount, date: date, stock_id: self.id)
+    ledger = account.ledgers.create(description: 'BSA inventory transfer', amount: wholesale_value, date: date, stock_id: id)
+    self.update(ledger_id: ledger.id)
   end
 end

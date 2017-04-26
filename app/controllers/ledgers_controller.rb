@@ -1,8 +1,6 @@
 class LedgersController < ApplicationController
   before_action :set_ledger, only: [:show, :edit, :update, :destroy]
 
-  # GET /ledgers
-  # GET /ledgers.json
   def index
     @ledgers = Ledger.joins(account: :event).where("events.id = ?", @active_event).order(date: :desc, created_at: :desc).page(params[:page]).per(50)
     if params[:account_id]
@@ -11,12 +9,9 @@ class LedgersController < ApplicationController
     @bank_accounts = @active_event.accounts.is_bank_account_depositable
   end
 
-  # GET /ledgers/1
-  # GET /ledgers/1.json
   def show
   end
 
-  # GET /ledgers/new
   def new
     @ledger = Ledger.new
     @accounts = @active_event.accounts.order(:name)
@@ -58,7 +53,7 @@ class LedgersController < ApplicationController
     @pack_prizes = @active_event.prize_carts.ordered_or_approved.joins(cart_prizes: :prize).where('prizes.source = "pack"').sum('prizes.cost')
     @total_liabilities = @due_to_bsa + @product_due_to_customers + @pack_prizes
     @total_equity = @total_assets - @total_liabilities
-    @liability_accounts = @active_event.accounts.joins(:ledgers).where(account_type: 'Liability').order("accounts.rank")
+    @liability_accounts = @active_event.accounts.joins(:ledgers).where(account_type: 'Liability').distinct(:account_id).order("accounts.rank")
   end
 
   def income_statement
@@ -116,37 +111,24 @@ class LedgersController < ApplicationController
 
   end
 
-  # PATCH/PUT /ledgers/1
-  # PATCH/PUT /ledgers/1.json
   def update
-    respond_to do |format|
-      if @ledger.update(ledger_params)
-        format.html { redirect_to @ledger, notice: 'Ledger was successfully updated.' }
-        format.json { render :show, status: :ok, location: @ledger }
-      else
-        format.html { render :edit }
-        format.json { render json: @ledger.errors, status: :unprocessable_entity }
-      end
+    if @ledger.update(ledger_params)
+      redirect_to @ledger, notice: 'Ledger was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /ledgers/1
-  # DELETE /ledgers/1.json
   def destroy
     @ledger.destroy
-    respond_to do |format|
-      format.html { redirect_to ledgers_url, notice: 'Ledger was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to ledgers_url, notice: 'Ledger was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_ledger
       @ledger = Ledger.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def ledger_params
       params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by, :is_money_collected, :take_order_id)
     end

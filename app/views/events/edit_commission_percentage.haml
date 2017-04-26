@@ -1,0 +1,45 @@
+.row
+  .col-md-6
+    .card
+      .card-block
+        %h3.card-title Commission %
+
+        %table.table.card-text
+          %tr
+            %th Commission:
+            %td= number_to_percentage(@active_event.unit_commission_percentage, precision: 2)
+
+          %tr
+            %th Online Commission:
+            %td= number_to_percentage(@active_event.online_commission_percentage, precision: 2)
+
+  .col-md-6
+    .card
+      .card-block
+        %p.card-text
+          Changing your Unit percentages will result in a recalculation of your Unit's
+          %strong= @active_event.name
+          transactions. 
+
+%br
+.row
+  .col-md-6
+    .card
+      .card-block
+        %h3.card-title New Commission %
+
+        = form_for @event do |f|
+
+          %table.table.card-text
+            .form-group
+              %tr
+                %th= f.label :commission_percentage
+                %td= f.text_field :unit_commission_percentage, class: 'form-control'
+            .form-group
+              %tr
+                %th= f.label :online_commission_percentage
+                %td= f.text_field :online_commission_percentage, class: 'form-control'
+
+          .form-group
+            = f.submit 'Update', class: 'btn btn-warning form-control'
+
