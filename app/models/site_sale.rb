@@ -86,7 +86,7 @@ class SiteSale < ApplicationRecord
 
   def debit_stock!
     site_sale_line_items.each do |line_item|
-      event.unit.stocks.create(product_id: line_item.product_id, quantity: - line_item.quantity, location: 'site sale', date: self.date, site_sale_id: self.id)
+      event.stocks.create(product_id: line_item.product_id, quantity: - line_item.quantity, location: 'site sales', date: self.date, site_sale_id: self.id)
     end
   end
 

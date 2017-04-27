@@ -1,8 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+site_sale_cash:
   event: one
-  name: Soimething
+  name: Site Sales cash
+  account_type: asset
 
 two:
   event: one

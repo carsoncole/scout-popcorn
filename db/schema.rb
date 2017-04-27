@@ -17,8 +17,9 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.string   "name"
     t.string   "account_type"
     t.integer  "rank",                        default: 0
+    t.boolean  "is_master_account",           default: true
     t.boolean  "is_cash"
-    t.boolean  "is_credit_card",              default: false
+    t.boolean  "is_third_party_account",      default: false
     t.boolean  "is_due_to_bsa",               default: false
     t.boolean  "is_take_order_eligible",      default: false
     t.boolean  "is_site_sale_eligible",       default: false
@@ -77,6 +78,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.integer  "take_order_id"
     t.integer  "site_sale_id"
     t.integer  "stock_id"
+    t.integer  "created_by"
     t.datetime "created_at",                                                                 null: false
     t.datetime "updated_at",                                                                 null: false
     t.datetime "bank_deposit_notification_sent_at"

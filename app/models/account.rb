@@ -11,7 +11,7 @@ class Account < ApplicationRecord
   end
 
   def self.take_order(event)
-    Account.where(event_id: event.id).where(name: 'Take Order Cash').first
+    Account.where(event_id: event.id).where(name: 'Take Orders cash').first
   end
 
   def self.money_due_from_customer(event)
@@ -24,6 +24,10 @@ class Account < ApplicationRecord
 
   def self.assets
     where(account_type: 'Asset')
+  end
+
+  def self.liabilities
+    where(account_type: 'Liability')
   end
 
   def self.is_site_sale_eligible
@@ -45,15 +49,24 @@ class Account < ApplicationRecord
   end
 
   def self.create_site_sales_cash!(event)
-    create(event_id: event.id, name: 'Site Sales Cash', is_cash: true, is_site_sale_eligible: true, account_type: 'Asset')
+    create(event_id: event.id, name: 'Site Sales cash', is_cash: true, is_site_sale_eligible: true, account_type: 'Asset', rank: 1)
   end
 
   def self.create_take_orders_cash!(event)
-    create(event_id: event.id, name: 'Take Orders Cash', is_cash: true, is_take_order_eligible: true, account_type: 'Asset')
+    create(event_id: event.id, name: 'Take Orders cash', is_cash: true, is_take_order_eligible: true, account_type: 'Asset',rank: 1)
+  end
+
+  def self.create_bank_accounts!(event)
+    create(event_id: event.id, name: 'Unit Bank account', is_cash: true, is_bank_account_depositable: true, account_type: 'Asset', rank: 2)
+    create(event_id: event.id, name: 'BSA Bank account', is_cash: true, is_bank_account_depositable: true, account_type: 'Asset', rank: 2)
   end
 
   def self.create_money_due_from_customers!(event)
-    create(event_id: event.id, name: 'Due from Customers', is_cash: false, is_take_order_eligible: true, account_type: 'Asset')
+    create(event_id: event.id, name: 'Due from Customers', is_cash: false, is_take_order_eligible: true, account_type: 'Asset', rank: 3)
+  end
+
+  def self.create_inventory!(event)
+    create(event_id: event.id, name: 'Inventory', is_cash: false, account_type: 'Asset', rank: 10)
   end
 
   def self.create_product_due_to_customers!(event)
@@ -64,8 +77,8 @@ class Account < ApplicationRecord
     create(event_id: event.id, name: 'Due to BSA', is_cash: false, is_due_to_bsa: true, account_type: 'Liability')
   end
 
-  def self.create_bsa_credit_card!(event)
-    create(event_id: event.id, name: 'BSA credit card', is_cash: false, account_type: 'Asset')
+  def self.create_third_party_account!(event)
+    create(event_id: event.id, name: 'Third Party account', is_third_party_account: true, is_site_sale_eligible: true, is_cash: false, account_type: 'Asset', rank: 4)
   end
 
 end

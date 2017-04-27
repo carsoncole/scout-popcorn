@@ -10,5 +10,5 @@ walmart:
 
 ace:
   event: one
-  name: Ace Hardware
+  name: Ace
   date: <%= Date.today + 12.days %>

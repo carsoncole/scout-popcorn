@@ -24,7 +24,6 @@
                 Depositable
 
               %th
-              %th
           %tbody
             - @accounts.each do |account|
               %tr
@@ -48,11 +47,11 @@
                     %i.fa.fa-check
                 %td= account.account_type
                 %td
-                  = link_to edit_account_path(account) do
-                    %i.fa.fa-pencil.fa-lg
-                %td
-                  = link_to account, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                    %i.fa.fa-trash.fa-lg
+                  - unless account.is_master_account?
+                    = link_to edit_account_path(account) do
+                      %i.fa.fa-pencil.fa-lg
+                    = link_to account, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                      %i.fa.fa-trash.fa-lg
 
         %br
 

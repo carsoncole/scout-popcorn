@@ -1,23 +1,19 @@
 one:
   site_sale: safeway
-  product: safeway
+  product: one
   quantity: 10
-  value: <%= 10 * 10 %>
 
 two:
   site_sale: safeway
   product: two
   quantity: 15
-  value: <%= 10 * 15 %>
 
 three:
   site_sale: safeway
   product: three
   quantity: 10
-  value: <%= 15 * 10 %>
 
 four:
   site_sale: safeway
   product: pack_donation
   quantity: 120
-  value: <%= 1 * 120 %>
