@@ -50,10 +50,5 @@
                   - unless account.is_master_account?
                     = link_to edit_account_path(account) do
                       %i.fa.fa-pencil.fa-lg
-                    = link_to account, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                      %i.fa.fa-trash.fa-lg
 
         %br
-
-        = link_to new_account_path do
-          %i.fa.fa-plus.fa-lg
