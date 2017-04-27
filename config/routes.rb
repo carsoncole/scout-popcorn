@@ -37,7 +37,6 @@ Rails.application.routes.draw do
   get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
   resources :accounts
   resources :payment_methods
-  get 'help/index'
 
 
   get 'home/invite_scouts' => 'home#invite_scouts', as: 'invite_scouts'
