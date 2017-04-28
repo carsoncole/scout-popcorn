@@ -1,5 +1,5 @@
 
-- if @total_sales > 0
+- if @total_sales > 0 && @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_starts_at < Date.today
   .row
     .col-md-4
     .col-md-4
@@ -10,6 +10,9 @@
             Prize Cart
             %i.fa.fa-shopping-cart.fa-lg
 
+
+- if @bsa_prizes.empty? && @bsa_bonus_prizes.empty? && @pack_prizes.empty? 
+  %p Awwwhh! Prizes have not been loaded yet. Come back later.
 
 
 - ['bsa', 'bsa_bonus', 'pack'].each do |prize_type|
@@ -24,7 +27,7 @@
         - elsif prize_type == 'pack'
           PACK 4496
         - else
-          = prrize_type.titleize
+          = prize_type.titleize
         Prizes
       %hr
   - eval("@#{prize_type}_prizes").each_slice(4) do |batch|

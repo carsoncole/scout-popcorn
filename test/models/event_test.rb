@@ -45,4 +45,21 @@ class EventTest < ActiveSupport::TestCase
     scout.reload
     assert_not_nil scout.event_id
   end
+
+  test "new event should have necessary accounts" do 
+    @event.save
+    event_accounts_ordered = @event.accounts.order(:name).map {|a| a.name }
+
+    assert_equal event_accounts_ordered,
+      [ 'BSA bank account',
+        'Due from customers',
+        'Due to BSA',
+        'Inventory',
+        'Product due to customers',
+        'Site Sales cash',
+        'Take Orders cash',
+        'Third Party account',
+        'Unit bank account'
+       ]
+  end
 end

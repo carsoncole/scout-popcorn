@@ -6,6 +6,9 @@
 #
 one: 
  name: Pack 100
+ treasurer_first_name: Paul
+ treasurer_last_name: Jones
+ treasurer_email: paul@example.com
 
 two: 
   name: Troop 100

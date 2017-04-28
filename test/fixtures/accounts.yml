@@ -3,14 +3,27 @@
 site_sale_cash:
   event: one
   name: Site Sales cash
-  account_type: asset
+  is_site_sale_eligible: true
+  account_type: Asset
 
-two:
+take_order_cash:
   event: one
-  name: MyString
+  name: Take Orders cash
+  account_type: Asset
+
+inventory:
+  event: one
+  name: Inventory
+  account_type: Asset
 
 due_to_bsa:
   event: one
   account_type: Liability
   is_due_to_bsa: true
   name: Due to BSA
+
+unit_bank_account:
+  event: one
+  name: Unit Bank account
+  account_type: Asset
+  is_bank_account_depositable: true

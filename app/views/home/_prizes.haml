@@ -12,7 +12,7 @@
           %i.fa.fa-rocket
           %i.fa.fa-gamepad
           %i.fa.fa-gift
-      - if @active_event.prize_cart_ordering_starts_at < Time.now && @active_event.prize_cart_ordering_ends_at > Time.now
+      - if @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_starts_at < Time.now && @active_event.prize_cart_ordering_ends_at > Time.now
         %hr
         %div.card-text
           = link_to prize_cart_path(current_scout.prize_cart(@active_event)) do

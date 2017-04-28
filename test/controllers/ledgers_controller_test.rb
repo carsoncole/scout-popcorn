@@ -5,10 +5,17 @@ class LedgersControllerTest < ActionDispatch::IntegrationTest
   #   @ledger = ledgers(:one)
   # end
 
-  # test "should get index" do
-  #   get ledgers_url
-  #   assert_response :success
-  # end
+  test "should get index" do
+    sign_in(scouts(:admin))
+    get ledgers_url
+    assert_response :success
+  end
+
+  test "should get bank deposit" do
+    sign_in(scouts(:admin))
+    get bank_deposit_url
+    assert_response :success
+  end
 
   # test "should get new" do
   #   get new_ledger_url

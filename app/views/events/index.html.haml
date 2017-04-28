@@ -3,17 +3,17 @@
     .col-md-6
       .card
         .card-block
-          .text-center
-            .card-title 
-              %h3
-                = event.name
-                = link_to edit_event_path(event) do
-                  %i.fa.fa-pencil
-          %table.table.card-text.card-text
+          .card-title 
+            .pull-right
+              = link_to edit_event_path(event) do
+                %i.fa.fa-pencil
+            %h3= event.name
+            
+          %table.table.card-text.card-text.table-sm
 
             %tr
               %th Contact:
-              %td.text-right= event.contact_person_email
+              %td.text-right= event.admin_email
 
 
 
@@ -42,20 +42,19 @@
                 - if event.is_online_enabled
                   %i.fa.fa-check
 
-            - if event.is_prizes_enabled?
-              %tr
-                %th Prize ordering starts:
-                %td.text-right= nice_date_compact(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
+            %tr
+              %th Prizes
+              %td.text-right
+                - if event.is_prizes_enabled?
+                  %i.fa.fa-check
+            %tr
+              %th Prize ordering starts:
+              %td.text-right= nice_date_compact(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
 
-              %tr
-                %th Prize ordering ends:
-                %td.text-right= nice_date_compact(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
-            - else
-              %tr
-                %th Prizes
-                %td.text-right
-                  - if event.is_prizes_enabled?
-                    %i.fa.fa-check
+            %tr
+              %th Prize ordering ends:
+              %td.text-right= nice_date_compact(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
+
             %tr
               %th Site Sales enabled?
               %td.text-right

@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Unit.create([
-  {name: 'Pack 4496', street_address_1: '425 Rolling Bay Road', city: 'Bainbridge Island', state_postal_code: 'WA', zip_code: '98110'},
+  {name: 'Pack 4496', street_address_1: '425 Rolling Bay Road', city: 'Bainbridge Island', state_postal_code: 'WA', zip_code: '98110', treasurer_first_name: 'Paul', treasurer_last_name: 'Jones', treasurer_email: 'paul@example.com'},
   {name: 'Pack 9999', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'}
   ])
 

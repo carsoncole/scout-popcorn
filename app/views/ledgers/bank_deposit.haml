@@ -1,0 +1,69 @@
+.row
+  .col-md-6
+    .card
+      .card-block
+        - if @deposit
+          .card-title
+            %h2 Bank Deposit
+
+        %p
+          Complete when making a deposit. 
+          - if @unit.treasurer?
+            A notification email of the deposit will be sent to
+            = surround("'", "'.") do
+              = @unit.treasurer_email
+        = form_for @ledger do |f|
+          - if @ledger.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@ledger.errors.count, "error")} prohibited this ledger from being saved:"
+              %ul
+                - @ledger.errors.full_messages.each do |msg|
+                  %li= msg
+
+          - if @deposit
+            = f.hidden_field :is_bank_deposit, value: 1
+            .form-group
+              = f.label "From"
+              %br
+              = f.collection_select :from_account_id, @cash_accounts, :id, :name, {}, class: 'form-control'
+
+            .form-group
+              = f.label "Deposit to:"
+              %br
+              = f.collection_select :account_id, @bank_accounts, :id, :name, {}, class: 'form-control'
+          - elsif params[:collect_from_customer]
+            %h2 Collect Money for Take Orders
+            = f.hidden_field :is_money_collected, value: 1 
+            .form-group
+              = f.label "Take Order"
+              %p.text-muted Select the Take Order money was collected for
+              = f.select :take_order_id, options_for_select(@take_order_ids), {}, class: 'form-control'
+          - else
+            .form-group
+              = f.label :account_id
+              %br
+              = f.collection_select :account_id, @accounts, :id, :name, {}, class: 'form-control'
+            .form-group
+              = f.label :description
+              = f.text_field :description, class: 'form-control'
+          .form-group
+            = f.label :amount
+            .col-md-4
+              = f.text_field :amount, class: 'form-control'
+            
+          / - else
+          /   .form-group
+          /     = f.label "Bank deposit?"
+          /     = f.check_box :is_bank_deposit, class: 'form-control'
+
+
+          .form-group
+            - if @deposit
+              = f.label :date_of_deposit
+            - else
+              = f.label :date
+            %br
+            .col-md-4
+              = f.date_select :date, {}, class: 'form-control'
+          .actions
+            = f.submit 'Submit Deposit', class: 'btn btn-success'

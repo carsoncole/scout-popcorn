@@ -57,11 +57,12 @@ class StocksControllerTest < ActionDispatch::IntegrationTest
     assert_select "td.wholesale-value", "$34,125.00"
   end
 
-  test "inventory wholesale_value = financials inventory value" do
+  test "inventory wholesale_value equals financials inventory value" do
     sign_in(scouts(:admin))
     get stocks_path
     wholesale_value = (css_select("td.wholesale-value")).first
     get balance_sheet_path
+    assert_select "td.popcorn-inventory"
     balance_sheet_value = (css_select("td.popcorn-inventory")).first
     assert_equal wholesale_value.content, balance_sheet_value.content
   end  

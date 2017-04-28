@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.integer  "unit_id"
     t.string   "name"
     t.boolean  "is_active",                                             default: true,   null: false
-    t.string   "contact_person_email"
+    t.string   "admin_email"
     t.decimal  "unit_commission_percentage",    precision: 5, scale: 2, default: "35.0", null: false
     t.decimal  "online_commission_percentage",  precision: 5, scale: 2, default: "35.0", null: false
     t.datetime "take_orders_deadline_at"

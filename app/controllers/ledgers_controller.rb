@@ -22,9 +22,8 @@ class LedgersController < ApplicationController
     @ledger = Ledger.new
     @ledger.is_bank_deposit = true
     @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
-    @asset_accounts = @active_event.accounts.assets.order(:name)
+    @cash_accounts = @active_event.accounts.cash.order(:name)
     @deposit = true
-    render :new
   end
 
   def final_unit_settlement_form

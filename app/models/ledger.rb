@@ -20,9 +20,11 @@ class Ledger < ApplicationRecord
 
   def send_bank_deposit_notifications!
     if created_by
-      BankDepositMailer.send_confirmation_email_to_depositer(self.created_by, self).deliver_now
-      BankDepositMailer.send_confirmation_email_to_treasurer(self.created_by, self).deliver_now
-      self.update(bank_deposit_notification_sent_at: Time.now)
+      Thread.new do
+        BankDepositMailer.send_confirmation_email_to_depositer(self.created_by, self).deliver_now
+        BankDepositMailer.send_confirmation_email_to_treasurer(self.created_by, self).deliver_now
+        self.update(bank_deposit_notification_sent_at: Time.now)
+      end
     end
   end
 end

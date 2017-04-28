@@ -3,7 +3,7 @@ one:
   name: Popcorn 2017
   is_active: true
   take_orders_deadline_at: <%= Date.today + 1.month %>
-  contact_person_email: someone@example.com
+  admin_email: someone@example.com
   prize_cart_ordering_starts_at: <%= Date.today + 40.days %>
   prize_cart_ordering_ends_at: <%= Date.today + 55.days %>
 
