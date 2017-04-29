@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :set_event, if: Proc.new {|n| current_scout }
   before_action :set_unit,if: Proc.new {|n| current_scout }
   before_action :authorize
-  before_action :add_admin_messages!, if:  Proc.new { |n| current_scout && current_scout.is_admin? }
-  before_action :create_an_event!, if: Proc.new { |n| current_scout && current_scout.is_admin? && !@active_event }
+  before_action :add_admin_messages!, if:  Proc.new { |n| current_scout && current_scout.is_unit_admin? }
+  before_action :create_an_event!, if: Proc.new { |n| current_scout && current_scout.is_unit_admin? && !@active_event }
   before_action :need_an_event!, if: Proc.new { |n| current_scout && !current_scout.is_admin? && current_scout.event_id.nil? }
 
 
@@ -40,6 +40,10 @@ class ApplicationController < ActionController::Base
 
   def authorize
     redirect_to root_path unless current_scout
+  end
+
+  def authorize_admin
+    redirect_to home_path unless current_scout.is_admin?
   end
 
   private

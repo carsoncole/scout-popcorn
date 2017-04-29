@@ -111,7 +111,7 @@
           - unless @envelope.picked_up? && current_scout.admin?
             %br
             .text-xs-center
-              = button_to "Picked Up", picked_up_envelope_path(@envelope.id), {disabled: (current_scout.is_super_admin? ? false : true), class: 'btn btn-lg btn-success'}
+              = button_to "Picked Up", picked_up_envelope_path(@envelope.id), {disabled: (current_scout.is_take_orders_admin? ? false : true), class: 'btn btn-lg btn-success'}
 
 .row
   .col-md-6

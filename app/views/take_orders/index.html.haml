@@ -118,7 +118,7 @@
               %table.table.table-sm.card-text
                 %thead
                   %tr
-                    - if current_scout.admin? || current_scout.is_super_admin?
+                    - if current_scout.is_unit_admin? || current_scout.is_take_orders_admin?
                       %th.hidden-print
                       %th Scout
                     %th Customer

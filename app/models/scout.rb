@@ -13,19 +13,22 @@ class Scout < ApplicationRecord
 
   # attr_accessor :password, :password_confirmation
 
+  # Roles
+  # Take Orders Admin
+  # Site Sales Admin
+  # Treasurer Admin
+  # Admin (Everything)
+
   validates :first_name, :last_name, :unit_id, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   validates :email, uniqueness: true
 
   before_save :fix_name!
-  before_save :check_super_admin_rights!, if: Proc.new {|s| s.is_super_admin_changed? }
   after_create :set_event!
-  after_create :set_if_admin!
   # after_create :send_registration_email!
   # after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
   after_create :create_prize_cart!
-
-  ADMINS = [['nathan','oestreich'], ['nicole', 'bavo'], ['carson', 'cole'],['candace', 'luckman'],['keri', 'pinzon']]
+  before_save :update_is_admin!
 
   def name
     first_name + ' ' + last_name
@@ -36,15 +39,11 @@ class Scout < ApplicationRecord
   end
 
   def self.admin
-    where(is_super_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true)).or(Scout.where(is_admin: true))
+    where(is_financial_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true)).or(Scout.where(is_admin: true))
   end
 
   def self.not_admin
-    where("is_super_admin IS NULL OR is_super_admin = ?", false).
-    where("is_take_orders_admin IS NULL OR is_take_orders_admin = ?", false).
-    where("is_site_sales_admin IS NULL OR is_site_sales_admin = ?", false).
-    where("is_prizes_admin IS NULL OR is_prizes_admin = ?", false).
-    where("is_admin IS NULL OR is_admin = ?", false)
+    where(is_admin: false)
   end
 
   def self.active
@@ -75,9 +74,9 @@ class Scout < ApplicationRecord
   end
 
   def admin?
-    is_super_admin == true || is_take_orders_admin == true ||
+    is_financial_admin == true || is_take_orders_admin == true ||
     is_site_sales_admin == true || is_prizes_admin == true ||
-    is_admin == true
+    is_unit_admin == true
   end
 
   def activity?
@@ -129,12 +128,6 @@ class Scout < ApplicationRecord
     self.last_name = last_name.capitalize if last_name
   end
 
-  def set_if_admin!
-    if ADMINS.include? [first_name.downcase, last_name.downcase] 
-      update(is_admin: true) 
-    end
-  end
-
   def send_registration_email!
     ScoutMailer.registration(self).deliver_later
   end
@@ -143,13 +136,10 @@ class Scout < ApplicationRecord
     ScoutMailer.you_are_registered(self).deliver_later
   end
 
-  def check_super_admin_rights!
-    if is_super_admin
-      self.is_take_orders_admin = true
-      self.is_site_sales_admin = true
-      self.is_online_sales_admin = true
-      self.is_prizes_admin = true
+  def update_is_admin!
+    if admin?
       self.is_admin = true
     end
   end
+
 end

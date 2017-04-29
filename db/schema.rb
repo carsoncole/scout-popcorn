@@ -177,12 +177,13 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.boolean  "is_admin",               default: false
+    t.boolean  "is_unit_admin",          default: false
+    t.boolean  "is_financial_admin",     default: false
     t.boolean  "is_take_orders_admin",   default: false
     t.boolean  "is_site_sales_admin",    default: false
     t.boolean  "is_online_sales_admin",  default: false
     t.boolean  "is_prizes_admin",        default: false
-    t.boolean  "is_super_admin",         default: false
+    t.boolean  "is_admin",               default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end

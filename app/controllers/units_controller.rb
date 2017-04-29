@@ -24,10 +24,8 @@ class UnitsController < ApplicationController
   # POST /units.json
   def create
     @unit = Unit.new(unit_params)
-    puts unit_params[:scouts_attributes]
-    puts "*"
     if @unit.save
-      @scout = @unit.scouts.new(first_name: scout_params[:first_name], last_name: scout_params[:last_name], unit_id: @unit.id, email: scout_params[:email], password:  scout_params[:password], password_confirmation: scout_params[:password_confirmation], is_super_admin: true)
+      @scout = @unit.scouts.new(first_name: scout_params[:first_name], last_name: scout_params[:last_name], unit_id: @unit.id, email: scout_params[:email], password:  scout_params[:password], password_confirmation: scout_params[:password_confirmation], is_unit_admin: true)
       if @scout.save
         redirect_to root_path, notice: 'Unit was successfully created. Login to continue.'
       else

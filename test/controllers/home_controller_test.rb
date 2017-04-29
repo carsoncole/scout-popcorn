@@ -21,7 +21,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   test "should show Scout sales table" do
     follow_redirect!
-    assert_select "h3", "My Sales"
+    assert_select "h1", "My Sales"
     assert_select "th.take_orders"
     assert_select "th.site_sales"
     assert_select "th.online_sales"
@@ -53,14 +53,14 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   test "should show online sales total" do
     sign_in(scouts(:one))
     follow_redirect!
-    assert_select "h3", "My Sales"
+    assert_select "h1", "My Sales"
     assert_select "td.online_sales_amount", "$125" 
   end
 
   test "should show admin online sales total" do
     sign_in(scouts(:admin))
     follow_redirect!
-    assert_select "h3", "Sales"
+    assert_select "h1", "Sales"
     assert_select "td.online_sales_amount", "$275" 
   end
 
@@ -72,6 +72,18 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     sign_in(scouts(:one))
     follow_redirect!
     assert_select "td.online_sales_amount", "$224" 
+  end
+
+  test "should show site sales cash for site sales admin" do
+    sign_in(scouts(:site_sales_admin))
+    follow_redirect!
+    assert_select ".site_sales_cash"
+  end
+
+  test "should show site sales cash for take orders admin" do
+    sign_in(scouts(:take_orders_admin))
+    follow_redirect!
+    assert_select ".take_orders_cash"
   end
 
 end

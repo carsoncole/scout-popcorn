@@ -82,7 +82,7 @@
               %th Number of Top Sellers:
               %td.text-right= event.number_of_top_sellers
 
-          - if current_scout.is_super_admin?
+          - if current_scout.is_unit_admin?
 
             .text-center
               - if event.is_active?

@@ -4,7 +4,37 @@ admin:
   last_name: Doe
   unit: one
   event: one
+  is_unit_admin: true
   is_admin: true
+  password_digest: <%= BCrypt::Password.create "password" %>
+
+super_admin:
+  email: super_admin@example.com
+  first_name: Mike
+  last_name: Willis
+  unit: one
+  event: one
+  is_unit_admin: true
+  is_admin: true
+  password_digest: <%= BCrypt::Password.create "password" %>
+
+site_sales_admin:
+  email: site_sales@example.com
+  first_name: Mary
+  last_name: Ellis
+  unit: one
+  event: one
+  is_site_sales_admin: true
+  is_admin: true
+  password_digest: <%= BCrypt::Password.create "password" %>
+
+take_orders_admin:
+  email: take_orders@example.com
+  first_name: Louis
+  last_name: Marshall
+  unit: one
+  event: one
+  is_take_orders_admin: true
   password_digest: <%= BCrypt::Password.create "password" %>
 
 one: 

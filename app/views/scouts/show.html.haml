@@ -3,12 +3,12 @@
     .card
       .card-block
         .card-title
-          .pull-right
-            = link_to edit_scout_path(@scout) do
-              %i.fa.fa-pencil
+          - if current_scout == @scout || current_scout.is_unit_admin?
+            .pull-right
+              = link_to edit_scout_path(@scout) do
+                %i.fa.fa-pencil
           %h3
             = @scout.name
-
 
       %ul.list-group.list-group-flush
         %li.list-group-item
@@ -50,5 +50,6 @@
           %li.list-group-item
             Administrator
 
-        %li.list-group-item
-          = link_to "Change password", scout_update_password_path(@scout)
+        - if current_scout == @scout || current_scout.is_unit_admin?
+          %li.list-group-item
+            = link_to "Change password", scout_update_password_path(@scout)

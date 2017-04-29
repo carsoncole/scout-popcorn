@@ -40,8 +40,7 @@
                   %th Email
                   %th Last Sign In
                   %th Sign Ins
-                  - if current_scout.admin?
-                    %th
+                  - if current_scout.is_unit_admin?
                     %th.hidden-print
 
               %tbody
@@ -67,31 +66,36 @@
                     %td= scout.email
                     %td= scout.last_sign_in_at.strftime('%b %d %I:%M%p') if scout.last_sign_in_at
                     %td.text-xs-center= scout.sign_in_count
-                    - if current_scout.admin?
+                    - if current_scout.is_unit_admin?
                       %td.hidden-print
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
-                        - if scout.is_active?
+                        - unless scout.activity?
                           = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                             %span.fa.fa-trash.fa-lg
                     
         - if params[:administrators].present?
           .table-responsive
             %table.table.card-text
-              %thead
+              %thead.small
                 %tr
-                  %th Name
-                  %th General
-                  %th Take Orders
-                  %th Site Sales
-                  %th Online Sales
-                  %th Prizes
-                  %th Super Admin
-                  %th Last Sign In
-                  %th Sign In Count
-                  - if current_scout.admin?
-                    %th
+                  %th
+                  %th.text-center(colspan=6) Admin Roles
+                  %th
+                  %th
+                  - if current_scout.is_unit_admin?
                     %th.hidden-print
+                %tr
+                  %th.text-center Name
+                  %th.text-center Unit
+                  %th.text-center Finances
+                  %th.text-center Take Orders
+                  %th.text-center Site Sales
+                  %th.text-center Online Sales
+                  %th.text-center Prizes
+                  %th.text-center Last Sign In
+                  %th.text-center Sign In Count
+                  - if current_scout.is_unit_admin?
                     %th.hidden-print
 
               %tbody
@@ -100,41 +104,41 @@
                     %td
                       %i.fa.fa-user
                       = link_to scout.name, scout_path(scout)
-                    %td
-                      - if scout.is_admin?
+                    %td.text-center
+                      - if scout.is_unit_admin?
                         %i.fa.fa-check
-                    %td
+                    %td.text-center
+                      - if scout.is_financial_admin?
+                        %i.fa.fa-check
+                    %td.text-center
                       - if scout.is_take_orders_admin?
                         %i.fa.fa-check
-                    %td
+                    %td.text-center
                       - if scout.is_site_sales_admin?
                         %i.fa.fa-check
-                    %td
+                    %td.text-center
                       - if scout.is_online_sales_admin?
                         %i.fa.fa-check
-                    %td
+                    %td.text-center
                       - if scout.is_prizes_admin?
                         %i.fa.fa-check
-                    %td
-                      - if scout.is_super_admin?
-                        %i.fa.fa-check
-                    %td= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
-                    %td= scout.sign_in_count
-                    - if current_scout.admin?
+                    %td.text-center= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
+                    %td.text-center= scout.sign_in_count
+                    - if current_scout.is_unit_admin?
                       %td.hidden-print
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
-                      %td.hidden-print
                         - unless scout.activity?
                           = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Scout account and all related information. It is irreversible.' } do
                             %span.fa.fa-trash.fa-lg
                     
-%br
-.row
-  .col-md-4
-    .card
-      .card-block    
-        .hidden-print      
-          = link_to new_scout_path do
-            %i.fa.fa-plus.fa-lg
-            Add a new Scout/Administrator
+- if current_scout.is_unit_admin?
+  %br
+  .row
+    .col-md-4
+      .card
+        .card-block    
+          .hidden-print      
+            = link_to new_scout_path do
+              %i.fa.fa-plus.fa-lg
+              Add a new Scout/Administrator

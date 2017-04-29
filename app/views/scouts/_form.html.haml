@@ -46,32 +46,27 @@
               = f.check_box :is_active, class: 'form-control'           
 
             .form-group
-              = f.label :is_admin
-              = f.check_box :is_admin, class: 'form-control' , disabled: current_scout.is_admin? || current_scout.is_admin? ? false : true
-
+              = f.label :is_unit_admin
+              = f.check_box :is_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
             .form-group
-              = f.label :is_super_admin
-              = f.check_box :is_super_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
+              = f.label :is_financial_admin
+              = f.check_box :is_financial_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
             
             .form-group
               = f.label :is_take_orders_admin
-              = f.check_box :is_take_orders_admin, class: 'form-control', disabled: current_scout.is_super_admin? ? false : true
+              = f.check_box :is_take_orders_admin, class: 'form-control', disabled: current_scout.is_unit_admin? ? false : true
 
             .form-group
               = f.label :is_site_sales_admin
-              = f.check_box :is_site_sales_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
+              = f.check_box :is_site_sales_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
 
             .form-group
               = f.label :is_online_sales_admin
-              = f.check_box :is_online_sales_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
+              = f.check_box :is_online_sales_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
 
             .form-group
               = f.label :is_prizes_admin
-              = f.check_box :is_prizes_admin, class: 'form-control' , disabled: current_scout.is_super_admin? ? false : true
-
-            .form-group
-              = f.label :is_super_admin
-              = f.check_box :is_super_admin, class: 'form-control' , disabled: current_scout.is_admin? || current_scout.is_admin? ? false : true
+              = f.check_box :is_prizes_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

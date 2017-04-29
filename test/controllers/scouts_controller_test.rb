@@ -2,12 +2,11 @@ require 'test_helper'
 
 class ScoutsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    sign_in(scouts(:one))
     @scout = scouts(:one)
   end
 
-
   test "should show multiple possible events in profile edit" do
+    sign_in(scouts(:one))
     event = Event.create(name: 'Some Event', is_active: true, unit_id: units(:one).id)
     scout = scouts(:one)
     get edit_scout_url(scout)
@@ -16,6 +15,7 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "scout profile should not allow editing event if only one available" do
+    sign_in(scouts(:one))
     scout = scouts(:one)
     get edit_scout_url(scout)
     assert_response :success
@@ -23,6 +23,7 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should successfully login and redirect" do
+    sign_in(scouts(:one))
     follow_redirect!
     assert_select "span.event-name", "Popcorn 2017"
   end
@@ -57,13 +58,23 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show scout" do
+    sign_in(scouts(:one))
     get scout_url(@scout)
     assert_response :success
   end
 
   test "should get edit" do
+    sign_in(scouts(:one))
     get edit_scout_url(@scout)
     assert_response :success
+  end
+
+  test "should not allow non-admins to #index" do
+    sign_in(scouts(:one))
+    get scouts_url
+    assert_response :redirect
+    follow_redirect!
+    assert_select ".my-sales"
   end
 
   test "should allow destroy if no activity" do

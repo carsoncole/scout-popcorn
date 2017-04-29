@@ -6,7 +6,7 @@
           %h1 Financial Ledger
 
         %ul.nav.nav-inline
-          - if current_scout.is_super_admin?
+          - if current_scout.is_financial_admin?
             %li.nav-item
               = link_to new_ledger_path, class: 'nav-link' do
                 %i.fa.fa-plus.fa-lg

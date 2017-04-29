@@ -1,6 +1,6 @@
 - if current_scout.is_site_sales_admin?
-  .card
-    .card-block.site_sales_cash
+  .card.site_sales_cash
+    .card-block
       %h5.card-title Site Sales Cash
 
       %p.card-text
@@ -10,8 +10,9 @@
       - if @site_sales_cash > 0
         %p.card-text.small
           Please deposit cash as soon as possible and record the deposit in
-          = Rails.configuration.application_name
-          and we will send an email notification to the Unit Treasurer.
+          = succeed(".") do
+            = Rails.configuration.application_name
+          An email notification will be sent to your Unit Treasurer.
         %p.card-text  
           = link_to "Record a deposit", bank_deposit_path
 

@@ -12,11 +12,15 @@ Unit.create([
   ])
 
 Scout.create([
-{first_name: 'Carson', last_name: 'Cole', email: 'a@a.com', unit_id: 1, password: 'robert', is_super_admin: true},
-{first_name: 'John', last_name: 'Doe', email: 'b@b.com', unit_id: 1, password: 'robert', is_admin: false},
-{first_name: 'Mary', last_name: 'Wilson', email: 'c@c.com', unit_id: 1, password: 'robert', is_admin: false},
-{first_name: 'Liam', last_name: 'Hardy', email: 'd@d.com', unit_id: 1, password: 'robert', is_admin: false},
-{first_name: 'Louis', last_name: 'Smart', email: 'e@e.com', unit_id: 1, password: 'robert', is_admin: false} 
+{first_name: 'Carson', last_name: 'Cole', email: 'admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true, is_take_orders_admin: true, is_prizes_admin: true, is_financial_admin: true, is_online_sales_admin: true, is_unit_admin: true},
+{first_name: 'John', last_name: 'Doe', email: 'take_orders_admin@example.com', unit_id: 1, password: 'password', is_take_orders_admin: true},
+{first_name: 'Billy', last_name: 'Watson', email: 'unit_admin@example.com', unit_id: 1, password: 'password', is_take_orders_admin: true},
+{first_name: 'Sam', last_name: 'Jones', email: 'sites_sales_admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true},
+{first_name: 'Scarlet', last_name: 'Ohannsen', email: 'financial_admin@example.com', unit_id: 1, password: 'password', is_financial_admin: true},
+{first_name: 'Bill', last_name: 'OReilly', email: 'prizes_admin@example.com', unit_id: 1, password: 'password', is_prizes_admin: true},
+{first_name: 'Mary', last_name: 'Wilson', email: 'b@b.com', unit_id: 1, password: 'password'},
+{first_name: 'Liam', last_name: 'Hardy', email: 'd@d.com', unit_id: 1, password: 'password'},
+{first_name: 'Louis', last_name: 'Smart', email: 'scout@example.com', unit_id: 1, password: 'password'} 
 ])
 
 Event.create([
