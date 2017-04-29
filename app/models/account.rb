@@ -6,8 +6,8 @@ class Account < ApplicationRecord
 
   ACCOUNT_TYPES = ['Asset', 'Liability', 'Equity', 'Income', 'Expense']
 
-  def self.site_sale(unit)
-    Account.where(unit_id: unit.id).where(name: 'Site Sale').first
+  def self.site_sale(event)
+    Account.where(event_id: event.id).where(name: 'Site Sales cash').first
   end
 
   def self.take_order(event)

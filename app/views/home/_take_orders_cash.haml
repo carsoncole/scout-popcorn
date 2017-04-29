@@ -1,0 +1,16 @@
+- if current_scout.is_take_orders_admin?
+  .card
+    .card-block.site_sales_cash
+      %h5.card-title Take Orders Cash
+
+      %p.card-text
+        Balance:
+        = number_to_currency(@take_orders_cash)
+
+      - if @take_orders_cash > 0
+        %p.card-text.small
+          Please deposit cash as soon as possible and record the deposit in
+          = Rails.configuration.application_name
+          and we will send an email notification to the Unit Treasurer.
+        %p.card-text  
+          = link_to "Record a deposit", bank_deposit_path

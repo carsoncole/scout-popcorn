@@ -30,6 +30,9 @@ class HomeController < ApplicationController
       end
       @resources = @active_event.resources
       @site_sales = @active_event.site_sales.where("date > ?", Time.now).order(date: :asc)
+    
+      @site_sales_cash = Ledger.joins(:account).where('accounts.id = ?', Account.site_sale(@active_event).id).sum('ledgers.amount') if current_scout.is_site_sales_admin?
+      @take_orders_cash = Ledger.joins(:account).where('accounts.id = ?', Account.take_order(@active_event).id).sum('ledgers.amount') if current_scout.is_take_orders_admin?
     end
   end
 

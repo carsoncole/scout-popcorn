@@ -1,4 +1,4 @@
-- if @active_event && @active_event.prizes?
+- if @active_event && @active_event.prizes? && !current_scout.is_admin?
   .card
     .card-block
       .card-title
@@ -20,3 +20,4 @@
             %i.fa.fa-long-arrow-right
             %i.fa.fa-shopping-cart
             Prize Cart
+  %br
