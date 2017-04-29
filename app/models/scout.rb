@@ -24,6 +24,7 @@ class Scout < ApplicationRecord
   validates :email, uniqueness: true
 
   before_save :fix_name!
+  before_validation :downcase_email!
   after_create :set_event!
   # after_create :send_registration_email!
   # after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
@@ -140,6 +141,10 @@ class Scout < ApplicationRecord
     if admin?
       self.is_admin = true
     end
+  end
+
+  def downcase_email!
+    self.email = email.downcase if email
   end
 
 end

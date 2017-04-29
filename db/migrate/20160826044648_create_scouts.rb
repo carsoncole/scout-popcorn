@@ -13,9 +13,7 @@ class CreateScouts < ActiveRecord::Migration[5.0]
       t.datetime :reset_password_sent_at
       t.boolean :is_active, default: true
       t.integer  :sign_in_count, default: 0, null: false
-      t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
-      t.string   :current_sign_in_ip
       t.string   :last_sign_in_ip
       t.boolean :is_unit_admin, default: false
       t.boolean :is_financial_admin, default: false

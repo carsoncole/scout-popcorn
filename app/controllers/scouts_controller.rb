@@ -23,6 +23,7 @@ class ScoutsController < ApplicationController
 
   def create
     @scout = Scout.new(scout_params)
+    @scout.email = @scout.email.downcase
 
     if @scout.save
       redirect_to root_path, notice: 'Your account was successfully created. Please login to continue'

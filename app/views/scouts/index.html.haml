@@ -94,6 +94,7 @@
                   %th.text-center Online Sales
                   %th.text-center Prizes
                   %th.text-center Last Sign In
+                  %th.text-center IP
                   %th.text-center Sign In Count
                   - if current_scout.is_unit_admin?
                     %th.hidden-print
@@ -123,6 +124,7 @@
                       - if scout.is_prizes_admin?
                         %i.fa.fa-check
                     %td.text-center= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
+                    %td.text-center= scout.last_sign_in_ip
                     %td.text-center= scout.sign_in_count
                     - if current_scout.is_unit_admin?
                       %td.hidden-print

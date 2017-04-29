@@ -23,6 +23,12 @@ class ScoutTest < ActiveSupport::TestCase
     assert scout.errors[:email]
   end
 
+  test "should save downcased email" do
+    @scout.email = 'UpperCase@example.Com'
+    @scout.save
+    assert_equal @scout.email, 'uppercase@example.com'
+  end
+
   test "should not save with non-unique email" do
     @scout.email = "mary@example.com"
     assert_not @scout.valid?

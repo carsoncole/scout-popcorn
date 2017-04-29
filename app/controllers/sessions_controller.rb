@@ -7,15 +7,13 @@ class SessionsController < ApplicationController
   end
 
   def create
-    scout = Scout.active.find_by(email: params[:email])
+    scout = Scout.active.find_by(email: params[:email].downcase)
     if scout && scout.authenticate(params[:password])
       session[:scout_id] = scout.id
       scout.update(
         sign_in_count:      scout.sign_in_count += 1, 
-        current_sign_in_at: Time.now, 
-        last_sign_in_at:    scout.current_sign_in_at,
-        last_sign_in_ip:    scout.current_sign_in_ip,
-        current_sign_in_ip: request.ip
+        last_sign_in_at:    Time.now,
+        last_sign_in_ip:    request.remote_ip,
       )
       redirect_to home_path, notice: 'Logged in!'
     else
