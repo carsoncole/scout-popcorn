@@ -6,6 +6,10 @@ class Account < ApplicationRecord
 
   ACCOUNT_TYPES = ['Asset', 'Liability', 'Equity', 'Income', 'Expense']
 
+  validates :name, :account_type, presence: true
+  validates :account_type, inclusion: { in: ACCOUNT_TYPES }
+  validates :name, uniqueness: { scope: :event } 
+
   def self.site_sale(event)
     Account.where(event_id: event.id).where(name: 'Site Sales cash').first
   end

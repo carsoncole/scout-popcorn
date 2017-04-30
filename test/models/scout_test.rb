@@ -35,6 +35,12 @@ class ScoutTest < ActiveSupport::TestCase
     assert @scout.errors[:email]
   end
 
-  test "#activity? should be true if any activity" do
+  test "should be is_admin if admin selected" do    
+    @scout.is_unit_admin = true
+    @scout.save
+    assert_equal @scout.is_admin, true
+    @scout.is_unit_admin = false
+    @scout.save
+    assert_equal @scout.is_admin, false
   end
 end

@@ -4,8 +4,6 @@ class CreateScouts < ActiveRecord::Migration[5.0]
       t.integer :unit_id
       t.string :first_name
       t.string :last_name
-      t.string :parent_first_name
-      t.string :parent_last_name
       t.string :email
       t.string :password_digest, null: false, default: ""
       t.integer :event_id

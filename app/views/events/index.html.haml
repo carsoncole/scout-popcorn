@@ -4,9 +4,10 @@
       .card
         .card-block
           .card-title 
-            .pull-right
-              = link_to edit_event_path(event) do
-                %i.fa.fa-pencil
+            - if current_scout.is_unit_admin?
+              .pull-right
+                = link_to edit_event_path(event) do
+                  %i.fa.fa-pencil
             %h3= event.name
             
           %table.table.card-text.card-text.table-sm
@@ -99,8 +100,9 @@
 
 
 %br
-.row
-  .col-md-6
-    = link_to new_event_path do
-      %i.fa.fa-plus.fa-lg
-      Add a new Event
+- if current_scout.is_unit_admin?
+  .row
+    .col-md-6
+      = link_to new_event_path do
+        %i.fa.fa-plus.fa-lg
+        Add a new Event

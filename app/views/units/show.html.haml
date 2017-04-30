@@ -6,8 +6,10 @@
         .card-title
           %h3
             = @unit.name
-            = link_to edit_unit_path do
-              %i.fa.fa-pencil
+            - if current_scout.is_unit_admin?
+              .pull-right
+                = link_to edit_unit_path do
+                  %i.fa.fa-pencil
 
         %table.table
           %tr

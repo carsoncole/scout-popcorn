@@ -14,7 +14,7 @@ Unit.create([
 Scout.create([
 {first_name: 'Carson', last_name: 'Cole', email: 'admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true, is_take_orders_admin: true, is_prizes_admin: true, is_financial_admin: true, is_online_sales_admin: true, is_unit_admin: true},
 {first_name: 'John', last_name: 'Doe', email: 'take_orders_admin@example.com', unit_id: 1, password: 'password', is_take_orders_admin: true},
-{first_name: 'Billy', last_name: 'Watson', email: 'unit_admin@example.com', unit_id: 1, password: 'password', is_take_orders_admin: true},
+{first_name: 'Billy', last_name: 'Watson', email: 'unit_admin@example.com', unit_id: 1, password: 'password', is_unit_admin: true},
 {first_name: 'Sam', last_name: 'Jones', email: 'sites_sales_admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true},
 {first_name: 'Scarlet', last_name: 'Ohannsen', email: 'financial_admin@example.com', unit_id: 1, password: 'password', is_financial_admin: true},
 {first_name: 'Bill', last_name: 'OReilly', email: 'prizes_admin@example.com', unit_id: 1, password: 'password', is_prizes_admin: true},

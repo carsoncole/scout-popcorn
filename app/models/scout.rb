@@ -11,24 +11,16 @@ class Scout < ApplicationRecord
   has_many :envelopes
   has_many :prize_carts
 
-  # attr_accessor :password, :password_confirmation
-
-  # Roles
-  # Take Orders Admin
-  # Site Sales Admin
-  # Treasurer Admin
-  # Admin (Everything)
-
   validates :first_name, :last_name, :unit_id, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
-  validates :email, uniqueness: true
+  validates :email, uniqueness: { case_sensitive: false }
 
   before_save :fix_name!
   before_validation :downcase_email!
   after_create :set_event!
   # after_create :send_registration_email!
   # after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
-  after_create :create_prize_cart!
+  # after_create :create_prize_cart!
   before_save :update_is_admin!
 
   def name
@@ -59,10 +51,6 @@ class Scout < ApplicationRecord
     prize_cart(event).cart_prizes.joins(:prize).where("prizes.source = 'bsa'").sum(:prize_amount)
   end
 
-  def parent_name
-    (parent_first_name||'') + ' ' + (parent_last_name||'')
-  end
-
   def prize_cart(event)
     prize_carts.where(event_id: event.id).first || prize_carts.create(event_id: event.id)
   end
@@ -81,7 +69,11 @@ class Scout < ApplicationRecord
   end
 
   def activity?
-    true if scout_site_sales.any? || online_sales.any? || take_orders.any?
+    if scout_site_sales.any? || online_sales.any? || take_orders.any?
+      true
+    else
+      false
+    end
   end
 
   def total_site_sales(event)
@@ -140,6 +132,8 @@ class Scout < ApplicationRecord
   def update_is_admin!
     if admin?
       self.is_admin = true
+    else
+      self.is_admin = false
     end
   end
 

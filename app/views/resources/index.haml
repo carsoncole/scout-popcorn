@@ -8,7 +8,7 @@
           %i.fa.fa-info-circle
           Resources are listed on the dashboard of all Scouts and provide either a link or download of additional information, which could be a prize form, council information etc.
 
-        %table.table
+        %table.table.card-text
           - @resources.each do |resource|
             %tr
               %th= resource.name
@@ -22,6 +22,7 @@
                 = link_to resource_path(resource), method: :delete do
                   %i.fa.fa-trash.fa-lg
 
-        %p.card-text
-          = link_to new_resource_path do
-            %i.fa.fa-plus.fa-lg
+        - if current_scout.is_unit_admin?
+          %p.card-text
+            = link_to new_resource_path do
+              %i.fa.fa-plus.fa-lg
