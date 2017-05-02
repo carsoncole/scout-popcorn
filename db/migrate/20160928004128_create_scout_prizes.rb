@@ -5,9 +5,9 @@ class CreateScoutPrizes < ActiveRecord::Migration[5.0]
       t.integer :event_id
       t.integer :prize_id
       t.integer :prize_amount
-      t.boolean :is_complete
+      t.integer :prize_cart_id
       t.datetime :is_complete_at
-      t.boolean :is_approved
+      t.datetime :is_approved_at
 
       t.timestamps
     end

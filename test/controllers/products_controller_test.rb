@@ -53,7 +53,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should create product" do
     sign_in(scouts(:admin))
     assert_difference('Product.count') do
-      post products_url, params: { product: { name: @product.name, retail_price: @product.retail_price } }
+      post products_url, params: { product: { name: 'A New Product', retail_price: 10 } }
     end
 
     assert_redirected_to products_path

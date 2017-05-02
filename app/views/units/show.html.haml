@@ -14,11 +14,11 @@
         %table.table
           %tr
             %th Treasurer:
-            %td.text-xs-right= @unit.treasurer_name
+            %td.text-right= @unit.treasurer_name
 
           %tr
             %th Treasuer Email:
-            %td.text-xs-right= @unit.treasurer_email
+            %td.text-right= @unit.treasurer_email
 
         - if current_scout.is_unit_admin?
           .text-xs-center

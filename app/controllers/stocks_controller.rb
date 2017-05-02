@@ -2,7 +2,7 @@ class StocksController < ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
 
   def index
-    @stocks_query = @active_event.stocks.joins(:product).order(:location, 'products.name')
+    @stocks_query = @active_event.stocks.joins(:product).order('products.name')
     @stocks = @active_event.stocks.joins(:product).order('products.name')
     @locations = @active_event.stocks.order(location: :desc).group(:location)
     if params[:location]

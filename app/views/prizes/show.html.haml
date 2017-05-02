@@ -7,11 +7,11 @@
         %table.table
           %tr
             %th Description:
-            %td.text-xs-right= @prize.description
+            %td.text-right= @prize.description
 
           %tr
             %th Prize Level:
-            %td.text-xs-right= number_to_currency(@prize.amount)
+            %td.text-right= number_to_currency(@prize.amount)
 
         = image_tag(@prize.url, class: 'img-fluid img-rounded m-x-auto') if @prize.url
 

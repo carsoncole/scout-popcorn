@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   has_many :stocks
 
   validates :name, :retail_price, presence: true
+  validates :name, uniqueness: { scope: :event_id, case_sensitive: false }
   validates :retail_price, inclusion: { in: [1], message: "should be set to $1 since this is a Unit donation."}, if: Proc.new {|p| p.is_pack_donation }
   validates :is_sourced_from_bsa, inclusion: { in: [false], message: "should not be selected since this is a Unit donation"}, if: Proc.new { |p| p.is_sourced_from_bsa && p.is_pack_donation }
   validates :is_physical_inventory, inclusion: { in: [false], message: "should not be selected since this is a Unit donation"}, if: Proc.new { |p| p.is_physical_inventory && p.is_pack_donation }
@@ -18,8 +19,12 @@ class Product < ApplicationRecord
 
   scope :active, -> { where(is_active: true )}
 
-  def self.default
-    where(event_id: nil)
+  def self.default(sourced_from=nil)
+    if sourced_from == nil
+      where(event_id: nil)
+    else
+      where(event_id: nil, sourced_from: sourced_from)
+    end
   end
 
   def name_with_id

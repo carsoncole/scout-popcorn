@@ -14,22 +14,22 @@
             %table.table.card-text
               %tr
                 %td Site Sale Product Sales
-                %td.text-xs-right= number_to_currency(@site_sales)
+                %td.text-right= number_to_currency(@site_sales)
               %tr
                 %td Take Order Sales
-                %td.text-xs-right= number_to_currency(@take_orders)
+                %td.text-right= number_to_currency(@take_orders)
               %tr
                 %td Site Sale Donations
-                %td.text-xs-right= number_to_currency(@site_sale_donations)
+                %td.text-right= number_to_currency(@site_sale_donations)
               %tr
                 %td Take Order Donations
-                %td.text-xs-right= number_to_currency(@take_order_donations)
+                %td.text-right= number_to_currency(@take_order_donations)
               %tr
                 %td Online Sales
-                %td.text-xs-right= number_to_currency(@online_sales)
+                %td.text-right= number_to_currency(@online_sales)
               %tr
                 %th.top.bottom Total
-                %th.top.bottom.text-xs-right= number_to_currency(@total_sales)
+                %th.top.bottom.text-right= number_to_currency(@total_sales)
 
       .col-md-6
         .card
@@ -40,16 +40,16 @@
             %table.table.card-text
               %tr
                 %td Cost of goods sold
-                %td.text-xs-right= number_to_currency(@total_cost_of_goods_sold)
+                %td.text-right= number_to_currency(@total_cost_of_goods_sold)
               %tr
                 %td Pack prizes
-                %td.text-xs-right= number_to_currency(@pack_selected_prizes)
+                %td.text-right= number_to_currency(@pack_selected_prizes)
               %tr
                 %td Other expenses
-                %td.text-xs-right= number_to_currency(@other_expenses)
+                %td.text-right= number_to_currency(@other_expenses)
               %tr
                 %th.top.bottom Total
-                %th.top.bottom.text-xs-right= number_to_currency(@total_expenses)
+                %th.top.bottom.text-right= number_to_currency(@total_expenses)
 
       .col-md-6
         .card
@@ -60,6 +60,6 @@
             %table.table.card-text
               %tr
                 %th.top.bottom-double Net Income
-                %th.top.bottom-double.text-xs-right= number_to_currency(@total_sales - @total_expenses)
+                %th.top.bottom-double.text-right= number_to_currency(@total_sales - @total_expenses)
 
     .small.text-muted.visible-print-block= nice_date_time(Time.now)

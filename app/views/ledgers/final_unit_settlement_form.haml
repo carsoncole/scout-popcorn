@@ -12,31 +12,31 @@
           - @due_to_bsa_ledgers.each do |ledger|
             %tr
               %td= ledger.description
-              %td.text-xs-right= number_to_currency(ledger.amount)
+              %td.text-right= number_to_currency(ledger.amount)
           %tr
             %th.top.bottom Total due to BSA
-            %td.top.bottom.text-xs-right= number_to_currency(@due_to_bsa)
+            %td.top.bottom.text-right= number_to_currency(@due_to_bsa)
 
           %tr
             %td Total deposits to BSA bank account
-            %td.text-xs-right
+            %td.text-right
 
           %tr
             %td Total deposits to Council
-            %td.text-xs-right
+            %td.text-right
 
           %tr
             %td Total BSA Online sales (net amount)
-            %td.text-xs-right= number_to_currency(@bsa_online_credits)
+            %td.text-right= number_to_currency(@bsa_online_credits)
 
           %tr
             %td Total third party payments
-            %td.text-xs-right= number_to_currency(@bsa_credit_card_cash)
+            %td.text-right= number_to_currency(@bsa_credit_card_cash)
 
           %tr
             %th.top Total payments
-            %td.top.text-xs-right= number_to_currency(@bsa_credit_card_cash + @bsa_online_credits)
+            %td.top.text-right= number_to_currency(@bsa_credit_card_cash + @bsa_online_credits)
 
           %tr
             %th.top.bottom-double Balance due
-            %td.top.bottom-double.text-xs-right= number_to_currency((@due_to_bsa || 0) - (@bsa_credit_card_cash||0) - (@bsa_online_credits || 0))
+            %td.top.bottom-double.text-right= number_to_currency((@due_to_bsa || 0) - (@bsa_credit_card_cash||0) - (@bsa_online_credits || 0))

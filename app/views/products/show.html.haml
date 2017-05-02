@@ -6,38 +6,45 @@
           %h1= @product.name
         %table.table
           %tr
-            %th Event:
-            %td.text-xs-right= @product.event.name
+            %th ID:
+            %td.text-right= @product.id
+          - if @product.event
+            %tr
+              %th Event:
+              %td.text-right= @product.event.name
+          - else
+            %tr
+              %th Collection:
+              %td.text-right= @product.sourced_from
           %tr
             %th Retail price:
-            %td.text-xs-right= number_to_currency(@product.retail_price)
+            %td.text-right= number_to_currency(@product.retail_price)
           %tr
             %th Image URL:
-            %td.text-xs-right= @product.url
+            %td.text-right= @product.url
 
           %tr
             %th Is active:
-            %td.text-xs-right
+            %td.text-right
               - if @product.is_active?
                 %i.fa.fa-check
           %tr
             %th Is physical inventory:
-            %td.text-xs-right
+            %td.text-right
               - if @product.is_physical_inventory?
                 %i.fa.fa-check
           %tr
             %th Is pack donation:
-            %td.text-xs-right
+            %td.text-right
               - if @product.is_pack_donation?
                 %i.fa.fa-check
           %tr
             %th Is sourced from BSA:
-            %td.text-xs-right
+            %td.text-right
               - if @product.is_sourced_from_bsa?
                 %i.fa.fa-check
-        = link_to 'Edit', edit_product_path(@product)
-        \|
-        = link_to 'All products', products_path
+        - if @product.event_id && current_scout.is_unit_admin?
+          = link_to 'Edit', edit_product_path(@product)
 
 
   / .col-md-6

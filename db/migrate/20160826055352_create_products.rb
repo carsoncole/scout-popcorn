@@ -8,6 +8,8 @@ class CreateProducts < ActiveRecord::Migration[5.0]
       t.boolean :is_active, default: true
       t.boolean :is_physical_inventory, default: true
       t.boolean :is_pack_donation, default: false
+      t.boolean :is_sourced_from_bsa, default: true
+      t.string :sourced_from
       t.timestamps
     end
   end

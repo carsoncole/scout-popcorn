@@ -46,7 +46,8 @@
         - if current_scout.admin?
           %li.nav-item.dropdown
             = link_to "#",class: "dropdown-toggle nav-item nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
-              Product
+              Popcorn
+              
               %span.caret                   
             %ul.dropdown-menu
               - if @active_event

@@ -131,19 +131,25 @@ class Event < ApplicationRecord
     total_site_sales + total_take_orders + total_online_sales
   end
 
-  private
-
-  def create_default_products!
-    Product.default.each do |product|
-      self.products.where(name: product.name).first_or_create(name: product.name, quantity: product.quantity, retail_price: product.retail_price, url: product.url)
-    end  
-  end
-
   def create_default_prizes!
     Prize.default.each do |prize|
       self.prizes.where(name: prize.name).first_or_create(name: prize.name, amount: prize.amount, url: prize.url, source: prize.source, source_id: prize.source_id, is_by_level: prize.is_by_level, description: prize.description)
-    end   
+    end
   end
+
+  def create_default_products!(sourced_from)
+    Product.default(sourced_from).each do |product|
+      self.products.where(name: product.name).first_or_create(name: product.name, retail_price: product.retail_price, url: product.url, sourced_from: product.sourced_from)
+    end  
+  end
+
+  def has_default_products
+    Product.default.each do |product|
+      return true if products
+    end
+  end
+
+  private
 
   def set_events_for_scouts!
     unit.scouts.where(event_id: nil).update_all(event_id: self.id) if is_active

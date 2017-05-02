@@ -62,4 +62,11 @@ class EventTest < ActiveSupport::TestCase
         'Unit bank account'
        ]
   end
+
+  test "should add default products" do
+    @event.save
+    assert_empty @event.products
+    assert @event.create_default_products!('Chief Seattle Council')
+    assert @event.products.present?
+  end
 end

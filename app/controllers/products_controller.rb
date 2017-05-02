@@ -2,13 +2,18 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = @active_event.products.order(:name)
+    if params[:collection_name]
+      @products = Product.default.where(sourced_from: params[:collection_name]).order(:name)
+    else
+      @products = @active_event.products.order(:name)
+    end
 
     if params[:inactive] == 'true'
       @products = @products.where(is_active: false)
     else
       @products = @products.active
     end
+    @presets = Product.default.group(:sourced_from)
   end
 
   def show
@@ -46,6 +51,25 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     redirect_to products_url, notice: 'Product was successfully destroyed.'
+  end
+
+  def preset_collections
+    @presets = Product.default.group(:sourced_from)
+  end
+
+  def add_preset_collection
+    products_to_add = Product.default.where(sourced_from: params[:collection_name])
+    initial_product_count = @active_event.products.size
+    products_to_add.each do |product|
+      new_product = @active_event.products.create(product.attributes.except("id", "created_at", "updated_at"))
+    end
+    post_product_count = @active_event.reload.products.size
+    products_added_count = post_product_count - initial_product_count
+    if products_added_count == products_to_add.size
+      redirect_to products_path, notice: 'All of the products were added to your Event.'
+    else
+      redirect_to products_path, alert: "#{(products_added_count).to_s} #{"product".pluralize(products_added_count)} added to your Event. One or more may not have been added due to products with the same name in your Event."
+    end
   end
 
   private

@@ -38,8 +38,6 @@ take_orders_admin:
   password_digest: <%= BCrypt::Password.create "password" %>
 
 one: 
-  parent_first_name: Mary
-  parent_last_name: Jones
   email: mary@example.com
   first_name: Sam
   last_name: Jones
@@ -48,8 +46,6 @@ one:
   password_digest: <%= BCrypt::Password.create "password" %>
 
 two: 
-  parent_first_name: Sam
-  parent_last_name: Jones
   email: sam@example.com
   first_name: Sam
   last_name: Jones
@@ -58,8 +54,6 @@ two:
   password_digest: <%= BCrypt::Password.create "password" %> 
 
 three: 
-  parent_first_name: Mary
-  parent_last_name: Jones
   email: john@example.com
   first_name: Sam
   last_name: Jones

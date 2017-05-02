@@ -7,7 +7,7 @@ class CreateEnvelopes < ActiveRecord::Migration[5.0]
       t.integer :money_received_by_id
       t.datetime :money_received_at
       t.datetime :closed_at
-
+      t.integer :created_by
       t.timestamps
     end
   end

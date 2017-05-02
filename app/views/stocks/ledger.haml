@@ -3,7 +3,7 @@
     .card
       .card-block
         .card-title
-          %h2 Product Transfers
+          %h2 Transfers
         - if current_scout.admin?
           %p.card-test
             / = link_to stock_movement_path do
@@ -65,10 +65,11 @@
                   /   - if stock.is_transfer_from_bsa
                   /     %i.fa.fa-check
                   %td
-                    = link_to edit_stock_path(stock) do
-                      %i.fa.fa-pencil.fa-lg
-                    = link_to stock_path(stock), method: :delete do
-                      %i.fa.fa-trash.fa-lg
+                    - if current_scout.is_unit_admin? || current_scout.is_financial_admin?
+                      = link_to edit_stock_path(stock) do
+                        %i.fa.fa-pencil.fa-lg
+                      = link_to stock_path(stock), method: :delete do
+                        %i.fa.fa-trash.fa-lg
 
 
         = paginate @stocks

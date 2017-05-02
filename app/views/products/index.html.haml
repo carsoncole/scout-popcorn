@@ -1,51 +1,119 @@
 .row
   .col-md-12
-    %h2
-      Product Catalog
-      - if params[:inactive] && current_scout.admin?
-        = surround("(", ")") do
-          Inactive
+    %h2 Catalog
 
-    - if @products.empty?
-      %p There are no products for this Event.
-
-    - if current_scout.admin?
-      - if params[:inactive]
-        %p.card-text= link_to "Products", products_path
-      - else
-        %p.card-text= link_to "Inactive Products", products_path(inactive: true)
-%br
-- @products.each_slice(4) do |batch|
-  .row
-    - batch.each do |product|
-      .col-md-3
-        .card.product
-          .card-block
-            .card-title
-              %h5.text-center= product.name
-
-            - if product.url.present?
-              = image_tag product.url, class: 'img-fluid'
+    - if current_scout.is_unit_admin?
+      .card.card-inverse.card-warning
+        .card-block
+          - if @products.empty?
+            %p There are no products for this Event. Add products individually or add a collection from preset collections.
             
-            %p.card-text.text-center
-              Price: 
-              = number_to_currency(product.retail_price)
-            - if current_scout.admin?
-              %p.card-text.text-right
-                = link_to 'Info', product
-                = link_to edit_product_path(product) do
-                  %i.fa.fa-pencil.fa-lg
+          %ul.card-text
+            %li
+              = link_to "Add a product", new_product_path
+            %li
+              = link_to "Add a group of Products from a preset collection", preset_product_collections_path
+              %br
+              %br
+              = form_tag '/products', method: :get do
+                .row
+                  .col-md-4
+                    .form-group
+                      = collection_select '', :collection_name, @presets, :sourced_from, :sourced_from,{}, class: 'form-control'
+                  .col-md-4
+                    = submit_tag "View Product collection", class: 'btn'
 
-                - unless product.used?
-                  = link_to product, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                    %i.fa.fa-trash.fa-lg
 
-  %br
+    - if params[:collection_name]
+      %br
+      %h2  
+        Product Collection:
+        = params[:collection_name]
 
-.row
-  .col-md-4
-    - if current_scout.admin?
-      = link_to new_product_path do
-        %fa.fa.fa-plus.fa-lg
-        Add new product
+      %br
+      .text-center
+        = link_to add_presets_path(collection_name: params[:collection_name]), class: 'btn btn-warning', method: :post, :data => { :confirm => 'This will put all these products into your Event catalog. Your catalog should currently be empty or you may end up with multiple listings of the same product. Are you sure you want to proceed?' } do
+          Add these products to your Event >>>
 
+
+          
+
+
+
+
+
+
+
+
+
+%br
+
+
+- if current_scout.is_unit_admin?
+  .row
+    .col-md-12
+      .card
+        .card-block
+          %table.table.card-text
+            %tr
+              %th Product
+              %td ID
+              %td Price
+              %td Image
+            - @products.each do |product|
+              %tr
+                %th= link_to product.name, product_path(product)
+                %td= product.id
+                %td= number_to_currency(product.retail_price)
+                %td
+                  - if product.url.present?
+                    = image_tag product.url, width: 50, class: 'img-fluid'
+                  = product.url
+                %td
+                  = link_to 'Info', product
+                  - if product.event_id
+                    = link_to edit_product_path(product) do
+                      %i.fa.fa-pencil.fa-lg
+
+                  - if product.event_id && !product.used?
+                    = link_to product, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                      %i.fa.fa-trash.fa-lg
+
+- else
+  - @products.each_slice(4) do |batch|
+    .row
+      - batch.each do |product|
+        .col-md-3
+          .card.product
+            .card-block
+              .card-title
+                %h5.text-center= product.name
+
+              - if product.url.present?
+                = image_tag product.url, class: 'img-fluid'
+              
+              %p.card-text.text-center
+                Price: 
+                = number_to_currency(product.retail_price)
+
+    %br
+
+/ .row
+/   .col-md-4
+/     - if current_scout.admin? && !@products.empty?
+/       = link_to new_product_path do
+/         %fa.fa.fa-plus.fa-lg
+/         Add new product
+
+%br
+%br
+= link_to "Return to Product catalog", products_path
+- if params[:inactive] && current_scout.admin? && @inactive_products.any?
+  = surround("(", ")") do
+    Inactive
+- if @products.empty?
+  %p.card-text There are no products for this Event.
+- if params[:inactive]
+  %p.card-text= link_to "Products", products_path
+- else
+  %p.card-text= link_to "Inactive Products", products_path(inactive: true)

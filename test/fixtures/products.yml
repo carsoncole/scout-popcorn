@@ -37,3 +37,41 @@ pack_donation:
   is_pack_donation: true
   is_physical_inventory: false
   is_sourced_from_bsa: false
+
+one_default:
+  name: White Popcorn
+  retail_price: 10
+  sourced_from: 'Chief Seattle Council'
+  is_physical_inventory: true
+
+two_default:
+  name: Plain Popcorn
+  retail_price: 10
+  sourced_from: 'Chief Seattle Council'
+  is_physical_inventory: true
+
+three_default:
+  name: Caramel Popcorn
+  retail_price: 15
+  sourced_from: 'Chief Seattle Council'
+  is_physical_inventory: true
+
+four_default:
+  name: Variety Popcorn Collection
+  retail_price: 45
+  sourced_from: 'Chief Seattle Council'
+  is_physical_inventory: true
+
+unused_default:
+  name: Cheap Popcorn Collection
+  retail_price: 20
+  sourced_from: 'Chief Seattle Council'
+  is_physical_inventory: true
+
+pack_donation_default:
+  name: Pack Donation
+  retail_price: 1
+  sourced_from: 'Chief Seattle Council'
+  is_pack_donation: true
+  is_physical_inventory: false
+  is_sourced_from_bsa: false

@@ -6,9 +6,11 @@ class CreateLedgers < ActiveRecord::Migration[5.0]
       t.decimal :amount, precision: 5, scale: 2, default: 0
       t.date :date
       t.boolean :is_money_collected
+      t.integer :line_item_id
       t.integer :take_order_id
       t.integer :site_sale_id
       t.integer :stock_id
+      t.datetime :bank_deposit_notification_sent_at
       t.integer :created_by
       t.integer :created_at
 

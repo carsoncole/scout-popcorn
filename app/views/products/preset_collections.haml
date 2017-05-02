@@ -1,0 +1,15 @@
+.row
+  .col-md-12
+    .card
+      .card-block
+        %h3.card-title Products
+        .card-text
+          
+          %p Your Product catalog can be populated with a preset collection of products, which can be further modified once in your catalog.
+
+          = form_tag '/products', method: :get do
+            .form-group
+              = collection_select '', :collection_name, @presets, :sourced_from, :sourced_from,{}, class: 'form-control'
+
+            = submit_tag "View Product collection", class: 'btn'
+

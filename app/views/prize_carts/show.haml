@@ -44,8 +44,8 @@
                   %td
                     = link_to prize.name, prize_path(prize)
                     = image_tag(prize.url, width: 40, class: 'img-rounded') if prize.url
-                  %td.text-xs-right= number_to_currency(prize.amount, precision: 0)
-                  %td.text-xs-right.action_button
+                  %td.text-right= number_to_currency(prize.amount, precision: 0)
+                  %td.text-right.action_button
                     = button_to prize_selection_path(prize.id), class: 'btn btn-success' do
                       %i.fa.fa-cart-plus
 
@@ -72,8 +72,8 @@
                     = link_to prize.name, prize_path(prize)
                     = image_tag(prize.url, width: 40, class: 'img-rounded') if prize.url
                     / = number_to_currency(prize.amount, precision: 0)
-                  %td.text-xs-right= number_to_currency(prize.amount, precision: 0)
-                  %td.text-xs-right.action_button
+                  %td.text-right= number_to_currency(prize.amount, precision: 0)
+                  %td.text-right.action_button
                     = button_to prize_selection_path(prize.id), class: 'btn btn-success' do
                       %i.fa.fa-cart-plus
 
@@ -101,8 +101,8 @@
                       %br
                       .small.text-danger * Removing this prize will reveal additional Pack Prizes with higher values
 
-                  %td.text-xs-right= number_to_currency(scout_prize.prize_amount, precision: 0)
-                  %td.text-xs-right.action_button
+                  %td.text-right= number_to_currency(scout_prize.prize_amount, precision: 0)
+                  %td.text-right.action_button
                     - unless scout_prize.prize.source == 'bsa-bonus' || @prize_cart.ordered?
                       = button_to prize_removal_path(scout_prize.id), class: 'btn btn-success' do
                         %i.fa.fa-minus

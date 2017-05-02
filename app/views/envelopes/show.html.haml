@@ -85,11 +85,11 @@
           - @payment_methods.each do |payment_method|
             %tr
               %th= payment_method.account.name
-              %td.text-xs-right
+              %td.text-right
                 = number_to_currency(@take_orders.where(payment_account_id: payment_method.payment_account_id).joins(:take_order_line_items).sum('take_order_line_items.value'), precision: 0)
           %tr
             %th Total
-            %td.text-xs-right= number_to_currency(@envelope.value, precision: 0 )
+            %td.text-right= number_to_currency(@envelope.value, precision: 0 )
 
   - if @envelope.open? && current_scout.admin?
     .col-md-1

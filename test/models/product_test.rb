@@ -10,6 +10,13 @@ class ProductTest < ActiveSupport::TestCase
     assert_not @product.valid?
   end
 
+  test "should be invalid if event with multiple same product names" do
+    @product.save
+    @product_two = Product.new(name: 'Caramel Popcorn', is_physical_inventory: true, retail_price: 10)
+    assert_not @product_two.valid?
+    assert @product.errors[:name].include? "has already been taken"
+  end
+
   test "should not be bsa-sourced if unit donation" do
     @product.is_pack_donation = true
     @product.is_sourced_from_bsa = true

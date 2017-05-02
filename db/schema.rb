@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.boolean  "is_active",                                     default: true
     t.boolean  "is_physical_inventory",                         default: true
     t.boolean  "is_pack_donation",                              default: false
+    t.string   "sourced_from"
     t.datetime "created_at",                                                    null: false
     t.datetime "updated_at",                                                    null: false
     t.boolean  "is_sourced_from_bsa",                           default: true
@@ -164,8 +165,6 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.integer  "unit_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "parent_first_name"
-    t.string   "parent_last_name"
     t.string   "email"
     t.string   "password_digest",        default: "",    null: false
     t.integer  "event_id"
