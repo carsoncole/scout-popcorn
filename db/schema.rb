@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(version: 20170419210244) do
   create_table "cart_prizes", force: :cascade do |t|
     t.integer  "prize_id"
     t.integer  "prize_amount"
+    t.integer  "prize_cart_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.integer  "prize_cart_id"
   end
 
   create_table "envelopes", force: :cascade do |t|
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.integer  "money_received_by_id"
     t.datetime "money_received_at"
     t.datetime "closed_at"
+    t.integer  "created_by"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.integer  "created_by"
     t.datetime "product_picked_up_at"
   end
 
@@ -75,14 +75,14 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.decimal  "amount",                            precision: 12, scale: 2, default: "0.0"
     t.date     "date"
     t.boolean  "is_money_collected"
+    t.integer  "line_item_id"
     t.integer  "take_order_id"
     t.integer  "site_sale_id"
     t.integer  "stock_id"
+    t.datetime "bank_deposit_notification_sent_at"
     t.integer  "created_by"
     t.datetime "created_at",                                                                 null: false
     t.datetime "updated_at",                                                                 null: false
-    t.datetime "bank_deposit_notification_sent_at"
-    t.integer  "line_item_id"
     t.boolean  "is_take_order_product_related"
   end
 
@@ -130,10 +130,10 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.boolean  "is_active",                                     default: true
     t.boolean  "is_physical_inventory",                         default: true
     t.boolean  "is_pack_donation",                              default: false
+    t.boolean  "is_sourced_from_bsa",                           default: true
     t.string   "sourced_from"
     t.datetime "created_at",                                                    null: false
     t.datetime "updated_at",                                                    null: false
-    t.boolean  "is_sourced_from_bsa",                           default: true
   end
 
   create_table "purchase_orders", force: :cascade do |t|

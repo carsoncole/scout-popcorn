@@ -10,3 +10,5 @@
               = site_sale.name + ' - ' + site_sale.date.strftime('%b %-d')
       - else
         %p.card-text No Site Sales have been scheduled.
+    .card-footer.text-center
+      = link_to "View Site Sales", site_sales_path

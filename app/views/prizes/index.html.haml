@@ -1,3 +1,7 @@
+.row
+  .col-md-12
+    %h2 Prizes
+
 
 - if @total_sales > 0 && @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_starts_at < Date.today
   .row
@@ -12,8 +16,9 @@
 
 
 - if @bsa_prizes.empty? && @bsa_bonus_prizes.empty? && @pack_prizes.empty? 
-  %p Awwwhh! Prizes have not been loaded yet. Come back later.
-
+  %br
+  %br
+  %p.text-center Prizes for selling popcorn have not been loaded yet. We are working on it so check back later.....
 
 - ['bsa', 'bsa_bonus', 'pack'].each do |prize_type|
   - next unless eval("@#{prize_type}_prizes").any?

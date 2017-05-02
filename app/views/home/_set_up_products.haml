@@ -1,13 +1,11 @@
-.row
-  .col-md-12
-    .card
-      .card-block
-        .card-text
-          
-          %i.fa.fa-exclamation-triangle.important
-            &nbsp;Important!
-          Your
-          = @active_event.name
-          event does not have any Popcorn product programmed. You can add products on the
-          = link_to "Popcorn Catalog", products_path
-          individually, or you can load a preset group of products.
+.card
+  .card-block
+    .card-text
+      
+      %i.fa.fa-exclamation-circle.important
+        &nbsp;Important!
+      Your
+      = @active_event.name
+      event does not have any Popcorn product programmed. You can add products on the
+      = link_to "Popcorn Catalog", products_path
+      individually, or you can load a preset group of products.

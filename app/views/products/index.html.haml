@@ -1,6 +1,5 @@
 .row
   .col-md-12
-    %h2 Catalog
 
     - if current_scout.is_unit_admin?
       .card.card-inverse.card-warning
@@ -29,7 +28,6 @@
         %br
         %p.text-center Popcorn products we will be selling have not been loaded yet. We are working on it so check back later.....
 
-
       - else
         - @products.each_slice(4) do |batch|
           .row
@@ -46,6 +44,7 @@
                     %p.card-text.text-center
                       Price: 
                       = number_to_currency(product.retail_price)
+          %br
 
 
 
@@ -105,7 +104,6 @@
                   - if product.event_id && !product.used?
                     = link_to product, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                       %i.fa.fa-trash.fa-lg
-
 
   %br
   %br

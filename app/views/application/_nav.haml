@@ -29,7 +29,7 @@
               = link_to "Online Sales", online_sales_path, class: "dropdown-item #{'active' if controller_name == 'online_sales'}"
         - unless current_scout.admin?
           %li.nav-item= link_to "Popcorn", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
-        - if @active_event.prizes?
+        - if @active_event.is_prizes_enabled?
           %li.nav-item.dropdown
             = link_to "#",class: "dropdown-toggle nav-link #{'active' if ['prizes'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
               Prizes
@@ -89,6 +89,7 @@
               / %li= link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
               %li= link_to "Resources", resources_path, class: "dropdown-item #{'active' if controller_name == 'resources'}"
             %li= link_to "Scouts/Administrators", scouts_path, class: "dropdown-item #{'active' if controller_name == 'scouts' && action_name != 'show' }"            
+            .dropdown-divider
             %li= link_to "Events", events_path, class: "dropdown-item #{'active' if controller_name == 'events'}"
             - if @unit && !@unit.new_record?
               %li= link_to "Unit", unit_path(@unit), class: "dropdown-item #{'active' if controller_name == 'units' && action_name != 'index' }"
@@ -98,3 +99,5 @@
       %li.nav-item
         = link_to logout_path, class: "nav-link" do
           %i.fa.fa-sign-out.fa-lg
+
+%br

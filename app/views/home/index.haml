@@ -1,9 +1,16 @@
-- if current_scout.is_unit_admin?
-  .row
-    .col-md-12
-      = render 'set_up_products' unless @active_event && @active_event.products?
-      %br
+- if @active_event
 
+  - if current_scout.is_unit_admin? && !@active_event.products?
+    .row
+      .col-md-12
+        = render 'set_up_products'
+        %br
+
+  - if ( current_scout.is_unit_admin? || current_scout.is_prizes_admin? ) && !@active_event.prizes?
+    .row
+      .col-md-12
+        = render 'set_up_prizes'
+        %br
 
 .row
   .col-md-4

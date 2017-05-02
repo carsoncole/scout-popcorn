@@ -35,7 +35,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should show new link" do
     sign_in(scouts(:admin))
     get products_url
-    assert_select "fa.fa.fa-plus"
+    assert_select "a[href=?]", "/products/new"
   end
 
   test "should show pencil edit link" do
