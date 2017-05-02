@@ -23,6 +23,33 @@
                   .col-md-4
                     = submit_tag "View Product collection", class: 'btn'
 
+    - else
+      - if @products.empty?
+        %br
+        %br
+        %p.text-center Popcorn products we will be selling have not been loaded yet. We are working on it so check back later.....
+
+
+      - else
+        - @products.each_slice(4) do |batch|
+          .row
+            - batch.each do |product|
+              .col-md-3
+                .card.product
+                  .card-block
+                    .card-title
+                      %h5.text-center= product.name
+
+                    - if product.url.present?
+                      = image_tag product.url, class: 'img-fluid'
+                    
+                    %p.card-text.text-center
+                      Price: 
+                      = number_to_currency(product.retail_price)
+
+
+
+
 
     - if params[:collection_name]
       %br
@@ -79,24 +106,20 @@
                     = link_to product, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                       %i.fa.fa-trash.fa-lg
 
-- else
-  - @products.each_slice(4) do |batch|
-    .row
-      - batch.each do |product|
-        .col-md-3
-          .card.product
-            .card-block
-              .card-title
-                %h5.text-center= product.name
 
-              - if product.url.present?
-                = image_tag product.url, class: 'img-fluid'
-              
-              %p.card-text.text-center
-                Price: 
-                = number_to_currency(product.retail_price)
+  %br
+  %br
+  = link_to "Return to Product catalog", products_path
+  - if params[:inactive] && current_scout.admin? && @inactive_products.any?
+    = surround("(", ")") do
+      Inactive
+  - if @products.empty?
+    %p.card-text There are no products for this Event.
+  - if params[:inactive]
+    %p.card-text= link_to "Products", products_path
+  - else
+    %p.card-text= link_to "Inactive Products", products_path(inactive: true)
 
-    %br
 
 / .row
 /   .col-md-4
@@ -105,15 +128,4 @@
 /         %fa.fa.fa-plus.fa-lg
 /         Add new product
 
-%br
-%br
-= link_to "Return to Product catalog", products_path
-- if params[:inactive] && current_scout.admin? && @inactive_products.any?
-  = surround("(", ")") do
-    Inactive
-- if @products.empty?
-  %p.card-text There are no products for this Event.
-- if params[:inactive]
-  %p.card-text= link_to "Products", products_path
-- else
-  %p.card-text= link_to "Inactive Products", products_path(inactive: true)
+
