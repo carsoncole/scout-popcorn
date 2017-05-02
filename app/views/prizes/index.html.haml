@@ -7,7 +7,7 @@
   .row
     .col-md-4
     .col-md-4
-      .alert.alert-danger.text-xs-center
+      .alert.alert-danger.text-center
         %p Select Your Prizes
         %b
           = link_to prize_cart_path(@active_event) do
@@ -48,8 +48,8 @@
                 %h4= prize.name
 
               
-              .text-xs-center
-                = image_tag(prize.url, width: 200, class: 'img-rounded img-fluid m-x-auto d-block') if prize.url
+              .text-center
+                = image_tag(prize.url, width: 150, class: 'img-rounded img-fluid m-x-auto d-block') if prize.url
                 %br
                 %h4
                   = number_to_currency(prize.amount)
@@ -76,7 +76,7 @@
 /                 award
 /               %h4= prize.name
             
-/             .text-xs-center
+/             .text-center
 /               = image_tag(prize.url, width: 200) if prize.url
 /               %br
 /               %h4

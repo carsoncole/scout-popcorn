@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.boolean  "is_by_level"
     t.string   "url"
     t.string   "group"
+    t.string   "collection_name"
     t.decimal  "cost",               precision: 5, scale: 2
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false

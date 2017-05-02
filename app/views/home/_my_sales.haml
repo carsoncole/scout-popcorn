@@ -1,14 +1,14 @@
 - if @active_event
   .card
     .card-block.my-sales
-      %h1.card-title
+      %h2.card-title
         - if current_scout.is_admin?
           Sales
         - else
           My Sales
       
       - grand_total = 0
-      %table.table.card-text
+      %table.table.card-text.table-sm
         - if @active_event.is_take_orders_enabled?
           %tr
             %th.take_orders(colspan=2)

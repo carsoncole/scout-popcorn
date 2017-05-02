@@ -1,22 +1,20 @@
 - if @active_event && @active_event.number_of_top_sellers && @active_event.number_of_top_sellers > 0 && @active_event.show_top_sellers
   .card.top-sellers
     .card-header
-      %h5.text-center
+      %h4.text-center
         %i.fa.fa-trophy.fa-lg
         Top Sellers
         %i.fa.fa-trophy.fa-lg    
     .card-block
-
-
       - if @top_sellers.any?
         
         .table-responsive
-          %table.table.card-text
+          %table.table.card-text.table-sm
             - @top_sellers.each do |top_seller|
               - scout = Scout.find(top_seller[0])
               %tr
                 %th= scout.name
-                %td.text-right= number_to_currency(top_seller[1], precision: 0)
+                %th.text-right= number_to_currency(top_seller[1], precision: 0)
       - else
         %p.card-text.text-center
           We will post the 

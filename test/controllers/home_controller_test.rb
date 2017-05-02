@@ -2,22 +2,21 @@ require 'test_helper'
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
 
-  setup do
-    post '/sessions', params: { email: 'mary@example.com', password: 'password'}
-  end
-
   test "should get root sign in when not logged in" do
+    sign_in(scouts(:one))
     get logout_path
     get root_url
     assert_response :success
   end
 
   test "should have Home title" do
+    sign_in(scouts(:one))
     get home_path
     assert_select 'title', /Home/
   end
 
   test "should get dashboard when logged in" do
+    sign_in(scouts(:one))
     get root_url
     assert_response :redirect
     follow_redirect!
@@ -25,32 +24,37 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show Scout sales table" do
+    sign_in(scouts(:one))
     follow_redirect!
-    assert_select "h1", "My Sales"
+    assert_select "h2", "My Sales"
     assert_select "th.take_orders"
     assert_select "th.site_sales"
     assert_select "th.online_sales"
   end
 
   test "should show Upcoming Site Sales" do
+    sign_in(scouts(:one))
     follow_redirect!
-    assert_select "h5", "Upcoming Site Sales"
-    assert_select "li.site_sale", 3
-    assert_select "li.site_sale", "Safeway - #{(Date.today + 10.days).strftime('%b %-d')}"
+    assert_select "h5", /Site Sales/
+    assert_select "td.site_sale_date", 3
+    assert_select "td.site_sale_name", "Safeway"
   end
 
   test "should show top sellers" do
+    sign_in(scouts(:one))
     follow_redirect!
-    assert_select "h5", "Top Sellers"
+    assert_select "h4", "Top Sellers"
   end
 
   test "should show resources" do
+    sign_in(scouts(:one))
     follow_redirect!
     assert_select "h5", "More info"
     assert_select "li.resource", 2
   end
 
   test "should show important dates" do
+    sign_in(scouts(:one))
     follow_redirect!
     assert_select "ul.important_dates"
   end
@@ -58,14 +62,14 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
   test "should show online sales total" do
     sign_in(scouts(:one))
     follow_redirect!
-    assert_select "h1", "My Sales"
+    assert_select "h2", "My Sales"
     assert_select "td.online_sales_amount", "$125" 
   end
 
   test "should show admin online sales total" do
     sign_in(scouts(:admin))
     follow_redirect!
-    assert_select "h1", "Sales"
+    assert_select "h2", "Sales"
     assert_select "td.online_sales_amount", "$275" 
   end
 

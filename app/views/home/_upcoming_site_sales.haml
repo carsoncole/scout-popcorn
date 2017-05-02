@@ -1,13 +1,14 @@
 - if @active_event
   .card
     .card-block
-      %h5.card-title Upcoming Site Sales
+      %h5.card-title Site Sales Upcoming
 
       - if @site_sales.any?
-        %ul.card-text
+        %table.table.card-text.table-sm
           - @site_sales.each do |site_sale|
-            %li.site_sale
-              = site_sale.name + ' - ' + site_sale.date.strftime('%b %-d')
+            %tr
+              %td.site_sale_date= site_sale.date.strftime('%b %-d')
+              %td.site_sale_name= site_sale.name
       - else
         %p.card-text No Site Sales have been scheduled.
     .card-footer.text-center

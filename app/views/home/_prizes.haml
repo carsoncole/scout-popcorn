@@ -3,18 +3,20 @@
     .card-block
       .card-title
         %h5 
-          Prizes
+          Prizes to Earn
           %i.fa.fa-bullhorn
           %i.fa.fa-soccer-ball-o
           %i.fa.fa-rocket
           %i.fa.fa-gamepad
           %i.fa.fa-gift
 
+      %p.card-text.small.text-muted Earn prizes based on the sales you achieve.
+
       %table.table.table-sm.card-text
         - @prizes.each do |prize|
           %tr
             %td= prize.name
-            %td= number_to_currency(prize.amount)
+            %td.text-right= number_to_currency(prize.amount)
 
       - if @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_starts_at < Time.now && @active_event.prize_cart_ordering_ends_at > Time.now
         %hr
@@ -25,5 +27,5 @@
             %i.fa.fa-shopping-cart
             Prize Cart
     .card-footer.text-center
-      = link_to "View Prizes", prizes_path
+      = link_to "See all Prizes", prizes_path
   %br
