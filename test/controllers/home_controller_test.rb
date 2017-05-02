@@ -12,6 +12,11 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should have Home title" do
+    get home_path
+    assert_select 'title', /Home/
+  end
+
   test "should get dashboard when logged in" do
     get root_url
     assert_response :redirect
