@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :set_event, if: Proc.new {|n| current_scout }
   before_action :set_unit,if: Proc.new {|n| current_scout }
   before_action :authorize
-  before_action :add_admin_messages!, if:  Proc.new { |n| current_scout && current_scout.is_unit_admin? }
+  # before_action :add_admin_messages!, if:  Proc.new { |n| current_scout && current_scout.is_unit_admin? }
   before_action :create_an_event!, if: Proc.new { |n| current_scout && current_scout.is_unit_admin? && !@active_event }
   before_action :need_an_event!, if: Proc.new { |n| current_scout && !current_scout.is_admin? && current_scout.event_id.nil? }
 
@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
     redirect_to home_path unless current_scout.is_admin?
   end
 
+  def authorize_unit_admin
+    redirect_to home_path unless current_scout.is_unit_admin?
+  end
+
   private
 
   def logged_in?
@@ -54,13 +58,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?
 
-  def add_admin_messages!
-    if current_scout.unit.events.empty?
-      flash[:alert] = "Scouts can not currently sign up with your Unit, without an Event created. Add an Event to change this."
-    elsif current_scout.unit.events.active.empty?
-      flash[:alert] = "Scouts can not currently sign up with your Unit, without an active Event. Create an active Event, or un-archive an existing Event."
-    end
-  end
+  # def add_admin_messages!
+  #   if current_scout.unit.events.empty?
+  #     flash[:alert] = "Scouts can not currently sign up with your Unit, without an Event created. Add an Event to change this."
+  #   elsif current_scout.unit.events.active.empty?
+  #     flash[:alert] = "Scouts can not currently sign up with your Unit, without an active Event. Create an active Event, or un-archive an existing Event."
+  #   end
+  # end
 
   def need_an_event!
     flash[:alert] = "No Event is currently selected."

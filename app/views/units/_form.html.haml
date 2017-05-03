@@ -1,55 +1,57 @@
-.row
-  .col-md-6
-    .card
-      .card-block
-        .card-title
-          %h2 Unit details
 
-        = form_tag units_path, method: :post do
-          / - if @unit.errors.any?
-          /   #error_explanation
-          /     %h2= "#{pluralize(@unit.errors.count, "error")} prohibited this unit from being saved:"
-          /     %ul
-          /       - @unit.errors.full_messages.each do |msg|
-          /         %li= msg
-          
-          .form-group
-            = label_tag :unit_name
-            
-            = text_field :unit, :name, placeholder: 'Pack 999', class: 'form-control'
+= form_tag units_path, method: :post do
+  - if @unit.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@unit.errors.count, "error")} prohibited this unit from being saved:"
+      %ul
+        - @unit.errors.full_messages.each do |msg|
+          %li= msg
+  - if @scout.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@scout.errors.count, "error")} prohibited this Administrator from being saved:"
+      %ul
+        - @scout.errors.full_messages.each do |msg|
+          %li= msg         
 
-          %br
+  .form-group
+    = label_tag :unit_name
+    = text_field :unit, :name, placeholder: 'Enter a Unit name, ex: Pack 999', class: 'form-control'
 
-          %h4 Administrator
+  %br
 
-          .form-group
-            = label_tag :first_name
-            = text_field :scout, :first_name, class: 'form-control'
+  %h5 Administrator
 
-          .form-group
-            = label_tag :last_name
-            = text_field :scout, :last_name, class: 'form-control'
-
-          .form-group
-            = label_tag :email
-            = text_field :scout, :email, class: 'form-control'
-
-          .form-group
-            = label_tag :password
-            - if @minimum_password_length
-              %em
-                = surround("(", ")") do
-                  = @minimum_password_length
-                  characters minimum.
-
-            = password_field :scout, :password, autocomplete: "off",class: 'form-control'
-
-          .form-group
-            = label_tag :password_confirmation
-            = password_field :scout,:password_confirmation, autocomplete: "off", class: 'form-control'
-
-          %hr
+  %p.text-muted.small
+    %i.fa.fa-info-circle
+    The Administrator will have full rights and can add additional administrators.
 
 
-          .actions
-            = submit_tag 'Save', class: 'btn btn-success'
+
+  .form-group
+    = label_tag :first_name
+    = text_field :scout, :first_name, class: 'form-control'
+
+  .form-group
+    = label_tag :last_name
+    = text_field :scout, :last_name, class: 'form-control'
+
+  .form-group
+    = label_tag :email
+    = text_field :scout, :email, class: 'form-control'
+
+  .form-group
+    = label_tag :password
+    - if @minimum_password_length
+      %em
+        = surround("(", ")") do
+          = @minimum_password_length
+          characters minimum.
+
+    = password_field :scout, :password, autocomplete: "off",class: 'form-control'
+
+  .form-group
+    = label_tag :password_confirmation
+    = password_field :scout,:password_confirmation, autocomplete: "off", class: 'form-control'
+
+  .actions
+    = submit_tag 'Create Unit', class: 'btn btn-success'

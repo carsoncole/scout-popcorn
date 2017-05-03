@@ -1,11 +1,38 @@
 require 'test_helper'
 
 class ScoutsControllerTest < ActionDispatch::IntegrationTest
+
   setup do
     @scout = scouts(:one)
   end
 
-  test "should show multiple possible events in profile edit" do
+  test "should get new" do
+    get signup_path
+    assert_response :success
+  end
+
+  test "should create scout" do
+    assert_difference('Scout.count') do
+      post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'test@example.com', password: 'password' } }
+    end
+
+    assert_redirected_to root_path
+  end
+
+  test "should not allow scout signups without units" do
+    Unit.destroy_all
+    get signup_path
+    assert_response :redirect
+    assert_redirected_to root_path
+  end
+
+  test "should successfully login and redirect" do
+    sign_in(scouts(:one))
+    follow_redirect!
+    assert_select "span.event-name", "Popcorn 2017"
+  end
+
+ test "should show multiple possible events in profile edit" do
     sign_in(scouts(:one))
     event = Event.create(name: 'Some Event', is_active: true, unit_id: units(:one).id)
     scout = scouts(:one)
@@ -22,23 +49,13 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".event_selection", false
   end
 
-  test "should successfully login and redirect" do
-    sign_in(scouts(:one))
-    follow_redirect!
-    assert_select "span.event-name", "Popcorn 2017"
-  end
-
-  test "should get new" do
-    get signup_path
-    assert_response :success
-  end
-
-  test "should show #active unit" do
+ test "should show #active unit" do
     get signup_path
     assert_select "#scout_unit_id" do |element|
-      assert_select element, "option", 2
+      assert_select element, "option", 3
     end
     assert_select "option", "Pack 100"
+    assert_select "option", "Troop 100"
   end
 
   test "should not allow scout with non-unique email" do
@@ -47,14 +64,6 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
       post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'mary@example.com', password: 'password' } }
     end
     assert_equal css_select('ul.errors>li').last.content, 'Email has already been taken'
-  end
-
-  test "should create scout" do
-    assert_difference('Scout.count') do
-      post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'test@example.com', password: 'password' } }
-    end
-
-    assert_redirected_to root_path
   end
 
   test "should show scout" do
@@ -77,6 +86,22 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".my-sales"
   end
 
+  # Admin
+
+  test "should show all scouts" do
+    sign_in(scouts(:unit_admin))
+    get scouts_url
+    assert_response :success
+
+    sign_in(scouts(:take_orders_admin))
+    get scouts_url
+    assert_response :success
+
+    sign_in(scouts(:site_sales_admin))
+    get scouts_url
+    assert_response :success
+  end
+
   test "should allow destroy if no activity" do
   end
 
@@ -87,4 +112,5 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     # patch scout_url(@scout), params: { scout: {  } }
     # assert_redirected_to scout_url(@scout)
   end
+
 end

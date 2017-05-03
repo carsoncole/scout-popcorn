@@ -75,3 +75,9 @@ pack_donation_default:
   is_pack_donation: true
   is_physical_inventory: false
   is_sourced_from_bsa: false
+
+white_popcorn:
+  name: White Popcorn
+  retail_price: 10
+  event: two
+  is_physical_inventory: true

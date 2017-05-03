@@ -5,28 +5,41 @@
         .card-title
           %h2 Sign Up
 
+        - if params[:administrator]
+          %p.text-info
+            %i.fa.fa-info-circle
+            This will initially create a Scout account. Once created, you can add administrative rights to the account.
+
+
         = form_for @scout do |f|
           = render 'errors', target: @scout
           
-          .form-group
-            = f.label :unit
-            %br
-            = f.collection_select :unit_id, @units, :id, :name, {prompt: 'Select a Unit...'}, class: 'form-control'
+          
+          - if params[:unit_id]
+            = f.hidden_field :unit_id, value: params[:unit_id]
+          - else
+            .form-group
+              = f.label :unit
+              %br
+              = f.collection_select :unit_id, @units, :id, :name, {prompt: 'Select a Unit...'}, class: 'form-control'
 
           .form-group
-            = f.label :email
+            - if params[:administrator]
+              = f.label :administrator_email
+            - else
+              = f.label :email
             %p.small.text-muted
               %i.fa.fa-info-circle
-              Each Scout/Administrator must have an unique Email.
-            = f.email_field :email, autofocus: true, placeholder: "Parent/Scout email", class: 'form-control'
+              Your email must not be already in use with another account.
+            = f.email_field :email, autofocus: true,  class: 'form-control'
             
           .form-group
             = f.label :scout_first_name
-            = f.text_field :first_name, placeholder: "First name",class: 'form-control'
+            = f.text_field :first_name, class: 'form-control'
 
           .form-group
             = f.label :scout_last_name
-            = f.text_field :last_name, placeholder: "Last name",class: 'form-control'  
+            = f.text_field :last_name,class: 'form-control'  
 
           .form-group
             = f.label :password

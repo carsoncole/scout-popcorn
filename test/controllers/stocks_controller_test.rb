@@ -23,19 +23,19 @@ class StocksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create stock" do
+  test "should create stock transfer from bsa" do
     sign_in(scouts(:admin))
-    assert_difference('Stock.count') do
-      post stocks_url, params: { stock: { product_id: @stock.product_id, quantity: @stock.quantity, event_id: @stock.event_id, location: @stock.location, date: Date.today } }
+    assert_difference('Stock.count', 1) do
+      post stocks_url, params: { stock: { product_id: @stock.product_id, quantity: @stock.quantity, event_id: @stock.event_id, is_transfer_from_bsa: true, location: @stock.location, date: Date.today } }
     end
 
     assert_redirected_to stocks_ledger_path
   end
 
-  test "should create stock movement with warehouse" do
+  test "should create stock transfer from warehouse" do
     sign_in(scouts(:admin))
     assert_difference('Stock.count', 2) do
-      post stocks_url, params: { stock: { product_id: @stock.product_id, quantity: @stock.quantity, event_id: @stock.event_id, location: 'site sales', date: Date.today, movement_with_warehouse: 1 } }
+      post stocks_url, params: { stock: { product_id: @stock.product_id, quantity: @stock.quantity, event_id: @stock.event_id, location: 'site sales', date: Date.today, is_transfer_from_warehouse: true } }
     end
     assert_redirected_to stocks_ledger_path
 

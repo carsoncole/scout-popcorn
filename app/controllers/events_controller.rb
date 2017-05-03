@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_action :authorize_unit_admin, except: :index
+
 
   def index
     @events = @unit.events.where(unit_id: @unit.id).order(is_active: :desc)
@@ -37,7 +39,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
 
     if @event.update(event_params)
-      redirect_to @event, notice: 'Event was successfully updated.'
+      redirect_to events_url, notice: 'Event was successfully updated.'
     else
       render :edit
     end

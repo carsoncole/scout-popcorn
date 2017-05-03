@@ -19,12 +19,12 @@
               Administrators
               = surround("(", ")") do
                 = @administrators.length
-          - if @inactive_scouts.length != 0
-            %li.nav-item
-              = link_to scouts_path(inactive: true), class: "nav-link #{'active' if params[:inactive]}" do
-                Archived
-                = surround("(", ")") do
-                  = @inactive_scouts.length            
+          / - if @inactive_scouts.length != 0
+          /   %li.nav-item
+          /     = link_to scouts_path(inactive: true), class: "nav-link #{'active' if params[:inactive]}" do
+          /       Archived
+          /       = surround("(", ")") do
+          /         = @inactive_scouts.length            
         %br
         - unless params[:administrators].present?
           .table-responsive
@@ -44,7 +44,7 @@
                     %th.hidden-print
 
               %tbody
-                - @scouts = @inactive_scouts if params[:inactive].present?
+                / - @scouts = @inactive_scouts if params[:inactive].present?
                 - @scouts.each do |scout|
                   %tr
                     %td
@@ -71,7 +71,7 @@
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
                         - unless scout.activity?
-                          = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                          = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Scout account and all related information if there is no activity.'  } do
                             %span.fa.fa-trash.fa-lg
                     
         - if params[:administrators].present?
@@ -135,16 +135,20 @@
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
                         - unless scout.activity?
-                          = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Scout account and all related information. It is irreversible.' } do
+                          = link_to scout, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Administrator account and all related information if there is no activity.' } do
                             %span.fa.fa-trash.fa-lg
-                    
-- if current_scout.is_unit_admin?
-  %br
+   
+- if current_scout.is_unit_admin?            
   .row
-    .col-md-4
+    .col-md-3
       .card
         .card-block    
           .hidden-print      
-            = link_to new_scout_path do
-              %i.fa.fa-plus.fa-lg
-              Add a new Scout/Administrator
+            - if params[:administrators].present?
+              = link_to new_scout_path(administrator: true, unit_id: current_scout.unit_id) do
+                %i.fa.fa-plus.fa-lg  
+                Add a new Administrator
+            - else
+              = link_to new_scout_path(unit_id: current_scout.unit_id) do
+                %i.fa.fa-plus.fa-lg  
+                Add a new Scout

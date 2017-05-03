@@ -27,3 +27,13 @@ unit_bank_account:
   name: Unit Bank account
   account_type: Asset
   is_bank_account_depositable: true
+
+inventory_two:
+  event: two
+  name: Inventory
+  account_type: Asset
+
+due_to_bsa_two:
+  event: two
+  name: Due to BSA
+  account_type: Liability

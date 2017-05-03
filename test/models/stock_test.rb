@@ -29,4 +29,17 @@ class StockTest < ActiveSupport::TestCase
     assert_equal @stock.id, @stock.ledger.stock_id
   end
 
+  # test "should show correct inventory balance" do
+  #   setup_event
+
+  #   assert_equal @event.stocks.where(product_id: @product.id).sum(:quantity), 100
+  # end
+
+  # def setup_event
+  #   @event = units(:two).events.create(name: 'Popcorn Event')
+  #   @product = @event.products.create(name: 'Cheese Popcorn', retail_price: 10)
+  #   assert @product.valid?
+  #   @stock = @event.stocks.create(product_id: @product.id, location: 'warehouse', is_transfer_from_bsa: true, date: Date.today, quantity: 100)
+  # end
+
 end

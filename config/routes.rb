@@ -44,7 +44,7 @@ Rails.application.routes.draw do
 
   get 'home/invite_scouts' => 'home#invite_scouts', as: 'invite_scouts'
 
-  resources :units
+  resources :units, except: :index
   resources :scouts do
     get 'update-password' => 'scouts#update_password', as: 'update_password'
   end

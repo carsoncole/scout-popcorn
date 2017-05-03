@@ -1,11 +1,12 @@
 class ScoutsController < ApplicationController
   before_action :set_scout, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorize, only: [:new, :create, :forgot_password]
-  before_action :authorize_admin, only: [:index, :destroy]
-  layout 'sessions', only: [:new, :create, :forgot_password]
+  before_action :authorize_unit_admin, only: :destroy
+  before_action :authorize_admin, only: :index
+  # layout 'sessions', only: [:create, :forgot_password]
 
   def index
-    @inactive_scouts = @unit.scouts.inactive
+    # @inactive_scouts = @unit.scouts.inactive
     @scouts = @unit.scouts.active.not_admin.order(:first_name)
     @administrators = @unit.scouts.active.admin
   end
@@ -14,6 +15,7 @@ class ScoutsController < ApplicationController
   end
 
   def new
+    redirect_to root_path if Unit.active.empty?
     @scout = Scout.new
     @units = Unit.active.order(:name)
   end
@@ -25,7 +27,9 @@ class ScoutsController < ApplicationController
     @scout = Scout.new(scout_params)
     @scout.email = @scout.email.downcase
 
-    if @scout.save
+    if current_scout && @scout.save
+      redirect_to root_path, notice: 'The account was successfully created.'
+    elsif @scout.save
       redirect_to root_path, notice: 'Your account was successfully created. Please login to continue'
     else
       @units = Unit.active.order(:name)
@@ -39,7 +43,7 @@ class ScoutsController < ApplicationController
   end
 
   def update
-    if @scout.update(scout_params)
+    if current_scout.is_unit_admin || current_scout == @scout && @scout.update(scout_params)
       redirect_to @scout, notice: 'Scout was successfully updated.'
     else
       render :edit 
@@ -47,8 +51,17 @@ class ScoutsController < ApplicationController
   end
 
   def destroy
-    @scout.update(is_active: false)
-    redirect_to scouts_path, notice: 'Scout was successfully moved to "inactive".'
+    if @scout.activity?
+      message = 'This Scout can not be destroyed since it has activity.'
+    else
+      @scout.destroy
+      if @scout.admin?
+        message = 'Administrator account was successfully destroyed.'
+      else
+        message = 'Scout account was successfully destroyed.'
+      end
+    end
+    redirect_to scouts_path, notice: message
   end
 
   def forgot_password

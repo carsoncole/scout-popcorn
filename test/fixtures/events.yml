@@ -1,7 +1,6 @@
 one:
   unit: one
   name: Popcorn 2017
-  is_active: true
   take_orders_deadline_at: <%= Date.today + 1.month %>
   admin_email: someone@example.com
   prize_cart_ordering_starts_at: <%= Date.today + 40.days %>
@@ -10,5 +9,4 @@ one:
 two:
   unit: two
   name: Popcorn 2018
-  is_active: false
   take_orders_deadline_at: <%= Date.today + 1.month %>

@@ -80,7 +80,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
     sign_in(scouts(:one))
     follow_redirect!
-    assert_select "td.onfline_sales_amount", "$224" 
+    assert_select "td.online_sales_amount", "$224" 
   end
 
   test "should show site sales cash for site sales admin" do

@@ -2,6 +2,8 @@ class UnitsController < ApplicationController
   helper StatesHelper
   before_action :set_unit, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorize, only: [:new, :create]
+  before_action :authorize_unit_admin, only: [:edit, :update, :destroy]
+
   layout 'sessions', only: [:new, :create]
 
   # GET /units/1
@@ -13,7 +15,8 @@ class UnitsController < ApplicationController
   # GET /units/new
   def new
     @unit = Unit.new
-    @unit.scouts.build
+    # @unit.scouts.build
+    @scout = Scout.new
   end
 
   # GET /units/1/edit
@@ -24,7 +27,11 @@ class UnitsController < ApplicationController
   # POST /units.json
   def create
     @unit = Unit.new(unit_params)
-    if @unit.save
+    @scout = Scout.new(scout_params)
+    @scout.valid?
+    @scout.errors.delete(:unit_id)
+    @scout.errors.delete(:unit)
+    if !@scout.errors.any? && @unit.save
       @scout = @unit.scouts.new(first_name: scout_params[:first_name], last_name: scout_params[:last_name], unit_id: @unit.id, email: scout_params[:email], password:  scout_params[:password], password_confirmation: scout_params[:password_confirmation], is_unit_admin: true)
       if @scout.save
         @scout.assign_full_rights!
@@ -37,28 +44,17 @@ class UnitsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /units/1
-  # PATCH/PUT /units/1.json
   def update
-    respond_to do |format|
-      if @unit.update(unit_params)
-        format.html { redirect_to @unit, notice: 'Unit was successfully updated.' }
-        format.json { render :show, status: :ok, location: @unit }
-      else
-        format.html { render :edit }
-        format.json { render json: @unit.errors, status: :unprocessable_entity }
-      end
+    if @unit.update(unit_params)
+      redirect_to @unit, notice: 'Unit was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /units/1
-  # DELETE /units/1.json
   def destroy
     @unit.destroy
-    respond_to do |format|
-      format.html { redirect_to units_url, notice: 'Unit was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to root_url, notice: 'Unit was successfully destroyed.'
   end
 
   private

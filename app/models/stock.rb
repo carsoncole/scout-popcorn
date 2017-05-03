@@ -64,7 +64,7 @@ class Stock < ApplicationRecord
   end
 
   def create_due_to_bsa!
-    account = event.accounts.where(is_due_to_bsa: true).first
+    account = event.accounts.where(name: 'Due to BSA', is_due_to_bsa: true).first
     ledger = account.ledgers.create(description: 'BSA inventory transfer', amount: wholesale_value, date: date, stock_id: id)
     self.update(ledger_id: ledger.id)
   end
