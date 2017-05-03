@@ -5,7 +5,8 @@
     %ul.card-text
       - if current_scout.admin?
         %li= link_to "Income: See where we stand", income_statement_path
-        %li= link_to "Make a Bank deposit", bank_deposit_path
+        - if current_scout.is_site_sales_admin? || current_scout.is_take_orders_admin? || current_scout.is_financial_admin?
+          %li= link_to "Make a Bank deposit", bank_deposit_path
         - if current_scout.is_site_sales_admin?
           %li= link_to "Site Sales Admin", site_sales_path
         - if current_scout.is_take_orders_admin?

@@ -51,18 +51,19 @@ class StocksController < ApplicationController
   end
 
   def create
-    if stock_params[:movement_with_warehouse] == true && stock_params[:location] == 'warehouse'
+    if stock_params[:is_transfer_from_warehouse] == true && stock_params[:location] == 'warehouse'
       redirect_to stocks_ledger_path, notice: "Location needs to be different than -warehouse-"
     else
-      if stock_params[:movement_with_warehouse] == "1"
-        movement_with_warehouse = true
-        stock_params.delete :movement_with_warehouse
-        @corresponding_stock = @active_event.stocks.build(stock_params)
-        @corresponding_stock.quantity = -@corresponding_stock.quantity
-        @corresponding_stock.location = 'warehouse'
-        @corresponding_stock.created_by = current_scout.id
-        @corresponding_stock.save
-      end
+
+      # if stock_params[:movement_with_warehouse] == "1"
+      #   movement_with_warehouse = true
+      #   stock_params.delete :movement_with_warehouse
+      #   @corresponding_stock = @active_event.stocks.build(stock_params)
+      #   @corresponding_stock.quantity = -@corresponding_stock.quantity
+      #   @corresponding_stock.location = 'warehouse'
+      #   @corresponding_stock.created_by = current_scout.id
+      #   @corresponding_stock.save
+      # end
 
       @stock = @active_event.stocks.build(stock_params)
       @stock.created_by = current_scout.id
@@ -102,6 +103,6 @@ class StocksController < ApplicationController
     end
 
     def stock_params
-      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :movement_with_warehouse, :is_transfer_from_bsa, :date)
+      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :is_transfer_from_warehouse, :is_transfer_from_bsa, :date, :created_by)
     end
 end

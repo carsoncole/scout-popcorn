@@ -33,6 +33,7 @@
                 %th Qty
                 %th Location
                 %th Wholesale
+                %th By
                 %th Created
                 %th
 
@@ -53,6 +54,7 @@
                     - if stock.location
                       = link_to stock.location.titleize, stocks_ledger_path(location: stock.location)
                   %td= number_to_currency(stock.wholesale_value)
+                  %td= Scout.find(stock.created_by).name if stock.created_by
                   %td= nice_date_time_compact(stock.created_at)
                   / %td
                   /   - if stock.created_by == 999

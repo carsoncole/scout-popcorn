@@ -2,7 +2,7 @@ $blue: #003F87;
 $yellow: #FCD116;
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family:  sans-serif;
   background-color: #efefef;
 }
 .page-title {
@@ -37,6 +37,7 @@ h5 {
 .important {
   font-size: 1.7em;
   color: red;
+  display: inline;
 }
 
 .field_with_errors {

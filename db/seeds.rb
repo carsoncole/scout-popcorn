@@ -55,26 +55,26 @@ event.create_default_products!("Chief Seattle Council 2017")
 products_array = event.products
 
 Stock.create ([
-  {event_id: 1, product_id: products_array[0].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 100},
-  {event_id: 1, product_id: products_array[1].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 100}, 
-  {event_id: 1, product_id: products_array[2].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 100},
-  {event_id: 1, product_id: products_array[3].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 100},
-  {event_id: 1, product_id: products_array[4].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 100},
-  {event_id: 1, product_id: products_array[5].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 100},
-  {event_id: 1, product_id: products_array[6].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 288},
-  {event_id: 1, product_id: products_array[7].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 108},
-  {event_id: 1, product_id: products_array[8].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 12},
-  {event_id: 1, product_id: products_array[9].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 12},
-  {event_id: 1, product_id: products_array[10].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 12},
-  {event_id: 1, product_id: products_array[11].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 6},
-  {event_id: 1, product_id: products_array[12].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 4}, 
-  {event_id: 1, product_id: products_array[13].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, quantity: 0},
-  {event_id: 1, product_id: products_array[2].id, location: 'site sales',  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
-  {event_id: 1, product_id: products_array[3].id, location: 'site sales',  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
-  {event_id: 1, product_id: products_array[4].id, location: 'site sales',  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
-  {event_id: 1, product_id: products_array[5].id, location: 'site sales',  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
-  {event_id: 1, product_id: products_array[6].id, location: 'site sales',  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
-  {event_id: 1, product_id: products_array[7].id, location: 'site sales',  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50}
+  {event_id: 1, product_id: products_array[0].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 100},
+  {event_id: 1, product_id: products_array[1].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 100}, 
+  {event_id: 1, product_id: products_array[2].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 100},
+  {event_id: 1, product_id: products_array[3].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 100},
+  {event_id: 1, product_id: products_array[4].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 100},
+  {event_id: 1, product_id: products_array[5].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 100},
+  {event_id: 1, product_id: products_array[6].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 288},
+  {event_id: 1, product_id: products_array[7].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 108},
+  {event_id: 1, product_id: products_array[8].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 12},
+  {event_id: 1, product_id: products_array[9].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 12},
+  {event_id: 1, product_id: products_array[10].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 12},
+  {event_id: 1, product_id: products_array[11].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 6},
+  {event_id: 1, product_id: products_array[12].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 4}, 
+  {event_id: 1, product_id: products_array[13].id, location: 'warehouse', description: 'Initial BSA order', is_transfer_from_bsa: true, date: Date.today - 7.days, created_by: 3, quantity: 0},
+  {event_id: 1, product_id: products_array[2].id, location: 'site sales', created_by: 3, is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
+  {event_id: 1, product_id: products_array[3].id, location: 'site sales', created_by: 3,  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
+  {event_id: 1, product_id: products_array[4].id, location: 'site sales', created_by: 3,  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
+  {event_id: 1, product_id: products_array[5].id, location: 'site sales', created_by: 3,  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
+  {event_id: 1, product_id: products_array[6].id, location: 'site sales', created_by: 3,  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50},
+  {event_id: 1, product_id: products_array[7].id, location: 'site sales', created_by: 3,  is_transfer_from_warehouse: true, date: Date.today - 2.days, quantity: 50}
   ])
 
 SiteSale.create ([

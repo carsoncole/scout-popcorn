@@ -25,7 +25,7 @@
   .col-md-4
     - if @active_event
       - if @active_event.is_site_sales_enabled?
-        = render 'upcoming_site_sales'
+        = render 'site_sales'
       = render 'important_dates'
       = render 'quick_links'
       = render 'resources'

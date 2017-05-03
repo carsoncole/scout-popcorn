@@ -114,6 +114,16 @@ class Scout < ApplicationRecord
     prize_carts.create(event_id: @active_event) unless prize_carts.any?
   end
 
+  def assign_full_rights!
+    self.is_unit_admin = true
+    self.is_take_orders_admin = true
+    self.is_site_sales_admin = true
+    self.is_online_sales_admin = true
+    self.is_prizes_admin = true
+    self.is_financial_admin = true
+    self.save
+  end
+
   private
 
   def fix_name!

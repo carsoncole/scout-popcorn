@@ -17,8 +17,11 @@ class Stock < ApplicationRecord
 
   attr_accessor :movement_with_warehouse
 
+
   before_save :update_wholesale_value!, if: Proc.new { |s| s.quantity_changed? || s.product_id_changed? }
+  before_create :debit_warehouse!, if: Proc.new { |s| s.is_transfer_from_warehouse }
   after_create :create_due_to_bsa!, if: Proc.new { |s| s.is_transfer_from_bsa }
+
 
   def self.warehouse
     where(location: 'warehouse')
@@ -46,6 +49,10 @@ class Stock < ApplicationRecord
     end
     value = value * (1 - event.unit_commission_percentage / 100 )
     value
+  end
+
+  def debit_warehouse!
+    event.stocks.create(quantity: -quantity, location: 'warehouse', created_by: created_by, product_id: product_id, event_id: event_id, date: date)
   end
 
   def self.is_transfer_from_bsa

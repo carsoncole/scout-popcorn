@@ -79,11 +79,11 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.integer  "take_order_id"
     t.integer  "site_sale_id"
     t.integer  "stock_id"
+    t.boolean  "is_take_order_product_related"
     t.datetime "bank_deposit_notification_sent_at"
     t.integer  "created_by"
     t.datetime "created_at",                                                                 null: false
     t.datetime "updated_at",                                                                 null: false
-    t.boolean  "is_take_order_product_related"
   end
 
   create_table "online_sales", force: :cascade do |t|

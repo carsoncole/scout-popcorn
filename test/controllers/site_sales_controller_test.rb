@@ -17,6 +17,33 @@ class SiteSalesControllerTest < ActionDispatch::IntegrationTest
     assert_select "a.new-site-sale-link", false
   end
 
+  test "should not show links to admin details" do
+    sign_in(scouts(:one))
+    get site_sales_url
+    assert_select "td.admin-info", 0
+    assert_select "td.admin-links", 0
+  end
+
+  # Admin
+
+  test "should show links to admin details" do
+    sign_in(scouts(:site_sales_admin))
+    get site_sales_url
+    assert_select "td.admin-info"
+    assert_select "td.admin-links"
+  end
+
+  test "should not show links to other admins" do
+    sign_in(scouts(:take_orders_admin))
+    get site_sales_url
+    assert_select "td.admin-info", 0
+    assert_select "td.admin-links", 0
+    sign_in(scouts(:unit_admin))
+    get site_sales_url
+    assert_select "td.admin-info", 0
+    assert_select "td.admin-links", 0
+  end
+
   test "should show admin new link" do
     sign_in(scouts(:admin))
     get site_sales_url

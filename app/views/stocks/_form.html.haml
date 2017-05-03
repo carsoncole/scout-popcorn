@@ -31,10 +31,15 @@
           .form-group
             = f.label :description
             = f.text_field :description, class: 'form-control'
+          / .form-group
+          /   = f.label :movement_with_warehouse
+          /   %p.small Check her if this a movement with the warehouse
+          /   = f.check_box :movement_with_warehouse,  class: 'form-control'
           .form-group
-            = f.label :movement_with_warehouse
-            %p.small Check her if this a movement with the warehouse
-            = f.check_box :movement_with_warehouse,  class: 'form-control'
+            = f.label :is_transfer_from_warehouse
+            %p.small Check her if this a transfer from the warehouse
+            = f.check_box :is_transfer_from_warehouse,  class: 'form-control'
+
           .form-group
             = f.label :is_transfer_from_bsa
             %p.small Check her if this is a transfer of product from the BSA

@@ -11,15 +11,15 @@
                 %tr
                   %th Site Sale
                   - unless current_scout.admin?
-                    %th Hours
+                    %th.text-center Hours
                   - if current_scout.admin?
                     %th
-                    %th Hours
-                    %th Sales
+                    %th.text-center Hours
+                    %th.text-center Sales
                   - unless current_scout.admin?
-                    %th Credited Sales
-                  - if current_scout.admin?
-                    %th Status
+                    %th.text-center Credited Sales
+                  - if current_scout.is_site_sales_admin?
+                    %th.text-center Status
                     %th.hidden-print
 
               %tbody
@@ -33,7 +33,7 @@
                         = link_to site_sale.full_name, site_sale_path(site_sale)
                       - else
                         = site_sale.full_name
-                    %td
+                    %td.text-center
                       - if current_scout.admin?
                         - hours += site_sale.scout_site_sales.sum(:hours_worked)
                       - else
@@ -41,36 +41,36 @@
                         - hours += hours_worked if hours_worked
                       = hours_worked
                     - if current_scout.admin?
-                      %td= site_sale.scout_site_sales.sum(:hours_worked)
-                      %td
+                      %td.text-center= site_sale.scout_site_sales.sum(:hours_worked)
+                      %td.text-center
                         - total_sales += site_sale.total_sales
                         = number_to_currency(site_sale.total_sales, precision: 0)
                     - else
-                      %td
+                      %td.text-center
                         - total += (site_sale.credited_sales(current_scout, @active_event) || 0)
                         = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
-                    - if current_scout.admin?
-                      %td
+                    - if current_scout.is_site_sales_admin?
+                      %td.admin-info.text-center
                         - if site_sale.status == 'closed'
                           %span.badge.badge-danger= site_sale.status.titleize
                         - else
                           %span.badge.badge-success= site_sale.status.titleize
-                      %td.hidden-print.text-right
+                      %td.hidden-print.text-right.admin-links
                         = link_to site_sale do
                           %i.fa.fa-folder-open.fa-lg
-                        - if current_scout.admin? && site_sale.open? 
+                        - if current_scout.is_site_sales_admin? && site_sale.open? 
                           =link_to site_sale_tracking_sheet_path(site_sale) do
                             %i.fa.fa-print.fa-lg
 
-                        = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Site Sale and all entered information. This is NOT reversible.' } do
-                          %i.fa.fa-trash.fa-lg
+                          = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Site Sale and all entered information. This is NOT reversible.' } do
+                            %i.fa.fa-trash.fa-lg
                 %tr
                   %td 
                   - if current_scout.admin?
                     %td     
-                  %td
+                  %td.text-center
                     = hours               
-                  %td
+                  %td.text-center
                     - if current_scout.admin?
                       = number_to_currency(total_sales, precision: 0)
                     - else
@@ -85,6 +85,6 @@
           = paginate @site_sales
 
 
-        - if current_scout.admin?
+        - if current_scout.is_site_sales_admin?
           = link_to new_site_sale_path, class: 'card-text new-site-sale-link' do
             %i.fa.fa-plus.fa-lg.hidden-print 

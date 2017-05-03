@@ -3,30 +3,30 @@
     .card
       .card-block
         .row
-          .col-md-6
+          .col-md-8
             .card-title
               %h3
-                Site Sale: 
                 = @site_sale.full_name
-                %span.lead
-                  = link_to edit_site_sale_path(@site_sale) do
-                    %i.fa.fa-pencil.hidden-print  
+                - if current_scout.is_site_sales_admin?
+                  %span.lead
+                    = link_to edit_site_sale_path(@site_sale) do
+                      %i.fa.fa-pencil.hidden-print  
 
-            - if current_scout.admin? && @site_sale.open? 
-              %p
-                =link_to site_sale_tracking_sheet_path(@site_sale) do
-                  %i.fa.fa-print.fa-lg
-                  Site Sale Transaction Sheet
+            / - if current_scout.is_site_sales_admin? && @site_sale.open? 
+            /   %p
+            /     =link_to site_sale_tracking_sheet_path(@site_sale) do
+            /       %i.fa.fa-print.fa-lg
+            /       Site Sale Transaction Sheet
 
 
-          .col-md-6
+          .col-md-4
             %h3.text-right
               - if @site_sale.status == 'closed'
                 %span.badge.badge-danger= @site_sale.status.capitalize
               - else
                 %span.badge.badge-success= @site_sale.status.capitalize
 
-        %table.table
+        %table.table.table-sm
           %thead
             %tr
               %th Product
@@ -62,14 +62,14 @@
                 %td
                   = number_to_currency( line_item.value, precision: 0 )
                 %td
-                  - if @site_sale.open?
+                  - if @site_sale.open? && current_scout.is_site_sales_admin?
                     = link_to site_sale_site_sale_line_item_path(@site_sale, line_item), method: :delete do
                       %i.fa.fa-trash.fa-lg.hidden-print  
 
             
             %tr
               %td
-                - if @site_sale.open?
+                - if @site_sale.open? && current_scout.is_site_sales_admin?
                   = link_to new_site_sale_site_sale_line_item_path(@site_sale) do
                     %i.fa.fa-plus.fa-lg
 
@@ -80,33 +80,14 @@
               %td
               %td= number_to_currency( @total_sales, precision: 0 )
 
-- if current_scout.admin?
-  %br
-  .row
-    .col-md-1
-    .col-md-10
-      .card
-        .card-block
-          - if @site_sale.open?  
-            .col-md-9
-              %p.card-text.text-danger Closing a Site Sale processes inventory and financials. Site Sales can be re-opened for any necessary changes.
-            .col-md-3
-              .card-text.text-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
-          - else
-            .col-md-9
-              %p.card-text.text-danger Reopening reverses all inventory and financial transactions.
-            .col-md-3
-              .card-text.text-center= button_to 'RE-OPEN', site_sale_path(@site_sale, open: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
-  %br
-
 .row    
   .col-md-12
     .card
       .card-block
         .card-title
-          %h3 Scout Volunteers
+          %h4 Scout Volunteers
         - total_credited_sales = 0
-        %table.table        
+        %table.table.table-sm        
           %thead
             %tr
               %th Scout
@@ -119,28 +100,26 @@
                 %td= scout_site_sale.hours_worked
                 %td
                   = number_to_currency(@active_event.total_site_sales_per_hour_worked * scout_site_sale.hours_worked, precision: 0)
-                - if current_scout.admin?
+                - if current_scout.is_site_sales_admin?
                   %td
                     = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do
                       %i.fa.fa-trash.fa-lg.hidden-print
             %tr
               %td
-                - if current_scout.admin?
+                - if current_scout.is_site_sales_admin?
                   = link_to new_site_sale_scout_site_sale_path(@site_sale) do
                     %i.fa.fa-plus.fa-lg.hidden-print
               %td= @total_hours
               %td= number_to_currency(total_credited_sales, precision: 0)
-
-%br
 
 .row    
   .col-md-6
     .card
       .card-block
         .card-title
-          %h3 Payment Methods
+          %h4 Payment Methods
 
-        %table.table        
+        %table.table.table-sm       
           %thead
             %tr
               %th Method
@@ -163,37 +142,56 @@
 
             %tr
               %td
+                - if @site_sale.open? && current_scout.is_site_sales_admin?
+                  = link_to new_site_sale_site_sale_payment_method_path(@site_sale) do
+                    %i.fa.fa-plus.fa-lg.hidden-print
               %td
                 = number_to_currency(@site_sale_payment_methods.sum(:amount))
                 - if @site_sale.payments_balance?
                   %i.fa.fa-check.fa-lg
 
-        - if @site_sale.open?
-          = link_to new_site_sale_site_sale_payment_method_path(@site_sale) do
-            %i.fa.fa-plus.fa-lg.hidden-print
 
-  - if current_scout.admin?  
+
+  - if current_scout.is_site_sales_admin?  
     .col-md-6
       .card
         .card-block
-          .card-title
-            %h4 Log
 
           %table.table.card-text.table-sm
             %tr
               %th Created
-              %td= nice_date_time_less(@site_sale.created_at)
+              %td.text-right= nice_date_time_less(@site_sale.created_at)
             %tr
               %th Last updated
-              %td= nice_date_time_less(@site_sale.updated_at)
+              %td.text-right= nice_date_time_less(@site_sale.updated_at)
             - if @site_sale.closed_at
               %tr
                 %th Closed at
-                %td= nice_date_time_less(@site_sale.closed_at)
+                %td.text-right= nice_date_time_less(@site_sale.closed_at)
             - if @site_sale.closed_by_id
               %tr
                 %th Closed by
-                %td= Scout.find(@site_sale.closed_by_id).name if Scout.find(@site_sale.closed_by_id)
+                %td.text-right= Scout.find(@site_sale.closed_by_id).name if Scout.find(@site_sale.closed_by_id)
+
+
+- if current_scout.is_site_sales_admin?
+  .row
+    .col-md-1
+    .col-md-10
+      .card
+        .card-block
+          - if @site_sale.open?  
+            .row
+              .col-md-9
+                %p.card-text.text-danger Closing a Site Sale processes inventory and financials. Site Sales can be re-opened for any necessary changes.
+              .col-md-3
+                .card-text.text-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
+          - else
+            .row
+              .col-md-9
+                %p.card-text.text-danger Reopening reverses all inventory and financial transactions.
+              .col-md-3
+                .card-text.text-center= button_to 'RE-OPEN', site_sale_path(@site_sale, open: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
 
 
 

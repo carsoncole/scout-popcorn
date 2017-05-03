@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration[5.0]
       t.string :name
       t.boolean :is_active, default: true, null: false
       t.string :admin_email
-      t.decimal :pack_commission_percentage, precision: 5, scale: 2, default: 35, null: false
+      t.decimal :unit_commission_percentage, precision: 5, scale: 2, default: 35, null: false
       t.decimal :online_commission_percentage, precision: 5, scale: 2, default: 35, null: false
       t.datetime :take_orders_deadline_at
       t.date :allow_prize_cart_ordering_at

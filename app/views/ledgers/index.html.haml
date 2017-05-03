@@ -59,7 +59,7 @@
                 %td
                   = link_to ledger_path(ledger) do
                     %i.fa.fa-folder-open.fa-lg
-                  - unless ledger.stock_id
+                  - unless ledger.stock_id || !current_scout.is_financial_admin?
                     = link_to edit_ledger_path(ledger) do
                       %i.fa.fa-pencil.fa-lg
                   
