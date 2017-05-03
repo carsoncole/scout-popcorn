@@ -6,8 +6,7 @@
           %h2
             Event
 
-        
-
+      
         = form_for @event do |f|
           - if @event.errors.any?
             #error_explanation
@@ -15,7 +14,6 @@
               %ul
                 - @event.errors.full_messages.each do |msg|
                   %li= msg
-
 
           .form-group
             = f.label :name
