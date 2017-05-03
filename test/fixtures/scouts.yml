@@ -89,6 +89,14 @@ three:
   event: one
   password_digest: <%= BCrypt::Password.create "password" %>
 
+no_activity: 
+  email: no_activity@example.com
+  first_name: Sam
+  last_name: Jones
+  unit: one
+  event: one
+  password_digest: <%= BCrypt::Password.create "password" %>
+
 four: 
   email: someome@example.com
   first_name: Sam

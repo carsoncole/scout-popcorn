@@ -15,7 +15,6 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Scout.count') do
       post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'test@example.com', password: 'password' } }
     end
-
     assert_redirected_to root_path
   end
 
@@ -86,6 +85,13 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".my-sales"
   end
 
+  test "should not update scout when other scouts do it" do
+    sign_in(scouts(:two))
+    patch scout_url(@scout), params: { scout: { first_name: 'new name'  } }
+    assert_response :success
+    assert flash[:notice], 'Scout was not updated.'
+  end  
+
   # Admin
 
   test "should show all scouts" do
@@ -103,14 +109,33 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should allow destroy if no activity" do
+    sign_in(scouts(:unit_admin))
+    scout = scouts(:no_activity)
+    assert_difference('Scout.count', -1) do
+      delete scout_url scout
+    end
   end
 
   test "should not allow destroy if activity" do
+    sign_in(scouts(:unit_admin))
+    scout = scouts(:one)
+    assert_difference('Scout.count', 0) do
+      delete scout_url scout
+    end
   end
 
-  test "should update scout" do
-    # patch scout_url(@scout), params: { scout: {  } }
-    # assert_redirected_to scout_url(@scout)
+  test "should update scout when scout does it" do
+    sign_in(@scout)
+    patch scout_url(@scout), params: { scout: { first_name: 'new name'  } }
+    assert_redirected_to scout_url(@scout)
+    assert flash[:notice], 'Scout was successfully updated.'
+  end
+
+  test "should update scout when unit_admin does it" do
+    sign_in(scouts(:unit_admin))
+    patch scout_url(@scout), params: { scout: { first_name: 'new name'  } }
+    assert_redirected_to scout_url(@scout)
+    assert flash[:notice], 'Scout was successfully updated.'
   end
 
 end
