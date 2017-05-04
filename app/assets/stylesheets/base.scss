@@ -2,6 +2,7 @@ $blue: #003F87;
 $yellow: #FCD116;
 
 body {
+  margin-top: 3em;
   font-family:  sans-serif;
   background-color: #efefef;
 }
@@ -24,6 +25,11 @@ h5 {
 
 .card {
   margin-bottom: 1em;
+}
+
+
+.btn.sales {
+  background-color: $yellow;  
 }
 
 .card .top-sellers {
