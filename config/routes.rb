@@ -38,7 +38,6 @@ Rails.application.routes.draw do
   get "ledgers/statements/income-statement" => "ledgers#income_statement", as: 'income_statement'
   resources :ledgers
   get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
-  resources :accounts
   resources :payment_methods
 
 
