@@ -243,8 +243,6 @@ ActiveRecord::Schema.define(version: 20170419210244) do
   end
 
   create_table "take_orders", force: :cascade do |t|
-    t.integer  "scout_id"
-    t.integer  "event_id"
     t.integer  "envelope_id"
     t.integer  "purchase_order_id"
     t.string   "status",                                           default: "received", null: false

@@ -1,11 +1,26 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  scout_id: 1
-  event_id: 1
-  status: MyString
+  scout: one
+  event: one
+  status: Open
 
 two:
-  scout_id: 1
-  event_id: 1
-  status: MyString
+  scout: two
+  event: one
+  status: Open
+
+three:
+  scout: three
+  event: one
+  status: Open
+
+four:
+  scout: four
+  event: one
+  status: Open
+
+five:
+  scout: four
+  event: one
+  status: Open

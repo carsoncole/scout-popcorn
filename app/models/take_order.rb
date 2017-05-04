@@ -1,6 +1,4 @@
 class TakeOrder < ApplicationRecord
-  belongs_to :scout
-  belongs_to :event
   belongs_to :purchase_order, optional: true
   belongs_to :account, foreign_key: :payment_account_id
   belongs_to :envelope
