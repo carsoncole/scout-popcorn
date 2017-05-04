@@ -7,25 +7,30 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Unit.create([
-  {name: 'Pack 4496', street_address_1: '425 Rolling Bay Road', city: 'Bainbridge Island', state_postal_code: 'WA', zip_code: '98110', treasurer_first_name: 'Paul', treasurer_last_name: 'Jones', treasurer_email: 'paul@example.com'},
-  {name: 'Pack 9999', street_address_1: '425 Rolling Bay Road', city: 'Tacoma', state_postal_code: 'WA', zip_code: '98110'}
+  {name: 'Sample Pack 100', treasurer_first_name: 'Paul', treasurer_last_name: 'Jones', treasurer_email: 'paul@example.com'}
   ])
 
 Scout.create([
-{first_name: 'Carson', last_name: 'Cole', email: 'admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true, is_take_orders_admin: true, is_prizes_admin: true, is_financial_admin: true, is_online_sales_admin: true, is_unit_admin: true},
-{first_name: 'John', last_name: 'Doe', email: 'take_orders_admin@example.com', unit_id: 1, password: 'password', is_take_orders_admin: true},
-{first_name: 'Billy', last_name: 'Watson', email: 'unit_admin@example.com', unit_id: 1, password: 'password', is_unit_admin: true},
-{first_name: 'Sam', last_name: 'Jones', email: 'sites_sales_admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true},
-{first_name: 'Scarlet', last_name: 'Ohannsen', email: 'financial_admin@example.com', unit_id: 1, password: 'password', is_financial_admin: true},
-{first_name: 'Bill', last_name: 'OReilly', email: 'prizes_admin@example.com', unit_id: 1, password: 'password', is_prizes_admin: true},
-{first_name: 'Mary', last_name: 'Wilson', email: 'b@b.com', unit_id: 1, password: 'password'},
-{first_name: 'Liam', last_name: 'Hardy', email: 'd@d.com', unit_id: 1, password: 'password'},
-{first_name: 'Louis', last_name: 'Smart', email: 'scout@example.com', unit_id: 1, password: 'password'} 
+{first_name: 'Super', last_name: 'Admin', email: 'admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true, is_take_orders_admin: true, is_prizes_admin: true, is_financial_admin: true, is_online_sales_admin: true, is_unit_admin: true},
+{first_name: 'Takeorders', last_name: 'Admin', email: 'take_orders_admin@example.com', unit_id: 1, password: 'password', is_take_orders_admin: true},
+{first_name: 'Unit', last_name: 'Admin', email: 'unit_admin@example.com', unit_id: 1, password: 'password', is_unit_admin: true},
+{first_name: 'Sitesales', last_name: 'Admin', email: 'sites_sales_admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true},
+{first_name: 'Financial', last_name: 'Admin', email: 'financial_admin@example.com', unit_id: 1, password: 'password', is_financial_admin: true},
+{first_name: 'Prizes', last_name: 'Admin', email: 'prizes_admin@example.com', unit_id: 1, password: 'password', is_prizes_admin: true},
+{first_name: 'Scout1', last_name: 'Jones', email: 'scout1@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout2', last_name: 'Hardy', email: 'scout2@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout3', last_name: 'Wilson', email: 'scout3@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout4', last_name: 'Obama', email: 'scout4@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout5', last_name: 'Trump', email: 'scout5@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout6', last_name: 'Yeung', email: 'scout6@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout7', last_name: 'Smith', email: 'scout7@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout8', last_name: 'Jackson', email: 'scout8@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout9', last_name: 'Ladd', email: 'scout9@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Scout10', last_name: 'Ryan', email: 'scout10@example.com', unit_id: 1, password: 'password'}
 ])
 
 Event.create([
-  { unit_id: 1, name: 'Popcorn Sales 2016'},
-  { unit_id: 2, name: 'Popcorn Sales 2016'}
+  { unit_id: 1, name: 'Popcorn Sales 2017'}
   ])
 
 event = Event.first
@@ -80,20 +85,25 @@ Stock.create ([
 SiteSale.create ([
   {event_id: 1, name: 'Ace Hardware', date: "#{Date.today + 5.days }"},
   {event_id: 1, name: 'Rite Aid', date: "#{Date.today + 12.days }"},
-  {event_id: 1, name: 'Rite Aid', date: "#{Date.today + 45.days }"},
-  {event_id: 1, name: 'Ace Hardware', date: "#{Date.today + 26.days }"},
+  {event_id: 1, name: 'Wilson High School', date: "#{Date.today + 45.days }"},
+  {event_id: 1, name: 'Anytown Police Station', date: "#{Date.today + 26.days }"},
   {event_id: 1, name: 'Town & Country', date: "#{Date.today + 35.days }"},
-  {event_id: 1, name: 'Town & Country', date: "#{Date.today + 18.days }"},
+  {event_id: 1, name: 'Safeway', date: "#{Date.today + 18.days }"},
   {event_id: 1, name: 'Walmart', date: "#{Date.today - 2.days }"}
   ])
 
 
 ScoutSiteSale.create ([
-  {scout_id: 1, site_sale_id: 7, hours_worked: 6},
-  {scout_id: 2, site_sale_id:7, hours_worked: 4}
+  {scout_id: 7, site_sale_id: 7, hours_worked: 4},
+  {scout_id: 8, site_sale_id:7, hours_worked: 4},
+  {scout_id: 9, site_sale_id:7, hours_worked: 2},
+  {scout_id: 10, site_sale_id:7, hours_worked: 4},
+  {scout_id: 11, site_sale_id:7, hours_worked: 2},
+  {scout_id: 12, site_sale_id:7, hours_worked: 3},
+  {scout_id: 13, site_sale_id:7, hours_worked: 4}
   ])
 
-SiteSaleLineItem.create ([{site_sale_id: 7, product_id: products_array[0].id, quantity: 25}, {site_sale_id: 7, product_id: products_array[1].id, quantity: 25}, {site_sale_id: 7, product_id: products_array[2].id, quantity: 25}, {site_sale_id: 7, product_id: products_array[3].id, quantity: 25}, {site_sale_id: 7, product_id: products_array[4].id, quantity: 25}, {site_sale_id: 7, product_id: products_array[5].id, quantity: 25}])
+SiteSaleLineItem.create ([{site_sale_id: 7, product_id: products_array[0].id, quantity: 25}, {site_sale_id: 7, product_id: products_array[1].id, quantity: 10}, {site_sale_id: 7, product_id: products_array[2].id, quantity: 12}, {site_sale_id: 7, product_id: products_array[3].id, quantity: 20}, {site_sale_id: 7, product_id: products_array[4].id, quantity: 5}, {site_sale_id: 7, product_id: products_array[5].id, quantity: 1}])
 
 Prize.create([
   {name: 'Participation Patch', amount: 25, source: 'bsa', source_id: '633893', collection_name: 'Chief Seattle Council Prizes 2017', source_description: 'Prize Level 1'},
@@ -152,6 +162,7 @@ Prize.create([
   {name: '$1,500 Bonus Level', amount: 1500, source: 'bsa-bonus', source_id: '', collection_name: 'Chief Seattle Council Prizes 2017', description: 'Invitation to party (to be announced)', is_by_level: true}
   ])
 
+Resource.create ([{event_id: 1, name: 'Prizes Brochure (BSA)', url: 'http://ibm.com'}])
 
 
 # 

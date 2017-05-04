@@ -46,7 +46,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select ".top-sellers", "Top Sellers"
   end
 
-  test "should show resources" do
+  test "should show more info resources" do
     sign_in(scouts(:one))
     follow_redirect!
     assert_select ".resources", "More info"

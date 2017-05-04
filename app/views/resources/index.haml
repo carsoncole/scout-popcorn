@@ -13,16 +13,24 @@
             %tr
               %th= resource.name
               %td
-                = link_to resource.url, target: '_blank' do
-                  = resource.url
-                  %i.fa.fa-external-link
-              %td
-                = link_to edit_resource_path(resource) do
-                  %i.fa.fa-pencil.fa-lg
-                = link_to resource_path(resource), method: :delete do
-                  %i.fa.fa-trash.fa-lg
+                - if resource.url.present?
+                  = link_to resource.url, target: '_blank' do
+                    = resource.url.truncate(60)
+                    %i.fa.fa-external-link
+              - if current_scout.is_unit_admin?
+                %td
+                  = link_to edit_resource_path(resource) do
+                    %i.fa.fa-pencil.fa-lg
+                  = link_to resource_path(resource), method: :delete do
+                    %i.fa.fa-trash.fa-lg
 
-        - if current_scout.is_unit_admin?
+
+- if current_scout.is_unit_admin?
+  .row
+    .col-md-6
+      .card
+        .card-block
           %p.card-text
             = link_to new_resource_path do
               %i.fa.fa-plus.fa-lg
+              Add new Resource
