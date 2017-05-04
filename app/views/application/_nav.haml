@@ -52,19 +52,8 @@
                   = link_to "Prize Carts", prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
    
           - if current_scout.admin?
-            %li.nav-item.dropdown
-              = link_to "#",class: "dropdown-toggle nav-item nav-link #{'active' if ['units', 'envelopes', 'ledgers', 'stocks', 'purchase_orders', 'events', 'accounts'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
-                Popcorn
-                
-                %span.caret                   
-              %ul.dropdown-menu
-                - if @active_event
-                  %li= link_to "Catalog", products_path, class: "dropdown-item #{'active' if controller_name == 'products'}"
-                  %li= link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
-                  %li= link_to "Transfers", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
-
-
-
+            %li.nav-item
+              = link_to "Popcorn", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
 
         - if current_scout.admin?
           %li.nav-item.btn-group
@@ -74,7 +63,11 @@
             .dropdown-menu
               - if @active_event
                 %h6.dropdown-header
-                  = @active_event.name
+                  Inventory
+                = link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
+                = link_to "Transfers", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+                %h6.dropdown-header
+                  Misc
                 = link_to "Envelopes", envelopes_path(status: 'open'), class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
                 = link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger'}"
                 = link_to "Take Orders Order", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
@@ -88,7 +81,7 @@
                 = link_to "Resources", resources_path, class: "dropdown-item #{'active' if controller_name == 'resources'}"
                 .dropdown-divider
                 %h6.dropdown-header
-                  = @active_event.name
+                  Financials
                 = link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
                 = link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
            

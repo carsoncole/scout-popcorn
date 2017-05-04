@@ -3,7 +3,7 @@ class Scout < ApplicationRecord
 
   belongs_to :unit
   belongs_to :event, optional: true
-  has_many :take_orders
+  has_many :take_orders, through: :envelopes
   has_many :events, through: :unit
   has_many :site_sales, through: :scout_site_sales
   has_many :scout_site_sales
@@ -33,7 +33,7 @@ class Scout < ApplicationRecord
   end
 
   def self.admin
-    where(is_financial_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true)).or(Scout.where(is_admin: true))
+    where(is_financial_admin: true).or(Scout.where(is_take_orders_admin: true)).or(Scout.where(is_site_sales_admin: true)).or(Scout.where(is_prizes_admin: true)).or(Scout.where(is_admin: true)).or(Scout.where(is_warehouse_admin: true))
   end
 
   def self.not_admin
@@ -66,6 +66,7 @@ class Scout < ApplicationRecord
   def admin?
     is_financial_admin == true || is_take_orders_admin == true ||
     is_site_sales_admin == true || is_prizes_admin == true ||
+    is_warehouse_admin ||
     is_unit_admin == true
   end
 
@@ -83,11 +84,11 @@ class Scout < ApplicationRecord
 
   def take_order_sales(event, is_turned_in=nil)
     if is_turned_in
-      take_orders.where(event_id: event.id).where.not(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+      take_orders.where("envelopes.event_id = ?",event.id).where.not(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     elsif is_turned_in == false
-      take_orders.where(event_id: event.id).where(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+      take_orders.where("envelopes.event_id = ?",event.id).where(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     else
-      take_orders.where(event_id: event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+      take_orders.where("envelopes.event_id = ?",event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     end
   end
 

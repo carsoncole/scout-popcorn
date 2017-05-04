@@ -22,6 +22,16 @@ unit_admin:
   is_admin: true
   password_digest: <%= BCrypt::Password.create "password" %>
 
+warehouse_admin:
+  email: unit_admin@example.com
+  first_name: John
+  last_name: Doe
+  unit: one
+  event: one
+  is_warehouse_admin: true
+  is_admin: true
+  password_digest: <%= BCrypt::Password.create "password" %>
+
 site_sales_admin:
   email: site_sales@example.com
   first_name: Mary

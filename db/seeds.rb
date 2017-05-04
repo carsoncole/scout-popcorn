@@ -13,20 +13,20 @@ Unit.create([
 Scout.create([
 {first_name: 'Super', last_name: 'Admin', email: 'admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true, is_take_orders_admin: true, is_prizes_admin: true, is_financial_admin: true, is_online_sales_admin: true, is_unit_admin: true},
 {first_name: 'Takeorders', last_name: 'Admin', email: 'take_orders_admin@example.com', unit_id: 1, password: 'password', is_take_orders_admin: true},
-{first_name: 'Unit', last_name: 'Admin', email: 'unit_admin@example.com', unit_id: 1, password: 'password', is_unit_admin: true},
+{first_name: 'Unit', last_name: 'Admin', email: 'unit_admin@example.com', unit_id: 1, password: 'password', is_unit_admin: true, is_warehouse_admin: true},
 {first_name: 'Sitesales', last_name: 'Admin', email: 'sites_sales_admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true},
 {first_name: 'Financial', last_name: 'Admin', email: 'financial_admin@example.com', unit_id: 1, password: 'password', is_financial_admin: true},
 {first_name: 'Prizes', last_name: 'Admin', email: 'prizes_admin@example.com', unit_id: 1, password: 'password', is_prizes_admin: true},
-{first_name: 'Scout1', last_name: 'Jones', email: 'scout1@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout2', last_name: 'Hardy', email: 'scout2@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout3', last_name: 'Wilson', email: 'scout3@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout4', last_name: 'Obama', email: 'scout4@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout5', last_name: 'Trump', email: 'scout5@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout6', last_name: 'Yeung', email: 'scout6@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout7', last_name: 'Smith', email: 'scout7@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout8', last_name: 'Jackson', email: 'scout8@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout9', last_name: 'Ladd', email: 'scout9@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Scout10', last_name: 'Ryan', email: 'scout10@example.com', unit_id: 1, password: 'password'}
+{first_name: 'Mike', last_name: 'Jones', email: 'scout1@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Bill', last_name: 'Hardy', email: 'scout2@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Steve', last_name: 'Wilson', email: 'scout3@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Carl', last_name: 'Obama', email: 'scout4@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Jonas', last_name: 'Trump', email: 'scout5@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Michael', last_name: 'Yeung', email: 'scout6@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Stenis', last_name: 'Smith', email: 'scout7@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Simon', last_name: 'Jackson', email: 'scout8@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Leon', last_name: 'Ladd', email: 'scout9@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Clark', last_name: 'Ryan', email: 'scout10@example.com', unit_id: 1, password: 'password'}
 ])
 
 Event.create([

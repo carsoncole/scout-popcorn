@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   has_many :prizes, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :stocks, dependent: :destroy
-  has_many :take_orders, dependent: :destroy
+  has_many :take_orders, through: :envelopes
   has_many :site_sales, dependent: :destroy
   has_many :take_order_line_items, through: :take_orders
   has_many :scout_site_sales, through: :site_sales

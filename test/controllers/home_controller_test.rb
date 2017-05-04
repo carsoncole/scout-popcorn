@@ -1,11 +1,18 @@
 require 'test_helper'
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
+  
 
   test "should get root sign in when not logged in" do
     sign_in(scouts(:one))
     get logout_path
     get root_url
+    assert_response :success
+  end
+
+  test "should get home page when logged in" do
+    sign_in(scouts(:one))
+    get home_path
     assert_response :success
   end
 

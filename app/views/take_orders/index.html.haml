@@ -4,6 +4,10 @@
       %h2.card-title
         Take Orders
 
+      %p.card-text
+        %i.fa.fa-info-circle
+        Take orders are door-to-door sales and are grouped together in envelopes, which should be individually turned in by each Scout.
+
       - unless @active_event.take_orders_allowed?
         .alert.alert-warning
           Take Orders are currently closed.

@@ -19,6 +19,7 @@ class CreateScouts < ActiveRecord::Migration[5.0]
       t.boolean :is_site_sales_admin, default: false
       t.boolean :is_online_sales_admin, default: false
       t.boolean :is_prizes_admin, default: false
+      t.boolean :is_warehouse_admin, default: false
       t.boolean :is_admin, default: false
       t.timestamps
     end

@@ -84,12 +84,12 @@
                     %th.hidden-print
                 %tr
                   %th
-                  %th
                   %th.text-center Unit
                   %th.text-center Finances
                   %th.text-center Take Orders
                   %th.text-center Site Sales
                   %th.text-center Online Sales
+                  %th.text-center Warehouse
                   %th.text-center Prizes
                   %th.text-center Logins
                   - if current_scout.is_unit_admin?
@@ -101,8 +101,6 @@
                     %td
                       %i.fa.fa-user
                       = link_to scout.name, scout_path(scout)
-                    %td
-                      = scout.email
                     %td.text-center
                       - if scout.is_unit_admin?
                         %i.fa.fa-check
@@ -117,6 +115,9 @@
                         %i.fa.fa-check
                     %td.text-center
                       - if scout.is_online_sales_admin?
+                        %i.fa.fa-check
+                    %td.text-center
+                      - if scout.is_warehouse_admin?
                         %i.fa.fa-check
                     %td.text-center
                       - if scout.is_prizes_admin?
