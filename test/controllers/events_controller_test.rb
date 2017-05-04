@@ -17,10 +17,11 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
   end
 
-  test "should get index" do
+  test "should not get index" do
     sign_in(scouts(:one))
     get events_url
-    assert_response :success
+    assert_response :redirect
+    assert_redirected_to home_path
   end
 
   test "should not get new" do
@@ -66,6 +67,19 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   end
 
   # Admin
+
+  test "should get index" do
+    sign_in(scouts(:unit_admin))
+    get events_url
+    assert_response :success
+  end
+
+  test "should not get index for other admins" do
+    sign_in(scouts(:take_orders_admin))
+    get events_url
+    assert_response :redirect
+    assert_redirected_to home_path
+  end
 
   test "should get new" do
     sign_in(scouts(:unit_admin))

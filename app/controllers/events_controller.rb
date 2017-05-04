@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authorize_unit_admin, except: :index
+  before_action :authorize_unit_admin
 
 
   def index

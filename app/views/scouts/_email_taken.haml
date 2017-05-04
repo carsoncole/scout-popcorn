@@ -1,0 +1,9 @@
+.row
+  .col-md-9
+    .card
+      .card-block
+        %p.email_taken.card-text
+          %i.fa.fa-exclamation-circle.fa-lg.important &nbsp;Important
+          The email your are trying to signup with is already used on an account. If you have forgotten your password or possibly your account was set up for you, simply visit the
+          = link_to 'Forgot password', forgot_password_path
+          page to reset the password and access your account.

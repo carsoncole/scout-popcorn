@@ -43,4 +43,13 @@ class ScoutTest < ActiveSupport::TestCase
     @scout.save
     assert_equal @scout.is_admin, false
   end
+
+  test "should not allow less than 1 unit admin" do
+    scouts(:admin).update(is_unit_admin: false)
+    assert_equal scouts(:admin).is_unit_admin, false
+    scout = scouts(:unit_admin)
+    scout.is_unit_admin = false
+    assert_not scout.valid?
+    assert scout.errors[:is_unit_admin]
+  end
 end

@@ -14,6 +14,7 @@ class Scout < ApplicationRecord
   validates :first_name, :last_name, :unit_id, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
   validates :email, uniqueness: { case_sensitive: false }
+  validate :must_have_one_unit_admin, if: Proc.new {|s| s.is_unit_admin_changed? && s.is_unit_admin == false}, on: :update
 
   before_save :fix_name!
   before_validation :downcase_email!
@@ -144,6 +145,12 @@ class Scout < ApplicationRecord
       self.is_admin = true
     else
       self.is_admin = false
+    end
+  end
+
+  def must_have_one_unit_admin
+    if unit.scouts.where(is_unit_admin: true).size == 1
+      errors.add(:unit_admin, "must be selected since there are no other unit administrators currently.")
     end
   end
 
