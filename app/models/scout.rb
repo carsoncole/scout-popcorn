@@ -18,7 +18,7 @@ class Scout < ApplicationRecord
 
   before_save :fix_name!
   before_validation :downcase_email!
-  after_create :set_event!
+  before_save :set_event!
   # after_create :send_registration_email!
   # after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
   # after_create :create_prize_cart!
@@ -96,7 +96,7 @@ class Scout < ApplicationRecord
   end
 
   def set_event!
-    update(event_id: unit.events.active.last.id) if unit.events && unit.events.active && unit.events.active.last
+    self.event_id = unit.events.active.last.id if unit.events && unit.events.active && unit.events.active.last
   end
 
   def event_site_sale_hours_worked(event)

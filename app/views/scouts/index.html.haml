@@ -37,9 +37,7 @@
                   %th Site Sales
                   %th Online
                   %th Total
-
-                  %th Last login
-                  %th Logins
+                  %th.text-center Logins
                   - if current_scout.is_unit_admin?
                     %th.hidden-print
 
@@ -63,8 +61,6 @@
                     %td
                       - unless scout.is_admin? || @active_event.nil?
                         = number_to_currency(scout.total_sales(@active_event), precision: 0)
-
-                    %td= scout.last_sign_in_at.strftime('%b %d %I:%M%p') if scout.last_sign_in_at
                     %td.text-center= scout.sign_in_count
                     - if current_scout.is_unit_admin?
                       %td.hidden-print
@@ -95,8 +91,6 @@
                   %th.text-center Site Sales
                   %th.text-center Online Sales
                   %th.text-center Prizes
-                  %th Last login
-                  / %th.text-center IP
                   %th.text-center Logins
                   - if current_scout.is_unit_admin?
                     %th.hidden-print
@@ -127,8 +121,6 @@
                     %td.text-center
                       - if scout.is_prizes_admin?
                         %i.fa.fa-check
-                    %td= nice_date_time_compact(scout.last_sign_in_at) if scout.last_sign_in_at
-                    / %td.text-center= scout.last_sign_in_ip
                     %td.text-center= scout.sign_in_count
                     - if current_scout.is_unit_admin?
                       %td.hidden-print

@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   get "stocks/stock-movement" => "stocks#stock_movement", as: 'stock_movement'
   resources :stocks
   resources :events do
-    get 'archive' => 'events#archive', as: 'archive'
+    get 'activate' => 'events#activate', as: 'activate'
     resources :scout_site_sales
     resources :resources
   end

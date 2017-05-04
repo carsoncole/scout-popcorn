@@ -8,7 +8,11 @@
               .pull-right
                 = link_to edit_event_path(event) do
                   %i.fa.fa-pencil
-            %h3= event.name
+            %h3
+              = event.name
+              - if event.is_active
+                .badge.badge-success
+                  Active
             
           %table.table.card-text.card-text.table-sm
 
@@ -86,23 +90,21 @@
           - if current_scout.is_unit_admin?
 
             .text-center
-              - if event.is_active?
-                = link_to event_archive_path(event), class: 'btn btn-warning', :data => { :confirm => 'WARNING - Archiving an Event will remove it from the Dashboard of all Scouts. No information is destroyed. Unarchiving an Event will return it to their Dashboard.' } do
+              - unless event.is_active?
+                = link_to event_activate_path(event), class: 'btn btn-warning', :data => { :confirm => "WARNING - Activating an Event will change the event for your Unit's Scouts." } do
                   %i.fa.fa-trash-o
-                  ARCHIVE EVENT
-              - else
-                = link_to event_archive_path(event, unarchive: true), class: 'btn btn-info', :data => { :confirm => 'Un-archiving an Event will return this Event to the Dashboard of all Unit Scouts.' } do
-                  %i.fa.fa-trash-o
-                  UN-ARCHIVE EVENT
-              = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed.' } do
+                  ACTIVATE
+                &nbsp;
+              = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed. This action is NOT reversible.' } do
                 %i.fa.fa-trash-o
                 DESTROY EVENT
-      %br
 
-%br
 - if current_scout.is_unit_admin?
   .row
     .col-md-6
-      = link_to new_event_path do
-        %i.fa.fa-plus.fa-lg
-        Add a new Event
+      .card
+        .card-block
+          %p.card-text
+            = link_to new_event_path do
+              %i.fa.fa-plus.fa-lg
+              Add a new Event

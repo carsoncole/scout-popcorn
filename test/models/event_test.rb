@@ -22,11 +22,11 @@ class EventTest < ActiveSupport::TestCase
 
   test "scout has an assigned event on creating new event" do
     scout = scouts(:one)
-    scout.update(event_id: nil)
-    event = Event.new(name: 'Popcorn 2020', unit_id: scout.unit_id, is_active: true)
-    assert event.save
-    scout.reload
-    assert_equal scout.event_id, event.id
+    assert_equal scout.event_id, events(:one).id
+    new_event = Event.create(name: 'Popcorn 2020', unit_id: scout.unit_id, is_active: true)
+    assert new_event.is_active
+
+    assert_equal scout.reload.event_id, new_event.id
   end
 
   test "destroying events results in nil events for scouts" do
@@ -68,5 +68,23 @@ class EventTest < ActiveSupport::TestCase
     assert_empty @event.products
     assert @event.create_default_products!('Chief Seattle Council')
     assert @event.products.present?
+  end
+
+  test "should only allow one active event" do
+    event = events(:one)
+    assert event.is_active
+    
+    # create new
+    @event.is_active = true
+    @event.save
+    assert_not event.reload.is_active
+    assert @event.is_active
+    assert_empty event.unit.events.active.where.not(id: @event.id)
+    
+    # update 
+    event.is_active = true
+    event.save
+    assert event.is_active
+    assert_not @event.reload.is_active
   end
 end

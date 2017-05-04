@@ -4,7 +4,7 @@ class UnitsController < ApplicationController
   skip_before_action :authorize, only: [:new, :create]
   before_action :authorize_unit_admin, only: [:edit, :update, :destroy]
 
-  layout 'sessions', only: [:new, :create]
+  # layout 'sessions', only: [:new, :create]
 
   # GET /units/1
   # GET /units/1.json

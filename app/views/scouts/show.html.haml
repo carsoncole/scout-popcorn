@@ -33,7 +33,9 @@
           %i.fa.fa-envelope.fa-lg
           &nbsp;
           = @scout.email
-
+        %li.list-group-item
+          Last login: 
+          = @scout.last_sign_in_at.strftime('%b %d %I:%M%p') if @scout.last_sign_in_at
         - if current_scout.admin?
           - unless @scout.is_active
             %li.list-group-item.text-danger

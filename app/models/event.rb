@@ -22,15 +22,16 @@ class Event < ApplicationRecord
 
   scope :active, -> { where(is_active: true) }
 
-  after_create :set_events_for_scouts!
-  after_update :set_events_for_scouts!, if: Proc.new {|e| e.is_active_changed? && e.is_active }
+  after_update :set_event_for_scouts!, if: Proc.new {|e| e.is_active_changed? && e.is_active }
   #after_create :create_default_products!
   #after_create :create_default_prizes!
+  # before_destroy :disallow_destroy, prepend: true
   after_create :create_default_accounts!
-  after_destroy :reset_events_for_scouts!
   after_save :update_take_orders!, if: Proc.new {|e| e.unit_commission_percentage_changed? }
-  after_update :reset_default_events!, if: Proc.new {|e| e.is_active_changed? && e.is_active == false }
+  after_save :reset_scouts_event!, if: Proc.new {|e| e.is_active == true }
+  before_save :reset_is_active!, if: Proc.new {|e| e.is_active && ( e.is_active_changed? || e.new_record? )}
   after_update :reprocess_all!, if: Proc.new { |e| e.unit_commission_percentage_changed? }
+  after_destroy :remove_event_from_scouts!
 
   def open_take_order_purchase_order
     open = take_order_purchase_orders.where(status: 'open').first
@@ -151,12 +152,8 @@ class Event < ApplicationRecord
 
   private
 
-  def set_events_for_scouts!
-    unit.scouts.where(event_id: nil).update_all(event_id: self.id) if is_active
-  end
-
-  def reset_events_for_scouts!
-    unit.scouts.where(event_id: self.id).update_all(event_id: nil)
+  def set_event_for_scouts!
+    unit.scouts.update_all(event_id: self.id)
   end
 
   def create_default_accounts!
@@ -170,14 +167,14 @@ class Event < ApplicationRecord
     Account.create_inventory!(self)
   end
 
-  def reset_default_events!
-    new_default_event = unit.events.active.last
-    if new_default_event
-      unit.scouts.where(event_id: self.id).update_all(event_id: new_default_event.id)
-    else
-      unit.scouts.where(event_id: self.id).update_all(event_id: nil)
-    end
+  def reset_scouts_event!
+    unit.scouts.update_all(event_id: self.id)
   end
+
+  # def disallow_destroy
+  #   errors[:base] << "Only inactive events can be destroyed."
+  #   throw :abort
+  # end
 
   def update_take_orders!
     take_orders.each {|take_order| take_order.reprocess_money_received_and_product_due!}
@@ -190,4 +187,13 @@ class Event < ApplicationRecord
       stock.create_due_to_bsa!
     end
   end
+
+  def reset_is_active!
+    unit.events.active.update_all(is_active: false)
+  end
+
+  def remove_event_from_scouts!
+    unit.scouts.where(event_id: self.id).update_all(event_id: nil)
+  end
+
 end

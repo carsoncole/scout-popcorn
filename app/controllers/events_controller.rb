@@ -47,17 +47,16 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
-    @event.destroy
-    redirect_to events_url, notice: 'Event was successfully destroyed.'
+    if @event.destroy
+      redirect_to events_url, notice: 'Event was successfully destroyed.'
+    else
+      redirect_to events_url, alert: 'Event was NOT destroyed.'
+    end
   end
 
-  def archive
+  def activate
     @event = Event.find(params[:event_id])
-    if params[:unarchive]
-      @event.update(is_active: true)
-    else
-      @event.update(is_active: false)
-    end
+    @event.update(is_active: true)
     redirect_to events_path
   end
 

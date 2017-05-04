@@ -31,15 +31,6 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_select "span.event-name", "Popcorn 2017"
   end
 
- test "should show multiple possible events in profile edit" do
-    sign_in(scouts(:one))
-    event = Event.create(name: 'Some Event', is_active: true, unit_id: units(:one).id)
-    scout = scouts(:one)
-    get edit_scout_url(scout)
-    assert_response :success
-    assert_select ".event_selection", 1
-  end
-
   test "scout profile should not allow editing event if only one available" do
     sign_in(scouts(:one))
     scout = scouts(:one)
