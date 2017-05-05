@@ -45,7 +45,25 @@ config.application_name = 'Corn Cub'
 config.allow_for_multiple_units = false
 ```
 
-If you want to run the application for just one Scout unit, change `config.allow_for_multiple_unit` to `true`.
+If you want to run the application for just one Scout unit, change `config.allow_for_multiple_unit` to `false`.
+
+## Administrative Roles
+
+Roles are broken down into the following, which each administrative user can be assigned one or more:
+
+- Unit Admin: All Unit configuration, including users, event, product and prize information.
+
+- Take Orders Admin: All Take Orders info.
+
+- Site Sales Admin: All Site Sales info.
+
+- Warehouse Admin: All inventory info, including transfers of product to the person(s) handling Site Sales and Take Orders.
+
+- Online Admin: All online orders info.
+
+- Financial Admin: All financial info.
+
+- Prizes Admin: All prize info.
 
 
 ## Author / License
