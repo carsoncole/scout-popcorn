@@ -2,94 +2,54 @@
   .col-md-12
     %h2 Prizes
 
+%br
+.row
 
-- if @total_sales > 0 && @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_starts_at < Date.today
-  .row
-    .col-md-4
-    .col-md-4
-      .alert.alert-danger.text-center
-        %p Select Your Prizes
-        %b
-          = link_to prize_cart_path(@active_event) do
-            Prize Cart
-            %i.fa.fa-shopping-cart.fa-lg
+  .col-md-3
+    .card
+      .card-block.card-text.text-center
+        %h5
+          Your sales that can be applied towards prizes:
+        %h2
+          %span.badge.badge-success
+            = number_to_currency(current_scout.sales(@active_event))
 
 
-- if @bsa_prizes.empty? && @bsa_bonus_prizes.empty? && @pack_prizes.empty? 
-  %br
-  %br
-  %p.text-center Prizes for selling popcorn have not been loaded yet. We are working on it so check back later.....
+%br
+%br   
 
-- ['bsa', 'bsa_bonus', 'pack'].each do |prize_type|
-  - next unless eval("@#{prize_type}_prizes").any?
-  .row
-    .col-md-12
-      %h2
-        - if prize_type == 'bsa'
-          BSA
-        - elsif prize_type == 'bsa_bonus'
-          BSA Bonus
-        - elsif prize_type == 'pack'
-          PACK 4496
-        - else
-          = prize_type.titleize
-        Prizes
-      %hr
-  - eval("@#{prize_type}_prizes").each_slice(4) do |batch|
+
+- Prize::SOURCES.each do |source|
+  - prizes = @active_event.prizes.where(source: source).order(sales_amount: :asc)
+  - if prizes.any?
     .row
-      - batch.each do |prize|
+      .col-md-12
+        %h4
+          = source
+          Prizes
+    .row
+      - prizes.each do |prize|
         .col-md-3
-          .card
-            .card-block{class: @total_sales > prize.amount ? 'prize-eligible' : nil }
-              .card-title
-                .small
-                  = prize.source.capitalize
-                  prize
-                %h4= prize.name
+          .card.text-center
+            .card-header
+              %h5.card-text= prize.name
+              / %p.small.card-text= link_to "Read more", prize_path(prize)
+            .card-block
+              - if prize.description.present?
+                %p.card-text= prize.description
 
-              
-              .text-center
-                = image_tag(prize.url, width: 150, class: 'img-rounded img-fluid m-x-auto d-block') if prize.url
-                %br
-                %h4
-                  = number_to_currency(prize.amount)
-                - unless prize.description.blank?
-                  = prize.description
-                - unless prize.event_id
-                  Default
-                .small= prize.source_id
-                %br
-              - if current_scout.admin?
-                = link_to 'Edit', edit_prize_path(prize)
-                = link_to 'Destroy', prize, :method => :delete, :data => { :confirm => 'Are you sure?' }
+              %p.card-text
+                - unless prize.reduces_sales_credits
+                  Achieve sales of:
+                  %br
+                = number_to_currency(prize.sales_amount)
+            - if current_scout.prize_cart(@active_event).product_ids.include? prize.id
+              .card-footer
+                = button_to "Remove from Cart", "#", class: 'btn btn-success btn-sm'
 
-  %br
-/ - if @pack_prizes
-/   .row
-/     - @pack_prizes.each do |prize|
-/       .col-md-3
-/         .card
-/           .card-block{class: current_scout.total_sales > prize.amount ? 'prize-eligible' : nil }
-/             .card-title
-/               .small
-/                 = prize.source.capitalize
-/                 award
-/               %h4= prize.name
-            
-/             .text-center
-/               = image_tag(prize.url, width: 200) if prize.url
-/               %br
-/               %h4
-/                 = number_to_currency(prize.amount)
-/               - unless prize.description.blank?
-/                 = prize.description
-/               - unless prize.event_id
-/                 Default
-/               .small= prize.source_id
-/               %br
-/             - if current_scout.admin?
-/               = link_to 'Edit', edit_prize_path(prize)
-/               = link_to 'Destroy', prize, :method => :delete, :data => { :confirm => 'Are you sure?' }
+            - elsif prize.reduces_sales_credits && current_scout.available_sales > prize.sales_amount
+              .card-footer
+                = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: 'btn btn-primary btn-sm'
 
 
-= link_to 'New Prize', new_prize_path if current_scout.admin?
+    %br

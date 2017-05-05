@@ -116,6 +116,17 @@ class Scout < ApplicationRecord
     prize_carts.create(event_id: @active_event) unless prize_carts.any?
   end
 
+  def sales(event=nil)
+    total = total_site_sales(event)
+    total += take_order_sales(event)
+    total += total_online_sales(event)
+    total
+  end
+
+  def available_sales(active_event=nil)
+    1000
+  end
+
   def assign_full_rights!
     self.is_unit_admin = true
     self.is_take_orders_admin = true

@@ -12,13 +12,16 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'forgot_password', to: 'scouts#forgot_password', as: 'forgot_password'
 
-  resources :prize_carts
+  # resources :prize_carts
   resources :due_from_customers, only: :index
 
   get 'events/:id/commissions' => 'events#edit_commission_percentage', as: 'edit_commission_percentage'
 
   get "product-preset-collections" => 'products#preset_collections', as: 'preset_product_collections'
   post "product-preset-collections" => 'products#add_preset_collection', as: 'add_presets'
+
+  get 'prize-cart' => 'prize_carts#show', as: 'prize_cart'
+  post 'prize-cart/order' => 'prize_carts#order', as: 'prize_cart_order'
 
   post 'prize_carts/:id' => 'prize_carts#order_prizes', as: 'order_prizes'
   get 'approved-prizes' => 'prize_carts#approved_prizes', as: 'approved_prizes'

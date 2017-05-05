@@ -2,7 +2,7 @@ class CartPrize < ApplicationRecord
   belongs_to :prize 
   belongs_to :prize_cart
 
-  validates :prize_id, :prize_amount, :prize_cart_id, presence: true
+  validates :prize_id, :prize_cart_id, presence: true
   validate :check_value_of_prizes
 
   def self.approved

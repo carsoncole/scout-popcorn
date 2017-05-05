@@ -33,7 +33,7 @@ class HomeController < ApplicationController
     
       @site_sales_cash = Ledger.joins(:account).where('accounts.id = ?', Account.site_sale(@active_event).id).sum('ledgers.amount') if current_scout.is_site_sales_admin?
       @take_orders_cash = Ledger.joins(:account).where('accounts.id = ?', Account.take_order(@active_event).id).sum('ledgers.amount') if current_scout.is_take_orders_admin?
-      @prizes = @active_event.prizes.order(amount: :asc).limit(10)
+      @prizes = @active_event.prizes.order(sales_amount: :asc).limit(10)
     end
   end
 

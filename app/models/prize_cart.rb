@@ -2,6 +2,7 @@ class PrizeCart < ApplicationRecord
   belongs_to :scout
   belongs_to :event
   has_many :cart_prizes, dependent: :destroy
+  has_many :prizes, through: :cart_prizes
 
   def self.approved
     where("is_approved_at IS NOT NULL")
@@ -25,6 +26,10 @@ class PrizeCart < ApplicationRecord
 
   def approved?
     !is_approved_at.blank?
+  end
+
+  def product_ids
+    cart_prizes.map {|cp| cp.id }
   end
 
   def self.ordered_or_approved

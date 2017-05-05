@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
   create_table "prizes", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
-    t.decimal  "amount",             precision: 5, scale: 2
+    t.decimal  "sales_amount",          precision: 5, scale: 2
     t.string   "description"
     t.string   "source"
     t.string   "source_description"
@@ -118,9 +118,10 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.string   "url"
     t.string   "group"
     t.string   "collection_name"
-    t.decimal  "cost",               precision: 5, scale: 2
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.decimal  "cost",                  precision: 5, scale: 2, default: "0.0", null: false
+    t.boolean  "reduces_sales_credits",                         default: true
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
   end
 
   create_table "products", force: :cascade do |t|

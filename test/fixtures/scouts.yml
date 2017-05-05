@@ -76,7 +76,7 @@ prizes_admin:
   password_digest: <%= BCrypt::Password.create "password" %>
 
 one: 
-  email: mary@example.com
+  email: one@example.com
   first_name: Sam
   last_name: Jones
   unit: one
@@ -84,7 +84,7 @@ one:
   password_digest: <%= BCrypt::Password.create "password" %>
 
 two: 
-  email: sam@example.com
+  email: two@example.com
   first_name: Sam
   last_name: Jones
   unit: one
@@ -92,7 +92,7 @@ two:
   password_digest: <%= BCrypt::Password.create "password" %> 
 
 three: 
-  email: john@example.com
+  email: three@example.com
   first_name: Sam
   last_name: Jones
   unit: one

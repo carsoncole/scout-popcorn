@@ -1,4 +1,4 @@
-# Corn Cub README
+# Scout Corn Cub for Popcorn Fundraising
 
 Corn Cub is for managing and for promoting involvement in a Scout popcorn fundraiser. 
 

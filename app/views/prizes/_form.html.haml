@@ -1,5 +1,5 @@
 .row
-  .col-md-12
+  .col-md-6
     .card
       .card-block
 
@@ -12,35 +12,34 @@
                 - @prize.errors.full_messages.each do |msg|
                   %li= msg
 
-          .form-group
-            = f.label :event
-            %br
-            = f.collection_select :event_id, @unit.events.order(:name), :id, :name, {}, class: 'form-control'
+          %h4 New Prize
 
           .form-group
-            = f.label :name
+            = f.label 'Name *'
             = f.text_field :name, class: 'form-control'
           .form-group
-            = f.label :amount
-            = f.text_field :amount, class: 'form-control'
+            = f.label 'Sales amount *'
+            = f.text_field :sales_amount, class: 'form-control'
+          .form-group
+            = f.label :source
+            = f.select :source, options_for_select( Prize::SOURCES), class: 'form-control'
+
+          %hr
+          %h5 Optional fields:
+
           .form-group
             = f.label :description
             = f.text_field :description, class: 'form-control'
+
           .form-group
-            = f.label :source
-            = f.text_field :source, class: 'form-control'
-          .form-group
-            = f.label "Source ID"
+            = f.label "Prize ID"
             = f.text_field :source_id, class: 'form-control'
-          .form-group
-            = f.label :source_description
-            = f.text_field :source_description, class: 'form-control'
           .form-group
             = f.label :cost
             = f.text_field :cost, class: 'form-control'
           .form-group
-            = f.label :group
-            = f.text_field :group, class: 'form-control'
+            = f.label :reduces_sales_credits
+            = f.check_box :reduces_sales_credits, class: 'form-control'
           .form-group
             = f.label :image_url
             = f.text_field :url, class: 'form-control'

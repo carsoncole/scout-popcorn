@@ -16,7 +16,7 @@
         - @prizes.each do |prize|
           %tr
             %td= prize.name
-            %td.text-right= number_to_currency(prize.amount)
+            %td.text-right= number_to_currency(prize.sales_amount)
 
       - if @active_event.prize_cart_ordering_starts_at && @active_event.prize_cart_ordering_starts_at < Time.now && @active_event.prize_cart_ordering_ends_at > Time.now
         %hr
