@@ -18,9 +18,12 @@
           %tr
             %th Prize
             %td.text-right Quantity
-          - @prizes.each do |prize|
+          - @cart_prizes.each do |cart_prize|
             %tr
-              %th= prize.name
+              %th
+                = cart_prize.prize.name
+                %br
+                = button_to "Remove", prize_removal_path(cart_prize), method: :post, class: 'btn btn-default btn-sm'
               %td.text-right 1
 
         %hr

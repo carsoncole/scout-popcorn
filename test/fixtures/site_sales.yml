@@ -12,3 +12,4 @@ ace:
   event: one
   name: Ace
   date: <%= Date.today + 12.days %>
+  closed_at: Date.today - 1.day

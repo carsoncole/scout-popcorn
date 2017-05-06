@@ -1,7 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :unit
   has_many :purchase_orders, dependent: :destroy
-  has_many :prizes, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :stocks, dependent: :destroy
   has_many :take_orders, through: :envelopes
@@ -15,6 +14,7 @@ class Event < ApplicationRecord
   has_many :accounts, dependent: :destroy
   has_many :prize_carts, dependent: :destroy
   has_many :resources, dependent: :destroy
+  has_many :prizes, dependent: :destroy
 
   validates :name, :unit_id, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
   validates :number_of_top_sellers, numericality: { integer_only: true }
@@ -43,18 +43,18 @@ class Event < ApplicationRecord
 
   def total_site_sales(scout)
     total = 0
-    site_sales.each do |site_sale|
+    site_sales.closed.each do |site_sale|
       total += site_sale.credited_sales(scout, @active_event) || 0
     end
     total
   end
 
   def total_site_sales
-    site_sales.joins(:site_sale_line_items).sum(:value)
+    site_sales.closed.joins(:site_sale_line_items).sum(:value)
   end
 
   def total_site_sale_donations
-    site_sales.joins(site_sale_line_items: :product).where("products.is_pack_donation = ?", true).sum(:value)
+    site_sales.closed.joins(site_sale_line_items: :product).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
   def important_dates?
@@ -72,7 +72,7 @@ class Event < ApplicationRecord
   end
 
   def total_take_order_donations
-    envelopes.joins(take_orders: [take_order_line_items: [:product]]).where("products.is_pack_donation = ?", true).sum(:value)
+    envelopes.closed.joins(take_orders: [take_order_line_items: [:product]]).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
   def bsa_wholesale_percentage
@@ -104,7 +104,7 @@ class Event < ApplicationRecord
   end
 
   def total_hours_worked
-    site_sales.joins(:scout_site_sales).sum(:hours_worked)
+    site_sales.closed.joins(:scout_site_sales).sum(:hours_worked)
   end
 
   def total_site_sales_per_hour_worked

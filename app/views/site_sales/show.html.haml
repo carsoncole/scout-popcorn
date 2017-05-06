@@ -21,7 +21,7 @@
 
           .col-md-4
             %h3.text-right
-              - if @site_sale.status == 'closed'
+              - if @site_sale.closed?
                 %span.badge.badge-danger= @site_sale.status.capitalize
               - else
                 %span.badge.badge-success= @site_sale.status.capitalize

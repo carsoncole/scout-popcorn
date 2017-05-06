@@ -4,10 +4,8 @@ class CreateSiteSales < ActiveRecord::Migration[5.0]
       t.integer :event_id
       t.string :name
       t.date :date
-      t.string :status, default: 'open', null: false
-      t.integer :closed_by_id
+      t.integer :closed_by
       t.datetime :closed_at
-
 
       t.timestamps
     end

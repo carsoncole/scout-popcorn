@@ -3,10 +3,22 @@ require 'test_helper'
 class SiteSaleTest < ActiveSupport::TestCase
 
   setup do
-    @site_sale = site_sales(:walmart)
+    @site_sale = site_sales(:safeway)
   end
 
-  #TODO Test code on changing status to 'closed' and 'reopen'
+  test "should be valid" do
+    assert @site_sale.valid?
+  end
+
+  test "should not be valid without name" do
+    @site_sale.name = nil
+    assert_not @site_sale.valid?
+  end
+
+  test "should show correct closed sales" do
+    assert_equal events(:one).total_site_sales ,270
+  end
+
 
   test "should debit stock when closed" do
   end

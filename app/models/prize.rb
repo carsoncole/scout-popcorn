@@ -19,6 +19,9 @@ class Prize < ApplicationRecord
       throw :abort
     end
   end
+
+
+
   # def self.default
   #   where(event_id: nil)
   # end

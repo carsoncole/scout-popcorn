@@ -63,7 +63,7 @@
               = link_to "Site Sales", site_sales_path
             %td.text-right
               - if current_scout.admin?
-                - amount = @active_event.site_sales.joins(:site_sale_line_items).sum(:value)
+                - amount = @active_event.site_sales.closed.joins(:site_sale_line_items).sum(:value)
               - else
                 - amount = @active_event.total_site_sales_per_hour_worked * current_scout.event_site_sale_hours_worked(@active_event)
               = number_to_currency(amount, precision: 0)

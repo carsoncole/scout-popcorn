@@ -18,4 +18,10 @@ class UnitTest < ActiveSupport::TestCase
     assert_not unit.save
     assert unit.errors[:treasurer_first_name].any?
   end
+
+  test "should destroy unit and all scout info" do
+    unit = units(:one)
+    unit.destroy
+    assert unit.destroyed?
+  end
 end

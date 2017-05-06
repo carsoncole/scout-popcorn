@@ -111,12 +111,10 @@ Prize.create([
   {event_id: 1,name: 'Luci Solar Lantern', sales_amount: 350, source: 'Council', source_id: '633896', source_description: 'Prize Level 2', url: 'prize-luci-solar-lantern.jpg'},
   {event_id: 1,name: 'Slime Lab Science Kit', sales_amount: 350, source: 'Council', source_id: '7406', source_description: 'Prize Level 2', url: 'prize-slime-lab-science-kit.jpg'},
   {event_id: 1,name: 'Cub Scout Utility Knife', sales_amount: 350, source: 'Council', source_id: '615777', source_description: 'Prize Level 2', url: 'prize-cub-scout-utility-knife.png'},
-
   {event_id: 1,name: 'HEXBUG Aquabot Jellyfish', sales_amount: 450, source: 'Council', source_id: '634191', source_description: 'Prize Level 3', url: 'prize-hexbug-aquabot-jellyfish.jpg'},
   {event_id: 1,name: 'Spy Science Kit', sales_amount: 450, source: 'Council', source_id: '627343', source_description: 'Prize Level 3', url: 'prize-spy-science-kit.jpg'},
   {event_id: 1,name: 'Nite Ize Flashlight', sales_amount: 450, source: 'Council', source_id: '624334', source_description: 'Prize Level 3', url: 'prize-nite-ize-flashlight.jpg'},
   {event_id: 1,name: 'Green Rubber Lock Back Knife', sales_amount: 450, source: 'Council', source_id: '615774', source_description: 'Prize Level 3', url: 'prize-green-rubber-knife.png'},
-
   {event_id: 1,name: 'Voice Changer', sales_amount: 650, source: 'Council', source_id: '633898', source_description: 'Prize Level 4', url: 'prize-voice-changer.jpg'},
   {event_id: 1,name: 'Binoculars 8 x 22', sales_amount: 650, source: 'Council', source_id: '611050', source_description: 'Prize Level 4', url: 'prize-binocular-8x22.png'},
   {event_id: 1,name: 'Landsailer Kit', sales_amount: 650, source: 'Council', source_id: '621406', source_description: 'Prize Level 4',url: 'prize-landsailer-kit.jpg'},

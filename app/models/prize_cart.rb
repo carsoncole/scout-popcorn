@@ -20,6 +20,10 @@ class PrizeCart < ApplicationRecord
     where(is_ordered_at: nil, is_approved_at: nil)
   end
 
+  def sales_credits
+    cart_prizes.joins(:prize).where("prizes.reduces_sales_credits = ?",true).sum('prizes.sales_amount')
+  end
+
   def ordered?
     !is_ordered_at.blank?
   end

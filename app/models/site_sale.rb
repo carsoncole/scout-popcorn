@@ -5,31 +5,23 @@ class SiteSale < ApplicationRecord
   has_many :products, through: :site_sale_line_items
   has_many :site_sale_payment_methods, dependent: :destroy
 
-  STATUSES = [ 'open', 'closed' ]
+  scope :closed, -> { where('closed_at NOT NULL') }
+  scope :open, -> { where(closed_at: nil) }
 
   validates :name, :date, :event_id, presence: true
-  validates :status, inclusion: { in: SiteSale::STATUSES }
 
-  after_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
-  after_save :do_ledgers!, if: Proc.new { |to| to.status_changed? && to.status == 'closed'}
+  after_save :debit_stock!, if: Proc.new { |to| to.closed_at_changed? && to.closed?}
+  after_save :do_ledgers!, if: Proc.new { |to| to.closed_at_changed? && to.closed? }
 
-  after_save :credit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'open'}
-  after_save :reverse_ledgers!, if: Proc.new { |to| to.status_changed? && to.status == 'open'}
-
-  def self.open
-    where(status: 'open')
-  end
+  after_save :credit_stock!, if: Proc.new { |to| to.closed_at_changed? && to.open? }
+  after_save :reverse_ledgers!, if: Proc.new { |to| to.closed_at_changed? && to.open? }
 
   def open?
-    status == 'open'
-  end
-
-  def self.closed
-    where(status: 'closed')
+    closed_at.nil?
   end
 
   def closed?
-    status == 'closed'
+    closed_at.present?
   end
 
   def payments_balance?
@@ -68,7 +60,7 @@ class SiteSale < ApplicationRecord
     hash
   end
 
-  def total_sales
+  def sales
     site_sale_line_items.sum(:value)
   end
 

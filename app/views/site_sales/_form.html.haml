@@ -29,11 +29,11 @@
           /   = f.label :total_sales
           /   = f.text_field :total_sales, class: 'form-control'
           
-          - if current_scout.is_site_sales_admin?
-            .form-group
-              = f.label :status
-              %br
-              = f.select :status, SiteSale::STATUSES, {}, class: 'form-control'
+          / - if current_scout.is_site_sales_admin?
+          /   .form-group
+          /     = f.label :
+          /     %br
+          /     = f.select :status, options_for_select(['']), {}, class: 'form-control'
 
 
 

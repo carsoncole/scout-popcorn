@@ -2,18 +2,22 @@ one:
   site_sale: safeway
   product: one
   quantity: 10
+  value: 100
 
 two:
   site_sale: safeway
   product: two
   quantity: 15
+  value: 150
 
 three:
-  site_sale: safeway
+  site_sale: ace
   product: three
   quantity: 10
+  value: 150
 
 four:
-  site_sale: safeway
+  site_sale: ace
   product: pack_donation
   quantity: 120
+  value: 120

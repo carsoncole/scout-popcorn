@@ -15,6 +15,15 @@
             = number_to_currency(current_scout.sales(@active_event))
 
 
+  .col-md-3
+    .card
+      .card-block.card-text.text-center
+        %h5
+          Sales value of prizes in your cart:
+        %h2
+          %span.badge.badge-success
+            = number_to_currency(@current_scout.prize_cart(@active_event).sales_credits)
+
 %br
 %br   
 
@@ -43,11 +52,8 @@
                   Achieve sales of:
                   %br
                 = number_to_currency(prize.sales_amount)
-            - if current_scout.prize_cart(@active_event).product_ids.include? prize.id
-              .card-footer
-                = button_to "Remove from Cart", "#", class: 'btn btn-success btn-sm'
 
-            - elsif prize.reduces_sales_credits && current_scout.available_sales > prize.sales_amount
+            - if prize.reduces_sales_credits && current_scout.available_sales_credits(@active_event) > prize.sales_amount
               .card-footer
                 = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: 'btn btn-primary btn-sm'
 

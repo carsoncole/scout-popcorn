@@ -1,9 +1,7 @@
 class Unit < ApplicationRecord
   has_many :scouts, dependent: :destroy
-  has_many :payment_methods
   has_many :events, dependent: :destroy
   has_many :ledgers, through: :accounts
-
 
   accepts_nested_attributes_for :scouts
 
@@ -12,10 +10,6 @@ class Unit < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :treasurer_email, format: /@/, unless: Proc.new {|u| u.treasurer_email.blank? }
   validates :treasurer_first_name, presence: true, unless: Proc.new {|u| u.treasurer_email.blank? }
-
-  def default_event
-    events.last
-  end
 
   def treasurer?
     true unless treasurer_email.blank?

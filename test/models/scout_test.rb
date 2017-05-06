@@ -30,7 +30,7 @@ class ScoutTest < ActiveSupport::TestCase
   end
 
   test "should not save with non-unique email" do
-    @scout.email = "mary@example.com"
+    @scout.email = "one@example.com"
     assert_not @scout.valid?
     assert @scout.errors[:email]
   end

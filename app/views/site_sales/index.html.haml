@@ -43,18 +43,18 @@
                     - if current_scout.admin?
                       %td.text-center= site_sale.scout_site_sales.sum(:hours_worked)
                       %td.text-center
-                        - total_sales += site_sale.total_sales
-                        = number_to_currency(site_sale.total_sales, precision: 0)
+                        - total_sales += site_sale.sales
+                        = number_to_currency(site_sale.sales, precision: 0)
                     - else
                       %td.text-center
                         - total += (site_sale.credited_sales(current_scout, @active_event) || 0)
                         = number_to_currency(site_sale.credited_sales(current_scout, @active_event), precision: 0)
                     - if current_scout.is_site_sales_admin?
                       %td.admin-info.text-center
-                        - if site_sale.status == 'closed'
-                          %span.badge.badge-danger= site_sale.status.titleize
+                        - if site_sale.closed?
+                          %span.badge.badge-danger Close
                         - else
-                          %span.badge.badge-success= site_sale.status.titleize
+                          %span.badge.badge-success Open
                       %td.hidden-print.text-right.admin-links
                         = link_to site_sale do
                           %i.fa.fa-folder-open.fa-lg
