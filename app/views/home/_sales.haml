@@ -34,7 +34,6 @@
             %td.text-right.online_sales_amount
               = number_to_currency(@online_sales, precision: 0)  
 
-
         - if @active_event.is_site_sales_enabled?
           %tr
             %th.site_sales(colspan=2)
@@ -45,4 +44,4 @@
         %tr
           %th(colspan=2) Total Sales
           %td.text-right
-            = number_to_currency(grand_total, precision: 0)
+            = number_to_currency(@total_sales, precision: 0)

@@ -92,6 +92,7 @@ SiteSale.create ([
   {event_id: 1, name: 'Walmart', date: "#{Date.today - 2.days }"}
   ])
 
+site_sale = SiteSale.find(7)
 
 ScoutSiteSale.create ([
   {scout_id: 7, site_sale_id: 7, hours_worked: 4},
@@ -164,6 +165,9 @@ Prize.create([
 
 Resource.create ([{event_id: 1, name: 'Prizes Brochure (BSA)', url: 'http://ibm.com'}])
 
+cash_payment_account = event.accounts.where(name: 'Site Sales cash').first
+
+SiteSalePaymentMethod.create ([{ site_sale_id: site_sale.id, account_id: cash_payment_account.id, amount: 790}])
 
 # 
 # TakeOrder.create([

@@ -58,9 +58,9 @@ class LedgersController < ApplicationController
 
   def income_statement
     @site_sale_donations = @active_event.total_site_sale_donations
-    @site_sales = @active_event.total_site_sales - @site_sale_donations
+    @site_sales = @active_event.total_site_sale_sales - @site_sale_donations
     @take_order_donations = @active_event.total_take_order_donations
-    @take_orders = @active_event.total_take_orders - @take_order_donations
+    @take_orders = @active_event.total_take_order_sales - @take_order_donations
     @online_sales = @active_event.total_online_sales
     @total_sales = @active_event.total_sales
     @total_cost_of_goods_sold = @active_event.cost_of_goods_sold

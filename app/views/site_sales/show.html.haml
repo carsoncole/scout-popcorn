@@ -2,6 +2,9 @@
   .col-md-12
     .card
       .card-block
+        Ds
+        = @site_sale.closed_at
+        = @site_sale.closed_at.present?
         .row
           .col-md-8
             .card-title
@@ -22,9 +25,9 @@
           .col-md-4
             %h3.text-right
               - if @site_sale.closed?
-                %span.badge.badge-danger= @site_sale.status.capitalize
+                %span.badge.badge-danger Closed
               - else
-                %span.badge.badge-success= @site_sale.status.capitalize
+                %span.badge.badge-success Open
 
         %table.table.table-sm
           %thead
@@ -168,10 +171,10 @@
               %tr
                 %th Closed at
                 %td.text-right= nice_date_time_less(@site_sale.closed_at)
-            - if @site_sale.closed_by_id
+            - if @site_sale.closed_by
               %tr
                 %th Closed by
-                %td.text-right= Scout.find(@site_sale.closed_by_id).name if Scout.find(@site_sale.closed_by_id)
+                %td.text-right= Scout.find(@site_sale.closed_by).name if Scout.find(@site_sale.closed_by)
 
 
 - if current_scout.is_site_sales_admin?

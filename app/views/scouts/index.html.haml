@@ -51,13 +51,13 @@
                     %td= scout.email
                     %td
                       - unless scout.is_admin? || @active_event.nil?
-                        = link_to number_to_currency(TakeOrder.scout_sales(scout, @active_event), precision: 0), take_orders_path(scout_id: scout.id)
+                        = link_to number_to_currency(scout.total_take_order_sales(@active_event), precision: 0), take_orders_path(scout_id: scout.id)
                     %td
                       - unless scout.is_admin? || @active_event.nil?
-                        = link_to number_to_currency(scout.total_site_sales(@active_event), precision: 0), site_sales_path(scout_id: scout.id)
+                      = link_to number_to_currency(scout.total_site_sales(@active_event), precision: 0), site_sales_path(scout_id: scout.id)
                     %td
                       - unless scout.is_admin? || @active_event.nil?
-                        = link_to number_to_currency(scout.online_credits(@active_event), precision: 0), online_sales_path(scout_id: scout.id)
+                        = link_to number_to_currency(scout.total_online_sales(@active_event), precision: 0), online_sales_path(scout_id: scout.id)
                     %td
                       - unless scout.is_admin? || @active_event.nil?
                         = number_to_currency(scout.total_sales(@active_event), precision: 0)

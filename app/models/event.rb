@@ -41,7 +41,7 @@ class Event < ApplicationRecord
     open
   end
 
-  def total_site_sales(scout)
+  def total_site_sale_sales(scout)
     total = 0
     site_sales.closed.each do |site_sale|
       total += site_sale.credited_sales(scout, @active_event) || 0
@@ -49,7 +49,7 @@ class Event < ApplicationRecord
     total
   end
 
-  def total_site_sales
+  def total_site_sale_sales
     site_sales.closed.joins(:site_sale_line_items).sum(:value)
   end
 
@@ -114,7 +114,7 @@ class Event < ApplicationRecord
   def total_site_sales_per_hour_worked
     hours = total_hours_worked
     if hours > 0
-      total_site_sales / total_hours_worked
+      total_site_sale_sales / total_hours_worked
     else
       0
     end
@@ -129,11 +129,11 @@ class Event < ApplicationRecord
   end
 
   def total_product_sales
-    total_site_sales + total_take_orders - total_site_sale_donations - total_take_order_donations + total_online_sales
+    total_site_sale_sales + total_take_order_sales - total_site_sale_donations - total_take_order_donations + total_online_sales
   end
 
   def total_sales
-    total_site_sales + total_take_order_sales + total_online_sales
+    total_site_sale_sales + total_take_order_sales + total_online_sales
   end
 
   def create_default_prizes!

@@ -2,9 +2,6 @@ class HomeController < ApplicationController
 
   def index
     if @active_event
-      @pack_donations = SiteSaleLineItem.joins(:product, :site_sale).where("site_sales.event_id = ?", @active_event.id).where("products.name = ?",'Pack Donation').sum(:value)
-      @product_sales = SiteSaleLineItem.joins(:product, :site_sale).where("site_sales.event_id = ?", @active_event.id).where("products.name <> ?",'Pack Donation').sum(:value)
-    
 
       # TOP SELLERS
       take_order_sales_totals = TakeOrder.sales_by_scout_and_event(@active_event)
@@ -40,7 +37,7 @@ class HomeController < ApplicationController
         @take_order_sales_turned_in = @active_event.total_take_order_sales(true)
         @take_order_sales_not_turned_in = @active_event.total_take_order_sales(false)
         @online_sales = @active_event.total_online_sales
-        @site_sale_sales = @active_event.total_site_sales
+        @site_sale_sales = @active_event.total_site_sale_sales
         @total_sales = @active_event.total_sales
         
         @site_sales_cash = Ledger.joins(:account).where('accounts.id = ?', Account.site_sale(@active_event).id).sum('ledgers.amount') if current_scout.is_site_sales_admin?
@@ -49,7 +46,8 @@ class HomeController < ApplicationController
         # _my_sales
         @take_order_sales_turned_in = current_scout.total_take_order_sales( @active_event, true )
         @take_order_sales_not_turned_in = current_scout.total_take_order_sales( @active_event, false )
-        @total_online_sales = current_scout.online_sales(@active_event)
+        @site_sale_sales = current_scout.total_site_sales( @active_event )
+        @online_sales = current_scout.total_online_sales(@active_event)
         @total_sales = current_scout.total_sales(@active_event)
       end
 
