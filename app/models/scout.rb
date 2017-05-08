@@ -57,10 +57,14 @@ class Scout < ApplicationRecord
   end
 
   def total_sales(event)
-    total = total_site_sales(event)
+    total = total_site_sale_sales(event)
     total += total_take_order_sales(event)
     total += total_online_sales(event)
     total
+  end
+
+  def sales(event=nil)
+    total_sales(event)
   end
 
   def admin?
@@ -88,7 +92,7 @@ class Scout < ApplicationRecord
     end
   end
 
-  def total_site_sales(event)
+  def total_site_sale_sales(event)
     event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
   end
 
@@ -120,9 +124,7 @@ class Scout < ApplicationRecord
     prize_carts.create(event_id: @active_event) unless prize_carts.any?
   end
 
-  def sales(event=nil)
-    total_sales(event)
-  end
+
 
   def available_sales_credits(active_event=nil)
     sales(active_event) - prize_cart(active_event).sales_credits

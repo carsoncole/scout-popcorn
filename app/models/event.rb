@@ -154,6 +154,23 @@ class Event < ApplicationRecord
     end
   end
 
+  def sales_by_scout_ordered
+    hash_of_scouts = {}
+
+    unit.scouts.each do |scout|
+      scout_sales = scout.sales(self)
+      unless scout_sales == 0
+        if hash_of_scouts[scout]
+          hash_of_scouts[scout] += scout_sales
+        else
+          hash_of_scouts[scout] = scout_sales
+        end
+      end
+    end
+
+    hash_of_scouts = hash_of_scouts.sort{|a,b| a[1] <=> b[1]}.reverse
+  end
+
   private
 
   def set_event_for_scouts!
