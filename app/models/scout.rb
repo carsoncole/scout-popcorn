@@ -58,7 +58,7 @@ class Scout < ApplicationRecord
 
   def total_sales(event)
     total = total_site_sales(event)
-    total += take_order_sales(event)
+    total += total_take_order_sales(event)
     total += total_online_sales(event)
     total
   end
@@ -78,11 +78,7 @@ class Scout < ApplicationRecord
     end
   end
 
-  def total_site_sales(event)
-    event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
-  end
-
-  def take_order_sales(event, is_turned_in=nil)
+  def take_order_credits(event, is_turned_in=true)
     if is_turned_in
       take_orders.where("envelopes.event_id = ?",event.id).where.not(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
     elsif is_turned_in == false
@@ -92,8 +88,16 @@ class Scout < ApplicationRecord
     end
   end
 
+  def total_site_sales(event)
+    event.total_site_sales_per_hour_worked * self.event_site_sale_hours_worked(event)
+  end
+
   def total_online_sales(event)
     online_sales.where(event_id: event.id).sum(:amount)
+  end
+
+  def total_take_order_sales(event, is_turned_in=true)
+    take_order_credits(event, is_turned_in)
   end
 
   def set_event!
@@ -117,14 +121,11 @@ class Scout < ApplicationRecord
   end
 
   def sales(event=nil)
-    total = total_site_sales(event)
-    total += take_order_sales(event)
-    total += total_online_sales(event)
-    total
+    total_sales(event)
   end
 
-  def available_sales(active_event=nil)
-    1000
+  def available_sales_credits(active_event=nil)
+    sales(active_event) - prize_cart(active_event).sales_credits
   end
 
   def assign_full_rights!

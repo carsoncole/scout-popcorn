@@ -20,7 +20,7 @@ Scout.create([
 {first_name: 'Mike', last_name: 'Jones', email: 'scout1@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Bill', last_name: 'Hardy', email: 'scout2@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Steve', last_name: 'Wilson', email: 'scout3@example.com', unit_id: 1, password: 'password'},
-{first_name: 'Carl', last_name: 'Obama', email: 'scout4@example.com', unit_id: 1, password: 'password'},
+{first_name: 'Juff', last_name: 'Dump', email: 'scout4@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Jonas', last_name: 'Trump', email: 'scout5@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Michael', last_name: 'Yeung', email: 'scout6@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Stenis', last_name: 'Smith', email: 'scout7@example.com', unit_id: 1, password: 'password'},

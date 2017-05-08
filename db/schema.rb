@@ -238,10 +238,10 @@ ActiveRecord::Schema.define(version: 20170419210244) do
   create_table "take_order_line_items", force: :cascade do |t|
     t.integer  "take_order_id"
     t.integer  "product_id"
-    t.integer  "quantity"
-    t.decimal  "value",         precision: 5, scale: 2
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.integer  "quantity",                              default: 0,     null: false
+    t.decimal  "value",         precision: 5, scale: 2, default: "0.0", null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
   end
 
   create_table "take_orders", force: :cascade do |t|

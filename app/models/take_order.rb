@@ -76,15 +76,15 @@ class TakeOrder < ApplicationRecord
     take_order_line_items.joins(:product).map{|toli| toli.product.name + ' (' + toli.quantity.to_s + ')' }.join(', ')
   end
 
-  def self.sales(event, is_turned_in=nil)
-    if is_turned_in
-      joins(:envelope).where("envelopes.event_id =?", event.id).where.not(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
-    elsif is_turned_in == false
-      joins(:envelope).where("envelopes.event_id = ?",event.id).where(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
-    else
-      joins(:envelope).where("envelopes.event_id = ?", event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
-    end
-  end
+  # def self.sales(event, is_turned_in=nil)
+  #   if is_turned_in
+  #     joins(:envelope).where("envelopes.event_id =?", event.id).where.not(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) }
+  #   elsif is_turned_in == false
+  #     joins(:envelope).where("envelopes.event_id = ?",event.id).where(status: 'in hand').inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
+  #   else
+  #     joins(:envelope).where("envelopes.event_id = ?", event.id).inject(0){|sum,t| sum + t.take_order_line_items.sum(:value) } 
+  #   end
+  # end
 
   def self.scout_sales(scout, event)
     scout.envelopes.joins(take_orders: :take_order_line_items).where("envelopes.event_id =?", event.id).sum(:value)

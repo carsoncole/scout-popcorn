@@ -63,7 +63,7 @@ class Event < ApplicationRecord
 
   end 
 
-  def total_take_orders(is_turned_in: true)
+  def total_take_order_sales(is_turned_in=true)
     if is_turned_in
       envelopes.closed_or_picked_up.joins(take_orders: :take_order_line_items).sum('take_order_line_items.value')
     else
@@ -107,6 +107,10 @@ class Event < ApplicationRecord
     site_sales.closed.joins(:scout_site_sales).sum(:hours_worked)
   end
 
+  def upcoming_site_sales
+    site_sales.where("date >= ?", Date.today).order(date: :asc)
+  end
+
   def total_site_sales_per_hour_worked
     hours = total_hours_worked
     if hours > 0
@@ -129,7 +133,7 @@ class Event < ApplicationRecord
   end
 
   def total_sales
-    total_site_sales + total_take_orders + total_online_sales
+    total_site_sales + total_take_order_sales + total_online_sales
   end
 
   def create_default_prizes!

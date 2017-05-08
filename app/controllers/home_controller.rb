@@ -29,10 +29,30 @@ class HomeController < ApplicationController
         @top_sellers << seller
       end
       @resources = @active_event.resources
-      @site_sales = @active_event.site_sales.where("date > ?", Time.now).order(date: :asc)
     
-      @site_sales_cash = Ledger.joins(:account).where('accounts.id = ?', Account.site_sale(@active_event).id).sum('ledgers.amount') if current_scout.is_site_sales_admin?
-      @take_orders_cash = Ledger.joins(:account).where('accounts.id = ?', Account.take_order(@active_event).id).sum('ledgers.amount') if current_scout.is_take_orders_admin?
+
+      # Site Sales
+      @site_sales = @active_event.upcoming_site_sales
+
+
+      if current_scout.is_admin?
+        # _my_sales - admin
+        @take_order_sales_turned_in = @active_event.total_take_order_sales(true)
+        @take_order_sales_not_turned_in = @active_event.total_take_order_sales(false)
+        @online_sales = @active_event.total_online_sales
+        @site_sale_sales = @active_event.total_site_sales
+        @total_sales = @active_event.total_sales
+        
+        @site_sales_cash = Ledger.joins(:account).where('accounts.id = ?', Account.site_sale(@active_event).id).sum('ledgers.amount') if current_scout.is_site_sales_admin?
+        @take_orders_cash = Ledger.joins(:account).where('accounts.id = ?', Account.take_order(@active_event).id).sum('ledgers.amount') if current_scout.is_take_orders_admin?
+      else
+        # _my_sales
+        @take_order_sales_turned_in = current_scout.total_take_order_sales( @active_event, true )
+        @take_order_sales_not_turned_in = current_scout.total_take_order_sales( @active_event, false )
+        @total_online_sales = current_scout.online_sales(@active_event)
+        @total_sales = current_scout.total_sales(@active_event)
+      end
+
       @prizes = @active_event.prizes.order(sales_amount: :asc).limit(10)
     end
   end
