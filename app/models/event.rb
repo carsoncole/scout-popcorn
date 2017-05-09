@@ -41,19 +41,44 @@ class Event < ApplicationRecord
     open
   end
 
-  def total_site_sale_sales(scout)
-    total = 0
-    site_sales.closed.each do |site_sale|
-      total += site_sale.credited_sales(scout, @active_event) || 0
+  def total_site_sale_sales(scout=nil, closed=true)
+    if scout
+      if closed
+        total_site_sales_per_hour_worked(closed) * total_site_sale_hours_worked(scout, closed)
+      else
+        site_sales.joins(:site_sale_line_items).sum(:value)
+      end
+    else
+      if closed
+        site_sales.closed.joins(:site_sale_line_items).sum(:value)
+      else
+        site_sales.joins(:site_sale_line_items).sum(:value)
+      end
     end
-    total
   end
 
-  def total_site_sale_sales(closed=true)
-    if closed
-      site_sales.closed.joins(:site_sale_line_items).sum(:value)
+  def total_site_sale_hours_worked(scout=nil, closed=true)
+    if scout
+      if closed
+        site_sales.closed.joins(:scout_site_sales).where("scout_site_sales.scout_id = ?", scout.id).sum(:hours_worked)
+      else
+        site_sales.joins(:scout_site_sales).where("scout_site_sales.scout_id = ?", scout.id).sum(:hours_worked)
+      end
     else
-      site_sales.joins(:site_sale_line_items).sum(:value)
+      if closed
+        site_sales.closed.joins(:scout_site_sales).sum(:hours_worked)
+      else
+        site_sales.joins(:scout_site_sales).sum(:hours_worked)
+      end
+    end
+  end
+
+  def total_site_sales_per_hour_worked(closed=true)
+    hours = total_site_sale_hours_worked(nil, closed)
+    if hours > 0
+      total_site_sale_sales(nil, closed) / hours
+    else
+      0
     end
   end
 
@@ -107,22 +132,7 @@ class Event < ApplicationRecord
     bank_account? && unit.treasurer? ? true : false 
   end
 
-  def total_hours_worked(closed=true)
-    if closed
-      site_sales.closed.joins(:scout_site_sales).sum(:hours_worked)
-    else
-      site_sales.joins(:scout_site_sales).sum(:hours_worked)
-    end
-  end
 
-  def total_site_sales_per_hour_worked(closed=true)
-    hours = total_hours_worked(closed)
-    if hours > 0
-      total_site_sale_sales(closed) / total_hours_worked(closed)
-    else
-      0
-    end
-  end
 
   def upcoming_site_sales
     site_sales.where("date >= ?", Date.today).order(date: :asc)

@@ -25,7 +25,7 @@ class HomeController < ApplicationController
         # _my_sales
         @take_order_sales_turned_in = current_scout.total_take_order_sales( @active_event, true )
         @take_order_sales_not_turned_in = current_scout.total_take_order_sales( @active_event, false )
-        @site_sale_sales = current_scout.total_site_sale_sales( @active_event )
+        @site_sale_sales = @active_event.total_site_sale_sales(current_scout, true)
         @online_sales = current_scout.total_online_sales(@active_event)
         @total_sales = current_scout.total_sales(@active_event)
       end

@@ -12,7 +12,6 @@ class SiteSale < ApplicationRecord
 
   #TODO add before_save callback to check that payment methods have been added.
 
-
   after_save :debit_stock!, if: Proc.new { |to| to.closed_at_changed? && to.closed?}
   after_save :do_ledgers!, if: Proc.new { |to| to.closed_at_changed? && to.closed? }
 
@@ -35,46 +34,20 @@ class SiteSale < ApplicationRecord
     name + " (" + date.strftime('%a %b %e') + ')'
   end
 
-  def scouts_that_worked
-    scout_site_sales
-  end
-
-  def credited_sales(scout, event)
-    if scout_site_sales.where(scout_id: scout.id).first
-      hours_worked(scout) * event.total_site_sales_per_hour_worked
+  def hours_worked(scout=nil)
+    if scout
+      scout_site_sales.where(scout_id: scout.id).sum(:hours_worked)
+    else
+      scout_site_sales.sum(:hours_worked)
     end
   end
 
-  def hours_worked(scout)
-    scout_site_sales
-  end
-
-  def self.sales_by_scout_and_event(event)
-    hash = {}
-    event.site_sales.each do |site_sale|
-      site_sale.scout_site_sales.each do |scout_site_sale|
-        if hash[scout_site_sale.scout_id]
-          hash[scout_site_sale.scout_id] += scout_site_sale.hours_worked * event.total_site_sales_per_hour_worked
-        else
-          hash[scout_site_sale.scout_id] = scout_site_sale.hours_worked * event.total_site_sales_per_hour_worked
-        end
-      end
+  def sales(scout=nil)
+    if scout
+      hours_worked(scout) * event.total_site_sales_per_hour_worked(false)
+    else
+      site_sale_line_items.sum(:value)
     end
-    hash
-  end
-
-  def sales
-    site_sale_line_items.sum(:value)
-  end
-
-  def hours_worked(scout)
-    if scout_site_sales.where(scout_id: scout.id).first
-      scout_site_sales.where(scout_id: scout.id).first.hours_worked
-    end
-  end
-
-  def total_hours_worked
-    scout_site_sales.sum(:hours_worked)
   end
 
   private

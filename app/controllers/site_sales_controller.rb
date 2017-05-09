@@ -1,15 +1,14 @@
 class SiteSalesController < ApplicationController
+  before_action :authorize_admin, except: :index
   before_action :set_site_sale, only: [:show, :edit, :update, :destroy]
 
-  # GET /site_sales
-  # GET /site_sales.json
+
   def index
     @site_sales = SiteSale.includes(:scout_site_sales, :site_sale_line_items).order(:date).page(params[:page])
     @site_sales = @site_sales.where(event_id: @active_event) if @active_event
   end
 
   def show
-    redirect_to site_sales_path unless current_scout.admin?
     @line_items = @site_sale.site_sale_line_items.order(created_at: :desc)
     @scout_site_sales = @site_sale.scout_site_sales.joins(:scout).order("scouts.first_name ASC")
     @total_sales = @site_sale.site_sale_line_items.sum(:value)
