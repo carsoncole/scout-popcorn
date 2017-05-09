@@ -30,6 +30,7 @@ gem 'kaminari'
 gem 'exception_notification'
 gem 'bcrypt', '~> 3.1.11'
 
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -41,6 +42,7 @@ gem 'bcrypt', '~> 3.1.11'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'launchy' # Capybara launching of browser for debugging
 end
 
 group :test do
