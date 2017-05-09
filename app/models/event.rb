@@ -49,8 +49,12 @@ class Event < ApplicationRecord
     total
   end
 
-  def total_site_sale_sales
-    site_sales.closed.joins(:site_sale_line_items).sum(:value)
+  def total_site_sale_sales(closed=true)
+    if closed
+      site_sales.closed.joins(:site_sale_line_items).sum(:value)
+    else
+      site_sales.joins(:site_sale_line_items).sum(:value)
+    end
   end
 
   def total_site_sale_donations
@@ -103,21 +107,25 @@ class Event < ApplicationRecord
     bank_account? && unit.treasurer? ? true : false 
   end
 
-  def total_hours_worked
-    site_sales.closed.joins(:scout_site_sales).sum(:hours_worked)
+  def total_hours_worked(closed=true)
+    if closed
+      site_sales.closed.joins(:scout_site_sales).sum(:hours_worked)
+    else
+      site_sales.joins(:scout_site_sales).sum(:hours_worked)
+    end
+  end
+
+  def total_site_sales_per_hour_worked(closed=true)
+    hours = total_hours_worked(closed)
+    if hours > 0
+      total_site_sale_sales(closed) / total_hours_worked(closed)
+    else
+      0
+    end
   end
 
   def upcoming_site_sales
     site_sales.where("date >= ?", Date.today).order(date: :asc)
-  end
-
-  def total_site_sales_per_hour_worked
-    hours = total_hours_worked
-    if hours > 0
-      total_site_sale_sales / total_hours_worked
-    else
-      0
-    end
   end
 
   def prizes?

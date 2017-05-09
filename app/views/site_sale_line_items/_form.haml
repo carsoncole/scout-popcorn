@@ -19,6 +19,6 @@
                 %br
                 = f.number_field :quantity,class: 'form-control'
           .actions
-            = f.submit 'Save', class: 'btn btn-success'
+            = f.submit 'Save', class: 'btn btn-success', id: 'site_sale_form_submit'
         %br
         = link_to "< Back to Site Sale", site_sale_path(@site_sale) 

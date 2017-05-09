@@ -6,13 +6,10 @@
           %h2 Transfers
         - if current_scout.is_warehouse_admin?
           %p.card-text
-            / = link_to stock_movement_path do
-            /   %i.fa.fa-print.fa-lg
-            /   Stock Movement
             %span
-              = link_to new_stock_path, class: 'hidden-print' do
-                &nbsp;
+              = link_to new_stock_path, class: 'hidden-print', id: 'new_transfer_link' do
                 %i.fa.fa-plus.fa-lg
+                Add a transfer
 
         %ul.nav.nav-tabs.hidden-print
           %li.nav-item

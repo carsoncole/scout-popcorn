@@ -16,7 +16,10 @@ class SiteSaleTest < ActiveSupport::TestCase
   end
 
   test "should show correct closed sales" do
-    assert_equal events(:one).total_site_sales ,270
+    site_sale = site_sales(:ace)
+    site_sale.update(closed_at: Time.now)
+
+    assert_equal events(:one).total_site_sale_sales, 270
   end
 
 

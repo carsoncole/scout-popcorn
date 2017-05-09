@@ -22,14 +22,10 @@ class ScoutSiteSalesController < ApplicationController
   def create
     @scout_site_sale = @site_sale.scout_site_sales.build(scout_site_sale_params)
 
-    respond_to do |format|
-      if @scout_site_sale.save
-        format.html { redirect_to @site_sale, notice: 'Scout site sale was successfully created.' }
-        format.json { render :show, status: :created, location: @scout_site_sale }
-      else
-        format.html { render :new }
-        format.json { render json: @scout_site_sale.errors, status: :unprocessable_entity }
-      end
+    if @scout_site_sale.save
+      redirect_to @site_sale, notice: 'Scout was successfully added as a volunteer for a site sale.'
+    else
+      render :new
     end
   end
 

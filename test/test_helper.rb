@@ -11,4 +11,11 @@ class ActiveSupport::TestCase
   def sign_in(scout)
     post '/sessions', params: { email: scout.email, password: 'password'}
   end
+
+  def capybara_login(scout)
+    visit root_path
+    fill_in '_email', with: scout.email
+    fill_in '_password', with: 'password'
+    click_button 'Log in'
+  end
 end

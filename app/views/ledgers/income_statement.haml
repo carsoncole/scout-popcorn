@@ -14,7 +14,8 @@
             %table.table.card-text
               %tr
                 %td Site Sale Product Sales
-                %td.text-right= number_to_currency(@site_sales)
+                %td.text-right.site_sale_sales
+                  = number_to_currency(@site_sales)
               %tr
                 %td Take Order Sales
                 %td.text-right= number_to_currency(@take_orders)

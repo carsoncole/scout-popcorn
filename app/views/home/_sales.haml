@@ -12,20 +12,15 @@
         - if @active_event.is_take_orders_enabled?
      
           %tr
-            %th(colspan=3) Take Orders
-
-          %tr
-            %td
-            %th
-              = link_to "Turned in", take_orders_path
+            %th.take_orders(colspan=2)= link_to "Take Orders", take_orders_path
             %td.text-right
               = number_to_currency(@take_order_sales_turned_in, precision: 0)
-          %tr
-            %td
-            %th
-              = link_to "Not turned in", take_orders_path
-            %td.text-right
-              = number_to_currency(@take_order_sales_not_turned_in, precision: 0)
+          / %tr
+          /   %td 
+          /   %th
+          /     = link_to "Not turned in", take_orders_path
+          /   %td.text-right
+          /     = number_to_currency(@take_order_sales_not_turned_in, precision: 0)
 
         - if @active_event.is_online_enabled?
           %tr
@@ -38,7 +33,7 @@
           %tr
             %th.site_sales(colspan=2)
               = link_to "Site Sales", site_sales_path
-            %td.text-right
+            %td.text-right.site-sales-amount
               = number_to_currency(@site_sale_sales, precision: 0)      
     
         %tr

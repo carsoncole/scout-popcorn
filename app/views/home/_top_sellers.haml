@@ -11,7 +11,7 @@
         .table-responsive
           %table.table.card-text.table-sm
             - @top_sellers.each do |top_seller|
-              - scout = Scout.find(top_seller[0])
+              - scout = Scout.find(top_seller[0].id)
               %tr
                 %th= scout.name
                 %th.text-right= number_to_currency(top_seller[1], precision: 0)

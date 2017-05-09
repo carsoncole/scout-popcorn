@@ -10,6 +10,9 @@ class SiteSale < ApplicationRecord
 
   validates :name, :date, :event_id, presence: true
 
+  #TODO add before_save callback to check that payment methods have been added.
+
+
   after_save :debit_stock!, if: Proc.new { |to| to.closed_at_changed? && to.closed?}
   after_save :do_ledgers!, if: Proc.new { |to| to.closed_at_changed? && to.closed? }
 

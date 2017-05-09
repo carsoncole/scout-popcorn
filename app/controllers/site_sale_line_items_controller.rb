@@ -22,19 +22,13 @@ class SiteSaleLineItemsController < ApplicationController
   def edit
   end
 
-  # POST /line_items
-  # POST /line_items.json
   def create
     @line_item = @site_sale.site_sale_line_items.build(site_sale_line_item_params)
 
-    respond_to do |format|
-      if @line_item.save
-        format.html { redirect_to @site_sale, notice: 'Line item was successfully created.' }
-        format.json { render :show, status: :created, location: @line_item }
-      else
-        format.html { render :new }
-        format.json { render json: @line_item.errors, status: :unprocessable_entity }
-      end
+    if @line_item.save
+      redirect_to @site_sale, notice: 'Product sold was successfully added.'
+    else
+      render :new
     end
   end
 

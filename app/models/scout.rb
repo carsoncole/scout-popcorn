@@ -124,8 +124,6 @@ class Scout < ApplicationRecord
     prize_carts.create(event_id: @active_event) unless prize_carts.any?
   end
 
-
-
   def available_sales_credits(active_event=nil)
     sales(active_event) - prize_cart(active_event).sales_credits
   end

@@ -2,9 +2,6 @@
   .col-md-12
     .card
       .card-block
-        Ds
-        = @site_sale.closed_at
-        = @site_sale.closed_at.present?
         .row
           .col-md-8
             .card-title
@@ -13,14 +10,7 @@
                 - if current_scout.is_site_sales_admin?
                   %span.lead
                     = link_to edit_site_sale_path(@site_sale) do
-                      %i.fa.fa-pencil.hidden-print  
-
-            / - if current_scout.is_site_sales_admin? && @site_sale.open? 
-            /   %p
-            /     =link_to site_sale_tracking_sheet_path(@site_sale) do
-            /       %i.fa.fa-print.fa-lg
-            /       Site Sale Transaction Sheet
-
+                      %i.fa.fa-pencil.hidden-print
 
           .col-md-4
             %h3.text-right
@@ -75,6 +65,7 @@
                 - if @site_sale.open? && current_scout.is_site_sales_admin?
                   = link_to new_site_sale_site_sale_line_item_path(@site_sale) do
                     %i.fa.fa-plus.fa-lg
+                    Add product sold
 
               - if @site_sale.open?
                 %td
@@ -96,13 +87,18 @@
               %th Scout
               %th Hours worked
               %th Sales allocated
+              %th
           %tbody
+            - total_credited_sales = 0
             - @scout_site_sales.each do |scout_site_sale|
               %tr
                 %td= scout_site_sale.scout.name
-                %td= scout_site_sale.hours_worked
                 %td
-                  = number_to_currency(@active_event.total_site_sales_per_hour_worked * scout_site_sale.hours_worked, precision: 0)
+                  = scout_site_sale.hours_worked
+                %td
+                  - credited_sales = @active_event.total_site_sales_per_hour_worked(false) * scout_site_sale.hours_worked
+                  - total_credited_sales += credited_sales
+                  = number_to_currency(credited_sales, precision: 0)
                 - if current_scout.is_site_sales_admin?
                   %td
                     = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do
@@ -112,10 +108,13 @@
                 - if current_scout.is_site_sales_admin?
                   = link_to new_site_sale_scout_site_sale_path(@site_sale) do
                     %i.fa.fa-plus.fa-lg.hidden-print
-              %td= @total_hours
-              %td= number_to_currency(total_credited_sales, precision: 0)
+                    Add a Scout volunteer
+              %td.total-credited-hours= @total_hours
+              %td.total-credited-sales= number_to_currency(total_credited_sales, precision: 0)
+              %td
 
-.row    
+
+.row
   .col-md-6
     .card
       .card-block
@@ -148,6 +147,7 @@
                 - if @site_sale.open? && current_scout.is_site_sales_admin?
                   = link_to new_site_sale_site_sale_payment_method_path(@site_sale) do
                     %i.fa.fa-plus.fa-lg.hidden-print
+                    Add a form of payment
               %td
                 = number_to_currency(@site_sale_payment_methods.sum(:amount))
                 - if @site_sale.payments_balance?
@@ -188,7 +188,7 @@
               .col-md-9
                 %p.card-text.text-danger Closing a Site Sale processes inventory and financials. Site Sales can be re-opened for any necessary changes.
               .col-md-3
-                .card-text.text-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, class: 'btn btn-danger btn-lg hidden-print'}
+                .card-text.text-center= button_to 'CLOSE', site_sale_path(@site_sale, closed: true), {disabled: (current_scout.is_site_sales_admin? ? false : true), method: :patch, id: 'site_sale_close_button', class: 'btn btn-danger btn-lg hidden-print'}
           - else
             .row
               .col-md-9

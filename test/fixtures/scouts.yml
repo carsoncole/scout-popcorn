@@ -9,6 +9,7 @@ admin:
   is_take_orders_admin: true
   is_site_sales_admin: true
   is_online_sales_admin: true
+  is_warehouse_admin: true
   is_admin: true
   password_digest: <%= BCrypt::Password.create "password" %>
 

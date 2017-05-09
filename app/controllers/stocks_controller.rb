@@ -70,7 +70,7 @@ class StocksController < ApplicationController
       @stock.created_by = current_scout.id
 
       if @stock.save
-        redirect_to stocks_ledger_path, notice: 'Stock was successfully created.'
+        redirect_to stocks_ledger_path, notice: 'Stock was successfully transferred.'
       else
         @products = @active_event.products.order(:name)
         render :new
