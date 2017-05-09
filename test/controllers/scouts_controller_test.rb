@@ -6,6 +6,18 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     @scout = scouts(:one)
   end
 
+  test "should get index" do
+    sign_in(scouts(:unit_admin))
+    get scouts_url
+    assert_response :success
+  end
+
+  test "should get administrators index" do
+    sign_in(scouts(:unit_admin))
+    get scouts_url(administrators: true)
+    assert_response :success
+  end
+
   test "should get new" do
     get signup_path
     assert_response :success

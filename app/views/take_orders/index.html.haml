@@ -152,10 +152,10 @@
                         = number_to_currency(take_order.value, precision: 0)
                       %td
                         = take_order.account.name if take_order.account
-                        - if take_order.account && take_order.account.is_credit_card?
-                          %i.fa.fa-credit-card
-                        - elsif take_order.account && take_order.account.is_cash?
-                          %i.fa.fa-money
+                        / - if take_order.account && take_order.account.is_credit_card?
+                        /   %i.fa.fa-credit-card
+                        / - elsif take_order.account && take_order.account.is_cash?
+                        /   %i.fa.fa-money
                       %td
                         - take_order.take_order_line_items.each do |line_item|
                           = line_item.product.name

@@ -5,7 +5,7 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @event = events(:one)
   end
-
+  
   test "should not get index without sign_in" do
     get events_url
     assert_redirected_to controller: 'sessions', action: 'new'

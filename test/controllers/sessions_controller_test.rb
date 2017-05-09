@@ -31,4 +31,11 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     Rails.configuration.allow_for_multiple_units = true
   end
 
+  test "should logout" do
+    sign_in(scouts(:one))
+    get logout_url
+    assert_response :redirect
+    assert_redirected_to root_url
+  end
+
 end

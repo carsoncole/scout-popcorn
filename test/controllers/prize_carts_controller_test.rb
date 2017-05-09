@@ -5,11 +5,11 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
   #   @prize = prizes(:one)
   # end
 
-  # test "should get index" do
-  #   sign_in(scouts(:admin))
-  #   get prizes_url
-  #   assert_response :success
-  # end
+  test "should get index" do
+    sign_in(scouts(:one))
+    get prize_cart_url
+    assert_response :success
+  end
 
   # test "should get new" do
   #   get new_prize_url

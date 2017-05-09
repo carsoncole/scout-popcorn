@@ -1,14 +1,15 @@
 require 'test_helper'
 
-class OrdersControllerTest < ActionDispatch::IntegrationTest
+class TakeOrdersControllerTest < ActionDispatch::IntegrationTest
   # setup do
   #   @take_order = orders(:one)
   # end
 
-  # test "should get index" do
-  #   get orders_url
-  #   assert_response :success
-  # end
+  test "should get index" do
+    sign_in(scouts(:one))
+    get take_orders_url
+    assert_response :success
+  end
 
   # test "should get new" do
   #   get new_order_url
