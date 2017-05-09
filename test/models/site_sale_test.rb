@@ -59,11 +59,12 @@ class SiteSaleTest < ActiveSupport::TestCase
   end
 
   test "should do ledger transactions when closed" do
-    product_id = site_sale_line_items(:one).product_id
-    original_stock = @site_sale.event.stocks.site_sales.where(product_id: product_id).sum(:quantity)
+    event = @site_sale.event
+    payment_method = site_sale_payment_methods(:cash)
+    original_balance = Account.site_sale(event).balance
     @site_sale.update(closed_at: Time.now)
-    new_stock = @site_sale.event.stocks.site_sales.where(product_id: product_id).sum(:quantity)
-    assert_equal original_stock - 10, new_stock
+    new_balance = Account.site_sale(event).balance
+    assert_equal original_balance + 250, new_balance
   end
 
   test "should credit stock when reopened" do
@@ -76,6 +77,13 @@ class SiteSaleTest < ActiveSupport::TestCase
   end
 
   test "should reverse ledgers when reopened" do
+    event = @site_sale.event
+    payment_method = site_sale_payment_methods(:cash)
+    @site_sale.update(closed_at: Time.now)
+    original_balance = Account.site_sale(event).balance
+    @site_sale.update(closed_at: nil)
+    new_balance = Account.site_sale(event).balance
+    assert_equal original_balance - 250, new_balance
   end
 
 end
