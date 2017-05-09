@@ -223,6 +223,7 @@ class Event < ApplicationRecord
     stocks.each do |stock|
       next unless stock.ledger_id
       Ledger.find(stock.ledger_id).destroy
+      stock.update_wholesale_value!
       stock.create_due_to_bsa!
     end
   end

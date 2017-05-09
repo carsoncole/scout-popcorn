@@ -126,19 +126,15 @@
             %tr
               %th Method
               %th Amount
-              %th
-              %th
           %tbody
             - @site_sale_payment_methods.each do |payment_method|
               %tr
                 %td= payment_method.account.name if payment_method.account
-                %td= number_to_currency(payment_method.amount)
                 %td
+                  = number_to_currency(payment_method.amount)
                   - if @site_sale.open?
                     = link_to edit_site_sale_site_sale_payment_method_path(@site_sale, payment_method) do
                       %i.fa.fa-pencil.fa-lg
-                %td
-                  - if @site_sale.open?
                     = link_to site_sale_site_sale_payment_method_path(@site_sale, payment_method), method: :delete do
                       %i.fa.fa-trash.fa-lg.hidden-print
 
@@ -152,8 +148,6 @@
                 = number_to_currency(@site_sale_payment_methods.sum(:amount))
                 - if @site_sale.payments_balance?
                   %i.fa.fa-check.fa-lg
-
-
 
   - if current_scout.is_site_sales_admin?  
     .col-md-6

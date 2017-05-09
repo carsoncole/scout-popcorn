@@ -5,6 +5,7 @@ one:
   location: warehouse
   is_transfer_from_bsa: true
   date: <%= Date.today %>
+  wholesale_value: 6500
 
 two:
   event: one
@@ -13,6 +14,7 @@ two:
   location: warehouse
   is_transfer_from_bsa: true
   date: <%= Date.today %>
+  wholesale_value: 7800
 
 three:
   event: one
@@ -21,6 +23,7 @@ three:
   location: warehouse
   is_transfer_from_bsa: true
   date: <%= Date.today %>
+  wholesale_value: 7800
 
 four:
   event: one
@@ -29,11 +32,4 @@ four:
   location: warehouse
   is_transfer_from_bsa: true
   date: <%= Date.today %>
-
-five:
-  event: one
-  product: one
-  quantity: 50
-  location: warehouse
-  is_transfer_from_bsa: true
-  date: <%= Date.today + 1.day %>
+  wholesale_value: 11700

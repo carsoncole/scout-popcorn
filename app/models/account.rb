@@ -22,6 +22,10 @@ class Account < ApplicationRecord
     Account.where(event_id: event.id).where(name: 'Money due from Customer').first
   end
 
+  def self.due_to_bsa(event)
+    Account.where(event_id: event.id).where(name: 'Due to BSA').first
+  end  
+
   def self.is_take_order_eligible
     where(is_take_order_eligible: true)
   end

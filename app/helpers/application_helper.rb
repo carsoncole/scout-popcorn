@@ -27,4 +27,8 @@ module ApplicationHelper
   def nice_date_time_less(datetime)
     datetime.strftime("%b %d, %Y %I:%M%p")
   end
+
+  def calculate_wholesale_value( product, quantity )
+    product.retail_price * quantity * ( 1 - product.event.unit_commission_percentage / 100 )
+  end
 end

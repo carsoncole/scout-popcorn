@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StockTest < ActiveSupport::TestCase
+  include ApplicationHelper
 
   setup do
     @stock = Stock.new(event: events(:one), product: products(:one), quantity: 1000, location: 'warehouse', is_transfer_from_bsa: true, date: Date.today)
@@ -29,17 +30,34 @@ class StockTest < ActiveSupport::TestCase
     assert_equal @stock.id, @stock.ledger.stock_id
   end
 
-  # test "should show correct inventory balance" do
-  #   setup_event
+  test "should debit warehouse" do
+    original_balance = @stock.balance('warehouse')
+    @stock.is_transfer_from_bsa = false
+    @stock.is_transfer_from_warehouse = true
+    @stock.location = 'site sales'
+    @stock.save
+    new_balance = @stock.balance('warehouse')
+    assert_equal original_balance, new_balance + 1000
+  end
 
-  #   assert_equal @event.stocks.where(product_id: @product.id).sum(:quantity), 100
-  # end
+  test "should create due-to-bsa" do
+    original_balance = Account.due_to_bsa(@stock.event).balance
+    @stock.save
+    bsa_value = calculate_wholesale_value(@stock.product, @stock.quantity)
+    new_balance = Account.due_to_bsa(@stock.event).balance
 
-  # def setup_event
-  #   @event = units(:two).events.create(name: 'Popcorn Event')
-  #   @product = @event.products.create(name: 'Cheese Popcorn', retail_price: 10)
-  #   assert @product.valid?
-  #   @stock = @event.stocks.create(product_id: @product.id, location: 'warehouse', is_transfer_from_bsa: true, date: Date.today, quantity: 100)
-  # end
+    assert_equal original_balance + bsa_value, new_balance      
+  end
+
+  test "should update wholesale value" do
+    product = @stock.product
+    @stock.save    
+    wholesale = @stock.wholesale_value
+    assert_equal wholesale, calculate_wholesale_value(product, @stock.quantity)
+    @stock.quantity = 500
+    @stock.save
+    wholesale = @stock.wholesale_value
+    assert_equal wholesale, calculate_wholesale_value(product, @stock.quantity)
+  end
 
 end

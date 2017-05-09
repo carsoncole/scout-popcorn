@@ -5,6 +5,7 @@ one:
   admin_email: someone@example.com
   prize_cart_ordering_starts_at: <%= Date.today + 40.days %>
   prize_cart_ordering_ends_at: <%= Date.today + 55.days %>
+  unit_commission_percentage: 35
 
 two:
   unit: two

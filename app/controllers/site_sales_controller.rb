@@ -20,21 +20,21 @@ class SiteSalesController < ApplicationController
     @site_sale = @active_event.site_sales.new
   end
 
-  def edit
-  end
-
   def create
-    @site_sale = @active_event.site_sales.build(site_sale_params)
-
-    if @site_sale.save
-      redirect_to site_sales_path, notice: 'Site sale was successfully created.'
+    if current_scout.is_site_sales_admin?
+      @site_sale = @active_event.site_sales.build(site_sale_params)
+      if @site_sale.save
+        redirect_to site_sales_path, notice: 'Site sale was successfully created.'
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to site_sales_path, alert: 'You do not have permission to create a Site Sale.'
     end
   end
 
   def update
-    if params[:closed] && current_scout.admin?
+    if params[:closed] && current_scout.is_site_sales_admin?
       if @site_sale.payments_balance?
         if @site_sale.update(closed_at: Time.now, closed_by: current_scout.id)
           redirect_to @site_sale, notice: 'The Site Sale was successfully closed.'
@@ -44,18 +44,24 @@ class SiteSalesController < ApplicationController
       else
         redirect_to @site_sale, alert: 'Payment methods do not balance with sales receipts.'
       end
-    elsif params[:open] && current_scout.admin?
+    elsif params[:open] && current_scout.is_site_sales_admin?
       @site_sale.update(closed_at: nil, closed_by: nil)
       redirect_to @site_sale, notice: 'The Site Sale was re-opened.'
-    else 
+    elsif current_scout.is_site_sales_admin?
       @site_sale.update(site_sale_params)
       redirect_to @site_sale, notice: 'The Site Sale was successfully updated.'
+    else
+      redirect_to @site_sale, alert: 'You do not have permission to modify this Site Sale.'
     end 
   end
 
   def destroy
-    @site_sale.destroy
-    redirect_to site_sales_url, notice: 'Site sale was successfully destroyed.'
+    if current_scout.is_site_sales_admin?
+      @site_sale.destroy
+      redirect_to site_sales_url, notice: 'Site sale was successfully destroyed.'
+    else
+      redirect_to @site_sale, alert: 'You do not have permission to modify this Site Sale.'
+    end
   end
 
   def tracking_sheet
@@ -64,12 +70,10 @@ class SiteSalesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_site_sale
       @site_sale = SiteSale.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def site_sale_params
       params.require(:site_sale).permit(:event_id, :name, :date, :status)
     end

@@ -48,7 +48,7 @@
             %tbody
               - total_retail = 0
               - total_wholesale = 0
-              - @stocks_hash.each do |key, value|
+              - @stocks_hash.each do |key, value, wholesale|
                 - product = Product.find(key)
                 - next if product.is_pack_donation? || !product.is_physical_inventory
                 - quantity = value
@@ -64,8 +64,10 @@
                     - total_retail += quantity * product.retail_price
                     = number_to_currency(quantity * product.retail_price)
                   %td.text-right
-                    - total_wholesale += quantity * product.retail_price * (1 - @active_event.unit_commission_percentage / 100)
-                    = number_to_currency(quantity * product.retail_price * (1 - @active_event.unit_commission_percentage / 100))
+                    - if params[:location]
+                      = Stock.wholesale_value(@active_event, product, params[:location])
+                    - else
+                      = Stock.wholesale_value(@active_event, product)    
                     
               %tr
                 %td
@@ -73,7 +75,10 @@
                 %td
                 %td.text-right= number_to_currency(total_retail)
                 %td.text-right.wholesale-value
-                  = number_to_currency(total_wholesale)
+                  - if params[:location]
+                    = number_to_currency(Stock.wholesale_value(@active_event, nil, params[:location]))
+                  - else
+                    = number_to_currency(Stock.wholesale_value(@active_event))
 
         = link_to new_stock_path, class: 'hidden-print' do
           %i.fa.fa-plus.fa-lg
