@@ -15,10 +15,6 @@ class Unit < ApplicationRecord
     true unless treasurer_email.blank?
   end
 
-  def invitable?
-    true if default_event
-  end
-
   def treasurer_name
     (treasurer_first_name || '') + ' ' + (treasurer_last_name || '')
   end

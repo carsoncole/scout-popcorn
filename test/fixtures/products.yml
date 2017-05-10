@@ -81,3 +81,9 @@ white_popcorn:
   retail_price: 10
   event: two
   is_physical_inventory: true
+
+plain_pocorn:
+  name: Plain Popcorn
+  retail_price: 20
+  event: two
+  is_physical_inventory: true

@@ -8,10 +8,6 @@ class StocksController < ApplicationController
     @locations = @active_event.stocks.order(location: :desc).group(:location)
     if params[:location]
       @stocks_query = @stocks_query.where(location: params[:location])
-    # elsif params[:all]
-    #   # use default
-    # elsif @locations.any?
-    #   redirect_to stocks_path(location: @locations.first.location)
     end
 
     if params['date(1i)']
@@ -55,17 +51,6 @@ class StocksController < ApplicationController
     if stock_params[:is_transfer_from_warehouse] == true && stock_params[:location] == 'warehouse'
       redirect_to stocks_ledger_path, notice: "Location needs to be different than -warehouse-"
     else
-
-      # if stock_params[:movement_with_warehouse] == "1"
-      #   movement_with_warehouse = true
-      #   stock_params.delete :movement_with_warehouse
-      #   @corresponding_stock = @active_event.stocks.build(stock_params)
-      #   @corresponding_stock.quantity = -@corresponding_stock.quantity
-      #   @corresponding_stock.location = 'warehouse'
-      #   @corresponding_stock.created_by = current_scout.id
-      #   @corresponding_stock.save
-      # end
-
       @stock = @active_event.stocks.build(stock_params)
       @stock.created_by = current_scout.id
 
@@ -93,7 +78,7 @@ class StocksController < ApplicationController
   def destroy
     @stock.destroy
     respond_to do |format|
-      format.html { redirect_to stocks_ledger_path, notice: 'Stock was successfully destroyed.' }
+      format.html { redirect_to stocks_ledger_path, notice: 'Stock transfer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

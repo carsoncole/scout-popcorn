@@ -67,7 +67,7 @@
                     - if current_scout.is_warehouse_admin?
                       = link_to edit_stock_path(stock) do
                         %i.fa.fa-pencil.fa-lg
-                      = link_to stock_path(stock), method: :delete do
+                      = link_to stock_path(stock), method: :delete, :data => { :confirm => 'Are you sure? Ensure that any other related transactions are also destroyed or it could result in financial figures that are not balanced.' } do
                         %i.fa.fa-trash.fa-lg
 
 

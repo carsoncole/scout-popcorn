@@ -18,7 +18,9 @@ class PrizeCartsController < ApplicationController
 
   def show
     @prize_cart = current_scout.prize_cart(@active_event)
-    @cart_prizes = @prize_cart.cart_prizes
+    @prize_cart.process_automatic_prizes!
+    @cart_prizes = @prize_cart.cart_prizes.joins(:prize).order('prizes.source')
+    @cart_prize_sources = @prize_cart.cart_prizes.joins(:prize).group('prizes.source').map{|s| s.prize.source }
     @prizes = @prize_cart.prizes
     # @prize_cart = current_scout.prize_cart(@active_event)
     # #Prize.process_bonus_prizes!(@active_event, current_scout) unless current_scout.admin? || params[:recalc]
@@ -58,7 +60,13 @@ class PrizeCartsController < ApplicationController
   end
 
   def order
-    current_scout.prize_cart(@active_event).cart_prizes.create(prize_id: params[:prize_id])
+    prize = @active_event.prizes.where(id: params[:prize_id]).first
+    prize_cart = current_scout.prize_cart(@active_event)
+    if existing_selected_prize = prize_cart.cart_prizes.where(prize: prize).first
+      existing_selected_prize.update(quantity: existing_selected_prize.quantity + 1 )
+    else
+      current_scout.prize_cart(@active_event).cart_prizes.create(prize: prize, prize_amount: prize.reduces_sales_credits? ? prize.sales_amount : nil, quantity: 1)
+    end
     redirect_to prizes_path
   end
 

@@ -9,7 +9,7 @@ class SiteSalesFlowTest < Capybara::Rails::TestCase
     site_sale = site_sales(:walmart)
     event = events(:one)
     products = event.products
-    scouts = units(:one).scouts
+    scouts = units(:one).scouts.not_admin
 
     event.stocks.each do |stock|
         stock.update_wholesale_value!
@@ -30,7 +30,7 @@ class SiteSalesFlowTest < Capybara::Rails::TestCase
     fill_in "stock_quantity", with: 20
     select 'site sales', from: "stock_location"
     check 'stock_is_transfer_from_warehouse'
-    click_button 'Save'
+    click_button 'Create stock transfer'
     assert page.has_content? 'Stock was successfully transferred'
 
     #visit balance sheet for original inventory
@@ -81,7 +81,6 @@ class SiteSalesFlowTest < Capybara::Rails::TestCase
     assert find('td.site-sales-cash').has_content? '$150.00'
     assert page.has_content? "$150.00"
     new_inventory = original_inventory - (150.00 * (1- event.unit_commission_percentage / 100))
-    save_and_open_page
     assert find('td.inventory').has_content? number_to_currency(new_inventory)
 
     # visit home page

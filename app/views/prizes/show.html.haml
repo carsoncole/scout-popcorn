@@ -35,6 +35,7 @@
 
         = image_tag(@prize.url, class: 'img-fluid img-rounded m-x-auto') if @prize.url
 
-        - if current_scout.admin?
-          = link_to 'Edit', edit_prize_path(@prize)
+        - if current_scout.is_prizes_admin?
+          = link_to edit_prize_path(@prize) do
+            %i.fa.fa-pencil.fa-lg
 

@@ -9,11 +9,6 @@
             .visible-print-inline
               = "-"
               = params[:location].titleize if params[:location]
-
-        / %p.hidden-print.card-text
-        /   = link_to stock_movement_path, class: 'dropdown-item' do
-        /     %i.fa.fa-print.fa-lg
-        /     Stock Transfers
                     
         .pull-right.hidden-print
           = form_tag stocks_path(location: params[:location]), method: :get do
@@ -30,8 +25,6 @@
           - @locations.each do |location|
             %li.nav-item
               = link_to location.location.titleize, stocks_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
-
-        
 
         %br
         .table-responsive
@@ -58,23 +51,23 @@
                     %b= link_to name, product_path(product)
                     - if quantity <= 0 && product.is_physical_inventory
                       .badge.badge-danger SOLD OUT
-                  %td.text-center.quantity= quantity
+                  %td.text-center{class: "#{product.name.parameterize} quantity"}= quantity
                   %td.text-right= number_to_currency(product.retail_price)
                   %td.text-right
                     - total_retail += quantity * product.retail_price
                     = number_to_currency(quantity * product.retail_price)
-                  %td.text-right
+                  %td.text-right{class: "#{product.name.parameterize} wholesale-value"}
                     - if params[:location]
-                      = Stock.wholesale_value(@active_event, product, params[:location])
+                      = number_to_currency(Stock.wholesale_value(@active_event, product, params[:location]), precision: 2)
                     - else
-                      = Stock.wholesale_value(@active_event, product)    
+                      = number_to_currency(Stock.wholesale_value(@active_event, product), precision: 2)
                     
               %tr
                 %td
                 %td
                 %td
                 %td.text-right= number_to_currency(total_retail)
-                %td.text-right.wholesale-value
+                %td.text-right.total-wholesale-value
                   - if params[:location]
                     = number_to_currency(Stock.wholesale_value(@active_event, nil, params[:location]))
                   - else
@@ -82,4 +75,5 @@
 
         = link_to new_stock_path, class: 'hidden-print' do
           %i.fa.fa-plus.fa-lg
+          Add a transfer
           .visible-print-block= nice_date_time(Time.current)

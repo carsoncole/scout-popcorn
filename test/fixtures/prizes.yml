@@ -25,6 +25,31 @@ four:
   source: Unit
   reduces_sales_credits: false
 
+council_one:
+  event: one
+  name: MyString
+  sales_amount: 300
+  source: Council
+
+council_two:
+  event: one
+  name: MyString
+  sales_amount: 500
+  source: Council
+
+council_three:
+  event: one
+  name: MyString
+  sales_amount: 1000
+  source: Council
+
+council_four:
+  event: one
+  name: MyString
+  sales_amount: 500
+  source: Council
+  reduces_sales_credits: false
+
 default_council_one:
   name: MyString
   sales_amount: 300

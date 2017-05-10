@@ -50,30 +50,37 @@ take_orders_admin:
   unit: one
   event: one
   is_take_orders_admin: true
+  is_admin: true
   password_digest: <%= BCrypt::Password.create "password" %>
 
 online_sales_admin: 
   email: online_sales@example.com
   first_name: Sam
-  last_name: Jones
+  last_name: Wilson
   unit: one
   event: one
+  is_online_sales_admin: true
+  is_admin: true
   password_digest: <%= BCrypt::Password.create "password" %>
 
 financial_admin: 
   email: financial_admin@example.com
-  first_name: Sam
+  first_name: Lisa
   last_name: Jones
   unit: one
   event: one
+  is_financial_admin: true
+  is_admin: true
   password_digest: <%= BCrypt::Password.create "password" %>
 
 prizes_admin: 
   email: prizes_admin@example.com
-  first_name: Sam
-  last_name: Jones
+  first_name: Mike
+  last_name: Rabbis
   unit: one
   event: one
+  is_prizes_admin: true
+  is_admin: true
   password_digest: <%= BCrypt::Password.create "password" %>
 
 one: 
@@ -86,32 +93,32 @@ one:
 
 two: 
   email: two@example.com
-  first_name: Sam
-  last_name: Jones
+  first_name: Harry
+  last_name: Potter
   unit: one
   event: one
   password_digest: <%= BCrypt::Password.create "password" %> 
 
 three: 
   email: three@example.com
-  first_name: Sam
-  last_name: Jones
+  first_name: Andrew
+  last_name: Jackson
   unit: one
   event: one
   password_digest: <%= BCrypt::Password.create "password" %>
 
 no_activity: 
   email: no_activity@example.com
-  first_name: Sam
-  last_name: Jones
+  first_name: Georg
+  last_name: Washington
   unit: one
   event: one
   password_digest: <%= BCrypt::Password.create "password" %>
 
 four: 
   email: someome@example.com
-  first_name: Sam
-  last_name: Jones
+  first_name: Luther
+  last_name: King
   unit: two
   event: two
   password_digest: <%= BCrypt::Password.create "password" %>

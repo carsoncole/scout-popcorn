@@ -35,10 +35,13 @@
             = f.label "Prize ID"
             = f.text_field :source_id, class: 'form-control'
           .form-group
-            = f.label :cost
+            = f.label :cost_to_unit
             = f.text_field :cost, class: 'form-control'
           .form-group
             = f.label :reduces_sales_credits
+            %p.small.text-muted
+              %i.fa.fa-info-circle
+              If selected, this prize will reduce the eligible sale credits that a Scout can use to choose prizes. Deselect this option if the prize should automatically be chosen for the Scout if they achieve the Sales Amount indicated above.
             = f.check_box :reduces_sales_credits, class: 'form-control'
           .form-group
             = f.label :image_url

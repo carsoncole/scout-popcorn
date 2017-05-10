@@ -1,34 +1,12 @@
 .row
   .col-md-12
     %h2 Prizes
+    %p= link_to "Prize Cart", prize_cart_path
 
 %br
-.row
-
-  .col-md-3
-    .card
-      .card-block.card-text.text-center
-        %h5
-          Your sales that can be applied towards prizes:
-        %h2
-          %span.badge.badge-success
-            = number_to_currency(current_scout.sales(@active_event))
-
-
-  .col-md-3
-    .card
-      .card-block.card-text.text-center
-        %h5
-          Sales value of prizes in your cart:
-        %h2
-          %span.badge.badge-success
-            = number_to_currency(@current_scout.prize_cart(@active_event).sales_credits)
-
-%br
-%br   
-
 
 - Prize::SOURCES.each do |source|
+
   - prizes = @active_event.prizes.where(source: source).order(sales_amount: :asc)
   - if prizes.any?
     .row
@@ -36,13 +14,44 @@
         %h4
           = source
           Prizes
+
+    .row
+
+      .col-md-3
+        .card
+          .card-block.card-text.text-center
+            %p
+              Your remaining sales credits that can be applied towards
+              = source
+              prizes:
+            %h3
+              %span.badge.badge-success{class: "#{source.parameterize} remaining-sales-credits" }
+                = number_to_currency(current_scout.prize_cart(@active_event).available_sales_credits(source))
+
+
+      .col-md-3
+        .card
+          .card-block.card-text.text-center
+            %p
+              Sales value of
+              = source
+              prizes in your cart:
+            %h3
+              %span.badge.badge-success{class: "#{source.parameterize} used-credits" }
+                = number_to_currency(@current_scout.prize_cart(@active_event).sales_credits_used(source))
+
+    %br
+
+
     .row
       - prizes.each do |prize|
         .col-md-3
           .card.text-center
             .card-header
               %h5.card-text= prize.name
-              / %p.small.card-text= link_to "Read more", prize_path(prize)
+              %p.card-text
+                = link_to prize_path(prize) do
+                  %i.fa.fa-pencil
             .card-block
               - if prize.description.present?
                 %p.card-text= prize.description
@@ -53,7 +62,7 @@
                   %br
                 = number_to_currency(prize.sales_amount)
 
-            - if prize.reduces_sales_credits && current_scout.available_sales_credits(@active_event) > prize.sales_amount
+            - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).available_sales_credits(source) >= prize.sales_amount
               .card-footer
                 = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: 'btn btn-primary btn-sm'
 

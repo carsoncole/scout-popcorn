@@ -8,6 +8,8 @@ class Prize < ApplicationRecord
   validates :name, length: { maximum: 40 }
   validates :name, uniqueness: { scope: :event }
 
+  scope :does_not_reduce_sales_credits, -> { where(reduces_sales_credits: false)}
+
   validates :sales_amount, numericality: true
   validates :source, inclusion: { in: Prize::SOURCES }
 
@@ -19,40 +21,5 @@ class Prize < ApplicationRecord
       throw :abort
     end
   end
-
-
-
-  # def self.default
-  #   where(event_id: nil)
-  # end
-
-  # def self.pack
-  #   where(source: 'pack')
-  # end
-
-  # def self.bsa
-  #   where(source: 'bsa')
-  # end
-
-  # def self.bsa_bonus
-  #   where(source: 'bsa-bonus')
-  # end
-
-  # def self.process_bonus_prizes!(event, s=nil)
-  #   scouts = []
-  #   if s
-  #     scouts << s
-  #   else
-  #     scouts += event.unit.scouts
-  #   end
-  #   scouts.each do |scout|
-  #     scout.prize_cart(event).cart_prizes.joins(:prize).where("prizes.source = ?", 'bsa-bonus').destroy_all
-  #     total_sales = scout.total_sales(event)
-  #     bsa_bonus_prizes = event.prizes.bsa_bonus.where("sales_amount <= ?", total_sales)
-  #     bsa_bonus_prizes.each do |prize|
-  #       scout.prize_cart(event).cart_prizes.create(prize_id: prize.id, prize_amount: prize.sales_amount)
-  #     end
-  #   end
-  # end
 
 end

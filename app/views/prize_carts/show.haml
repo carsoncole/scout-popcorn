@@ -3,166 +3,63 @@
   .col-md-8
     .card
       .card-block
-        %h2.card-title
-          .pull-right
-            %i.fa.fa-shopping-cart.fa-lg
+        %h2.card-title.text-center
+          = @active_event.name
+          %br
           Prize Cart
+          %br
+          %i.fa.fa-shopping-cart.fa-lg
 
         %p.card-text
           = current_scout.name
           %br
           = @active_event.name
 
+        %p.card-text.hidden-print= link_to "View Prizes", prizes_path
         %br
         %table.table.card-text
           %tr
-            %th Prize
-            %td.text-right Quantity
-          - @cart_prizes.each do |cart_prize|
+            %td Prize
+            %td.text-center Quantity
+            %td.text-right Sales credits used
+          - @cart_prize_sources.each do |source|
+            %tr
+              %th(colspan=3)
+                = source
+                prizes
+            - @prize_cart.cart_prizes.joins(:prize).where("prizes.source = ?", source).each do |cart_prize|
+              - prize = cart_prize.prize
+              
+              %tr
+                %td
+                  = succeed(":") do
+                    = prize.source
+                  = prize.name
+                  - if prize.description.present?
+                    %br
+                    .small= prize.description
+                  - if prize.reduces_sales_credits
+                    %br
+                    = button_to "Remove", prize_removal_path(cart_prize), method: :post, class: 'btn btn-info btn-sm hidden-print'
+                %td.text-center
+                  = cart_prize.quantity
+
+                %td.text-right
+                  - if cart_prize.prize_amount.present?
+                    = number_to_currency(cart_prize.prize_amount * cart_prize.quantity, precision: 2)
+                  - else
+                    = "-"
+                  /#FIXME This could permit additional quantity on a prize whose price has been changed
+
             %tr
               %th
-                = cart_prize.prize.name
-                %br
-                = button_to "Remove", prize_removal_path(cart_prize), method: :post, class: 'btn btn-default btn-sm'
-              %td.text-right 1
-
+              %td
+              %td.text-right= number_to_currency(@prize_cart.sales_credits_used(source), precision: 2)
         %hr
-        .text-right= link_to 'Place Order', "#", class: 'btn btn-success text-right card-text', disabled: true
+        - unless @prize_cart.ordered?
+          .text-right.hidden-print= link_to 'Place Order', "#", class: 'btn btn-success text-right card-text', disabled: true
 
-    .text-center
+    .text-center.hidden-print
       = link_to "#" do
         %i.fa.fa-print.fa-lg
         Print
-/ - unless current_scout.admin?
-/   .row
-/     .col-md-2
-/     .col-md-8
-/       .card
-/         .card-block
-/           .card-title.text-xs-center
-/             %h2 Your Sales
-
-/           %h4.card-text.text-xs-center.text-info
-/             = number_to_currency(@total_sales)
-
-/           %p.card-text.text-muted.text-xs-center.small This figure includes all Site and Online Sales, and Take Orders that have been turned in.
-
-
-/   .row
-/     .col-md-6
-/       .card
-/         .card-block
-/           .card-title
-/             %h2 Available BSA Prizes
-
-/           %p.card-text.text-muted
-/             Select any combination of BSA prizes that total less than your total sales of
-/             = number_to_currency(@total_sales)
-
-/           %p.text-xs-center
-/             You have
-/             = number_to_currency(@total_sales - @bsa_prize_amounts_selected, precision: 0)
-/             left to choose prizes with
-
-/           - unless @cart_prizes.any? || @eligible_bsa_prizes.any?
-/             %br
-/             .col-md-2
-/             .col-md-8
-/               .alert.alert-info.text-xs-center
-/                 As you do more Popcorn Sales, prizes you become eligible for will be shown here.
-          
-/           - if @eligible_bsa_prizes.any?
-/             %br
-/             %table.table.table-sm
-/               - @eligible_bsa_prizes.each do |prize|
-/                 %tr
-/                   %td
-/                     = link_to prize.name, prize_path(prize)
-/                     = image_tag(prize.url, width: 40, class: 'img-rounded') if prize.url
-/                   %td.text-right= number_to_currency(prize.amount, precision: 0)
-/                   %td.text-right.action_button
-/                     = button_to prize_selection_path(prize.id), class: 'btn btn-success' do
-/                       %i.fa.fa-cart-plus
-
-/     .col-md-6
-/       .card
-/         .card-block
-/           .card-title
-/             %h2 Available Pack Prizes
-/           - if @pack_prizes.any?
-/             %p.card-text.text-muted You can select one prize.
-
-/           - unless @cart_prizes.any? || @available_pack_prizes.any?
-/             %br
-/             .col-md-2
-/             .col-md-8
-/               .alert.alert-info.text-xs-center
-/                 As you do more Popcorn Sales, prizes you become eligible for will be shown here.
-          
-/           - if @pack_prizes.any?
-/             %table.table.table-sm
-/               - @pack_prizes.each do |prize|
-/                 %tr
-/                   %td
-/                     = link_to prize.name, prize_path(prize)
-/                     = image_tag(prize.url, width: 40, class: 'img-rounded') if prize.url
-/                     / = number_to_currency(prize.amount, precision: 0)
-/                   %td.text-right= number_to_currency(prize.amount, precision: 0)
-/                   %td.text-right.action_button
-/                     = button_to prize_selection_path(prize.id), class: 'btn btn-success' do
-/                       %i.fa.fa-cart-plus
-
-/       .card
-/         .card-block
-/           .card-title
-/             %h2
-/               %i.fa.fa-shopping-cart.fa-lg
-/               Prize Cart
-/           %br
-/           - if @cart_prizes.any?
-/             %table.table.table-sm
-/               - @cart_prizes.each do |scout_prize|
-/                 %tr
-/                   %td
-/                     - if scout_prize.prize.source == 'bsa'
-/                       BSA Prize
-/                     - elsif scout_prize.prize.source == 'bsa-bonus'
-/                       BSA Bonus Prize
-/                     - elsif scout_prize.prize.source == 'pack'
-/                       Pack Prize
-/                     = link_to scout_prize.prize.name, prize_path(scout_prize.prize_id)
-/                     = image_tag(scout_prize.prize.url, width: 40, class: 'img-rounded') if scout_prize.prize.url
-/                     - if scout_prize.prize.source == 'pack' && @available_pack_prizes.first && @available_pack_prizes.first.amount > scout_prize.prize_amount
-/                       %br
-/                       .small.text-danger * Removing this prize will reveal additional Pack Prizes with higher values
-
-/                   %td.text-right= number_to_currency(scout_prize.prize_amount, precision: 0)
-/                   %td.text-right.action_button
-/                     - unless scout_prize.prize.source == 'bsa-bonus' || @prize_cart.ordered?
-/                       = button_to prize_removal_path(scout_prize.id), class: 'btn btn-success' do
-/                         %i.fa.fa-minus
-
-
-/           - else
-/             .col-md-2
-/             .col-md-8
-/               .alert.alert-info.text-xs-center
-/                 Prizes you have chosen will be shown here.           
-
-/           = render 'flash'
-
-/           .card-text.text-xs-center
-/             - if @active_event.allow_prize_cart_ordering? && !@prize_cart.ordered?
-/               = button_to "ORDER MY PRIZES", prize_cart_path(@prize_cart), class: 'btn btn-success btn-lg'
-/             - elsif @active_event.allow_prize_cart_ordering? && @prize_cart.ordered?
-/               %b
-/                 ORDERED
-/                 = nice_date_time(@prize_cart.is_ordered_at)
-/             - else
-/               .text-muted
-/                 Prize orders can be placed on
-/                 = succeed(".") do
-/                   = nice_date(@active_event.prize_cart_ordering_starts_at) 
-/               %br
-/               = button_to "ORDER MY PRIZES", "#", disabled: @active_event.prize_cart_ordering_starts_at < Date.today && @active_event.prize_cart_ordering_ends_at > Date.today ? false : true, class: 'btn btn-success btn-lg'
-
