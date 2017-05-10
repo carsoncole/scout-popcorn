@@ -80,7 +80,7 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
   test "should not destroy prize since used" do
     sign_in(scouts(:prizes_admin))
     assert_difference('Prize.count', 0) do
-      delete prize_url(@pri ze)
+      delete prize_url(@prize)
     end
 
     assert_redirected_to prizes_url
