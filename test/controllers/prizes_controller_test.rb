@@ -33,7 +33,6 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
     scout = scouts(:one)
     event = events(:one)
     get prizes_url
-    puts event.prizes.first.source
     assert_select ".council.used-credits", number_to_currency(scout.prize_cart(event).sales_credits_used('Council'), precision: 2)
   end
 
@@ -81,7 +80,7 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
   test "should not destroy prize since used" do
     sign_in(scouts(:prizes_admin))
     assert_difference('Prize.count', 0) do
-      delete prize_url(@prize)
+      delete prize_url(@pri ze)
     end
 
     assert_redirected_to prizes_url

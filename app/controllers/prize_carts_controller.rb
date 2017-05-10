@@ -1,5 +1,4 @@
 class PrizeCartsController < ApplicationController
-  # before_action :redirect_unless_admin!, except: [:show, :order_prizes, :selection, :removal]
 
   def index
   #   redirect_to root_path unless current_scout.admin?

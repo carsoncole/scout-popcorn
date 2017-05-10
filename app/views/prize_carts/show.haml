@@ -10,12 +10,21 @@
           %br
           %i.fa.fa-shopping-cart.fa-lg
 
+        
+        .pull-right
+          .card-text.hidden-print.text-right= link_to "View Prizes", prizes_path
+          .card-text.hidden-print.text-right
+            = link_to "#", onclick: 'window.print();return false;' do
+              %i.fa.fa-print.fa-lg
+              Print
+
+
         %p.card-text
           = current_scout.name
           %br
           = @active_event.name
 
-        %p.card-text.hidden-print= link_to "View Prizes", prizes_path
+
         %br
         %table.table.card-text
           %tr
@@ -57,9 +66,4 @@
               %td.text-right= number_to_currency(@prize_cart.sales_credits_used(source), precision: 2)
         %hr
         - unless @prize_cart.ordered?
-          .text-right.hidden-print= link_to 'Place Order', "#", class: 'btn btn-success text-right card-text', disabled: true
-
-    .text-center.hidden-print
-      = link_to "#" do
-        %i.fa.fa-print.fa-lg
-        Print
+          %p.card-text.text-center.hidden-print= link_to 'Place Order', "#", class: 'btn btn-success text-right card-text', disabled: true
