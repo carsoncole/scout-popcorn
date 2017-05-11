@@ -25,7 +25,7 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
     scout = scouts(:one)
     event = events(:one)
     get prizes_url
-    assert_select ".council.remaining-sales-credits", number_to_currency(scout.prize_cart(event).available_sales_credits('Council'), precision: 2)
+    assert_select ".council.remaining-sales-credits", number_to_currency(scout.prize_cart(event).sales_credits_available('Council'), precision: 2)
   end
 
   test "should show used credits" do

@@ -22,11 +22,15 @@ class PrizeCart < ApplicationRecord
     where(is_ordered_at: nil, is_approved_at: nil)
   end
 
+  def self.total_unit_cost(event)
+    approved.where(event_id: event.id).joins(cart_prizes: :prize).where("prizes.source = ?", 'Unit').sum('prizes.cost * cart_prizes.quantity')
+  end
+
   def sales_credits_used(source)
     cart_prizes.joins(:prize).where("prizes.reduces_sales_credits = ?",true).where("prizes.source = ?", source).sum('prizes.sales_amount * quantity')
   end
 
-  def available_sales_credits(source)
+  def sales_credits_available(source)
     scout.sales(event) - sales_credits_used(source)
   end
 
@@ -38,6 +42,16 @@ class PrizeCart < ApplicationRecord
     !is_approved_at.blank?
   end
 
+  def status
+    if approved?
+      "Approved"
+    elsif ordered?
+      "Ordered"
+    else
+      "In Process"
+    end
+  end
+
   def product_ids
     cart_prizes.map {|cp| cp.id }
   end
@@ -47,7 +61,13 @@ class PrizeCart < ApplicationRecord
   end
 
   def orderable?
-    cart_prizes.joins(:prize).where("prizes.source = 'bsa'").sum("prizes.amount") < scout.total_sales(event)
+    sales = scout.sales(event)
+    result = true
+    Prize::SOURCES.each do |source|
+      if sales > sales_credits_used(source)
+        result = false
+      end
+    end
   end
 
   def process_automatic_prizes!

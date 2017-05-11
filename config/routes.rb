@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'forgot_password', to: 'scouts#forgot_password', as: 'forgot_password'
 
-  # resources :prize_carts
+  
   resources :due_from_customers, only: :index
 
   get 'events/:id/commissions' => 'events#edit_commission_percentage', as: 'edit_commission_percentage'
@@ -20,10 +20,10 @@ Rails.application.routes.draw do
   get "product-preset-collections" => 'products#preset_collections', as: 'preset_product_collections'
   post "product-preset-collections" => 'products#add_preset_collection', as: 'add_presets'
 
-  get 'prize-cart' => 'prize_carts#show', as: 'prize_cart'
+  resources :prize_carts, only: [:index, :show], path: 'prize-carts'
   post 'prize-cart/order' => 'prize_carts#order', as: 'prize_cart_order'
 
-  post 'prize_carts/:id' => 'prize_carts#order_prizes', as: 'order_prizes'
+  post 'prize-carts/:id' => 'prize_carts#order_prizes', as: 'order_prizes'
   get 'approved-prizes' => 'prize_carts#approved_prizes', as: 'approved_prizes'
   post "approve-prize-cart/:id" => "prize_carts#approve", as: 'approve_prize_cart'
   post "unapprove-prize-cart/:id" => "prize_carts#unapprove", as: 'unapprove_prize_cart'
@@ -72,7 +72,6 @@ Rails.application.routes.draw do
     resources :scout_site_sales
     resources :resources
   end
-  post "prize-cart/selection/:id" => "prize_carts#selection", as: 'prize_selection'
   post "prize-cart/removal/:id" => "prize_carts#removal", as: 'prize_removal'
   resources :prizes
   resources :products

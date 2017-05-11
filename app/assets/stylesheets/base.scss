@@ -10,6 +10,10 @@ body {
   margin-bottom: 1.5em;
 }
 
+.fa-shopping-cart {
+  color: $yellow;
+}
+
 h5 {
   color: $blue;
 }
@@ -27,6 +31,13 @@ h5 {
   margin-bottom: 1em;
 }
 
+td {
+  &.sales-level { width: 6em };
+  &.prize-quantity { widht: 4em };
+  &.sales-accounted { width: 9em };
+  &.unit-cost { width: 5em };
+
+}
 
 .btn.sales {
   background-color: $yellow;  

@@ -1,7 +1,7 @@
 .row
   .col-md-12
     %h2 Prizes
-    %p= link_to "Prize Cart", prize_cart_path
+    %p= link_to "Prize Cart", prize_cart_path(current_scout.prize_cart(@active_event))
 
 %br
 
@@ -26,7 +26,7 @@
               prizes:
             %h3
               %span.badge.badge-success{class: "#{source.parameterize} remaining-sales-credits" }
-                = number_to_currency(current_scout.prize_cart(@active_event).available_sales_credits(source))
+                = number_to_currency(current_scout.prize_cart(@active_event).sales_credits_available(source))
 
 
       .col-md-3
@@ -62,7 +62,7 @@
                   %br
                 = number_to_currency(prize.sales_amount)
 
-            - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).available_sales_credits(source) >= prize.sales_amount
+            - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).sales_credits_available(source) >= prize.sales_amount
               .card-footer
                 = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: 'btn btn-primary btn-sm'
 

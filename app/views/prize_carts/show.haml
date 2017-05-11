@@ -20,12 +20,13 @@
 
 
         %p.card-text
-          = current_scout.name
+          = @prize_cart.scout.name
           %br
           = @active_event.name
+        - if @prize_cart.ordered?
+          %h3.text-center
+            .badge.badge-success Ordered
 
-
-        %br
         %table.table.card-text
           %tr
             %td Prize
@@ -49,7 +50,8 @@
                     .small= prize.description
                   - if prize.reduces_sales_credits
                     %br
-                    = button_to "Remove", prize_removal_path(cart_prize), method: :post, class: 'btn btn-info btn-sm hidden-print'
+                    - unless @prize_cart.ordered?
+                      = button_to "Remove", prize_removal_path(cart_prize), method: :post, class: 'btn btn-info btn-sm hidden-print'
                 %td.text-center
                   = cart_prize.quantity
 
@@ -65,5 +67,21 @@
               %td
               %td.text-right= number_to_currency(@prize_cart.sales_credits_used(source), precision: 2)
         %hr
-        - unless @prize_cart.ordered?
-          %p.card-text.text-center.hidden-print= link_to 'Place Order', "#", class: 'btn btn-success text-right card-text', disabled: true
+        %small.text-muted
+          - if @prize_cart.ordered?
+            Ordered:
+            = nice_date_time(@prize_cart.is_ordered_at)
+          - if @prize_cart.approved? && current_scout.is_admin?
+            = '– Approved:'
+            = nice_date_time(@prize_cart.is_approved_at)
+        .hidden-print
+          - if @prize_cart.ordered? && !@prize_cart.approved?
+            %p.card-text.text-center= button_to 'Reopen Order', unorder_prize_cart_path(@prize_cart.id), class: 'btn btn-success', disabled: false
+          - elsif !@prize_cart.ordered?
+            %p.card-text.text-center= button_to 'Place Order', order_prizes_path(@prize_cart.id), class: 'btn btn-success', disabled: false
+          - if current_scout.is_prizes_admin?
+            - if @prize_cart.ordered? && !@prize_cart.approved?
+              %hr
+              %p.card-text.text-center= button_to 'Approve', approve_prize_cart_path(@prize_cart.id), class: 'btn btn-success', disabled: false
+            - elsif @prize_cart.approved?
+              %p.card-text.text-center= button_to 'Unapprove', unapprove_prize_cart_path(@prize_cart.id), class: 'btn btn-success', disabled: false

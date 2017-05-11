@@ -44,12 +44,9 @@
                 %span.caret
               .dropdown-menu          
                 = link_to "Prizes", prizes_path, class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'index' }"
-                - unless current_scout.admin?  
-                  = link_to prize_cart_path, class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'cart'}" do
-                    %i.fa.fa-shopping-cart
-                    Prize Cart
-                - if current_scout.admin?
-                  = link_to "Prize Cart", prize_cart_path, class: "dropdown-item #{'active' if controller_name == 'scout_prize_selections'}"
+                = link_to prize_cart_path(current_scout.prize_cart(@active_event)), class: "dropdown-item #{'active' if controller_name == 'prizes' && action_name == 'cart'}" do
+                  %i.fa.fa-shopping-cart
+                  Prize Cart
    
           - if current_scout.admin?
             %li.nav-item
@@ -75,7 +72,10 @@
                 .dropdown-divider                  
                 %h6.dropdown-header
                   Prizes
-                = link_to "Approved Prize Carts", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
+                = link_to prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'index'}" do
+                  %i.fa.fa-shopping-cart
+                  Prize carts
+                = link_to "Prizes Approved", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
 
                 .dropdown-divider
                 %h6.dropdown-header
