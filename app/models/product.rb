@@ -8,6 +8,7 @@ class Product < ApplicationRecord
 
   validates :name, :retail_price, presence: true
   validates :name, uniqueness: { scope: :event_id, case_sensitive: false }
+  validates :name, length: { maximum: 50 }
   validates :retail_price, inclusion: { in: [1], message: "should be set to $1 since this is a Unit donation."}, if: Proc.new {|p| p.is_pack_donation }
   validates :is_sourced_from_bsa, inclusion: { in: [false], message: "should not be selected since this is a Unit donation"}, if: Proc.new { |p| p.is_sourced_from_bsa && p.is_pack_donation }
   validates :is_physical_inventory, inclusion: { in: [false], message: "should not be selected since this is a Unit donation"}, if: Proc.new { |p| p.is_physical_inventory && p.is_pack_donation }
