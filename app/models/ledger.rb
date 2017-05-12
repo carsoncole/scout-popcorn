@@ -3,13 +3,10 @@ class Ledger < ApplicationRecord
   belongs_to :take_order, optional: true
   belongs_to :take_order_line_item, optional: true
   belongs_to :stock, optional: true
-  
-  before_destroy { |ledger| 
-  }
 
   validates :account_id, presence: true
 
-  after_save :send_bank_deposit_notifications!, if: Proc.new {|l| l.is_bank_deposit && l.amount < 0 && bank_deposit_notification_sent_at.nil? }
+  # after_save :send_bank_deposit_notifications!, if: Proc.new {|l| l.is_bank_deposit && l.amount < 0 && bank_deposit_notification_sent_at.nil? }
   
   attr_accessor :is_bank_deposit, :from_account_id
 

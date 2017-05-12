@@ -8,7 +8,7 @@
         %table.table
           %tr
             %th Account:
-            %td.text-right= @ledger.account.name
+            %td.text-right= @ledger.account.name if @ledger.account
           %tr
             %th Description:
             %td.text-right= @ledger.description
@@ -28,7 +28,7 @@
             %th Created:
             %td.text-right= nice_date_time(@ledger.created_at)
 
-          - if @ledger.account.is_bank_account_depositable
+          - if @ledger.account && @ledger.account.is_bank_account_depositable
             %tr
               %th Bank notification email sent at:
               %td.text-right= nice_date_time(@ledger.bank_deposit_notification_sent_at) if @ledger.bank_deposit_notification_sent_at

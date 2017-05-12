@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  account_id: 1
+  account: site_sale_cash
   description: MyString
   amount: 9.99
   date: 2016-09-14
 
 two:
-  account_id: 1
+  account: site_sale_cash
   description: MyString
   amount: 9.99
   date: 2016-09-14
