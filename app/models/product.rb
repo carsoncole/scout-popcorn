@@ -45,7 +45,7 @@ class Product < ApplicationRecord
   end
 
   def self.take_order_left(take_order)
-    Product.active.where(event_id: take_order.event_id).order(:name).reject{ |p| take_order.products.include? p}
+    Product.active.where(event_id: take_order.envelope.event_id).order(:name).reject{ |p| take_order.products.include? p}
   end
 
   def self.site_sale_left(site_sale)

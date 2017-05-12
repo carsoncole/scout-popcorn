@@ -7,7 +7,7 @@
             .card-title
               %h3
                 Take Order -
-                = @take_order.scout.name  
+                = @take_order.envelope.scout.name  
                 %span.badge.badge-primary
                   - if @take_order.status == 'submitted'
                     Turned In

@@ -9,10 +9,10 @@
         = form_for @take_order do |f|
           = render 'errors', target: @take_order
 
-          - if current_scout.admin? && @take_order.envelope.nil?
-            .form-group
-              %label Scout
-              = f.collection_select :scout_id, Scout.not_admin, :id, :last_first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
+          / - if current_scout.admin? && @take_order.envelope.nil?
+          /   .form-group
+          /     %label Scout
+          /     = f.collection_select :scout_id, @active_event.unit.scouts.not_admin, :id, :last_first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
           .form-group
             .field
               %label= f.label :customer_name

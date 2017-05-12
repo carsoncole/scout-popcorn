@@ -6,9 +6,9 @@ class TakeOrder < ApplicationRecord
   has_many :take_order_line_items, dependent: :destroy
   has_many :ledgers
   
-  validates :scout_id, :event_id, :customer_name, :payment_account_id, presence: true
+  validates :customer_name, :payment_account_id, presence: true
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
-  validate :check_scout_id_matches_envelope_scout_id
+  # validate :check_scout_id_matches_envelope_scout_id
   
   before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
@@ -161,11 +161,11 @@ class TakeOrder < ApplicationRecord
     end
   end
 
-  def check_scout_id_matches_envelope_scout_id
-    if envelope && scout_id != envelope.scout_id
-      errors.add(:scout_id, "must match the Scout on the Envelope.")
-    end
-  end
+  # def check_scout_id_matches_envelope_scout_id
+  #   if envelope && scout_id != envelope.scout_id
+  #     errors.add(:scout_id, "must match the Scout on the Envelope.")
+  #   end
+  # end
 
   def credit_product_due!
     product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first

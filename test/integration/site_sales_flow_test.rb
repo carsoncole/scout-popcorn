@@ -77,9 +77,8 @@ class SiteSalesFlowTest < Capybara::Rails::TestCase
 
     #visit balance sheet
     visit balance_sheet_path
-    #33800
-    assert find('td.site-sales-cash').has_content? '$150.00'
-    assert page.has_content? "$150.00"
+    assert find('td.site-sales-cash').has_content? '$169.98'
+    assert page.has_content? "$169.98"
     new_inventory = original_inventory - (150.00 * (1- event.unit_commission_percentage / 100))
     assert find('td.inventory').has_content? number_to_currency(new_inventory)
 

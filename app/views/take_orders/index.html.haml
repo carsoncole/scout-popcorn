@@ -141,11 +141,11 @@
                   - total = 0
                   - envelope.take_orders.each do |take_order|
                     %tr
-                      - if current_scout.admin?
-                        %td
-                        %td
-                          - if take_order.scout
-                            = link_to take_order.scout.name, take_orders_path(scout_id: take_order.scout.id, filter: params[:filter])
+                      / - if current_scout.admin?
+                      /   %td
+                      /   %td
+                      /     - if take_order.envelope.scout
+                      /       = link_to take_order.envelope.scout.name, take_orders_path(scout_id: take_order.envelope.scout.id, filter: params[:filter])
                       %td= take_order.customer_name
                       %td
                         - total += take_order.value

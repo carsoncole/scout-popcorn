@@ -6,7 +6,7 @@ site_sale_cash:
   is_site_sale_eligible: true
   account_type: Asset
 
-site_sale_cash:
+take_orders_cash:
   event: one
   name: Take Orders cash
   account_type: Asset
