@@ -3,6 +3,7 @@ class Ledger < ApplicationRecord
   belongs_to :take_order, optional: true
   belongs_to :take_order_line_item, optional: true
   belongs_to :stock, optional: true
+  belongs_to :double_entry, optional: true
 
   validates :account_id, presence: true
 
@@ -10,6 +11,7 @@ class Ledger < ApplicationRecord
   
   attr_accessor :is_bank_deposit, :from_account_id, :fund_site_sales
 
+  after_destroy :destroy_related_double_entries!, if: Proc.new {|l| l.double_entry_id.present? }
 
   def self.expenses
     joins(:account).where("accounts.acount_type = 'Expense'")
@@ -23,5 +25,9 @@ class Ledger < ApplicationRecord
         self.update(bank_deposit_notification_sent_at: Time.now)
       end
     end
+  end
+
+  def destroy_related_double_entries!
+    Ledger.where(double_entry_id: self.double_entry_id).delete_all
   end
 end

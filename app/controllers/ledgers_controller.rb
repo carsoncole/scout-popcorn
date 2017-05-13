@@ -18,14 +18,6 @@ class LedgersController < ApplicationController
     @take_order_ids = @active_event.take_orders.joins(:account).where("accounts.name = 'Money due from Customer'").map{|to|["Take Order: #{to.id} - #{to.customer_name}",to.id]}
   end
 
-  def bank_deposit
-    @ledger = Ledger.new
-    @ledger.is_bank_deposit = true
-    @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
-    @cash_accounts = @active_event.accounts.cash.order(:name)
-    @deposit = true
-  end
-
   def final_unit_settlement_form
     @due_to_bsa_ledgers = Ledger.joins(account: :event).where("event_id = ? AND accounts.name = 'Due to BSA'", @active_event.id)
     @due_to_bsa= (@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
@@ -118,6 +110,10 @@ class LedgersController < ApplicationController
       contra_ledger.account = site_sale_cash_account
       contra_ledger.description = 'Money transfer from Unit'
       
+      double_entry = DoubleEntry.create
+      @ledger.double_entry = double_entry
+      contra_ledger.double_entry = double_entry
+
       if @ledger.save && contra_ledger.save
         flash[:notice] = 'Funding of Site Sales was recorded.'
         redirect_to ledgers_path
@@ -131,12 +127,49 @@ class LedgersController < ApplicationController
     end
   end
 
+  def bank_deposit
+    if request.post?
+      @ledger = Ledger.new(ledger_params)
+      @ledger.created_by = current_scout.id
+      from_account = Account.find(ledger_params[:from_account_id])
+      if from_account
+        @ledger.description = "Bank deposit from #{from_account.name}"
+      end
+      @contra_ledger = Ledger.new(ledger_params)
+      @contra_ledger.description = "Bank deposit to #{@ledger.account.name}"
+      @contra_ledger.account_id = ledger_params[:from_account_id]
+      @contra_ledger.amount = -ledger_params[:amount].to_f
+      @contra_ledger.created_by = current_scout.id
+      @contra_ledger.save
+
+      double_entry = DoubleEntry.create
+      @ledger.double_entry = double_entry
+      @contra_ledger.double_entry = double_entry
+
+      if @ledger.save && @contra_ledger.save
+        flash[:notice] = 'Your bank deposit has been recorded.'
+        redirect_to ledgers_path
+      else
+        @ledger = Ledger.new
+        @fund_site_sales = true  
+      end
+    else
+      @ledger = Ledger.new
+      @ledger.is_bank_deposit = true
+      @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
+      @cash_accounts = @active_event.accounts.cash.order(:name)
+      @deposit = true
+    end
+  end
+
+
   private
     def set_ledger
       @ledger = Ledger.find(params[:id])
     end
 
     def ledger_params
-      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by, :is_money_collected, :take_order_id, :fund_site_sales)
+      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by, :is_money_collected, :take_order_id, :fund_site_sales, :double_entry_id)
     end
+
 end

@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   get 'ledgers/fund-site-sales' => 'ledgers#fund_site_sales', as: :fund_site_sales
   post 'ledgers/fund-site-sales' => 'ledgers#fund_site_sales'
   
+  get 'ledgers/bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
+  post 'ledgers/bank-deposit' => 'ledgers#bank_deposit'
+
   resources :due_from_customers, only: :index
 
   get 'events/:id/commissions' => 'events#edit_commission_percentage', as: 'edit_commission_percentage'
@@ -44,7 +47,7 @@ Rails.application.routes.draw do
    get "ledgers/final-unit-settlement-form" => "ledgers#final_unit_settlement_form", as: 'final_unit_settlement_form'
   get "ledgers/statements/income-statement" => "ledgers#income_statement", as: 'income_statement'
   resources :ledgers
-  get 'bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
+
   resources :payment_methods
 
 

@@ -12,7 +12,7 @@
             A notification email of the deposit will be sent to
             = surround("'", "'.") do
               = @unit.treasurer_email
-        = form_for @ledger do |f|
+        = form_for @ledger, url: 'bank-deposit' do |f|
           - if @ledger.errors.any?
             #error_explanation
               %h2= "#{pluralize(@ledger.errors.count, "error")} prohibited this ledger from being saved:"

@@ -3,42 +3,34 @@
     .card
       .card-block
         .card-title
-          %h2 Financial Ledger
+          %h4 Financial Ledger
 
-        %ul.nav.nav-inline
+        %ul.nav.nav-inline.small
           - if current_scout.is_financial_admin?
             %li.nav-item
-              = link_to new_ledger_path, class: 'nav-link' do
+              = link_to ledger_transactions_path, class: 'nav-link' do
                 %i.fa.fa-plus.fa-lg
-          - if current_scout.is_financial_admin?
-            %li.nav-item
-              = link_to "Transactions", ledger_transactions_path, class: 'nav-link'
-          - if current_scout.is_financial_admin? || current_scout.is_site_sales_admin? || current_scout.is_take_orders_admin?
-            %li.nav-item
-              = link_to bank_deposit_path, class: 'nav-link' do
-                Bank Deposit
-          - if current_scout.is_take_orders_admin?
-            %li.nav-item
-              = link_to new_ledger_path(collect_from_customer: true), class: 'nav-link' do
-                Collect fr/Customer
-          %li.nav-item.dropdown
-            = link_to "Bank Accounts", "#", class: 'nav-link dropdown-toggle', 'data-toggle': "dropdown"
-            .dropdown-menu
-              - @bank_accounts.each do |account|
-                = link_to account.name, ledgers_path(account_id: account.id), class: 'dropdown-item'
+                New Transaction
+
+          / %li.nav-item.dropdown
+          /   = link_to "Bank Accounts", "#", class: 'nav-link dropdown-toggle', 'data-toggle': "dropdown"
+          /   .dropdown-menu
+          /     - @bank_accounts.each do |account|
+          /       = link_to account.name, ledgers_path(account_id: account.id), class: 'dropdown-item'
 
         %br
         - total = 0
-        %table.table.table-sm
+        %table.table.table-sm.small
           %thead
             %tr
               %th Account
               %th Description
               %th Amount
               %th Date
-              %th Created
               %th
               %th Stock
+              %th Created
+              %th DE ID
               %th
 
           %tbody
@@ -50,7 +42,6 @@
                   = number_to_currency(ledger.amount)
                   - total += ledger.amount
                 %td= nice_date_less(ledger.date) if ledger.date
-                %td= nice_date_time_compact(ledger.created_at)
                 %td
                   - if ledger.take_order_id
                     =link_to "Take Order", take_order_path(ledger.take_order_id)
@@ -59,6 +50,8 @@
                 %td
                   - if ledger.stock_id && ledger.stock
                     = link_to ledger.stock.product.name, stock_path(ledger.stock_id)
+                %td= nice_date_time_compact(ledger.created_at)
+                %td= ledger.double_entry_id
                 %td
                   = link_to ledger_path(ledger) do
                     %i.fa.fa-folder-open.fa-lg
@@ -66,12 +59,14 @@
                     = link_to edit_ledger_path(ledger) do
                       %i.fa.fa-pencil.fa-lg
                   
-                    = link_to ledger, :method => :delete do
+                    = link_to ledger, :method => :delete, :data => { :confirm => 'Destroying a transaction will also destroy any related double-entry transactions (sharing the same double-entry ID)' } do
                       %i.fa.fa-trash.fa-lg
+
             %tr
               %td
               %td
               %td= number_to_currency(total, precision: 2)
+              %td
               %td
               %td
               %td

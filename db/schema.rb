@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419210244) do
+ActiveRecord::Schema.define(version: 20170513015256) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "event_id"
@@ -35,6 +35,11 @@ ActiveRecord::Schema.define(version: 20170419210244) do
     t.integer  "quantity",      default: 0, null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "double_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "envelopes", force: :cascade do |t|
@@ -71,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170419210244) do
   end
 
   create_table "ledgers", force: :cascade do |t|
+    t.integer  "double_entry_id"
     t.integer  "account_id"
     t.string   "description"
     t.decimal  "amount",                            precision: 12, scale: 2, default: "0.0"

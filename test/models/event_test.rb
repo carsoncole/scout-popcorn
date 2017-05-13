@@ -54,6 +54,7 @@ class EventTest < ActiveSupport::TestCase
       [ 'BSA bank account',
         'Due from customers',
         'Due to BSA',
+        'Due to Unit',
         'Inventory',
         'Product due to customers',
         'Site Sales cash',
