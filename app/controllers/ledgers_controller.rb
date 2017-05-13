@@ -27,21 +27,20 @@ class LedgersController < ApplicationController
 
   def balance_sheet
     @popcorn_inventory = Stock.wholesale_value(@active_event)
-    @liability_accounts = @active_event.accounts.liabilities.order("accounts.rank")
-    @asset_accounts = @active_event.accounts.assets.order("accounts.rank")
+    @liability_accounts = @active_event.accounts.liability.order("accounts.rank")
+    @asset_accounts = @active_event.accounts.asset.order("accounts.rank")
   end
 
   def income_statement
+    @expense_accounts = @active_event.accounts.expense.order("accounts.rank")
+    @income_accounts = @active_event.accounts.income.order("accounts.rank")
     @site_sale_donations = @active_event.total_site_sale_donations
     @site_sales = @active_event.total_site_sale_sales - @site_sale_donations
     @take_order_donations = @active_event.total_take_order_donations
     @take_orders = @active_event.total_take_order_sales - @take_order_donations
     @online_sales = @active_event.total_online_sales
     @total_sales = @active_event.total_sales
-    @total_cost_of_goods_sold = @active_event.cost_of_goods_sold
-    @pack_selected_prizes = @active_event.prize_carts.ordered_or_approved.joins(cart_prizes: :prize).where('prizes.source = "pack"').sum('prizes.cost')
-    @other_expenses = @active_event.accounts.joins(:ledgers).where("accounts.account_type = 'Expense'").sum("ledgers.amount")
-    @total_expenses = @active_event.cost_of_goods_sold + @pack_selected_prizes + @other_expenses
+    @popcorn = @active_event.cost_of_goods_sold
   end
 
   def edit

@@ -1,6 +1,7 @@
 .row
   .col-md-12
-    %h3
+    %br
+    %h2
       .visible-print-inline= @active_event.name
       Balance Sheet
 
@@ -71,3 +72,6 @@
               / %tr
               /   %th.top.bottom-double Equity
               /   %th.top.bottom-double.text-right= number_to_currency(@total_equity - @other_expenses)
+
+
+    %p.small.text-muted.visible-print-block= nice_date_time(Time.now)

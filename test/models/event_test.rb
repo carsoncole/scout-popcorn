@@ -60,8 +60,12 @@ class EventTest < ActiveSupport::TestCase
         'Site Sales cash',
         'Take Orders cash',
         'Third Party account',
-        'Unit bank account'
-       ]
+        'Unit bank account',
+        'Popcorn',
+        'Unit prizes',
+        'Misc',
+        'Processor fees'
+       ].sort
   end
 
   test "should add default products" do

@@ -205,6 +205,7 @@ class Event < ApplicationRecord
     Account.create_third_party_account!(self)
     Account.create_bank_accounts!(self)
     Account.create_inventory!(self)
+    Account.create_expenses!(self)
   end
 
   def reset_scouts_event!

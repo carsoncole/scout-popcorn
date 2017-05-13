@@ -34,12 +34,20 @@ class Account < ApplicationRecord
     where(is_take_order_eligible: true)
   end
 
-  def self.assets
+  def self.asset
     where(account_type: 'Asset')
   end
 
-  def self.liabilities
+  def self.liability
     where(account_type: 'Liability')
+  end
+
+  def self.income
+    where(account_type: 'Income')
+  end
+
+  def self.expense
+    where(account_type: 'Expense')
   end
 
   def self.cash
@@ -84,6 +92,14 @@ class Account < ApplicationRecord
   def self.create_inventory!(event)
     create(event_id: event.id, name: 'Inventory', is_cash: false, account_type: 'Asset', rank: 10)
   end
+
+  def self.create_expenses!(event)
+    create(event_id: event.id, name: 'Popcorn', account_type: 'Expense', rank: 1)
+    create(event_id: event.id, name: 'Unit prizes', account_type: 'Expense', rank: 2)
+    create(event_id: event.id, name: 'Misc', account_type: 'Expense', rank: 2)
+    create(event_id: event.id, name: 'Processor fees', account_type: 'Expense', rank: 2)
+  end
+
 
   def self.create_product_due_to_customers!(event)
     create(event_id: event.id, name: 'Product due to customers', is_cash: false, account_type: 'Liability')
