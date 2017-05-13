@@ -38,7 +38,7 @@ class PrizeCartsController < ApplicationController
     else
       current_scout.prize_cart(@active_event).cart_prizes.create(prize: prize, prize_amount: prize.reduces_sales_credits? ? prize.sales_amount : nil, quantity: 1)
     end
-    redirect_to prize_cart
+    redirect_to prizes_path
   end
 
   def unorder

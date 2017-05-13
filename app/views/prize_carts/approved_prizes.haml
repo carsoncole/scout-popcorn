@@ -1,17 +1,17 @@
 .row
   .col-md-12
     .card
+      .card-header
+        = @unit.name
+        = @active_event.name
       .card-block
         .card-title
-          %h3
-            = @unit.name
-            = @active_event.name
-          %h1            
+          %h2           
             Prizes Approved
 
         - Prize::SOURCES.each do |source|
 
-          %h3= source
+          %h4= source
           - grand_total = 0
           %table.table.table-sm
             %tr.small
