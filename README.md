@@ -47,6 +47,23 @@ config.allow_for_multiple_units = false
 
 If you want to run the application for just one Scout unit, change `config.allow_for_multiple_unit` to `false`.
 
+### Seed Data
+
+There is seed data that can be optionally loaded to view an already-entered Unit, Scouts, and administrators.
+
+```ruby
+rails db:seed
+```
+
+There are multiple users with different roles, but here are a sample:
+
+All passwords are simply 'password'.
+
+- Admin (full rights): admin@example.com
+- Unit admin: unit_admin@example.com
+- Site Sales admin: site_sales_admin@example.com
+- Scout: scout1@example.com
+
 ## Administrative Roles
 
 Roles are broken down into the following, which each administrative user can be assigned one or more:
