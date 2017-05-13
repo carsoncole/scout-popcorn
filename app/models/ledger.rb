@@ -8,7 +8,7 @@ class Ledger < ApplicationRecord
 
   # after_save :send_bank_deposit_notifications!, if: Proc.new {|l| l.is_bank_deposit && l.amount < 0 && bank_deposit_notification_sent_at.nil? }
   
-  attr_accessor :is_bank_deposit, :from_account_id
+  attr_accessor :is_bank_deposit, :from_account_id, :fund_site_sales
 
 
   def self.expenses

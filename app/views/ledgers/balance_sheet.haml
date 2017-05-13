@@ -15,7 +15,8 @@
             %table.table.card-text
               - total_assets = 0
               - @asset_accounts.each do |account|
-                - amount = 0
+                - amount = account.ledgers.sum(:amount)
+                - next if amount ==0 && account.name != 'Inventory'
                 %tr
                   %td(colspan=2)
                     - if account.name == 'Inventory'
@@ -27,8 +28,8 @@
                       - total_assets += @popcorn_inventory
                       = number_to_currency(@popcorn_inventory)
                     - else
-                      - total_assets += account.ledgers.sum(:amount)
-                      = number_to_currency(account.ledgers.sum(:amount))
+                      - total_assets += amount
+                      = number_to_currency(amount)
 
               %tr
                 %th.top.bottom(colspan=2) Total assets
@@ -44,12 +45,14 @@
             %table.table.card-text
               - total_liabilities = 0
               - @liability_accounts.each do |account|
+                - amount = account.ledgers.sum(:amount)
+                - next if amount == 0
                 %tr
                   %td(colspan=2)
                     = link_to account.name, ledgers_path(account_id: account.id)
                   %td.text-right
-                    - total_liabilities += account.ledgers.sum(:amount)
-                    = number_to_currency(account.ledgers.sum(:amount))
+                    - total_liabilities += amount
+                    = number_to_currency(amount)
 
               %tr
                 %th.top.bottom(colspan=2) Total liabilities

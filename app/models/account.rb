@@ -26,6 +26,10 @@ class Account < ApplicationRecord
     Account.where(event_id: event.id).where(name: 'Due to BSA').first
   end  
 
+  def self.due_to_unit(event)
+    Account.where(event_id: event.id).where(name: 'Due to Unit').first
+  end 
+
   def self.is_take_order_eligible
     where(is_take_order_eligible: true)
   end
@@ -87,6 +91,10 @@ class Account < ApplicationRecord
 
   def self.create_money_due_to_bsa!(event)
     create(event_id: event.id, name: 'Due to BSA', is_cash: false, is_due_to_bsa: true, account_type: 'Liability')
+  end
+
+  def self.create_money_due_to_unit!(event)
+    create(event_id: event.id, name: 'Due to Unit', is_cash: false, account_type: 'Liability')
   end
 
   def self.create_third_party_account!(event)

@@ -1,0 +1,40 @@
+.row
+  .col-md-12
+    %h2 Transactions
+
+%br
+.row
+  .col-md-3
+    .card
+      %h5.card-header Bank Deposit
+      .card-block
+        %p.card-text Use this when making a bank deposit from either Take Order or Site Sale cash.
+      .card-footer= link_to "Bank deposit", bank_deposit_path
+
+  .col-md-3
+    .card
+      %h5.card-header Fund Site Sales
+      .card-block
+        
+        %p.card-text Use this when providing the initial funding for the Site Sale's cash box. This money should be provided by your Unit Treasurer and will be recorded as money due back to the Unit.
+      .card-footer= link_to "Fund Site Sales with starting cash", fund_site_sales_path
+  .col-md-3
+    .card
+      %h5.card-header Expense Reimbursement #1
+      .card-block
+        %p.card-text Use this when reimbursing an expense with payment made directly by your Unit (not money received from popcorn sales). 
+      .card-footer= link_to "Reimburse for an expense with payment by your Unit", "#"        
+  .col-md-3
+    .card
+      %h5.card-header Expense Reimbursement #2
+      .card-block
+        
+        %p.card-text Use this when incurring expenses and reimburses those expenses from either Site Sales or Take Orders cash.
+      .card-footer= link_to "Reimburse for an expense with payment from Site Sales/Take Orders cash", "#"
+  .col-md-3
+    .card
+      %h5.card-header Other transactions (Advanced)
+      .card-block
+        
+        %p.card-text Use this to make double-entry transactions. 
+      .card-footer= link_to "Other transactions (Advanced)", "#"

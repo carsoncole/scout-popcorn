@@ -1,0 +1,32 @@
+.row
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h2 Fund Site Sales
+
+        %p.card-text Use this to provide cash from your Unit for running Site Sales (to provide change). Typically, you would only do this funding and use this transaction at the beginning of your popcorn event.
+
+        %p.card-text This will be recorded as money due to the Unit from Site Sales.
+
+        = form_for @ledger, url: 'fund-site-sales' do |f|
+          - if @ledger.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@ledger.errors.count, "error")} prohibited this ledger from being saved:"
+              %ul
+                - @ledger.errors.full_messages.each do |msg|
+                  %li= msg
+
+          - if @fund_site_sales
+            = f.hidden_field :fund_site_sales, value: 1
+          .form-group
+            = f.label :date
+            %br
+            = f.date_select :date, {}, class: 'form-control'
+
+          .form-group
+            = f.label :amount
+            .col-md-4
+              = f.text_field :amount, class: 'form-control'
+          .actions
+            = f.submit 'Fund Site Sales', class: 'btn btn-success'

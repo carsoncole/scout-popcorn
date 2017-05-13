@@ -201,6 +201,7 @@ class Event < ApplicationRecord
     Account.create_money_due_from_customers!(self)
     Account.create_product_due_to_customers!(self)
     Account.create_money_due_to_bsa!(self)
+    Account.create_money_due_to_unit!(self)
     Account.create_third_party_account!(self)
     Account.create_bank_accounts!(self)
     Account.create_inventory!(self)

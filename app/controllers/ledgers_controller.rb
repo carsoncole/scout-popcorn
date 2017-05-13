@@ -27,7 +27,7 @@ class LedgersController < ApplicationController
   end
 
   def final_unit_settlement_form
-    @due_to_bsa_ledgers = Ledger.joins(account: :event).where("event_id = ? AND accounts.name = 'Due to BSA'", @active_event.id)#(@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
+    @due_to_bsa_ledgers = Ledger.joins(account: :event).where("event_id = ? AND accounts.name = 'Due to BSA'", @active_event.id)
     @due_to_bsa= (@active_event.accounts.where(name: 'Due to BSA').first.balance if @active_event.accounts.where(name: 'Due to BSA').any?) || 0
     @bsa_credit_card_cash = @active_event.accounts.where(is_third_party_account: true).first.balance if @active_event.accounts.where(is_third_party_account: true).any?
     @bsa_online_credits = @active_event.total_online_sales * (@active_event.online_commission_percentage/100)
@@ -106,12 +106,37 @@ class LedgersController < ApplicationController
     redirect_to ledgers_url, notice: 'Ledger was successfully destroyed.'
   end
 
+  def fund_site_sales
+    if request.post?
+      @ledger = Ledger.new(ledger_params)
+      @ledger.created_by = current_scout.id
+      due_to_unit_account = Account.due_to_unit(@active_event)
+      site_sale_cash_account = @active_event.accounts.where("name = ?", 'Site Sales cash').first
+      @ledger.account = due_to_unit_account
+      @ledger.description = 'Money transfer from Unit'
+      contra_ledger = Ledger.new(ledger_params)
+      contra_ledger.account = site_sale_cash_account
+      contra_ledger.description = 'Money transfer from Unit'
+      
+      if @ledger.save && contra_ledger.save
+        flash[:notice] = 'Funding of Site Sales was recorded.'
+        redirect_to ledgers_path
+      else
+        @ledger = Ledger.new
+        @fund_site_sales = true  
+      end
+    else
+      @ledger = Ledger.new
+      @fund_site_sales = true  
+    end
+  end
+
   private
     def set_ledger
       @ledger = Ledger.find(params[:id])
     end
 
     def ledger_params
-      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by, :is_money_collected, :take_order_id)
+      params.require(:ledger).permit(:account_id, :description, :amount, :date, :is_bank_deposit, :from_account_id, :created_by, :is_money_collected, :take_order_id, :fund_site_sales)
     end
 end

@@ -42,12 +42,6 @@
           .form-group
             = f.label :amount
             = f.text_field :amount, class: 'form-control'
-            
-          / - else
-          /   .form-group
-          /     = f.label "Bank deposit?"
-          /     = f.check_box :is_bank_deposit, class: 'form-control'
-
 
           .form-group
             - if @deposit

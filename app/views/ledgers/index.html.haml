@@ -10,6 +10,9 @@
             %li.nav-item
               = link_to new_ledger_path, class: 'nav-link' do
                 %i.fa.fa-plus.fa-lg
+          - if current_scout.is_financial_admin?
+            %li.nav-item
+              = link_to "Transactions", ledger_transactions_path, class: 'nav-link'
           - if current_scout.is_financial_admin? || current_scout.is_site_sales_admin? || current_scout.is_take_orders_admin?
             %li.nav-item
               = link_to bank_deposit_path, class: 'nav-link' do
