@@ -64,8 +64,7 @@ class Scout < ApplicationRecord
   end
 
   def sales(event=nil)
-    2000
-    #total_sales(event)
+    total_sales(event)
   end
 
   def admin?

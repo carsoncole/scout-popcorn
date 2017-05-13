@@ -48,7 +48,7 @@
                 %tr
                   %td
                     - name = product.name + (product.is_active? ? "" : ' (INACTIVE)')
-                    %b= link_to name, product_path(product)
+                    = link_to name, product_path(product)
                     - if quantity <= 0 && product.is_physical_inventory
                       .badge.badge-danger SOLD OUT
                   %td.text-center{class: "#{product.name.parameterize} quantity"}= quantity

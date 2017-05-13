@@ -3,7 +3,11 @@
     .card
       .card-block
         .card-title
-          %h1 Scout
+          %h2
+            - if @scout.new_record?
+              Scout
+            - else
+              = @scout.name
         = form_for @scout do |f|
           - if @scout.errors.any?
             #error_explanation
