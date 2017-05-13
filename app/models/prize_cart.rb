@@ -6,7 +6,9 @@ class PrizeCart < ApplicationRecord
 
   validates :scout_id, :event_id, presence: true
 
-  def after_save :add_prize_costs_to_expenses!, if: Proc.new {|pc| pc.is_ordered_at_changed? && pc.ordered? }
+  after_save :add_prize_costs_to_expenses!, if: Proc.new {|pc| pc.is_ordered_at_changed? && pc.ordered? }
+
+  after_save :remove_prize_costs_from_expenses!, if: Proc.new {|pc| pc.is_ordered_at_changed? && !pc.ordered? }
 
   def self.approved
     where("is_approved_at IS NOT NULL")
@@ -80,7 +82,13 @@ class PrizeCart < ApplicationRecord
   end
 
   def add_prize_costs_to_expenses!
-    cart_prizes.joins(:prize).sum("prizes.cost * cart_prizes.quantity")
+    expense = cart_prizes.joins(:prize).sum("prizes.cost * cart_prizes.quantity")
+    popcorn_expense_account = event.accounts.where(name: 'Popcorn').last
+    Ledger.create(account_id: popcorn_expense_account.id, amount: expense, prize_cart_id: self.id)
+  end
+
+  def remove_prize_costs_from_expenses!
+    Ledger.joins(:accounts).where("accounts.name = ?", 'Popcorn', prize_cart_id: self.id).destroy_all
   end
 
 

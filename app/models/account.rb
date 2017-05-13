@@ -69,7 +69,7 @@ class Account < ApplicationRecord
   end
 
   def self.create_take_orders_cash!(event)
-    create(event_id: event.id, name: 'Take Orders cash', is_cash: true, is_take_order_eligible: true, account_type: 'Asset',rank: 1)
+    create(event_id: event.id, name: 'Take Orders cash', is_cash: true, is_take_order_eligible: true, account_type: 'Asset', rank: 1)
   end
 
   def self.create_bank_accounts!(event)
