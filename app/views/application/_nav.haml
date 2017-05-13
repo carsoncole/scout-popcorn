@@ -37,7 +37,7 @@
             /     = link_to "Online Sales", online_sales_path, class: "dropdown-item #{'active' if controller_name == 'online_sales'}"
           - if @active_event.is_take_orders_enabled?
             %li.nav-item.dropdown
-              = link_to "#",class: "nav-link dropdown-toggle #{'active' if ['take_orders', 'online_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
+              = link_to "#",class: "nav-link dropdown-toggle #{'active' if ['take_orders'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
                 Take Orders
                 %span.caret                    
               .dropdown-menu
@@ -46,20 +46,14 @@
                 = link_to "Envelopes", envelopes_path(status: 'open'), class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
 
           - if @active_event.is_site_sales_enabled?
-            %li.nav-item.dropdown
-              = link_to "#",class: "nav-link dropdown-toggle #{'active' if ['take_orders', 'online_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
-                Site Sales
-                %span.caret                    
-              .dropdown-menu
-                = link_to "Site Sales", site_sales_path, class: "dropdown-item #{'active' if controller_name == 'site_sales'}"
+            %li.nav-item
+              = link_to "Site Sales", site_sales_path, class: "nav-link #{'active' if controller_name == 'site_sales'}"
+                
 
           - if @active_event.is_online_enabled?
-            %li.nav-item.dropdown
-              = link_to "#",class: "nav-link dropdown-toggle #{'active' if ['take_orders', 'online_sales'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
-                Online
-                %span.caret                    
-              .dropdown-menu
-                = link_to "Online Sales", online_sales_path, class: "dropdown-item #{'active' if controller_name == 'online_sales'}"
+            %li.nav-item
+              = link_to "Online Sales", online_sales_path, class: "nav-link #{'active' if controller_name == 'online_sales'}"
+                
 
           - unless current_scout.admin?
             %li.nav-item= link_to "Popcorn", products_path, class: "nav-link #{'active' if controller_name == 'products'}"
