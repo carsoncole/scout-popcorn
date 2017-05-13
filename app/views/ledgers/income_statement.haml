@@ -1,9 +1,11 @@
 .row
   .col-md-12
-    %h3
+    %br
+    %h2
       .visible-print-inline= @active_event.name
       Income Statement
 
+    %br
     .row
       .col-md-6
         .card
@@ -12,46 +14,77 @@
               %h5 Revenues
 
             %table.table.card-text
+              - total_income = 0
+              - @income_accounts.each do |account|
+                - amount = account.ledgers.sum(:amount)
+                %tr
+                  %td(colspan=2)
+                    = link_to account.name, ledgers_path(account_id: account.id)
+                  %td.text-right(class = "#{account.name.parameterize}")
+                  - total_income += amount
+                  = number_to_currency(amount)
+
               %tr
-                %td Site Sale Product Sales
+                %td(colspan=2) Site Sales
                 %td.text-right.site_sale_sales
                   = number_to_currency(@site_sales)
+                  - total_income += @site_sales
+
               %tr
-                %td Take Order Sales
-                %td.text-right= number_to_currency(@take_orders)
+                %td(colspan=2) Take Orders
+                %td.text-right
+                  = number_to_currency(@take_orders)
+                  - total_income += @take_orders
+
               %tr
-                %td Site Sale Donations
-                %td.text-right= number_to_currency(@site_sale_donations)
+                %td(colspan=2) Online Sales
+                %td.text-right
+                  = number_to_currency(@online_sales)
+                  - total_income += @online_sales
+
               %tr
-                %td Take Order Donations
-                %td.text-right= number_to_currency(@take_order_donations)
+                %td(colspan=2) Site Sale donations
+                %td.text-right
+                  = number_to_currency(@site_sale_donations)
+                  - total_income += @site_sale_donations
+
               %tr
-                %td Online Sales
-                %td.text-right= number_to_currency(@online_sales)
+                %td(colspan=2) Take Order donations
+                %td.text-right
+                  = number_to_currency(@take_order_donations)
+                  - total_income += @take_order_donations
+
               %tr
-                %th.top.bottom Total
-                %th.top.bottom.text-right= number_to_currency(@total_sales)
-        %br
+                %th.top.bottom(colspan=2) Total income
+                %th.top.bottom.text-right= number_to_currency(total_income)
 
       .col-md-6
         .card
           .card-block
             .card-title
+      
               %h5 Expenses
 
             %table.table.card-text
+              - total_expenses = 0
+              - @expense_accounts.each do |account|
+                - amount = account.ledgers.sum(:amount)
+                - if account.name == 'Popcorn'
+                  - amount = @popcorn
+                / - next if amount == 0
+                %tr
+                  %td(colspan=2)
+                    = link_to account.name, ledgers_path(account_id: account.id)
+                  %td.text-right
+                    - total_expenses += amount
+                    = number_to_currency(amount)
+
               %tr
-                %td Cost of goods sold
-                %td.text-right= number_to_currency(@total_cost_of_goods_sold)
-              %tr
-                %td Pack prizes
-                %td.text-right= number_to_currency(@pack_selected_prizes)
-              %tr
-                %td Other expenses
-                %td.text-right= number_to_currency(@other_expenses)
-              %tr
-                %th.top.bottom Total
-                %th.top.bottom.text-right= number_to_currency(@total_expenses)
+                %th.top.bottom(colspan=2) Total expenses
+                %th.top.bottom.text-right= number_to_currency(total_expenses)
+
+        %br
+
 
         .card
           .card-block
@@ -61,6 +94,6 @@
             %table.table.card-text
               %tr
                 %th.top.bottom-double Net Income
-                %th.top.bottom-double.text-right= number_to_currency(@total_sales - @total_expenses)
+                %th.top.bottom-double.text-right= number_to_currency(total_income - total_expenses)
 
     .small.text-muted.visible-print-block= nice_date_time(Time.now)

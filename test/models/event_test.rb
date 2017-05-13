@@ -50,6 +50,7 @@ class EventTest < ActiveSupport::TestCase
     @event.save
     event_accounts_ordered = @event.accounts.order(:name).map {|a| a.name }
 
+    puts event_accounts_ordered
     assert_equal event_accounts_ordered,
       [ 'BSA bank account',
         'Due from customers',
@@ -60,8 +61,12 @@ class EventTest < ActiveSupport::TestCase
         'Site Sales cash',
         'Take Orders cash',
         'Third Party account',
-        'Unit bank account'
-       ]
+        'Unit bank account',
+        'Popcorn',
+        'Unit prizes',
+        'Misc',
+        'Processor fees'
+       ].sort
   end
 
   test "should add default products" do
