@@ -14,9 +14,10 @@
           - @prize_carts.each do |cart|
 
             %tr
-              %td= link_to cart.scout.name, prize_cart_path(cart.scout.prize_cart(@active_event))
+              %td= cart.scout.name
               %td= cart.cart_prizes.count
               %td= number_to_currency(cart.sales_credits_used('Council'))
               %td= number_to_currency(cart.sales_credits_available('Council'))
               %td
                 = cart.status
+                = link_to '(View)', prize_cart_path(cart.scout.prize_cart(@active_event))

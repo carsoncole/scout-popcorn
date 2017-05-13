@@ -1,5 +1,5 @@
 class PrizeCartsController < ApplicationController
-  before_action :authorize_admin, except: [:show, :order, :unorder, :removal]
+  before_action :authorize_admin, except: [:show, :order, :order_prizes, :unorder, :removal]
 
   def index
     @prize_carts = @active_event.prize_carts.includes(:scout).order("scouts.last_name ASC")

@@ -6,6 +6,8 @@ class PrizeCart < ApplicationRecord
 
   validates :scout_id, :event_id, presence: true
 
+  def after_save :add_prize_costs_to_expenses!, if: Proc.new {|pc| pc.is_ordered_at_changed? && pc.ordered? }
+
   def self.approved
     where("is_approved_at IS NOT NULL")
   end
@@ -75,6 +77,10 @@ class PrizeCart < ApplicationRecord
     eligible_prizes.each do |prize|
       cart_prizes.create(prize: prize, quantity: 1) unless cart_prizes.where(prize: prize).any?
     end
+  end
+
+  def add_prize_costs_to_expenses!
+    cart_prizes.joins(:prize).sum("prizes.cost * cart_prizes.quantity")
   end
 
 

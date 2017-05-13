@@ -7,7 +7,7 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
     @prize = prizes(:one)
   end
 
-  test "should get index " do
+  test "should get index" do
     sign_in(scouts(:one))
     get prizes_url
     assert_response :success

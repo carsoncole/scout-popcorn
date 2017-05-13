@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PrizesControllerTest < ActionDispatch::IntegrationTest
+class PrizeCartsControllerTest < ActionDispatch::IntegrationTest
   # setup do
   #   @prize = prizes(:one)
   # end
