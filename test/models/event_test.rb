@@ -50,7 +50,6 @@ class EventTest < ActiveSupport::TestCase
     @event.save
     event_accounts_ordered = @event.accounts.order(:name).map {|a| a.name }
 
-    puts event_accounts_ordered
     assert_equal event_accounts_ordered,
       [ 'BSA bank account',
         'Due from customers',
