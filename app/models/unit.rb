@@ -12,7 +12,7 @@ class Unit < ApplicationRecord
   validates :treasurer_first_name, presence: true, unless: Proc.new {|u| u.treasurer_email.blank? }
 
   def treasurer?
-    true unless treasurer_email.blank?
+    true unless treasurer_email.blank? || treasurer_first_name.blank?
   end
 
   def treasurer_name
