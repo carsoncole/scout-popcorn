@@ -2,7 +2,7 @@ class PrizeCartsController < ApplicationController
   before_action :authorize_admin, except: [:show, :order, :order_prizes, :unorder, :removal]
 
   def index
-    @prize_carts = @active_event.prize_carts.includes(:scout).order("scouts.last_name ASC")
+    @prize_carts = @active_event.prize_carts.includes(:scout).order("scouts.last_name ASC").page(params[:page]).per(40)
   end
 
   def show
@@ -61,6 +61,6 @@ class PrizeCartsController < ApplicationController
 
   def removal
     current_scout.prize_cart(@active_event).cart_prizes.find(params[:id]).destroy
-    redirect_to prize_cart_path(recalc: false)
+    redirect_to prize_cart_path
   end
 end

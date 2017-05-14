@@ -21,3 +21,11 @@ three:
   customer_name: Mary Jones
   description: MyString
   amount: 150
+
+four:
+  scout: one
+  event: one
+  order_date: 2016-09-05
+  customer_name: Mary Jones
+  description: MyString
+  amount: 1000

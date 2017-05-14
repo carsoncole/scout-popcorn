@@ -21,3 +21,4 @@
               %td
                 = cart.status
                 = link_to '(View)', prize_cart_path(cart.scout.prize_cart(@active_event))
+        = paginate @prize_carts

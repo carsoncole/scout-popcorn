@@ -4,11 +4,13 @@ one:
   event: one
   name: MyString
   sales_amount: 300
+  cost: 50
   source: Unit
 
 two:
   event: one
   name: MyString
+  cost: 100
   sales_amount: 500
   source: Unit
 
@@ -44,6 +46,13 @@ council_three:
   source: Council
 
 council_four:
+  event: one
+  name: MyString
+  sales_amount: 500
+  source: Council
+  reduces_sales_credits: false
+
+council_five:
   event: one
   name: MyString
   sales_amount: 500

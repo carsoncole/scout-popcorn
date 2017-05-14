@@ -37,3 +37,8 @@ due_to_bsa_two:
   event: two
   name: Due to BSA
   account_type: Liability
+
+unit_prizes:
+  event: one
+  name: Unit prizes
+  account_type: Expense
