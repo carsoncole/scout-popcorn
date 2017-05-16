@@ -14,7 +14,7 @@ class OnlineSalesControllerTest < ActionDispatch::IntegrationTest
   test "should get index and show orders" do
     sign_in(scouts(:one))
     get online_sales_url
-    assert_equal css_select("tr").size, 3
+    assert_equal css_select("tr").size, 5
   end
 
   test "should show admin new link" do

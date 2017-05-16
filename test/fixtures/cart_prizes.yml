@@ -1,3 +1,19 @@
 one:
   prize: one
   prize_cart: one
+  quantity: 1
+
+two:
+  prize: two
+  prize_cart: one
+  quantity: 1
+
+three:
+  prize: four
+  prize_cart: one
+  quantity: 1
+
+four:
+  prize: council_four
+  prize_cart: one
+  quantity: 1

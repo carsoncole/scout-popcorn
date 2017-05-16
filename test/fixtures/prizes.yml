@@ -2,51 +2,70 @@
 
 one:
   event: one
-  name: MyString
+  name: Summer Camp $50 credit
   sales_amount: 300
+  cost: 50
   source: Unit
 
 two:
   event: one
-  name: MyString
+  name: Summer Camp $100 credit
+  cost: 100
   sales_amount: 500
   source: Unit
 
 three:
   event: one
-  name: MyString
+  name: Summer Camp $200 credit
   sales_amount: 1000
+  cost: 200
   source: Unit
 
 four:
   event: one
-  name: MyString
+  name: Gift Card $50
   sales_amount: 500
+  cost: 50
+  source: Unit
+  reduces_sales_credits: false
+
+five:
+  event: one
+  name: Gift Card $100
+  sales_amount: 700
+  cost: 100
   source: Unit
   reduces_sales_credits: false
 
 council_one:
   event: one
-  name: MyString
+  name: Nerf Gun
   sales_amount: 300
   source: Council
 
 council_two:
   event: one
-  name: MyString
+  name: Flashlight
   sales_amount: 500
   source: Council
 
 council_three:
   event: one
-  name: MyString
+  name: Walkie Talkie
   sales_amount: 1000
   source: Council
 
 council_four:
   event: one
-  name: MyString
+  name: Baseball game 2 tickets
   sales_amount: 500
+  source: Council
+  reduces_sales_credits: false
+
+council_five:
+  event: one
+  name: Swim party
+  sales_amount: 1500
   source: Council
   reduces_sales_credits: false
 

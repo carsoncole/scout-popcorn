@@ -22,6 +22,11 @@ due_to_bsa:
   is_due_to_bsa: true
   name: Due to BSA
 
+due_to_unit:
+  event: one
+  account_type: Liability
+  name: Due to Unit
+
 unit_bank_account:
   event: one
   name: Unit Bank account
@@ -37,3 +42,8 @@ due_to_bsa_two:
   event: two
   name: Due to BSA
   account_type: Liability
+
+unit_prizes:
+  event: one
+  name: Unit prizes
+  account_type: Expense

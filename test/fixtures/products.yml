@@ -24,6 +24,12 @@ four:
   event: one
   is_physical_inventory: true
 
+five:
+  name: Chocolate Popcorn
+  retail_price: 25
+  event: one
+  is_physical_inventory: true
+
 unused:
   name: Cheap Popcorn Collection
   retail_price: 20

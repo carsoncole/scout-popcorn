@@ -1,6 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-cash:
+one:
   site_sale: safeway
   account: site_sale_cash
   amount: 250
+
+two:
+  site_sale: walmart
+  account: site_sale_cash
+  amount: 1300
+
+three:
+  site_sale: ace
+  account: site_sale_cash
+  amount: 150

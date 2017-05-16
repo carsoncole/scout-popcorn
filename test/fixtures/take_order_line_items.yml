@@ -1,0 +1,59 @@
+one:
+  take_order: one
+  product: one
+  quantity: 1
+  value: 10
+
+two:
+  take_order: one
+  product: two
+  quantity: 1
+  value: 10
+
+three:
+  take_order: two
+  product: three
+  quantity: 2
+  value: 30
+
+four:
+  take_order: two
+  product: one
+  quantity: 1
+  value: 10
+
+five:
+  take_order: three
+  product: four
+  quantity: 1
+  value: 45
+
+six:
+  take_order: four
+  product: three
+  quantity: 2
+  value: 30
+
+seven:
+  take_order: five
+  product: one
+  quantity: 1
+  value: 10
+
+eight:
+  take_order: five
+  product: two
+  quantity: 2
+  value: 20
+
+nine:
+  take_order: five
+  product: four
+  quantity: 2
+  value: 90
+
+ten:
+  take_order: five
+  product: three
+  quantity: 1
+  value: 15

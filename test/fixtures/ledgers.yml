@@ -2,12 +2,18 @@
 
 one:
   account: site_sale_cash
-  description: MyString
-  amount: 9.99
-  date: 2016-09-14
+  description: Initial transfer to fund site sales
+  amount: 200
+  date: <%= Date.today %>
 
 two:
-  account: site_sale_cash
-  description: MyString
-  amount: 9.99
-  date: 2016-09-14
+  account: due_to_unit
+  description: Initial transfer to fund site 
+  amount: 200
+  date: <%= Date.today %>
+
+three:
+  account: due_to_bsa
+  description: Initial BSA transfer
+  amount: <%= (6500 + 7800 + 7800 + 11700) * 0.65 %>
+  date: <%= Date.today %> 

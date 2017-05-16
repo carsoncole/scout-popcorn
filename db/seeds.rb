@@ -159,8 +159,8 @@ Prize.create([
 
   {event_id: 1,name: '$600 Bonus Level', sales_amount: 600, source: 'Council', source_id: '988100313', description: 'Two Tickets to the Mariners Scout Day Experience', reduces_sales_credits: false, is_by_level: true},
   {event_id: 1,name: '$1,500 Bonus Level', sales_amount: 1500, source: 'Council', source_id: '', description: 'Invitation to party (to be announced)', reduces_sales_credits: false},
-  {event_id: 1,name: 'Summer Camp $50 Credit', sales_amount: 300, source: 'Unit', source_description: '$50 credit applied towards summer camp', reduces_sales_credits: true},
-  {event_id: 1,name: 'Summer Camp $200 Credit', sales_amount: 700, source: 'Unit', source_description: '$200 credit applied towards summer camp'}
+  {event_id: 1,name: 'Summer Camp $50 Credit', sales_amount: 300, source: 'Unit', source_description: '$50 credit applied towards summer camp', reduces_sales_credits: true, cost: 50},
+  {event_id: 1,name: 'Summer Camp $200 Credit', sales_amount: 700, source: 'Unit', source_description: '$200 credit applied towards summer camp', cost: 200}
   ])
 
 Resource.create ([{event_id: 1, name: 'Prizes Brochure (BSA)', url: 'http://ibm.com'}])

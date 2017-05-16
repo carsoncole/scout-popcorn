@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class EventTest < ActiveSupport::TestCase
+
   def setup
     @event = Event.new(name: 'Some Event 20XX', unit_commission_percentage: 30, online_commission_percentage: 30, number_of_top_sellers: 10, unit: units(:one))
   end
@@ -60,8 +61,12 @@ class EventTest < ActiveSupport::TestCase
         'Site Sales cash',
         'Take Orders cash',
         'Third Party account',
-        'Unit bank account'
-       ]
+        'Unit bank account',
+        'Popcorn',
+        'Unit prizes',
+        'Misc',
+        'Processor fees'
+       ].sort
   end
 
   test "should add default products" do
