@@ -11,11 +11,10 @@ class PrizeCartTest < ActiveSupport::TestCase
     assert @prize_cart.valid?
   end
 
-  test "should show sales credits available" do
-    
-    assert_equal 325, @prize_cart_one.sales_credits_available('Unit')
+  test "should show sales credits available" do 
+    assert_equal 742, @prize_cart_one.sales_credits_available('Unit')
     @prize_cart_one.cart_prizes.delete_all
-    assert_equal 1125, @prize_cart_one.sales_credits_available('Unit')
+    assert_equal 1542, @prize_cart_one.sales_credits_available('Unit')
   end
 
   test "should show unit sales credits used" do
@@ -36,7 +35,7 @@ class PrizeCartTest < ActiveSupport::TestCase
 
   test "should process automatic prizes" do
     @prize_cart_one.cart_prizes.delete_all
-    assert_difference "@prize_cart_one.cart_prizes.count", 3 do
+    assert_difference "@prize_cart_one.cart_prizes.count", 4 do
       @prize_cart_one.process_automatic_prizes!
     end
   end
@@ -50,7 +49,7 @@ class PrizeCartTest < ActiveSupport::TestCase
     prize_cart.update(is_approved_at: Time.now)
 
     amount = expense_account.ledgers.sum(:amount)
-    assert_equal amount, 150
+    assert_equal amount, 200
   
     prize_cart.update(is_approved_at: nil)
 

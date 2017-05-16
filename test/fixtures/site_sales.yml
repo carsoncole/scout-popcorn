@@ -1,7 +1,8 @@
 safeway:
   event: one
   name: Safeway
-  date: <%= Date.today + 10.days %>
+  date: <%= Date.today - 1.day %>
+  closed_at: <%= Date.today %>
 
 walmart:
   event: one

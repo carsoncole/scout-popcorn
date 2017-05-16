@@ -1,31 +1,39 @@
 one:
   scout: one
   event: one
-  order_date: 2016-09-05
+  order_date: <%= Date.today %>
   customer_name: John Smith
-  description: MyString
+  description: Lots of popcorn
   amount: 25
 
 two:
   scout: one
   event: one
-  order_date: 2016-09-05
+  order_date: <%= Date.today %>
   customer_name: Mary Jones
-  description: MyString
+  description: Lots of popcorn
   amount: 100
 
 three:
   scout: two
   event: one
-  order_date: 2016-09-05
+  order_date: <%= Date.today %>
   customer_name: Mary Jones
-  description: MyString
+  description: Lots of popcorn
   amount: 150
 
 four:
   scout: one
   event: one
-  order_date: 2016-09-05
+  order_date: <%= Date.today %>
   customer_name: Mary Jones
-  description: MyString
+  description: Lots of popcorn
   amount: 1000
+
+five:
+  scout: one
+  event: one
+  order_date: <%= Date.today %>
+  customer_name: Jill Mills
+  description: Lots of popcorn
+  amount: 250

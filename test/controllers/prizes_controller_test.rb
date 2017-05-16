@@ -88,7 +88,7 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy unusued prize" do
     sign_in(scouts(:prizes_admin))
-    prize = prizes(:four)
+    prize = prizes(:five)
     assert_difference('Prize.count', -1) do
       delete prize_url(prize)
     end

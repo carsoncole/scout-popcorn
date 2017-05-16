@@ -21,3 +21,15 @@ four:
   product: pack_donation
   quantity: 120
   value: 120
+
+five:
+  site_sale: walmart
+  product: two
+  quantity: 100
+  value: 1000
+
+six:
+  site_sale: walmart
+  product: three
+  quantity: 20
+  value: 300

@@ -19,7 +19,7 @@ class SiteSaleTest < ActiveSupport::TestCase
     site_sale = site_sales(:ace)
     site_sale.update(closed_at: Time.now)
 
-    assert_equal events(:one).total_site_sale_sales, 270
+    assert_equal events(:one).total_site_sale_sales, 520
   end
 
   test "should show closed" do
@@ -46,7 +46,7 @@ class SiteSaleTest < ActiveSupport::TestCase
   end
 
   test "should show sales" do
-    assert_equal @site_sale.sales(scouts(:one)), 130
+    assert_equal @site_sale.sales(scouts(:one)), 454
     assert_equal @site_sale.sales, 250   
   end
 
@@ -60,7 +60,6 @@ class SiteSaleTest < ActiveSupport::TestCase
 
   test "should do ledger transactions when closed" do
     event = @site_sale.event
-    payment_method = site_sale_payment_methods(:cash)
     original_balance = Account.site_sale(event).balance
     @site_sale.update(closed_at: Time.now)
     new_balance = Account.site_sale(event).balance
@@ -78,7 +77,6 @@ class SiteSaleTest < ActiveSupport::TestCase
 
   test "should reverse ledgers when reopened" do
     event = @site_sale.event
-    payment_method = site_sale_payment_methods(:cash)
     @site_sale.update(closed_at: Time.now)
     original_balance = Account.site_sale(event).balance
     @site_sale.update(closed_at: nil)

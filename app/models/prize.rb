@@ -14,12 +14,13 @@ class Prize < ApplicationRecord
   validates :source, inclusion: { in: Prize::SOURCES }
 
   before_destroy :check_if_used
+  before_save :check_if_used, if: Proc.new {|p| p.sales_amount_changed? }
 
   def check_if_used
     if cart_prizes.any?
-      errors[:base] << 'Can not be destroyed since Prize is in use'
+      errors[:base] << 'Can not be price-modified/destroyed since Prize is in use'
       throw :abort
     end
   end
-
+  
 end

@@ -64,7 +64,7 @@
 
             - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).sales_credits_available(source) >= prize.sales_amount
               .card-footer
-                = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: 'btn btn-primary btn-sm'
+                = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: "btn btn-primary btn-sm #{prize.name.parameterize}"
 
 
     %br
