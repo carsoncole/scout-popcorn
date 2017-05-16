@@ -1,12 +1,15 @@
 = render 'transaction'
 
 .row
-  .col-md-3
-  .col-md-6
+  .col-md-12
     .card
       .card-block
         .card-title
-          %h4 Expense Reimbursement - Paid by Site Sales or Take Orders
+          %h2 Reimbursement - From Site Sales / Take Orders Cash
+
+        %p.text-muted.small
+          %i.fa.fa-info-circle.small
+          Use this form when reimbursing for an expense, which is paid from from Site Sales or Take Orders cash.
 
         = form_for @ledger, url: 'expense-reimbursement-2' do |f|
           - if @ledger.errors.any?
@@ -16,28 +19,25 @@
                 - @ledger.errors.full_messages.each do |msg|
                   %li= msg
 
-          %p Use this form when reimbursing for an expense, which is paid from from Site Sales or Take Orders cash.
-
-          .form-group
-            = f.label "From"
-            %br
-            = f.collection_select :from_account_id, @cash_accounts, :id, :name, {}, class: 'form-control'
-
-          .form-group
-            = f.label :description_of_expense
-            %br
-            = f.text_field :description, class: 'form-control'
-
-          .form-group
-            = f.label :amount
-            .col-md-4
+          .col-md-4
+            .form-group
+              = f.label "From:"
+              %br
+              = f.collection_select :from_account_id, @cash_accounts, :id, :name, {}, class: 'form-control'
+          .col-md-8
+            .form-group
+              = f.label 'Description:'
+              %br
+              = f.text_field :description, class: 'form-control'
+          .col-md-4
+            .form-group
+              = f.label 'Amount:'
               = f.text_field :amount, class: 'form-control'
-  
+    
 
-          .form-group
-            = f.label :date
-            %br
-            .col-md-4
+            .form-group
+              = f.label 'Date:'
+              %br
               = f.date_select :date, {}, class: 'form-control'
-          .actions
-            = f.submit 'Submit Expense', class: 'btn btn-success'
+            .actions
+              = f.submit 'Submit Expense', class: 'btn btn-success'

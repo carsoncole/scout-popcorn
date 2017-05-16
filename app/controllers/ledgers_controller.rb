@@ -1,5 +1,6 @@
 class LedgersController < ApplicationController
   before_action :set_ledger, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin
 
   def index
     @ledgers = Ledger.joins(account: :event).where("events.id = ?", @active_event).order(date: :desc, created_at: :desc).page(params[:page]).per(50)
@@ -218,10 +219,10 @@ class LedgersController < ApplicationController
       @ledger.is_bank_deposit = true
       @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
       @cash_accounts = @active_event.accounts.cash.order(:name)
-      if !current_scout.is_take_orders_admin?
+      if !current_scout.is_financial_admin? && !current_scout.is_take_orders_admin?
         @cash_accounts = @cash_accounts.where(is_take_order_eligible: false)
       end
-      if !current_scout.is_site_sales_admin?
+      if  !current_scout.is_financial_admin? && !current_scout.is_site_sales_admin?
         @cash_accounts = @cash_accounts.where(is_site_sale_eligible: false)
       end
       @deposit = true

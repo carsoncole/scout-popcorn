@@ -1,10 +1,15 @@
 .row
-  .col-md-6
+  .col-md-12
     .card
       .card-block
-        - if @deposit
-          .card-title
-            %h1 Bank Deposit
+        .card-title
+          %h4 General Transaction
+
+        %p.text-muted.small
+          %i.fa.fa-info-circle.small
+            Entering a transaction here requires you enter any additional related double-entry transactions or it will result in your event's financial statements not balancing.
+
+
         = form_for @ledger do |f|
           - if @ledger.errors.any?
             #error_explanation
@@ -13,42 +18,24 @@
                 - @ledger.errors.full_messages.each do |msg|
                   %li= msg
 
-          - if @deposit
-            = f.hidden_field :is_bank_deposit, value: 1
+          .col-md-4
             .form-group
-              = f.label "From"
-              %br
-              = f.collection_select :from_account_id, @asset_accounts, :id, :name, {}, class: 'form-control'
-
-            .form-group
-              = f.label "Deposit to:"
-              %br
-              = f.collection_select :account_id, @bank_accounts, :id, :name, {}, class: 'form-control'
-          - elsif params[:collect_from_customer]
-            %h2 Collect Money for Take Orders
-            = f.hidden_field :is_money_collected, value: 1 
-            .form-group
-              = f.label "Take Order"
-              %p.text-muted Select the Take Order money was collected for
-              = f.select :take_order_id, options_for_select(@take_order_ids), {}, class: 'form-control'
-          - else
-            .form-group
-              = f.label :account_id
+              = f.label 'Account:'
               %br
               = f.collection_select :account_id, @accounts, :id, :name, {}, class: 'form-control'
+          .col-md-8
             .form-group
-              = f.label :description
+              = f.label 'Description'
               = f.text_field :description, class: 'form-control'
-          .form-group
-            = f.label :amount
-            = f.text_field :amount, class: 'form-control'
+          
+          .col-md-4
+            .form-group
+              = f.label 'Amount:'
+              = f.text_field :amount, class: 'form-control'
 
-          .form-group
-            - if @deposit
-              = f.label :deposit_date
-            - else
-              = f.label :date
-            %br
-            = f.date_select :date, {}, class: 'form-control'
+            .form-group
+              = f.label 'Date:'
+              %br
+              = f.date_select :date, {}, class: 'form-control'
           .actions
             = f.submit 'Save', class: 'btn btn-success'

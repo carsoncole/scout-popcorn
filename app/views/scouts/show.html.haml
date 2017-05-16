@@ -43,10 +43,6 @@
               &nbsp;
               ARCHIVED
 
-
-          %li.list-group-item
-            Administrator
-
         - if current_scout == @scout || current_scout.is_unit_admin?
           %li.list-group-item
             = link_to "Change password", scout_update_password_path(@scout)

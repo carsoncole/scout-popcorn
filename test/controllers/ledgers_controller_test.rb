@@ -35,12 +35,6 @@ class LedgersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get transaction exp reimbursement 2" do
-    sign_in(scouts(:financial_admin))
-    get expense_reimbursement_2_url
-    assert_response :success
-  end
-
   test "should get balance sheet" do
     sign_in(scouts(:financial_admin))
     get balance_sheet_url
