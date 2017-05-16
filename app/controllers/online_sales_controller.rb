@@ -1,5 +1,7 @@
 class OnlineSalesController < ApplicationController
   before_action :set_online_sale, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin, except: :index
+  before_action :authorize_online_admin, only: [:edit, :update, :create, :destroy]
 
   def index
     if current_scout.admin?

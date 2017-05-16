@@ -1,7 +1,7 @@
 class SiteSalesController < ApplicationController
   before_action :authorize_admin, except: :index
   before_action :set_site_sale, only: [:show, :edit, :update, :destroy]
-
+  before_action :authorize_site_sales_admin,  only: [:update, :destroy, :create, :new]
 
   def index
     @site_sales = SiteSale.includes(:scout_site_sales, :site_sale_line_items).order(:date).page(params[:page])
@@ -21,20 +21,16 @@ class SiteSalesController < ApplicationController
   end
 
   def create
-    if current_scout.is_site_sales_admin?
-      @site_sale = @active_event.site_sales.build(site_sale_params)
-      if @site_sale.save
-        redirect_to site_sales_path, notice: 'Site sale was successfully created.'
-      else
-        render :new
-      end
+    @site_sale = @active_event.site_sales.build(site_sale_params)
+    if @site_sale.save
+      redirect_to site_sales_path, notice: 'Site sale was successfully created.'
     else
-      redirect_to site_sales_path, alert: 'You do not have permission to create a Site Sale.'
+      render :new
     end
   end
 
   def update
-    if params[:closed] && current_scout.is_site_sales_admin?
+    if params[:closed]
       if @site_sale.payments_balance?
         if @site_sale.update(closed_at: Time.now, closed_by: current_scout.id)
           redirect_to @site_sale, notice: 'The Site Sale was successfully closed.'
@@ -56,8 +52,7 @@ class SiteSalesController < ApplicationController
   end
 
   def destroy
-    if current_scout.is_site_sales_admin?
-      @site_sale.destroy
+    if @site_sale.destroy
       redirect_to site_sales_url, notice: 'Site sale was successfully destroyed.'
     else
       redirect_to @site_sale, alert: 'You do not have permission to modify this Site Sale.'

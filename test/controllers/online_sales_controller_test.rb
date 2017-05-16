@@ -29,6 +29,20 @@ class OnlineSalesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should not get new" do
+    sign_in(scouts(:one))
+    get new_online_sale_url
+    assert_response :redirect
+    assert_redirected_to home_url
+  end
+
+  test "should not get edit" do
+    sign_in(scouts(:one))
+    get edit_online_sale_url(@online_sale)
+    assert_response :redirect
+    assert_redirected_to home_url
+  end
+
   test "should create online_sale" do
     sign_in(scouts(:admin))
     assert_difference('OnlineSale.count') do
@@ -56,6 +70,14 @@ class OnlineSalesControllerTest < ActionDispatch::IntegrationTest
       delete online_sale_url(@online_sale)
     end
     assert_redirected_to online_sales_path
+  end
+
+  test "should not destroy online_sale" do
+    sign_in(scouts(:one))
+    assert_difference('OnlineSale.count', 0) do
+      delete online_sale_url(@online_sale)
+    end
+    assert_redirected_to home_path
   end
 
   test "should show online sale" do
