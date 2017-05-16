@@ -102,17 +102,19 @@
                 / = link_to "Take Orders Order", purchase_orders_path, class: "dropdown-item #{'active' if controller_name =='purchase_orders'}"
                 / = link_to "Take Orders Index", take_orders_order_index_path, class: "dropdown-item #{'active' if controller_name =='take_orders_order'}"
 
-
                 %h6.dropdown-header
-                  Finances
-                = link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger' && action_name == 'index'}"
-                = link_to "Transactions", ledger_transactions_path, class: "dropdown-item #{'active' if controller_name == 'ledger' && action_name == 'transactions'}"
+                  Transactions
+                = link_to "All Transactions", ledger_transactions_path, class: "dropdown-item #{'active' if controller_name == 'ledgers' && action_name == 'transactions'}"
+                / # = link_to "Bank Deposit", bank_deposit_path, class: "dropdown-item #{'active' if controller_name == 'ledger' && action_name == 'bank_deposit'}"                
 
-                / .dropdown-divider
-                / %h6.dropdown-header
-                /   Misc
+                / = link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger' && action_name == 'index'}"
 
+                .dropdown-divider
+                %h6.dropdown-header
+                  Financials
 
+                = link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
+                = link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
 
                 / = link_to "Inventory Returns", inventory_returns_path, class: "dropdown-item #{'active' if controller_name =='stocks' && action_name == 'inventory_returns'}"
                 / = link_to "Final Unit Settlement Form", final_unit_settlement_form_path, class: "dropdown-item #{'active' if controller_name =='ledgers' && action_name == 'final_unit_settlement_form'}"
@@ -121,8 +123,7 @@
                 / = link_to "Collect from Customer", new_ledger_path(collect_from_customer: true), class: "dropdown-item #{'active' if controller_name == 'ledgers' && params[:collect_from_customer].present? }"
                 / / = link_to "Accounts", accounts_path, class: "dropdown-item #{'active' if controller_name == 'payment_methods'}"
                 / = link_to "Resources", resources_path, class: "dropdown-item #{'active' if controller_name == 'resources'}"
-                = link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
-                = link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
+
            
               .dropdown-divider
               %h6.dropdown-header Unit

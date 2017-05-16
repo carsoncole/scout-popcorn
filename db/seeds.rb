@@ -17,6 +17,7 @@ Scout.create([
 {first_name: 'Sitesales', last_name: 'Admin', email: 'site_sales_admin@example.com', unit_id: 1, password: 'password', is_site_sales_admin: true},
 {first_name: 'Financial', last_name: 'Admin', email: 'financial_admin@example.com', unit_id: 1, password: 'password', is_financial_admin: true},
 {first_name: 'Prizes', last_name: 'Admin', email: 'prizes_admin@example.com', unit_id: 1, password: 'password', is_prizes_admin: true},
+{first_name: 'Warehouse', last_name: 'Admin', email: 'warehouse_admin@example.com', unit_id: 1, password: 'password', is_warehouse_admin: true},
 {first_name: 'Mike', last_name: 'Jones', email: 'scout1@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Bill', last_name: 'Hardy', email: 'scout2@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Steve', last_name: 'Wilson', email: 'scout3@example.com', unit_id: 1, password: 'password'},

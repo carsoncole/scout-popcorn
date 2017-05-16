@@ -20,6 +20,12 @@ Rails.application.routes.draw do
   get 'ledgers/bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
   post 'ledgers/bank-deposit' => 'ledgers#bank_deposit'
 
+  get 'ledgers/expense-reimbursement-1' => "ledgers#expense_reimbursement_1", as: 'expense_reimbursement_1'
+  post 'ledgers/expense-reimbursement-1' => 'ledgers#expense_reimbursement_1'
+  get 'ledgers/expense-reimbursement-2' => "ledgers#expense_reimbursement_2", as: 'expense_reimbursement_2'
+  post 'ledgers/expense-reimbursement-2' => 'ledgers#expense_reimbursement_2'
+
+
   resources :due_from_customers, only: :index
 
   get 'events/:id/commissions' => 'events#edit_commission_percentage', as: 'edit_commission_percentage'

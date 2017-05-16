@@ -1,0 +1,38 @@
+= render 'transaction'
+
+.row
+  .col-md-3
+  .col-md-6
+    .card
+      .card-block
+        .card-title
+          %h4 Expense Reimbursement - Paid by Unit
+
+        = form_for @ledger, url: 'expense-reimbursement-1' do |f|
+          - if @ledger.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@ledger.errors.count, "error")} prohibited this ledger from being saved:"
+              %ul
+                - @ledger.errors.full_messages.each do |msg|
+                  %li= msg
+
+          %p Use this form when reimbursing for an expense, which is paid for directly by the Unit. This transaction will record a liability to the Unit for the amount of the expense.
+
+          .form-group
+            = f.label :description_of_expense
+            %br
+            = f.text_field :description, class: 'form-control'
+
+          .form-group
+            = f.label :amount
+            .col-md-4
+              = f.text_field :amount, class: 'form-control'
+  
+
+          .form-group
+            = f.label :date
+            %br
+            .col-md-4
+              = f.date_select :date, {}, class: 'form-control'
+          .actions
+            = f.submit 'Submit Expense', class: 'btn btn-success'

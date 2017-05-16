@@ -66,20 +66,20 @@
                 %tr
                   %th
                   %th
-                  %th.text-center(colspan=6) Admin Roles
+                  %th.text-center(colspan=6) RIGHTS
                   %th
                   %th
                   - if current_scout.is_unit_admin?
                     %th.hidden-print
                 %tr
                   %th
-                  %th.text-center Unit
-                  %th.text-center Finances
-                  %th.text-center Take Orders
-                  %th.text-center Site Sales
-                  %th.text-center Online Sales
-                  %th.text-center Warehouse
-                  %th.text-center Prizes
+                  %th.role.text-center Unit
+                  %th.role.text-center Finances
+                  %th.role.text-center Take Orders
+                  %th.role.text-center Site Sales
+                  %th.role.text-center Online Sales
+                  %th.role.text-center Warehouse
+                  %th.role.text-center Prizes
                   %th.text-center Logins
                   - if current_scout.is_unit_admin?
                     %th.hidden-print
@@ -90,27 +90,41 @@
                     %td
                       %i.fa.fa-user
                       = link_to scout.name, scout_path(scout)
-                    %td.text-center
+                    %td.role.text-center
                       - if scout.is_unit_admin?
-                        %i.fa.fa-check
-                    %td.text-center
+                        %i.fa.fa-check-square-o
+                      - else
+                        %i.fa.fa-square-o.text-muted
+                    %td.role.text-center
                       - if scout.is_financial_admin?
-                        %i.fa.fa-check
-                    %td.text-center
+                        %i.fa.fa-check-square-o
+                      - else
+                        %i.fa.fa-square-o.text-muted
+                    %td.role.text-center
                       - if scout.is_take_orders_admin?
-                        %i.fa.fa-check
-                    %td.text-center
+                        %i.fa.fa-check-square-o
+                      - else
+                        %i.fa.fa-square-o.text-muted
+                    %td.role.text-center
                       - if scout.is_site_sales_admin?
-                        %i.fa.fa-check
-                    %td.text-center
+                        %i.fa.fa-check-square-o
+                      - else
+                        %i.fa.fa-square-o.text-muted
+                    %td.role.text-center
                       - if scout.is_online_sales_admin?
-                        %i.fa.fa-check
-                    %td.text-center
+                        %i.fa.fa-check-square-o
+                      - else
+                        %i.fa.fa-square-o.text-muted
+                    %td.role.text-center
                       - if scout.is_warehouse_admin?
-                        %i.fa.fa-check
-                    %td.text-center
+                        %i.fa.fa-check-square-o
+                      - else
+                        %i.fa.fa-square-o.text-muted
+                    %td.role.text-center
                       - if scout.is_prizes_admin?
-                        %i.fa.fa-check
+                        %i.fa.fa-check-square-o
+                      - else
+                        %i.fa.fa-square-o.text-muted
                     %td.text-center= scout.sign_in_count
                     - if current_scout.is_unit_admin?
                       %td.hidden-print

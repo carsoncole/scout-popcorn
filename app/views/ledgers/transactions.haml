@@ -3,6 +3,7 @@
 .row
   .col-md-12
     %h4 Transactions
+    %p= link_to "Ledger", ledgers_path
 
 %br
 .row
@@ -12,34 +13,34 @@
       .card-block
         %h4.card-title Bank deposit
         %p.card-text
-          Use this when making a bank deposit from either Take Order or Site Sale cash.
+          Use when making a bank deposit from either Take Order or Site Sale cash.
           - if @active_event.unit.treasurer?
-            Email notification will be sent of your deposit to your Unit Treasurer,
+            Notification will be sent to
             = succeed(".") do
-              = @active_event.unit.treasurer_name
-      .card-footer.text-center= button_to "Bank deposit", bank_deposit_path, class: 'btn btn-primary btn-sm', disabled: current_scout.is_take_orders_admin? || current_scout.is_site_sales_admin? || current_scout.is_financial_admin? ? false : true
+              %b= @active_event.unit.treasurer_name
+      .card-footer.text-center= button_to "Bank deposit", bank_deposit_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_take_orders_admin? || current_scout.is_site_sales_admin? || current_scout.is_financial_admin? ? false : true
 
   .col-md-3
     .card.card-outline-primary
       .card-header Setup
       .card-block
         %h4.card-title Cash for Site Sales
-        %p.card-text Use this when providing the initial funding for the Site Sale's cash box. This money should be provided by your Unit Treasurer and will be recorded as money due back to the Unit.
-      .card-footer.text-center= button_to "Cash for Site Sales", fund_site_sales_path, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true
+        %p.card-text Use when providing initial cash for Site Sale's cash box. Money should be provided by Unit Treasurer.
+      .card-footer.text-center= button_to "Cash for Site Sales", fund_site_sales_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true
   .col-md-3
     .card.card-outline-primary
       .card-header Expense
       .card-block
-        %h4.card-title Expense reimbursement #1
-        %p.card-text Use this when reimbursing an expense with payment made directly by your Unit (not money received from popcorn sales). 
-      .card-footer.text-center= button_to "Reimbursement by Unit", "#" ,class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true  
+        %h4.card-title Reimbursement: Unit
+        %p.card-text Use when reimbursing with cash from your Unit (not money received from popcorn sales). 
+      .card-footer.text-center= button_to "Expense Reimbursement", expense_reimbursement_1_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true  
   .col-md-3
     .card.card-outline-primary
       .card-header Expense
       .card-block
-        %h4.card-title Expense reimbursement #2
-        %p.card-text Use this when incurring expenses and reimburses those expenses from either Site Sales or Take Orders cash.
-      .card-footer.text-center= button_to "Reimbursement by Cash", "#", class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true
+        %h4.card-title Reimbursement: Site Sales/Take Orders
+        %p.card-text Use when reimbursing with cash from either Site Sales or Take Orders cash.
+      .card-footer.text-center= button_to "Expense Reimbursement", expense_reimbursement_2_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true  
 
   / .col-md-3
   /   .card.card-outline-primary

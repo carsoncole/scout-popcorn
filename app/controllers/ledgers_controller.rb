@@ -126,6 +126,68 @@ class LedgersController < ApplicationController
     end
   end
 
+  def expense_reimbursement_1
+    if request.post?
+      @ledger = Ledger.new(ledger_params)
+      @ledger.created_by = current_scout.id
+      from_account = Account.due_to_unit(@active_event)
+      @ledger.account_id = from_account.id
+      @contra_ledger = Ledger.new(ledger_params)
+      @contra_ledger.description = @ledger.description
+      @contra_ledger.account_id = @active_event.accounts.where(name: 'Misc').first.id
+      @contra_ledger.amount = ledger_params[:amount].to_f.abs
+      @contra_ledger.created_by = current_scout.id
+      @contra_ledger.save
+
+      double_entry = DoubleEntry.create
+      @ledger.double_entry = double_entry
+      @contra_ledger.double_entry = double_entry
+
+      if @ledger.save && @contra_ledger.save
+        flash[:notice] = 'The expense has been recorded.'
+        redirect_to ledgers_path
+      else
+        @ledger = Ledger.new 
+      end
+
+    else
+      @ledger = Ledger.new
+    end
+  end
+
+  def expense_reimbursement_2
+    if request.post?
+      @ledger = Ledger.new(ledger_params)
+      @ledger.created_by = current_scout.id
+      @ledger.amount = -(@ledger.amount.abs)
+      from_account = Account.find(ledger_params[:from_account_id])
+      @ledger.account_id = from_account.id
+      @contra_ledger = Ledger.new(ledger_params)
+      @contra_ledger.description = @ledger.description
+      @contra_ledger.account_id = @active_event.accounts.where(name: 'Misc').first.id
+      @contra_ledger.amount = ledger_params[:amount].to_f.abs
+      @contra_ledger.created_by = current_scout.id
+      @contra_ledger.save
+
+      double_entry = DoubleEntry.create
+      @ledger.double_entry = double_entry
+      @contra_ledger.double_entry = double_entry
+
+      if @ledger.save && @contra_ledger.save
+        flash[:notice] = 'The expense has been recorded.'
+        redirect_to ledgers_path
+      else
+        @ledger = Ledger.new
+        @cash_accounts = @active_event.accounts.cash.order(:name) 
+      end
+
+    else
+      @ledger = Ledger.new
+      @cash_accounts = @active_event.accounts.cash.order(:name)
+    end
+  end
+
+
   def bank_deposit
     if request.post?
       @ledger = Ledger.new(ledger_params)
@@ -139,7 +201,6 @@ class LedgersController < ApplicationController
       @contra_ledger.account_id = ledger_params[:from_account_id]
       @contra_ledger.amount = -ledger_params[:amount].to_f
       @contra_ledger.created_by = current_scout.id
-      @contra_ledger.save
 
       double_entry = DoubleEntry.create
       @ledger.double_entry = double_entry
@@ -157,6 +218,12 @@ class LedgersController < ApplicationController
       @ledger.is_bank_deposit = true
       @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
       @cash_accounts = @active_event.accounts.cash.order(:name)
+      if !current_scout.is_take_orders_admin?
+        @cash_accounts = @cash_accounts.where(is_take_order_eligible: false)
+      end
+      if !current_scout.is_site_sales_admin?
+        @cash_accounts = @cash_accounts.where(is_site_sale_eligible: false)
+      end
       @deposit = true
     end
   end
