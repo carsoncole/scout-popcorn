@@ -49,26 +49,28 @@ If you want to run the application for just one Scout unit, change `config.allow
 
 ### Seed Data
 
-There is seed data that can be optionally loaded to view an already-entered Unit, Scouts, and administrators.
+There is seed data that can be optionally loaded to view an already-entered Unit, Scouts, event, and administrators. To see how the application works based on the user, you can login with any of the pre-defined users below.
 
 ```ruby
 rails db:seed
 ```
 
-There are multiple users with different roles, but here are a sample:
-
-All passwords are simply 'password'.
+There are multiple administrators and Scout users with different roles, all of which have a password of 'password'.
 
 - Admin (full rights): admin@example.com
 - Unit admin: unit_admin@example.com
-- Site Sales admin: site_sales_admin@example.com
-- Scout: scout1@example.com
+- Site Sales: site_sales_admin@example.com
+- Take Orders: take_orders_admin@example.com
+- Financial: financial_admin@example.com
+- Warehouse: warehouse_admin@example.com
+- Prizes: prizes_admin@example.com
+- Scouts: scout1@example.com, scout2@example.com, scout3@example.com
 
 ## Administrative Roles
 
 Roles are broken down into the following, which each administrative user can be assigned one or more:
 
-- **Unit:** All unit info, including users and assignment of roles, event, product and prize information.
+- **Unit:** All unit info, including users and assignment of roles, event, product and prize information. This role is effectively a super-admin role, but for rights to any of the below roles, it must be specifically assigned.
 
 - **Take Orders:** All Take Orders info.
 
