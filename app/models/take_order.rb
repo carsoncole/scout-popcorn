@@ -1,7 +1,7 @@
 class TakeOrder < ApplicationRecord
   belongs_to :purchase_order, optional: true
   belongs_to :account, foreign_key: :payment_account_id
-  belongs_to :envelope, optional: true
+  belongs_to :envelope
   has_many :products, through: :take_order_line_items
   has_many :take_order_line_items, dependent: :destroy
   has_many :ledgers
@@ -74,7 +74,7 @@ class TakeOrder < ApplicationRecord
 
   def payment
     if account.name == 'Take Orders cash'
-      'Cash'
+      'Cash/Check'
     elsif account.name == 'Due from customers'
       'Not paid'
     else

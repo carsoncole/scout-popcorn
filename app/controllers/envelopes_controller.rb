@@ -1,6 +1,6 @@
 class EnvelopesController < ApplicationController
   before_action :set_envelope, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_take_orders_admin, except: :show
+  before_action :authorize_take_orders_admin, except: [:show, :remove_take_order]
 
   def index
     @envelopes = @active_event.envelopes.order(closed_at: :desc).page(params[:page])
@@ -54,7 +54,9 @@ class EnvelopesController < ApplicationController
 
   def remove_take_order
     take_order = TakeOrder.find(params[:id])
-    take_order.destroy
+    if take_order.envelope.scout == current_scout || current_scout.is_take_order_admin?
+      take_order.destroy
+    end
     @envelope = Envelope.find(params[:envelope_id])
     redirect_to envelope_path(@envelope.id)
   end

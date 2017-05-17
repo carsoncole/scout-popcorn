@@ -75,6 +75,7 @@ class PrizeCart < ApplicationRecord
   end
 
   def process_automatic_prizes!
+    cart_prizes.joins(:prize).where(reduces_sales_credits: false).destroy_all
     eligible_prizes = event.prizes.does_not_reduce_sales_credits.where("sales_amount < ?", scout.sales(event))
     eligible_prizes.each do |prize|
       cart_prizes.create(prize: prize, quantity: 1) unless cart_prizes.where(prize: prize).any?

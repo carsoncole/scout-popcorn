@@ -29,7 +29,6 @@ class TakeOrdersController < ApplicationController
       @envelopes = @active_event.envelopes.includes(take_orders: [take_order_line_items: :product]).closed
       render :pick_sheet
     end
-
   end
 
   def show

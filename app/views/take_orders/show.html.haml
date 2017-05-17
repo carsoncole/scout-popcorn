@@ -8,13 +8,13 @@
               %h3
                 Take Order -
                 = @take_order.envelope.scout.name  
-                %span.badge.badge-primary
-                  - if @take_order.status == 'submitted'
-                    Turned In
-                  - elsif @take_order.status == 'in hand'
-                    In Hand
-                  - else
-                    = @take_order.status.capitalize
+                / %span.badge.badge-primary
+                /   - if @take_order.status == 'submitted'
+                /     Turned In
+                /   - elsif @take_order.status == 'in hand'
+                /     In Hand
+                /   - else
+                /     = @take_order.status.capitalize
                 - if !@take_order.submitted? && @active_event.take_orders_allowed?
                   %span
                     = link_to edit_take_order_path(@take_order) do
@@ -106,6 +106,7 @@
                     %td
                       = link_to new_take_order_take_order_line_item_path(@take_order) do
                         %i.fa.fa-plus.fa-lg
+                        Add a product sold
 
                     %td
                     %td
