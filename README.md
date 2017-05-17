@@ -1,6 +1,6 @@
 # Scout Corn Cub for Popcorn Fundraising
 
-Corn Cub is for managing and for promoting involvement in a Scout popcorn fundraiser. 
+Corn Cub is a multi-Scout Unit or single Unit application for managing and for promoting involvement in a Scout popcorn fundraiser. 
 
 For **Scouts**, they can track their progress, prizes they might have earned, and manage orders and deliveries.
 
