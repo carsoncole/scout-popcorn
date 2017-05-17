@@ -2,23 +2,17 @@ class SiteSaleLineItemsController < ApplicationController
   before_action :set_site_sale
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
 
-  # GET /line_items
-  # GET /line_items.json
   def index
     @line_items = @site_sale.site_sale_line_items
   end
 
-  # GET /line_items/1
-  # GET /line_items/1.json
   def show
   end
 
-  # GET /line_items/new
   def new
     @line_item = @site_sale.site_sale_line_items.new
   end
 
-  # GET /line_items/1/edit
   def edit
   end
 
@@ -32,8 +26,6 @@ class SiteSaleLineItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /line_items/1
-  # PATCH/PUT /line_items/1.json
   def update
     if @line_item.update(site_sale_line_item_params)
       redirect_to @site_sale, notice: "#{@line_item.product.name} was successfully updated."
@@ -42,8 +34,6 @@ class SiteSaleLineItemsController < ApplicationController
     end
   end
 
-  # DELETE /line_items/1
-  # DELETE /line_items/1.json
   def destroy
     if @line_item.destroy
       redirect_to @site_sale, notice: "#{@line_item.product.name} was successfully destroyed."

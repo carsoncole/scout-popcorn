@@ -6,25 +6,19 @@ class UnitsController < ApplicationController
 
   # layout 'sessions', only: [:new, :create]
 
-  # GET /units/1
-  # GET /units/1.json
   def show
     cookies[:unit_id] = @unit.id
   end
 
-  # GET /units/new
   def new
     @unit = Unit.new
     # @unit.scouts.build
     @scout = Scout.new
   end
 
-  # GET /units/1/edit
   def edit
   end
 
-  # POST /units
-  # POST /units.json
   def create
     @unit = Unit.new(unit_params)
     @scout = Scout.new(scout_params)
@@ -58,12 +52,10 @@ class UnitsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_unit
       @unit = Unit.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def unit_params
       params.require(:unit).permit(:name, :street_address_1, :street_address_2, :city, :zip_code, :state_postal_code, :treasurer_first_name, :treasurer_last_name, :treasurer_email, :first_name, :last_name, :email)
     end

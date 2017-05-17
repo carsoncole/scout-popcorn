@@ -17,15 +17,6 @@ class ApplicationController < ActionController::Base
     if current_scout
       @unit = current_scout.unit
     end
-    # if cookies[:unit_id]
-    #   begin
-    #     @unit = Unit.find(cookies[:unit_id]) 
-    #   rescue
-    #     cookies.delete :unit_id
-    #   end
-    # else
-    #   @unit = current_scout.unit
-    # end
   end
 
   def set_event
@@ -69,14 +60,6 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :logged_in?
-
-  # def add_admin_messages!
-  #   if current_scout.unit.events.empty?
-  #     flash[:alert] = "Scouts can not currently sign up with your Unit, without an Event created. Add an Event to change this."
-  #   elsif current_scout.unit.events.active.empty?
-  #     flash[:alert] = "Scouts can not currently sign up with your Unit, without an active Event. Create an active Event, or un-archive an existing Event."
-  #   end
-  # end
 
   def need_an_event!
     flash[:alert] = "No Event is currently selected."
