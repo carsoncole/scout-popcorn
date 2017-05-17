@@ -47,6 +47,8 @@ config.allow_for_multiple_units = false
 
 If you want to run the application for just one Scout unit, change `config.allow_for_multiple_unit` to `false`.
 
+For email notification, update settings in **environment.rb**.
+
 ### Seed Data
 
 There is seed data that can be optionally loaded to view an already-entered Unit, Scouts, event, and administrators. To see how the application works based on the user, you can login with any of the pre-defined users below.
