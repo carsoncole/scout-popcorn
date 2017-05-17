@@ -1,8 +1,7 @@
 class EnvelopesController < ApplicationController
   before_action :set_envelope, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_take_orders_admin, except: :show
 
-  # GET /envelopes
-  # GET /envelopes.json
   def index
     @envelopes = @active_event.envelopes.order(closed_at: :desc).page(params[:page])
 
@@ -22,20 +21,16 @@ class EnvelopesController < ApplicationController
     @total_pack_donations = @envelopes.joins(take_orders: [take_order_line_items: :product]).where("products.is_pack_donation = ?", true).sum(:value)
   end
 
-  # GET /envelopes/1p
-  # GET /envelopes/1.json
   def show
     @take_orders = @envelope.take_orders.order(:created_at)
     @payment_methods = @take_orders.joins(:account).group('accounts.name')
   end
 
-  # GET /envelopes/new
   def new
     @envelope = Envelope.new
     @scouts = @unit.scouts.active.not_admin.order(:last_name)
   end
 
-  # GET /envelopes/1/edit
   def edit
   end
 
@@ -64,8 +59,6 @@ class EnvelopesController < ApplicationController
     redirect_to envelope_path(@envelope.id)
   end
 
-  # POST /envelopes
-  # POST /envelopes.json
   def create
     @envelope = Envelope.new(envelope_params)
     @envelope.created_by = current_scout.id
@@ -78,8 +71,6 @@ class EnvelopesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /envelopes/1
-  # PATCH/PUT /envelopes/1.json
   def update
     respond_to do |format|
       if @envelope.update(envelope_params)
@@ -100,8 +91,6 @@ class EnvelopesController < ApplicationController
     redirect_to envelope_path(@envelope)
   end
 
-  # DELETE /envelopes/1
-  # DELETE /envelopes/1.json
   def destroy
     @envelope.destroy
     redirect_to take_orders_path

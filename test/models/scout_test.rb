@@ -52,4 +52,8 @@ class ScoutTest < ActiveSupport::TestCase
     assert_not scout.valid?
     assert scout.errors[:is_unit_admin]
   end
+
+  test "should create an open envelope" do
+    assert scouts(:one).open_envelope.present?
+  end
 end

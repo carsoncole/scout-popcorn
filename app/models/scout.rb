@@ -109,7 +109,11 @@ class Scout < ApplicationRecord
   end
 
   def open_envelope(event)
-    envelopes.open.where(event_id: event.id).last
+    open = envelopes.open.where(event_id: event.id).last
+    unless open
+      open = envelopes.create(event_id: event.id)
+    end
+    open
   end
 
   def open_envelope?(event)

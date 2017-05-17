@@ -43,7 +43,7 @@
           - @take_orders.each do |take_order|              
             %tr
               - if current_scout.admin?
-                %td= take_order.scout.name
+                %td= take_order.envelope.scout.name
               %td= take_order.customer_name
               %td
                 - take_order.take_order_line_items.each do |line_item|

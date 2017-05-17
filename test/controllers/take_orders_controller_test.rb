@@ -7,12 +7,18 @@ class TakeOrdersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
+    sign_in(scouts(:one))
+    get take_orders_url
+    assert_response :success
+  end
+
+  test "should get index as admin" do
     sign_in(scouts(:take_orders_admin))
     get take_orders_url
     assert_response :success
   end
 
-  test "should get new" do
+  test "should get new as admin" do
     sign_in(scouts(:take_orders_admin))
     get new_take_order_url
     assert_response :success

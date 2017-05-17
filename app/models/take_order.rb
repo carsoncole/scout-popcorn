@@ -1,7 +1,7 @@
 class TakeOrder < ApplicationRecord
   belongs_to :purchase_order, optional: true
   belongs_to :account, foreign_key: :payment_account_id
-  belongs_to :envelope
+  belongs_to :envelope, optional: true
   has_many :products, through: :take_order_line_items
   has_many :take_order_line_items, dependent: :destroy
   has_many :ledgers
@@ -10,7 +10,7 @@ class TakeOrder < ApplicationRecord
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   # validate :check_scout_id_matches_envelope_scout_id
   
-  before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  # before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   # before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
@@ -70,6 +70,16 @@ class TakeOrder < ApplicationRecord
 
   def delivered?
     status == 'delivered'
+  end
+
+  def payment
+    if account.name == 'Take Orders cash'
+      'Cash'
+    elsif account.name == 'Due from customers'
+      'Not paid'
+    else
+      account.name.capitalize
+    end
   end
 
   def products_and_quantities
@@ -137,12 +147,12 @@ class TakeOrder < ApplicationRecord
     # date = self.money_received_at.blank? ? self.created_at : self.money_received_at
     date = self.envelope.money_received_at.blank? ? self.envelope.created_at : self.envelope.money_received_at
     take_order_line_items.each do |line_item|
-      unit = self.event.unit      
+      unit = self.envelope.event.unit      
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: date, description: "Take Order submitted", is_take_order_product_related: true)
       
       if line_item.product.physical?
-        product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
-        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * event.bsa_wholesale_percentage, date: date, description: "Take Order submitted", line_item_id: line_item.id, is_take_order_product_related: true)
+        product_due_to_customers_account = envelope.event.accounts.where(name: 'Product due to customers').first
+        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * envelope.event.bsa_wholesale_percentage, date: date, description: "Take Order submitted", line_item_id: line_item.id, is_take_order_product_related: true)
       end
     end
   end
