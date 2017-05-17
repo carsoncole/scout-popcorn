@@ -1,20 +1,20 @@
 one:
   envelope: one
   customer_name: John Smith
-  account: take_order_cash
+  account: take_orders_cash
 two:
   envelope: one
   customer_name: Wilbur Ross
-  account: take_order_cash
+  account: take_orders_cash
 three:
   envelope: one
   customer_name: James Madison
-  account: take_order_cash
+  account: take_orders_cash
 four:
   envelope: two
   customer_name: George Washington
-  account: take_order_cash
+  account: take_orders_cash
 five:
   envelope: two
   customer_name: Larry Jones
-  account: take_order_cash
+  account: take_orders_cash

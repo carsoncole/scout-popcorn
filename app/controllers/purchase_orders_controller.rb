@@ -65,8 +65,8 @@ class PurchaseOrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_purchase_order
-      if @unit
-        @purchase_order = @unit.purchase_orders.find(params[:id])
+      if @active_event
+        @purchase_order = @active_event.purchase_orders.find(params[:id])
       else
         @purchase_order = PurchaseOrder.find(params[:id])
       end

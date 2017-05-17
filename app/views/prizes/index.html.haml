@@ -49,9 +49,10 @@
           .card.text-center
             .card-header
               %h5.card-text= prize.name
-              %p.card-text
-                = link_to prize_path(prize) do
-                  %i.fa.fa-pencil
+              - if current_scout.is_prizes_admin?
+                %p.card-text
+                  = link_to prize_path(prize) do
+                    %i.fa.fa-pencil
             .card-block
               - if prize.description.present?
                 %p.card-text= prize.description

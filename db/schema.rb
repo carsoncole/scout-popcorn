@@ -32,9 +32,10 @@ ActiveRecord::Schema.define(version: 20170513015256) do
     t.integer  "prize_cart_id"
     t.integer  "prize_id"
     t.integer  "prize_amount"
-    t.integer  "quantity",      default: 0, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.integer  "quantity",      default: 0,     null: false
+    t.boolean  "is_automatic",  default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "double_entries", force: :cascade do |t|

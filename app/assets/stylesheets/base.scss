@@ -27,6 +27,18 @@ h5 {
   font-size: 3em;
 }
 
+.take-orders {
+  .customer {
+    width: 20em;
+  }
+  .amount {
+    width: 6em;
+  }
+  .payment {
+    width: 7em;
+  }
+}
+
 th.role, td.role {
   width: 5.5em;
 }

@@ -19,7 +19,7 @@ class TakeOrder < ApplicationRecord
   before_save :credit_stock_for_reversed_pickup!, if: Proc.new { |to| to.status_changed? && to.status_was == :picked_up}
 
   before_save :remove_from_purchase_order!, if: Proc.new {|t| !t.new_record? && t.status_changed? && t.status == 'in hand'}
-  before_save :credit_stock!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
+  # before_save :credit_stock!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_create :assign_to_envelope!
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
@@ -72,6 +72,16 @@ class TakeOrder < ApplicationRecord
     status == 'delivered'
   end
 
+  def payment
+    if account.is_cash?
+      'Cash/Check'
+    elsif account.name == 'Due from customers'
+      'Not paid'
+    else
+      account.name.capitalize
+    end
+  end
+
   def products_and_quantities
     take_order_line_items.joins(:product).map{|toli| toli.product.name + ' (' + toli.quantity.to_s + ')' }.join(', ')
   end
@@ -106,7 +116,7 @@ class TakeOrder < ApplicationRecord
   private
 
   def add_to_purchase_order!
-    self.purchase_order_id = event.open_take_order_purchase_order.id
+    self.purchase_order_id = envelope.event.open_take_order_purchase_order.id
   end
 
   def remove_from_purchase_order!
@@ -116,7 +126,7 @@ class TakeOrder < ApplicationRecord
   def debit_stock!
     date = self.envelope.money_received_at.blank? ? self.envelope.created_at : self.envelope.money_received_at
     take_order_line_items.each do |line_item|
-      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: date, created_by: 999)
+      new_stock_entry = Stock.new(event_id: self.envelope.event.id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: date, created_by: 999)
       new_stock_entry.save
     end
   end
@@ -137,12 +147,12 @@ class TakeOrder < ApplicationRecord
     # date = self.money_received_at.blank? ? self.created_at : self.money_received_at
     date = self.envelope.money_received_at.blank? ? self.envelope.created_at : self.envelope.money_received_at
     take_order_line_items.each do |line_item|
-      unit = self.event.unit      
+      unit = self.envelope.event.unit      
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: date, description: "Take Order submitted", is_take_order_product_related: true)
       
       if line_item.product.physical?
-        product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
-        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * event.bsa_wholesale_percentage, date: date, description: "Take Order submitted", line_item_id: line_item.id, is_take_order_product_related: true)
+        product_due_to_customers_account = envelope.event.accounts.where(name: 'Product due to customers').first
+        Ledger.create(take_order_id: self.id, account_id: product_due_to_customers_account.id, amount: line_item.value * envelope.event.bsa_wholesale_percentage, date: date, description: "Take Order submitted", line_item_id: line_item.id, is_take_order_product_related: true)
       end
     end
   end

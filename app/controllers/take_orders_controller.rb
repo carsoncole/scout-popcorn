@@ -9,6 +9,10 @@ class TakeOrdersController < ApplicationController
       @envelopes = @active_event.envelopes.where(scout_id: current_scout.id).order(status: :desc, closed_at: :desc)
     end
 
+    @open_envelopes = @envelopes.open
+    @closed_envelopes = @envelopes.closed
+    @picked_up_envelopes = @envelopes.picked_up
+
     if params[:envelopes] == 'open' || params[:envelopes].blank?
       @envelopes = @envelopes.open
     elsif params[:envelopes]  == 'closed'
@@ -25,7 +29,6 @@ class TakeOrdersController < ApplicationController
       @envelopes = @active_event.envelopes.includes(take_orders: [take_order_line_items: :product]).closed
       render :pick_sheet
     end
-
   end
 
   def show
@@ -46,7 +49,7 @@ class TakeOrdersController < ApplicationController
   end
 
   def create
-    @envelope = Envelope.find(params[:take_order][:envelope_id])
+    @envelope = current_scout.open_envelope(@active_event)
     @take_order = @envelope.take_orders.new(take_order_params)
     @take_order.status = 'in hand'
 

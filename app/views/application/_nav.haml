@@ -88,6 +88,7 @@
             
                 = link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
                 = link_to "Transfers", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+                = link_to "Take Order Purchase Orders", take_order_purchase_orders_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
 
 
 

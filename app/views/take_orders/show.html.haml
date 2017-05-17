@@ -8,20 +8,20 @@
               %h3
                 Take Order -
                 = @take_order.envelope.scout.name  
-                %span.badge.badge-primary
-                  - if @take_order.status == 'submitted'
-                    Turned In
-                  - elsif @take_order.status == 'in hand'
-                    In Hand
-                  - else
-                    = @take_order.status.capitalize
+                / %span.badge.badge-primary
+                /   - if @take_order.status == 'submitted'
+                /     Turned In
+                /   - elsif @take_order.status == 'in hand'
+                /     In Hand
+                /   - else
+                /     = @take_order.status.capitalize
                 - if !@take_order.submitted? && @active_event.take_orders_allowed?
                   %span
                     = link_to edit_take_order_path(@take_order) do
                       %i.fa.fa-pencil
 
         .row
-          .col-md-4
+          .col-md-5
             %table.table.table-sm
               %tr
                 %th Customer:
@@ -35,13 +35,15 @@
               %tr
                 %th Payment by:
                 %td.text-right
-                  = @take_order.account.name.upcase if @take_order.account
+                  = @take_order.payment
 
               %tr
                 %th Envelope:
                 %td.text-right
-                  - if @take_order.envelope
-                    = link_to @take_order.envelope.name, envelope_path(@take_order.envelope) 
+                  = precede("#") do
+                    = @take_order.envelope.id
+                  / - if @take_order.envelope
+                  / = link_to @take_order.envelope.name, envelope_path(@take_order.envelope) 
 
               - unless @take_order.note.blank?
                 %tr
@@ -104,6 +106,7 @@
                     %td
                       = link_to new_take_order_take_order_line_item_path(@take_order) do
                         %i.fa.fa-plus.fa-lg
+                        Add a product sold
 
                     %td
                     %td

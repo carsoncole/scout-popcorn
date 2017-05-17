@@ -6,6 +6,7 @@ class CreateCartPrizes < ActiveRecord::Migration[5.0]
       t.integer :prize_amount
       t.integer :quantity, default: 1, null: false
       t.integer :quantity, default: 0, null: false
+      t.boolean :is_automatic, default: false
       
       t.timestamps
     end
