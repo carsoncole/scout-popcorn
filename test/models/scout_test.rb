@@ -54,6 +54,6 @@ class ScoutTest < ActiveSupport::TestCase
   end
 
   test "should create an open envelope" do
-    assert scouts(:one).open_envelope.present?
+    assert scouts(:one).open_envelope(events(:one)).present?
   end
 end

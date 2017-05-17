@@ -4,7 +4,7 @@
       .card-block
         .card-title
           %h2
-            = @unit.name
+            = @active_event.name
             Take Orders - Purchase Order
 
           - unless params[:final]
@@ -24,7 +24,7 @@
                 - if params[:final]
                   Quantity
                 - else
-                  Net Quantity
+                  New Order Quantity
               %th Price
               %th Value
           %tbody
@@ -34,20 +34,23 @@
               - if quantity != 0
                 %tr
                   %td= product.name
-                  - unit_inventory = @unit.inventory(product)
-                  - unit_inventory += quantity + @unit.stocks.where(product_id: product.id).take_orders.sum(:quantity)
+                  - event_inventory = @active_event.inventory(product)
+
                   - unless params[:final]
                     %td= quantity
                     %td
-                      = unit_inventory
+                      = event_inventory
                   %td
-                    - net_quantity = quantity - unit_inventory
+                    - net_quantity = event_inventory - quantity
+                    - net_quantity = nil if net_quantity >= 0
                     = net_quantity
-                  %td= number_to_currency(product.retail_price)
                   %td
-                    - value = product.retail_price * net_quantity
-                    - total_value += value
-                    = number_to_currency( value )
+                    = number_to_currency(product.retail_price) if net_quantity
+                  %td
+                    - if net_quantity
+                      - value = product.retail_price * net_quantity
+                      - total_value += value
+                      = number_to_currency( value )
             %tr
               %td
               - unless params[:final]
@@ -87,7 +90,7 @@
             - total_value_wo_donations = 0
             - @take_orders.each do |to|
               %tr
-                %td= to.scout.name
+                %td= to.envelope.scout.name
                 %td
                   = link_to take_order_path(to) do
                     %i.fa.fa-folder-open.fa-lg

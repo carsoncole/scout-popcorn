@@ -10,7 +10,7 @@ class TakeOrder < ApplicationRecord
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
   # validate :check_scout_id_matches_envelope_scout_id
   
-  # before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
+  before_save :add_to_purchase_order!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :send_receipt!, if: Proc.new { |to| to.customer_email.present? && to.status_changed? && to.status == 'submitted' && to.receipt_sent_at.blank? }
   # before_save :debit_stock!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
   before_save :register_money_received_and_product_due!, if: Proc.new { |to| to.status_changed? && to.status == 'submitted'}
@@ -19,7 +19,7 @@ class TakeOrder < ApplicationRecord
   before_save :credit_stock_for_reversed_pickup!, if: Proc.new { |to| to.status_changed? && to.status_was == :picked_up}
 
   before_save :remove_from_purchase_order!, if: Proc.new {|t| !t.new_record? && t.status_changed? && t.status == 'in hand'}
-  before_save :credit_stock!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
+  # before_save :credit_stock!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_save :reverse_money_received_and_product_due!, if: Proc.new { |to| !to.new_record? && to.status_changed? && to.status == 'in hand'}
   before_create :assign_to_envelope!
   before_destroy :credit_stock!, if: Proc.new { |to| to.submitted? }
@@ -73,7 +73,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def payment
-    if account.name == 'Take Orders cash'
+    if account.is_cash?
       'Cash/Check'
     elsif account.name == 'Due from customers'
       'Not paid'
@@ -116,7 +116,7 @@ class TakeOrder < ApplicationRecord
   private
 
   def add_to_purchase_order!
-    self.purchase_order_id = event.open_take_order_purchase_order.id
+    self.purchase_order_id = envelope.event.open_take_order_purchase_order.id
   end
 
   def remove_from_purchase_order!
@@ -126,7 +126,7 @@ class TakeOrder < ApplicationRecord
   def debit_stock!
     date = self.envelope.money_received_at.blank? ? self.envelope.created_at : self.envelope.money_received_at
     take_order_line_items.each do |line_item|
-      new_stock_entry = Stock.new(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: date, created_by: 999)
+      new_stock_entry = Stock.new(event_id: self.envelope.event.id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: date, created_by: 999)
       new_stock_entry.save
     end
   end

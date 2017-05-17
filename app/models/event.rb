@@ -132,7 +132,9 @@ class Event < ApplicationRecord
     bank_account? && unit.treasurer? ? true : false 
   end
 
-
+  def inventory(product)
+    stocks.where.not(location: 'take orders').where(product_id: product.id).sum(:quantity)
+  end
 
   def upcoming_site_sales
     site_sales.where("date >= ?", Date.today).order(date: :asc)

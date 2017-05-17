@@ -9,39 +9,10 @@
       %br
 
 
-      / - unless @active_event.take_orders_allowed?
-      /   .alert.alert-warning
-      /     Take Orders are currently closed.
+      - unless @active_event.take_orders_allowed?
+        .alert.alert-warning
+          Take Orders are currently closed.
 
-      / - if current_scout.admin?
-      /   %ul.nav.nav-inline
-      /     %li.nav-item
-      /       = link_to new_take_order_path, class: 'nav-link' do
-      /         New Take Order
-
-      / - if current_scout.admin?
-      /   %ul.nav.nav-inline
-      /     - if @active_event.take_orders_allowed? 
-      /       %li.nav-item
-      /         = link_to new_envelope_path, class: 'nav-link' do
-      /           New Envelope
-        
-      /     %li.nav-item
-      /       = link_to "Print Pick Sheet", take_orders_path(pick_sheet: true), class: 'nav-link'
-      /   %br
-
-
-
-      / - if !current_scout.open_envelope?(@active_event) && @active_event.take_orders_allowed? && @active_event.products?
-      /   %ul.nav.nav-inline
-      /     %li.nav-item
-      /       = link_to new_envelope_path, class: 'nav-link' do
-      /         %i.fa.fa-plus
-      /         Create new Order Form/Envelope
-
-      /   %br
-
-      
       %ul.nav.nav-tabs.card-text
         %li.nav-item
           = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
@@ -64,64 +35,11 @@
             - if current_scout.admin?
               = surround("(", ")") do
                 = @active_event.envelopes.picked_up.count
-        / %li.nav-item
-        /   = link_to take_orders_path(envelopes: 'all'), class: "nav-link #{'active' if params[:envelopes] == 'all'}" do
-        /     All Envelopes
-        /     - if current_scout.admin?
-        /       = surround("(", ")") do
-        /         = @active_event.envelopes.count
-
-        
+ 
       .row
         .col-md-12
           %br
           - @envelopes.each do |envelope|
-            / %h6
-            /   = link_to envelope_path(envelope) do
-            /     - if current_scout.admin?
-            /       - if envelope.open?
-            /         %i.fa.fa-envelope
-            /       - else
-            /         %i.fa.fa-envelope
-            /       = envelope.name
-            /     - else
-            /       %i.fa.fa-envelope
-            /       Order Form
-            /       = precede("#") do
-            /         = envelope.id
-            /       / - if envelope.open?
-            /       /   %span.badge.badge-info OPEN
-            /       / - elsif envelope.closed?
-            /       /   %span.badge.badge-info TURNED IN
-  
-            / - if current_scout.admin? && envelope.open? && @active_event.take_orders_allowed?
-            /   - if envelope.take_orders.any? 
-            /     = link_to "#", :data => { :confirm =>  "You need to move all take orders to another envelope before deleting this envelope"} do
-            /       %i.fa.fa-trash
-            /   - else
-            /     = link_to envelope_path(envelope), method: :delete do
-            /       %i.fa.fa-trash
-            / - if envelope.open? && @active_event.take_orders_allowed?
-            /   %p
-            /     = link_to new_envelope_take_order_path(envelope.id) do
-            /       %i.fa.fa-plus
-            /       Add a New Take Order to this Envelope
-            /   %br
-            
-            / - if envelope.created_by && current_scout.admin?
-            /   - scout = Scout.find(envelope.created_by) 
-            /   %p
-            /     Created by:
-            /     = scout.name
-                
-                
-
-            / - if envelope.closed_at
-            /   %b.small.text-muted
-            /     Turned in at:
-            /     = nice_date_time(envelope.closed_at)
-            /   %br
-            /   %br
             .card.card-outline-secondary
               .card-block
                 .table-responsive
@@ -150,7 +68,6 @@
 
                         - if current_scout.admin?
                           %th
-                          / %th.hidden
                           %th.visible-print-block Delivered
                           %th.hidden-print
 
