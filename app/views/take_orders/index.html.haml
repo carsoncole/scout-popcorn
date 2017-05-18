@@ -3,9 +3,11 @@
     .card.card-block
       %h2.card-title
         Take Orders
-      %p.card-text.alert.alert-info.text-muted
-        %i.fa.fa-info-circle
-        Entering your own Take Orders here is optional. Once you submit a Take Orders envelope (with money), it will be entered for you if not already entered by you.
+        
+      - unless current_scout.admin?
+        %p.card-text.alert.alert-info.text-muted
+          %i.fa.fa-info-circle
+          Entering your own Take Orders here is optional. Once you submit a Take Orders envelope (with money), it will be entered for you if not already entered by you.
 
 
       - unless @active_event.take_orders_allowed?

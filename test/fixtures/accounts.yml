@@ -3,12 +3,22 @@
 site_sale_cash:
   event: one
   name: Site Sales cash
+  simple_name: 'Cash/Check'
   is_site_sale_eligible: true
   account_type: Asset
 
 take_orders_cash:
   event: one
   name: Take Orders cash
+  simple_name: 'Cash/Check'
+  is_take_order_eligible: true
+  account_type: Asset
+
+due_from_customer:
+  event: one
+  name: Due from customers
+  simple_name: Due from customer
+  is_take_order_eligible: true
   account_type: Asset
 
 inventory:

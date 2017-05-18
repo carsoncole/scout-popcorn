@@ -54,7 +54,7 @@ class TakeOrdersController < ApplicationController
     @take_order.status = 'in hand'
 
     if @take_order.save
-      redirect_to @take_order, notice: 'Order was successfully created.'
+      redirect_to @take_order, notice: 'Customer details were entered.'
     else
       @accounts = @active_event.accounts.is_take_order_eligible.order(name: :desc)
       render :new

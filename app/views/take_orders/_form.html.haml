@@ -4,15 +4,16 @@
       .card-block
         .card-title
           %h2 Take Order Customer Details
+
+        %p.card-text.alert.alert-info.text-muted
+          %i.fa.fa-info-circle
+          Enter customer details here. The address is important as it will be shown on your delivery form when you deliver the popcorn. If you enter an email, a receipt will be sent when you have turned in this order.
+
         %p.text-emphasis= @take_order.envelope.name if @take_order.envelope
         %br
         = form_for @take_order do |f|
           = render 'errors', target: @take_order
 
-          / - if current_scout.admin? && @take_order.envelope.nil?
-          /   .form-group
-          /     %label Scout
-          /     = f.collection_select :scout_id, @active_event.unit.scouts.not_admin, :id, :last_first_name, {prompt: "Select a Scout"}, {class: 'form-control'}
           .form-group
             = f.label :customer_name
             = f.text_field :customer_name, class: 'form-control', placeholder: 'Name'
@@ -25,12 +26,10 @@
             %em.small.text-muted A thank you receipt will be sent if an email address is entered.
             = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
           .form-group
-            = f.label 'Payment method'
-            %br
-            %em.small.text-muted Select 'Take Orders cash' for cash + checks. 
+            = f.label 'How are they paying?'
             = f.collection_select :payment_account_id, @accounts, :id, :simple_name,{}, class: 'form-control'
           .form-group
-            = f.label 'Note:'
+            = f.label 'Note (for your own reference)'
             = f.text_field :note, class: 'form-control'
 
           - if current_scout.admin?

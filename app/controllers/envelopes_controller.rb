@@ -99,12 +99,14 @@ class EnvelopesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_envelope
-      @envelope = Envelope.find(params[:id]) if params[:id]
+      if current_scout.is_admin?
+        @envelope = @active_event.envelopes.find(params[:id]) if params[:id]
+      else
+        @envelope = current_scout.envelopes.find(params[:id]) if params[:id]
+      end        
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def envelope_params
       params.require(:envelope).permit(:scout_id, :event_id, :status)
     end
