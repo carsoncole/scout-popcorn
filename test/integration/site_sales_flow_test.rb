@@ -62,7 +62,7 @@ class SiteSalesFlowTest < Capybara::Rails::TestCase
     # first delete the existing site sales cash
     site_sale.site_sale_payment_methods.delete_all
     click_link 'Add a form of payment'
-    select "Site Sales cash", from: "site_sale_payment_method_account_id"
+    select "Cash/Check", from: "site_sale_payment_method_account_id"
     fill_in "site_sale_payment_method_amount", with: site_sale.sales
     click_button 'Save'
     assert page.has_content? 'Form of Site Sale payment was added'
