@@ -16,7 +16,8 @@
                 %th= scout.name
                 %th.text-right= number_to_currency(top_seller[1], precision: 0)
       - else
-        %p.card-text.text-center
+        %p.card-text.alert.alert-info.text-muted.text-center
+          %i.fa.fa-info-circle
           We will post the 
           = @active_event.number_of_top_sellers
-          top selling Scouts here!
+          top selling Scouts here!          

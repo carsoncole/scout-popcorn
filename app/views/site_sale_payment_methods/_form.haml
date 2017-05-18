@@ -13,7 +13,7 @@
           .form-group
             = f.label :payment_method
             %br
-            = f.collection_select :account_id, @accounts, :id, :name, {},class: 'form-control'
+            = f.collection_select :account_id, @accounts, :id, :simple_name, {},class: 'form-control'
           .form-group
             = f.label :amount
             = f.text_field :amount, class: 'form-control'

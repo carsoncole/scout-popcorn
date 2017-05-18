@@ -73,10 +73,8 @@ class TakeOrder < ApplicationRecord
   end
 
   def payment
-    if account.is_cash?
-      'Cash/Check'
-    elsif account.name == 'Due from customers'
-      'Not paid'
+    if account.simple_name.present?
+      account.simple_name
     else
       account.name.capitalize
     end

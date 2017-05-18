@@ -129,7 +129,7 @@
           %tbody
             - @site_sale_payment_methods.each do |payment_method|
               %tr
-                %td= payment_method.account.name if payment_method.account
+                %td= payment_method.account.payment if payment_method.account
                 %td
                   = number_to_currency(payment_method.amount)
                   - if @site_sale.open?

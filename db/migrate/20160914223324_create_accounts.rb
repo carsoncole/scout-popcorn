@@ -3,6 +3,7 @@ class CreateAccounts < ActiveRecord::Migration[5.0]
     create_table :accounts do |t|
       t.integer :event_id
       t.string :name
+      t.string :simple_name
       t.string :account_type
       t.integer :rank, default: 0
       t.boolean :is_master_account, default: true

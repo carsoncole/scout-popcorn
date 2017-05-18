@@ -2,8 +2,7 @@
   .col-md-12
     .card
       .card-block
-        .card-title
-          %h1 Envelopes       
+        %h2.card-title Envelopes       
 
         %ul.nav.nav-tabs
           %li.nav-item
@@ -14,63 +13,64 @@
                   = @active_event.envelopes.open.count
 
           %li.nav-item
-            = link_to envelopes_path, class: "nav-link #{'active' unless params[:status]}" do
-              All
-              - if current_scout.admin?
-                = surround("(", ")") do
-                  = @active_event.envelopes.count
-
-
-
-          %li.nav-item
             = link_to envelopes_path(status: 'closed'), class: "nav-link #{'active' if params[:status] == 'closed'}" do
               Closed
               - if current_scout.admin?
                 = surround("(", ")") do
                   = @active_event.envelopes.closed.count
 
+          %li.nav-item
+            = link_to envelopes_path, class: "nav-link #{'active' unless params[:status]}" do
+              All
+              - if current_scout.admin?
+                = surround("(", ")") do
+                  = @active_event.envelopes.count
+
         %br
 
-        %table.table
+        %table.table.card-text.table-sm
           %thead
             %tr
               %th 
               %th Status
               %th Value
               %th Closed
-              %th
+              %th By
               %th
 
           %tbody
             - @envelopes.each do |envelope|
               %tr
-                %td= link_to envelope.name, envelope_path(envelope)
-                %td= envelope.status
-                %td= number_to_currency(envelope.value)
-                %td= nice_date_time_less(envelope.closed_at) if envelope.closed_at
                 %td
+                  - if envelope.open?
+                    %i.fa.fa-envelope-open-o
+                  - else
+                    %i.fa.fa-envelope-o
+                  = link_to envelope.name, envelope_path(envelope)
+                %td
+                  .badge.badge-info= envelope.status
+                %td= number_to_currency(envelope.value)
+                %td
+                  = nice_date_time_less(envelope.closed_at) if envelope.closed_at
+                %td= Scout.find(envelope.closed_by).name if envelope.closed_by
+                %td.text-right
                   = link_to envelope do
                     %i.fa.fa-folder-open
-                
-                %td
                   - unless envelope.closed?
                     = link_to  envelope, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                       %i.fa.fa-trash
 
         = paginate @envelopes
-        %br
-
-        = render 'nav'
 
 .row
   .col-md-12
     .card
       .card-block
         .card-title
-          %h2 Totals
+          %h4 Totals
 
 
-        %table.table
+        %table.table.table-sm.card-text
           %tr
             %th Total sales:
             %td.text-right

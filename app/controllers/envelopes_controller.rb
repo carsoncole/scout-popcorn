@@ -36,13 +36,13 @@ class EnvelopesController < ApplicationController
 
   def close
     @envelope = Envelope.find(params[:id])
-    @envelope.update(status: 'Closed')#,money_received_by_id: current_scout.id, money_received_at: Time.current, closed_at: Time.current)
+    @envelope.update(status: 'Closed', closed_by: current_scout.id)
     redirect_to envelope_path(@envelope)
   end
 
   def open
     @envelope = Envelope.find(params[:id])
-    @envelope.update(status: 'Open')#,money_received_by_id: nil, money_received_at: nil, closed_at: nil)
+    @envelope.update(status: 'Open', closed_by: nil)
     redirect_to envelope_path(@envelope)
   end
 

@@ -72,12 +72,20 @@ class Account < ApplicationRecord
     end
   end
 
+  def payment
+    if simple_name.present?
+      simple_name
+    else
+      name.capitalize
+    end
+  end
+
   def self.create_site_sales_cash!(event)
-    create(event_id: event.id, name: 'Site Sales cash', is_cash: true, is_site_sale_eligible: true, account_type: 'Asset', rank: 1)
+    create(event_id: event.id, name: 'Site Sales cash', simple_name: 'Cash', is_cash: true, is_site_sale_eligible: true, account_type: 'Asset', rank: 1)
   end
 
   def self.create_take_orders_cash!(event)
-    create(event_id: event.id, name: 'Take Orders cash', is_cash: true, is_take_order_eligible: true, account_type: 'Asset', rank: 1)
+    create(event_id: event.id, name: 'Take Orders cash', simple_name: 'Cash/Check', is_cash: true, is_take_order_eligible: true, account_type: 'Asset', rank: 1)
   end
 
   def self.create_bank_accounts!(event)
@@ -86,7 +94,7 @@ class Account < ApplicationRecord
   end
 
   def self.create_money_due_from_customers!(event)
-    create(event_id: event.id, name: 'Due from customers', is_cash: false, is_take_order_eligible: true, account_type: 'Asset', rank: 3)
+    create(event_id: event.id, name: 'Due from customers', simple_name: 'Due from customer', is_cash: false, is_take_order_eligible: true, account_type: 'Asset', rank: 3)
   end
 
   def self.create_inventory!(event)
@@ -99,7 +107,6 @@ class Account < ApplicationRecord
     create(event_id: event.id, name: 'Misc', account_type: 'Expense', rank: 2)
     create(event_id: event.id, name: 'Processor fees', account_type: 'Expense', rank: 2)
   end
-
 
   def self.create_product_due_to_customers!(event)
     create(event_id: event.id, name: 'Product due to customers', is_cash: false, account_type: 'Liability')
@@ -114,7 +121,7 @@ class Account < ApplicationRecord
   end
 
   def self.create_third_party_account!(event)
-    create(event_id: event.id, name: 'Third Party account', is_third_party_account: true, is_site_sale_eligible: true, is_cash: false, account_type: 'Asset', rank: 4)
+    create(event_id: event.id, name: 'Third Party account', simple_name: 'Third party account', is_third_party_account: true, is_site_sale_eligible: true, is_cash: false, account_type: 'Asset', rank: 4)
   end
 
 end

@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20170513015256) do
   create_table "accounts", force: :cascade do |t|
     t.integer  "event_id"
     t.string   "name"
+    t.string   "simple_name"
     t.string   "account_type"
     t.integer  "rank",                        default: 0
     t.boolean  "is_master_account",           default: true
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20170513015256) do
     t.integer  "money_received_by_id"
     t.datetime "money_received_at"
     t.datetime "closed_at"
+    t.integer  "closed_by"
     t.integer  "created_by"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false

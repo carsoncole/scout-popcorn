@@ -3,10 +3,9 @@
     .card.card-block
       %h2.card-title
         Take Orders
-      %p.card-text.text-muted
+      %p.card-text.alert.alert-info.text-muted
         %i.fa.fa-info-circle
-          Once your submit a Take Orders envelope (with money), it will show up here. You can optionally enter your own Take Orders here.
-      %br
+        Entering your own Take Orders here is optional. Once you submit a Take Orders envelope (with money), it will be entered for you if not already entered by you.
 
 
       - unless @active_event.take_orders_allowed?

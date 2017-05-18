@@ -60,6 +60,7 @@ class Envelope < ApplicationRecord
     take_orders.each do |take_order|
       take_order.update(status: :submitted)
     end
+    self.closed_at = Time.now
   end
 
   def process_if_picked_up!
@@ -71,6 +72,7 @@ class Envelope < ApplicationRecord
   def reverse_if_reopened!
     take_orders.each do |take_order|
       take_order.update(status: 'in hand')
-    end    
+    end
+    self.closed_at = nil
   end
 end

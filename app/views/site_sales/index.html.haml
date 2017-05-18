@@ -4,17 +4,25 @@
       .card-block
         %h2.card-title Site Sales
 
+        - unless current_scout.admin?
+          %p.card-text.alert.alert-info.text-muted
+            %i.fa.fa-info-circle
+            The sales credit you get for working at a Site Sale will be determined by taking the sales from ALL Site Sales and proportionately allocating them based on the total number of hours that are worked. Your credited sales may change as more Site Sales are completed.
+
         - if @site_sales.any?
           .table-responsive
             %table.table.card-text
               %thead
                 %tr
                   %th Site Sale
-                  %th.text-center Hours
+                  - if current_scout.admin?
+                    %th.text-center Hours
+                  - else
+                    %th.text-center Your hours
                   - if current_scout.admin?
                     %th.text-center Sales
                   - else
-                    %th.text-center Credited Sales
+                    %th.text-center Your credited Sales
                   - if current_scout.is_site_sales_admin?
                     %th.text-center Status
                     %th.hidden-print
