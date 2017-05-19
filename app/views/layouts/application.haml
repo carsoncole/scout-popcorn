@@ -4,7 +4,12 @@
   
   %body
     .hidden_print=render 'nav'
-    .container
-      .hidden_print= render 'flash'
-      = yield
-      / = render 'debugging'
+    - if controller_name == 'ledgers' && action_name == 'index'
+      .container-fluid
+        .hidden_print= render 'flash'
+        = yield
+    - else
+      .container
+        .hidden_print= render 'flash'
+        = yield
+        / = render 'debugging'

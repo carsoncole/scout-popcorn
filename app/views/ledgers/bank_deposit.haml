@@ -7,7 +7,7 @@
         .card-title
           %h2 Bank Deposit
 
-        %p.text-muted.small
+        %p.text-muted
           %i.fa.fa-info-circle
           Complete when making a deposit. 
           - if @unit.treasurer?
@@ -43,4 +43,4 @@
               %br
               = f.date_select :date, { start_year: 2017 }, class: 'form-control'
             .actions
-              = f.submit 'Submit Deposit', class: 'btn btn-success'
+              = f.submit 'Record Deposit', class: 'btn btn-success'

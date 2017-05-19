@@ -46,7 +46,7 @@ class OnlineSalesController < ApplicationController
 
   private
     def set_online_sale
-      @online_sale = OnlineSale.find(params[:id])
+      @online_sale = @active_event.online_sales.find(params[:id])
     end
 
     def online_sale_params

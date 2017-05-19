@@ -24,7 +24,7 @@ unit_admin:
   password_digest: <%= BCrypt::Password.create "password" %>
 
 warehouse_admin:
-  email: unit_admin@example.com
+  email: warehouse_admin@example.com
   first_name: John
   last_name: Doe
   unit: one

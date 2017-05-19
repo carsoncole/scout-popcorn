@@ -4,12 +4,14 @@ site_sale_cash:
   event: one
   name: Site Sales cash
   simple_name: 'Cash/Check'
+  is_cash: true
   is_site_sale_eligible: true
   account_type: Asset
 
 take_orders_cash:
   event: one
   name: Take Orders cash
+  is_cash: true
   simple_name: 'Cash/Check'
   is_take_order_eligible: true
   account_type: Asset
@@ -39,7 +41,7 @@ due_to_unit:
 
 unit_bank_account:
   event: one
-  name: Unit Bank account
+  name: Unit bank account
   account_type: Asset
   is_bank_account_depositable: true
 

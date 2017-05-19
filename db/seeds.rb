@@ -18,6 +18,7 @@ Scout.create([
 {first_name: 'Financial', last_name: 'Admin', email: 'financial_admin@example.com', unit_id: 1, password: 'password', is_financial_admin: true},
 {first_name: 'Prizes', last_name: 'Admin', email: 'prizes_admin@example.com', unit_id: 1, password: 'password', is_prizes_admin: true},
 {first_name: 'Warehouse', last_name: 'Admin', email: 'warehouse_admin@example.com', unit_id: 1, password: 'password', is_warehouse_admin: true},
+{first_name: 'Online', last_name: 'Admin', email: 'online_sales_admin@example.com', unit_id: 1, password: 'password', is_online_sales_admin: true},
 {first_name: 'Mike', last_name: 'Jones', email: 'scout1@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Bill', last_name: 'Hardy', email: 'scout2@example.com', unit_id: 1, password: 'password'},
 {first_name: 'Steve', last_name: 'Wilson', email: 'scout3@example.com', unit_id: 1, password: 'password'},
@@ -169,6 +170,8 @@ Resource.create ([{event_id: 1, name: 'Prizes Brochure (BSA)', url: 'http://ibm.
 cash_payment_account = event.accounts.where(name: 'Site Sales cash').first
 
 SiteSalePaymentMethod.create ([{ site_sale_id: site_sale.id, account_id: cash_payment_account.id, amount: 790}])
+
+OnlineSale.create ([{scout_id: 9, event_id: event.id, amount: 50, customer_name: 'Olivia John', order_date: Date.today - 1.days, description: 'Popcorn'}, {scout_id: 10, event_id: event.id, amount: 50, customer_name: 'George Washington', order_date: Date.today - 1.days, description: 'Popcorn'}, {scout_id: 9, event_id: event.id, amount: 50, customer_name: 'John Denver', order_date: Date.today - 1.days, description: 'Popcorn'}, {scout_id: 11, event_id: event.id, amount: 50, customer_name: 'Michael Omalley', order_date: Date.today - 1.days, description: 'Popcorn'}])
 
 # 
 # TakeOrder.create([
