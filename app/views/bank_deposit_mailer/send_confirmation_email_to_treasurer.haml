@@ -3,7 +3,10 @@
   %head
     %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
   %body
-    %h1{style: 'text-align:center'} A Corn Cub FYI.
+    %h1{style: 'text-align:center'}
+      A
+      = Rails.configuration.application_name
+      FYI.
     - if @unit.treasurer_first_name
       %p
         Hello
@@ -14,7 +17,7 @@
       A deposit of
       = number_to_currency(@ledger.amount.abs)
       was made into
-      Union Bank
+      = @sibling_ledger.account.name
       on
       = @ledger.date.strftime("%B %d, %Y")
       by

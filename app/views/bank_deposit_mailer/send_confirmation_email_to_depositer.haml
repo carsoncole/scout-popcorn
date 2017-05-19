@@ -12,8 +12,8 @@
     %p
       Thank you for making and registering a deposit of
       = number_to_currency(@ledger.amount.abs)
-      into
-      Union Bank
+      into the
+      = @sibling_ledger.account.name
       on
       = @ledger.date.strftime("%B %d, %Y")
       from
@@ -28,5 +28,5 @@
 
     %p
       = @scout.unit.name
-      Corn Cub
-
+      %br
+      = Rails.configuration.application_name

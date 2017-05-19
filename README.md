@@ -28,6 +28,10 @@ Corn Cub also provides comprehensive management tools, including an Income State
 
 This is a Ruby on Rails application. Simply `bundle install` will install dependencies and then `Rails server` will launch the application.
 
+### Email notifications
+
+Email notifications can be sent for bank deposits, receipts and on registration, which requires ActionMailer settings to be configured in **environment.rb**.
+
 ### Dependencies
 
 Rails 5.0, Ruby 2.3
@@ -46,8 +50,6 @@ config.allow_for_multiple_units = false
 ```
 
 If you want to run the application for just one Scout unit, change `config.allow_for_multiple_unit` to `false`.
-
-For email notification, update settings in **environment.rb**.
 
 ### Seed Data
 

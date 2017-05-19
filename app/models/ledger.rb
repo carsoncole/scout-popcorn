@@ -7,7 +7,7 @@ class Ledger < ApplicationRecord
 
   validates :account_id, presence: true
 
-  # after_save :send_bank_deposit_notifications!, if: Proc.new {|l| l.is_bank_deposit && l.amount < 0 && bank_deposit_notification_sent_at.nil? }
+  after_save :send_bank_deposit_notifications!, if: Proc.new {|l| l.is_bank_deposit && l.amount < 0 && bank_deposit_notification_sent_at.nil? }
   
   attr_accessor :is_bank_deposit, :from_account_id, :fund_site_sales
 
@@ -17,13 +17,18 @@ class Ledger < ApplicationRecord
     joins(:account).where("accounts.acount_type = 'Expense'")
   end
 
+  def siblings
+    Ledger.where("double_entry_id = ?", double_entry_id).where.not("id = ?", self.id)
+  end
+
   def send_bank_deposit_notifications!
     if created_by
-      Thread.new do
-        BankDepositMailer.send_confirmation_email_to_depositer(self.created_by, self).deliver_now
-        BankDepositMailer.send_confirmation_email_to_treasurer(self.created_by, self).deliver_now
-        self.update(bank_deposit_notification_sent_at: Time.now)
-      end
+      sibling_ledger = self.siblings.first
+      # Thread.new do
+      BankDepositMailer.send_confirmation_email_to_depositer(self.created_by, self, sibling_ledger).deliver_now
+      BankDepositMailer.send_confirmation_email_to_treasurer(self.created_by, self, sibling_ledger).deliver_now
+      self.update(bank_deposit_notification_sent_at: Time.now)
+      # end
     end
   end
 
