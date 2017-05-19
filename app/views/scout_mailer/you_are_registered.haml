@@ -1,34 +1,25 @@
-!!!
-%html
-  %head
-    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
-  %body
-    %h1{style: 'text-align:center'}
-      Welcome to
-      = succeed("'s") do
-        = @scout.unit.name
-      = Rails.configuration.application_name
+%p 
+  Hello   
+  = succeed(",") do 
+    = @scout.first_name.capitalize
 
-    %p 
-      Hello   
-      = succeed(",") do 
-        = @scout.first_name.capitalize
 
-  
-    %p
-      Welcome to our own Popcorn Sale event website, where we've made it fun for all of our Scouts to be able to see their contribution.
+%p
+  Welcome to our Popcorn website, where we've made it fun for you to track your progress toward's your own goal.
 
-    %p
-      You are registered:
-      %br
-      Email:
-      = @scout.email
+%p
+  This is the email you will log in with:
+  %br
+  Email:
+  = @scout.email
 
-    %p
-      If you have any questions, you can contact:
-      %br
-      - @scout.unit.admin.each do |admin|
-        admin.name
-        = surround('(',')') do
-          admin.email
-        %br
+%p If you forgot your password, there is a link on our website where you can request a new password.
+
+%p
+  If you have any questions, you can contact:
+  %br
+  - @scout.unit.admin.each do |admin|
+    admin.name
+    = surround('(',')') do
+      admin.email
+    %br

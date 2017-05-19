@@ -52,19 +52,6 @@ class LedgersController < ApplicationController
     @ledger = Ledger.new(ledger_params)
     @ledger.created_by = current_scout.id
 
-    if @ledger.is_bank_deposit
-      from_account = Account.find(ledger_params[:from_account_id])
-      if from_account
-        @ledger.description = "Bank deposit from #{from_account.name}"
-      end
-      @contra_ledger = Ledger.new(ledger_params)
-      @contra_ledger.description = "Bank deposit to #{@ledger.account.name}"
-      @contra_ledger.account_id = ledger_params[:from_account_id]
-      @contra_ledger.amount = -ledger_params[:amount].to_f
-      @contra_ledger.created_by = current_scout.id
-      @contra_ledger.save
-    end
-
     if @ledger.is_money_collected
       @ledger.amount = -@ledger.amount
       @ledger.description = "Money collected from customer"
@@ -188,26 +175,16 @@ class LedgersController < ApplicationController
     end
   end
 
-
   def bank_deposit
     if request.post?
       @ledger = Ledger.new(ledger_params)
       @ledger.created_by = current_scout.id
       from_account = Account.find(ledger_params[:from_account_id])
-      if from_account
-        @ledger.description = "Bank deposit from #{from_account.name}"
-      end
-      @contra_ledger = Ledger.new(ledger_params)
-      @contra_ledger.description = "Bank deposit to #{@ledger.account.name}"
-      @contra_ledger.account_id = ledger_params[:from_account_id]
-      @contra_ledger.amount = -ledger_params[:amount].to_f
-      @contra_ledger.created_by = current_scout.id
+      @ledger.description = "Bank deposit from #{from_account.name}"
 
-      double_entry = DoubleEntry.create
-      @ledger.double_entry = double_entry
-      @contra_ledger.double_entry = double_entry
+      @ledger.double_entry_id = DoubleEntry.create.id
 
-      if @ledger.save && @contra_ledger.save
+      if @ledger.save
         flash[:notice] = 'Your bank deposit has been recorded.'
         redirect_to ledgers_path
       else
@@ -228,7 +205,6 @@ class LedgersController < ApplicationController
       @deposit = true
     end
   end
-
 
   private
     def set_ledger

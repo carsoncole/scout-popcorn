@@ -6,6 +6,7 @@ class PrizeCartMailer < ApplicationMailer
     @unit = @scout.unit
     @event = prize_cart.event
     @prize_cart = prize_cart
+    @title = 'Prize order received'
     if prize_cart.ordered?
       mail(to: prize_cart.scout.email, subject: "#{@unit.name} #{@event.name} Prize order received")
     end

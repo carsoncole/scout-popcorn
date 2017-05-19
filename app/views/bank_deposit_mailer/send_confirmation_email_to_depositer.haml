@@ -1,32 +1,25 @@
-!!!
-%html
-  %head
-    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
-  %body
-    %h1{style: 'text-align:center'} Thank You.
-    %p
-      Hello
-      = succeed(",") do
-        = @scout.first_name
+%p
+  Hello
+  = succeed(",") do
+    = @scout.first_name
+%p
+  Thank you for making and registering a deposit of
+  = number_to_currency(@ledger.amount.abs)
+  into the
+  = @sibling_ledger.account.name
+  on
+  = @ledger.date.strftime("%B %d, %Y")
+  from
+  = succeed(".") do
+    = @ledger.account.name
 
-    %p
-      Thank you for making and registering a deposit of
-      = number_to_currency(@ledger.amount.abs)
-      into the
-      = @sibling_ledger.account.name
-      on
-      = @ledger.date.strftime("%B %d, %Y")
-      from
-      = succeed(".") do
-        = @ledger.account.name
+- unless @unit.treasurer_email.blank?
+  %p
+    We have also notified
+    = @unit.treasurer_name
+    of this deposit.
 
-    - unless @unit.treasurer_email.blank?
-      %p
-        We have also notified
-        = @unit.treasurer_name
-        of this deposit.
-
-    %p
-      = @scout.unit.name
-      %br
-      = Rails.configuration.application_name
+%p
+  = @scout.unit.name
+  %br
+  = Rails.configuration.application_name

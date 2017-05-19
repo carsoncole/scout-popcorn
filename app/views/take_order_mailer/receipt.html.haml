@@ -1,36 +1,28 @@
-!!!
-%html
-  %head
-    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
-  %body
-    %h1{style: 'text-align:center'}
-      Thank You
+%p
+  = @scout.unit.name
+  thanks you for your support.
 
-    %p
-      = @scout.unit.name
-      thanks you for your support.
+%h2 Your Order
+%ul
+  - total = 0
+  - @take_order.take_order_line_items.each do |line_item|
+    %li
+      = line_item.product.name
+      = surround("(", ")") do
+        = line_item.quantity
+      - value = line_item.quantity * line_item.product.retail_price
+      = number_to_currency(value)
+      - total += value
+  %li
+    Amount due:
+    = number_to_currency(total)
 
-    %h2 Your Order
-    %ul
-      - total = 0
-      - @take_order.take_order_line_items.each do |line_item|
-        %li
-          = line_item.product.name
-          = surround("(", ")") do
-            = line_item.quantity
-          - value = line_item.quantity * line_item.product.retail_price
-          = number_to_currency(value)
-          - total += value
-      %li
-        Amount due:
-        = number_to_currency(total)
+  %li
+    - if @take_order.payment_account_id == 6
+      Please pay on delivery
+    - else
+      PAID IN FULL. Thank you!
 
-      %li
-        - if @take_order.payment_account_id == 6
-          Please pay on delivery
-        - else
-          PAID IN FULL. Thank you!
-
-    %p
-      If you have any questions, you can reach us at
-      = mail_to("#{@scout.unit.admin.map{|s|s.email}.join(', ')}")
+%p
+  If you have any questions, you can reach us at
+  = mail_to("#{@scout.unit.admin.map{|s|s.email}.join(', ')}")

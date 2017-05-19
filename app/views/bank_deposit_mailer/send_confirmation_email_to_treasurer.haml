@@ -1,32 +1,9 @@
-!!!
-%html
-  %head
-    %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
-  %body
-    %h1{style: 'text-align:center'}
-      A
-      = Rails.configuration.application_name
-      FYI.
-    - if @unit.treasurer_first_name
-      %p
-        Hello
-        = succeed(",") do
-          = @unit.treasurer_first_name
+- if @unit.treasurer_first_name
+  %p= 'Hello ' + @unit.treasurer_first_name + ','
 
-    %p
-      A deposit of
-      = number_to_currency(@ledger.amount.abs)
-      was made into
-      = @sibling_ledger.account.name
-      on
-      = @ledger.date.strftime("%B %d, %Y")
-      by
-      = @scout.name
-      from
-      = succeed(".") do
-        = @ledger.account.name
+%p= 'A deposit of ' + number_to_currency(@ledger.amount.abs).to_s + ' was made into ' + @sibling_ledger.account.name + ' on ' + @ledger.date.strftime("%B %d, %Y").to_s + ' by ' + @scout.name + ' from ' + @ledger.account.name + '.'
 
-    %p
-      = @scout.unit.name
-      %br
-      Corn Cub
+%p
+  = @scout.unit.name
+  %br
+  Corn Cub
