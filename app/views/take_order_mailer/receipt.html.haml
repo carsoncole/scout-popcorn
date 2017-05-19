@@ -6,9 +6,9 @@
     %h1{style: 'text-align:center'}
       Thank You
 
-    %p Pack 4496 on Bainbridge Island thanks you for your support and in helping a Scout earn his way to Summer Camp.
-
-    %p We have received your order and expect to deliver it by November 10, 2016.
+    %p
+      = @scout.unit.name
+      thanks you for your support.
 
     %h2 Your Order
     %ul
@@ -33,4 +33,4 @@
 
     %p
       If you have any questions, you can reach us at
-      = mail_to("pack4496@gmail.com")
+      = mail_to("#{@scout.unit.admin.map{|s|s.email}.join(', ')}")

@@ -57,7 +57,7 @@ class UnitsController < ApplicationController
     end
 
     def unit_params
-      params.require(:unit).permit(:name, :street_address_1, :street_address_2, :city, :zip_code, :state_postal_code, :treasurer_first_name, :treasurer_last_name, :treasurer_email, :first_name, :last_name, :email)
+      params.require(:unit).permit(:name, :street_address_1, :street_address_2, :city, :zip_code, :state_postal_code, :treasurer_first_name, :treasurer_last_name, :treasurer_email, :first_name, :last_name, :email, :send_email_on_registration)
     end
 
     def scout_params

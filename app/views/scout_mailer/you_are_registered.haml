@@ -4,47 +4,31 @@
     %meta(content="text/html; charset=UTF-8" http-equiv='Content-Type')
   %body
     %h1{style: 'text-align:center'}
-      Welcome to Pack 4496's Corn Cub!
+      Welcome to
+      = succeed("'s") do
+        = @scout.unit.name
+      = Rails.configuration.application_name
 
     %p 
       Hello   
       = succeed(",") do 
-        - if @scout.parent_first_name.blank?
-          = @scout.first_name.capitalize
-        - else
-          = @scout.parent_first_name.capitalize
+        = @scout.first_name.capitalize
+
   
     %p
       Welcome to our own Popcorn Sale event website, where we've made it fun for all of our Scouts to be able to see their contribution.
 
     %p
-      We will be updating Site Sale contributions after each Site Sale so
-      - if @scout.parent_first_name.blank?
-        scouts
-      - else
-        = @scout.first_name
-      can check back and see what they get towards their sales total. It will change over time as we will be taking the total Site Sales and proportionately dividing the sales up based on hours volunteered.
-
-    %p
-      Also, by turning in door-to-door Take Order order forms and collection envelopes at any Site Sale, all of 
-      - if @scout.parent_first_name.blank?
-        a Scout's
-      - else
-        = @scout.first_name.capitalize + "'s"
-      customer info will be entered and the total will be shown in Corn Cub. It will also show all the info they need for ultimately delivering the product.
-
-    %p On Take Orders, if an email address is provided, a thank-you and receipt will also automatically be sent.
-
-
-    %p
-      %b Need another order form/collection enveloper?
-      Visit any Site Sale and you will be able to pick up both.
-
-
-
-    %p Yours in Scouting,
-
-    %p
-      Carson Cole
+      You are registered:
       %br
-      Cubmaster Pack 4496, Popcorn Kernel
+      Email:
+      = @scout.email
+
+    %p
+      If you have any questions, you can contact:
+      %br
+      - @scout.unit.admin.each do |admin|
+        admin.name
+        = surround('(',')') do
+          admin.email
+        %br

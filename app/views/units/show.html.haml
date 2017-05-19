@@ -13,6 +13,13 @@
 
         %table.table
           %tr
+            %th Email sent on registration:
+            %td.text-right
+              - if @unit.send_email_on_registration
+                %i.fa.fa-check.fa-lg
+              - else
+                No
+          %tr
             %th Treasurer:
             %td.text-right= @unit.treasurer_name
 

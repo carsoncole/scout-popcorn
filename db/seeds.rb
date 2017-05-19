@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Unit.create([
-  {name: 'Sample Pack 100', treasurer_first_name: 'Paul', treasurer_last_name: 'Jones', treasurer_email: 'paul@example.com'}
+  {name: 'Sample Pack 100', treasurer_first_name: 'Paul', treasurer_last_name: 'Jones', treasurer_email: 'paul@example.com', send_email_on_registration: false}
   ])
 
 Scout.create([

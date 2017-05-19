@@ -19,4 +19,8 @@ class Unit < ApplicationRecord
     (treasurer_first_name || '') + ' ' + (treasurer_last_name || '')
   end
 
+  def admin
+    scouts.where(is_unit_admin: true)
+  end
+
 end

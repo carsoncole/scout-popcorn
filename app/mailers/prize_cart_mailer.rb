@@ -1,5 +1,5 @@
 class PrizeCartMailer < ApplicationMailer
-  default from: "Pack 4496 <pack4496@gmail.com>"
+  default from: Rails.configuration.from_email
 
   def receipt(prize_cart)
     @scout = prize_cart.scout

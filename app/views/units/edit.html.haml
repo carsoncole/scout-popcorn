@@ -18,9 +18,19 @@
             = f.text_field :name, placeholder: 'Pack 999', class: 'form-control'
 
           %br
+          %h4 Email Notifications
+          %p.text-muted
+            %i.fa.fa-info-circle
+            Notifications can be enabled to send a confirmation email to Scouts, and a copy to the Unit administrator, when they register.        
+
+          .form-group
+            = f.label :send_email_on_registration
+            = f.check_box :send_email_on_registration, class: 'form-control'
+
+
           %h4 Treasurer Notifications
 
-          %p.small
+          %p.text-muted
             %i.fa.fa-info-circle
             Entering Treasurer details here will result in email notifications of the dates and amounts of money when deposited into a unit bank account.
           .form-group

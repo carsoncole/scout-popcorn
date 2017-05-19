@@ -19,8 +19,8 @@ class Scout < ApplicationRecord
   before_save :fix_name!
   before_validation :downcase_email!
   before_save :set_event!
-  # after_create :send_registration_email!
-  # after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
+  after_create :send_registration_email!
+  after_create :send_you_are_registered_email!, unless: Proc.new {|s| s.is_admin?}
   # after_create :create_prize_cart!
   before_save :update_is_admin!
 
@@ -142,11 +142,15 @@ class Scout < ApplicationRecord
   end
 
   def send_registration_email!
-    ScoutMailer.registration(self).deliver_later
+    Thread.new do
+      ScoutMailer.registration(self).deliver_now
+    end
   end
 
   def send_you_are_registered_email!
-    ScoutMailer.you_are_registered(self).deliver_later
+    Thread.new do
+      ScoutMailer.you_are_registered(self).deliver_now
+    end
   end
 
   def update_is_admin!
