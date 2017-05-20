@@ -23,7 +23,7 @@ class BankDepositMailerTest < ActionMailer::TestCase
     assert_equal ['from_email@example.com'], email.from
     assert_equal ["site_sales@example.com"], email.to
     assert_equal "Thank you for making a #{@scout.unit.name} deposit", email.subject
-    assert_equal read_fixture('send_confirmation_email_to_depositer').join, email.body.to_s
+    assert_equal ERB.new(read_fixture('send_confirmation_email_to_depositer').join).result, email.body.to_s
 
   end
 
@@ -40,7 +40,7 @@ class BankDepositMailerTest < ActionMailer::TestCase
     assert_equal ['from_email@example.com'], email.from
     assert_equal ["paul@example.com"], email.to
     assert_equal "A #{Rails.configuration.application_name} bank deposit was made from Site Sales cash", email.subject
-    assert_equal read_fixture('send_confirmation_email_to_treasurer').join, email.body.to_s
+    assert_equal ERB.new(read_fixture('send_confirmation_email_to_treasurer').join).result, email.body.to_s
 
   end
 

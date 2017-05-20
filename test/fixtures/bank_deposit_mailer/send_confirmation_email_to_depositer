@@ -6,7 +6,7 @@
 <body>
 <h1 style='text-align:center'>Thank you</h1>
 <p>Hello Mary,</p>
-<p>Thank you for making and registering a deposit of $10.00 into the Site Sales cash on May 19, 2017 from Site Sales cash.</p>
+<p>Thank you for making and registering a deposit of $10.00 into the Site Sales cash on <%= Date.today.strftime("%B %d, %Y") %> from Site Sales cash.</p>
 <p>We have also notified Paul Jones of this deposit.</p>
 <p>
 Pack 100
