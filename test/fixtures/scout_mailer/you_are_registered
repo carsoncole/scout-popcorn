@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+</head>
+<body>
+<h1 style='text-align:center'>Welcome to Corn Cub</h1>
+<p>Hello Sam,</p>
+<p>Welcome to our Popcorn website, where we've made it fun for you to track your progress toward's your own goal.</p>
+<p>
+This is the email you will log in with:
+<br>
+Email:
+sam@example.com
+</p>
+<p>If you forgot your password, there is a link on our website where you can request a new password.</p>
+<p>
+If you have any questions, you can contact:
+<br>
+John Doe
+(unit_admin@example.com)
+<br>
+John Doe
+(admin@example.com)
+<br>
+</p>
+
+</body>
+</html>

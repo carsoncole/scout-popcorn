@@ -16,7 +16,7 @@ class ScoutMailer < ApplicationMailer
   def you_are_registered(scout)
     if scout.unit.send_email_on_registration
       @scout = scout
-      @title = 'Welcome to ' + Rails.configuration.application_name + '.'
+      @title = 'Welcome to ' + Rails.configuration.application_name
       mail(subject: "Welcome to #{Rails.configuration.application_name}", to: scout.email)
     end
   end

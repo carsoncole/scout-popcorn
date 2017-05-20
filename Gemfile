@@ -27,7 +27,6 @@ gem 'haml-rails'
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'font-awesome-sass'
 gem 'kaminari'
-gem 'exception_notification'
 gem 'bcrypt', '~> 3.1.11'
 
 

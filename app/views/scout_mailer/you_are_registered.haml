@@ -1,11 +1,7 @@
-%p 
-  Hello   
-  = succeed(",") do 
-    = @scout.first_name.capitalize
+%p= 'Hello ' + @scout.first_name.capitalize + ','
 
 
-%p
-  Welcome to our Popcorn website, where we've made it fun for you to track your progress toward's your own goal.
+%p Welcome to our Popcorn website, where we've made it fun for you to track your progress toward's your own goal.
 
 %p
   This is the email you will log in with:
@@ -19,7 +15,7 @@
   If you have any questions, you can contact:
   %br
   - @scout.unit.admin.each do |admin|
-    admin.name
+    = admin.name
     = surround('(',')') do
-      admin.email
+      = admin.email
     %br

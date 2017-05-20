@@ -2,26 +2,14 @@
 <html>
 <head>
 <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
-<style></style>
 </head>
 <body>
-<h1 style='text-align:center'>
-Corn Cub Registration
-</h1>
-<p>The following Scout was registered:</p>
+<h1 style='text-align:center'>Corn Cub Registration</h1>
+<p>The following Scout just registered:</p>
 <ul>
-<li>
-Scout:
-Sam Jones
-</li>
-<li>
-Unit:
-Pack 100
-</li>
-<li>
-Email:
-sam@example.com
-</li>
+<li>Scout: Sam Jones</li>
+<li>Unit: Pack 100</li>
+<li>Email: sam@example.com</li>
 </ul>
 
 </body>

@@ -1,23 +1,9 @@
-%p
-  Hello
-  = succeed(",") do
-    = @scout.first_name
-%p
-  Thank you for making and registering a deposit of
-  = number_to_currency(@ledger.amount.abs)
-  into the
-  = @sibling_ledger.account.name
-  on
-  = @ledger.date.strftime("%B %d, %Y")
-  from
-  = succeed(".") do
-    = @ledger.account.name
+%p= 'Hello ' + @scout.first_name + ','
+
+%p= 'Thank you for making and registering a deposit of ' + number_to_currency(@ledger.amount.abs).to_s + ' into the ' + @sibling_ledger.account.name + ' on ' + @ledger.date.strftime("%B %d, %Y") + ' from ' + @ledger.account.name + '.'
 
 - unless @unit.treasurer_email.blank?
-  %p
-    We have also notified
-    = @unit.treasurer_name
-    of this deposit.
+  %p= 'We have also notified ' + @unit.treasurer_name + ' of this deposit.'
 
 %p
   = @scout.unit.name
