@@ -5,6 +5,11 @@ class LedgersControllerTest < ActionDispatch::IntegrationTest
     @ledger = ledgers(:one)
   end
 
+  test "should not get index without sign_in" do
+    get ledgers_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get index" do
     sign_in(scouts(:financial_admin))
     get ledgers_url

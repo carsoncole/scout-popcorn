@@ -5,6 +5,11 @@ class PrizeCartsControllerTest < ActionDispatch::IntegrationTest
     @prize_cart = scouts(:one).prize_cart(events(:one))
   end
 
+  test "should not get index without sign_in" do
+    get prize_carts_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get prize cart" do
     sign_in(scouts(:one))
     get prize_cart_url(@prize_cart)

@@ -6,6 +6,11 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     @product_unused = products(:unused)
   end
 
+  test "should not get index without sign_in" do
+    get products_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get index" do
     sign_in(scouts(:one))
     get products_url

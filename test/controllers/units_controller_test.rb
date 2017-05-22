@@ -5,8 +5,6 @@ class UnitsControllerTest < ActionDispatch::IntegrationTest
     @unit = units(:one)
   end
 
-  # not logged-in
-
   test "should get new" do
     get new_unit_url
     assert_response :success

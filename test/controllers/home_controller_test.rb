@@ -2,6 +2,11 @@ require 'test_helper'
 
 class HomeControllerTest < ActionDispatch::IntegrationTest 
 
+  test "should not get index without sign_in" do
+    get home_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get root sign in when not logged in" do
     sign_in(scouts(:one))
     get logout_path

@@ -6,6 +6,11 @@ class TakeOrdersControllerTest < ActionDispatch::IntegrationTest
     @envelope = envelopes(:one)
   end
 
+  test "should not get index without sign_in" do
+    get take_orders_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get index" do
     sign_in(scouts(:one))
     get take_orders_url

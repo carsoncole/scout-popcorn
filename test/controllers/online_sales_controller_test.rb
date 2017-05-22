@@ -5,6 +5,11 @@ class OnlineSalesControllerTest < ActionDispatch::IntegrationTest
     @online_sale = online_sales(:one)
   end
 
+  test "should not get index without sign_in" do
+    get online_sales_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get index" do
     sign_in(scouts(:one))
     get online_sales_url

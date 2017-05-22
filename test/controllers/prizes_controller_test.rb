@@ -7,6 +7,11 @@ class PrizesControllerTest < ActionDispatch::IntegrationTest
     @prize = prizes(:one)
   end
 
+  test "should not get index without sign_in" do
+    get prizes_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get index" do
     sign_in(scouts(:one))
     get prizes_url

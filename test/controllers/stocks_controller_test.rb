@@ -9,6 +9,11 @@ class StocksControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should not get index without sign_in" do
+    get stocks_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
   test "should get index" do
     sign_in(scouts(:admin))
     get stocks_url

@@ -1,6 +1,18 @@
 require 'test_helper'
 
 class PurchaseOrdersControllerTest < ActionDispatch::IntegrationTest
+
+  test "should not get index without sign_in" do
+    get purchase_orders_url
+    assert_redirected_to controller: 'sessions', action: 'new'
+  end
+
+  test "should not get index without admin sign_in" do
+    sign_in(scouts(:one))
+    get purchase_orders_url
+    assert_redirected_to controller: 'home', action: 'index'
+  end
+
   # setup do
   #   @purchase_order = purchase_orders(:one)
   # end

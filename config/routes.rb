@@ -2,29 +2,25 @@ Rails.application.routes.draw do
   root "sessions#new"
   get '/home' => 'home#index', as: 'home'
 
-  resources :resources
-  get 'take_orders_order/index'
+  resources :sessions, :resources, :payment_methods, :online_sales, :prizes, :products, :scout_site_sales
 
-
-  resources :sessions
   get 'signup', to: 'scouts#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'forgot_password', to: 'scouts#forgot_password', as: 'forgot_password'
 
+  get 'take_orders_order/index'
 
   get 'ledgers/transactions' => 'ledgers#transactions', as: :ledger_transactions
   get 'ledgers/fund-site-sales' => 'ledgers#fund_site_sales', as: :fund_site_sales
   post 'ledgers/fund-site-sales' => 'ledgers#fund_site_sales'
-  
   get 'ledgers/bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
   post 'ledgers/bank-deposit' => 'ledgers#bank_deposit'
-
   get 'ledgers/expense-reimbursement-1' => "ledgers#expense_reimbursement_1", as: 'expense_reimbursement_1'
   post 'ledgers/expense-reimbursement-1' => 'ledgers#expense_reimbursement_1'
   get 'ledgers/expense-reimbursement-2' => "ledgers#expense_reimbursement_2", as: 'expense_reimbursement_2'
   post 'ledgers/expense-reimbursement-2' => 'ledgers#expense_reimbursement_2'
-
+  resources :ledgers
 
   resources :due_from_customers, only: :index
 
@@ -35,7 +31,6 @@ Rails.application.routes.draw do
 
   resources :prize_carts, only: [:index, :show], path: 'prize-carts'
   post 'prize-cart/order' => 'prize_carts#order', as: 'prize_cart_order'
-
   post 'prize-carts/:id' => 'prize_carts#order_prizes', as: 'order_prizes'
   get 'approved-prizes' => 'prize_carts#approved_prizes', as: 'approved_prizes'
   post "approve-prize-cart/:id" => "prize_carts#approve", as: 'approve_prize_cart'
@@ -53,10 +48,6 @@ Rails.application.routes.draw do
   get "ledgers/statements/balance-sheet" => "ledgers#balance_sheet", as: 'balance_sheet'
    get "ledgers/final-unit-settlement-form" => "ledgers#final_unit_settlement_form", as: 'final_unit_settlement_form'
   get "ledgers/statements/income-statement" => "ledgers#income_statement", as: 'income_statement'
-  resources :ledgers
-
-  resources :payment_methods
-
 
   get 'home/invite_scouts' => 'home#invite_scouts', as: 'invite_scouts'
 
@@ -70,24 +61,21 @@ Rails.application.routes.draw do
     resources :site_sale_line_items
     resources :scout_site_sales
   end
-  resources :online_sales
 
   # get "take-orders/pick-sheet" => 'take_orders#pick_sheet' as: :print_take_order_pick_sheet
   resources :take_orders, path: 'take-orders' do
     resources :take_order_line_items
   end
-  resources :scout_site_sales
   get "stocks/ledger" => "stocks#ledger", as: 'stocks_ledger'
   get "stocks/inventory-returns" => "stocks#inventory_returns", as: 'inventory_returns'
   get "stocks/stock-movement" => "stocks#stock_movement", as: 'stock_movement'
+
   resources :stocks
   resources :events do
     get 'activate' => 'events#activate', as: 'activate'
     resources :scout_site_sales
     resources :resources
   end
-  resources :prizes
-  resources :products
 
   resources :top_sellers, only: :index
   resources :purchase_orders, :take_order_purchase_orders
