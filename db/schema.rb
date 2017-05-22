@@ -285,6 +285,7 @@ ActiveRecord::Schema.define(version: 20170513015256) do
     t.string   "treasurer_last_name"
     t.string   "treasurer_email"
     t.boolean  "send_email_on_registration", default: false
+    t.boolean  "send_emails",                default: true
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
   end

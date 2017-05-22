@@ -27,7 +27,6 @@
 
           %br
 
-          / # = render "devise/shared/links"
           - if Rails.configuration.allow_for_multiple_units || Unit.all.empty?
             = link_to "Sign Up Your Unit", new_unit_path, class: 'sign-up-your-unit'
             %br

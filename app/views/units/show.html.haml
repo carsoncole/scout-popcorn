@@ -16,9 +16,17 @@
             %th Email sent on registration:
             %td.text-right
               - if @unit.send_email_on_registration
-                %i.fa.fa-check.fa-lg
+                %i.fa.fa-check-square-o.fa-lg
               - else
-                No
+                %i.fa.fa-square-o.fa-lg
+          %tr
+            %th Emails:
+            %td.text-right
+              - if @unit.send_emails
+                %i.fa.fa-check-square-o.fa-lg
+              - else
+                %i.fa.fa-square-o.fa-lg
+
           %tr
             %th Treasurer:
             %td.text-right= @unit.treasurer_name

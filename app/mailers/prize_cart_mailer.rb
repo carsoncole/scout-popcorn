@@ -4,6 +4,7 @@ class PrizeCartMailer < ApplicationMailer
   def receipt(prize_cart)
     @scout = prize_cart.scout
     @unit = @scout.unit
+    return unless @unit.send_emails
     @event = prize_cart.event
     @prize_cart = prize_cart
     @title = 'Prize order received'

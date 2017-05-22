@@ -3,6 +3,7 @@ class TakeOrderMailer < ApplicationMailer
 
   def receipt(take_order)
     @scout = take_order.scout
+    return unless @scout.unit.send_emails
     @take_order = take_order
     @title = 'Thank you'
     if take_order.customer_email

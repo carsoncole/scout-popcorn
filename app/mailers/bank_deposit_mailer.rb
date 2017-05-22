@@ -8,9 +8,10 @@ class BankDepositMailer < ApplicationMailer
   def send_confirmation_email_to_depositer(scout_id, ledger, sibling_ledger)
     if ActionMailer::Base.smtp_settings[:address] != 'localhost'
       @scout = Scout.find(scout_id)
+      @unit = @scout.unit
+      return unless @unit.send_emails
       @ledger = ledger
       @sibling_ledger = sibling_ledger
-      @unit = @scout.unit
       @title = 'Thank you' 
       to = @scout.email
       mail(to: to, subject: "Thank you for making a #{@scout.unit.name} deposit")
@@ -22,9 +23,10 @@ class BankDepositMailer < ApplicationMailer
   def send_confirmation_email_to_treasurer(scout_id, ledger, sibling_ledger)
     if ActionMailer::Base.smtp_settings[:address] != 'localhost'
       @scout = Scout.find(scout_id)
+      @unit = @scout.unit
+      return unless @unit.send_emails
       @ledger = ledger
       @sibling_ledger = sibling_ledger
-      @unit = @scout.unit
       @title = 'A ' + Rails.configuration.application_name + ' FYI.'
       unless @unit.treasurer_email.blank?
         if Rails.env == 'development' && Rails.configuration.development_email.present?

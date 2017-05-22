@@ -38,12 +38,12 @@ class Ledger < ApplicationRecord
   def send_bank_deposit_notifications!
     if created_by
       sibling_ledger = self.siblings.first
-      Thread.new do
-        BankDepositMailer.send_confirmation_email_to_depositer(self.created_by, self, sibling_ledger).deliver_now
-        BankDepositMailer.send_confirmation_email_to_treasurer(self.created_by, self, sibling_ledger).deliver_now
-        self.update(bank_deposit_notification_sent_at: Time.now)
-      end
+      # Thread.new do
+      BankDepositMailer.send_confirmation_email_to_depositer(self.created_by, self, sibling_ledger).deliver_now
+      BankDepositMailer.send_confirmation_email_to_treasurer(self.created_by, self, sibling_ledger).deliver_now
+      self.update(bank_deposit_notification_sent_at: Time.now)
     end
+    # end
   end
 
   def destroy_related_double_entries!

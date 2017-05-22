@@ -11,6 +11,7 @@ class CreateUnits < ActiveRecord::Migration[5.0]
       t.string :treasurer_last_name
       t.string :treasurer_email
       t.boolean :send_email_on_registration, default: false
+      t.boolean :send_emails, default: true
       t.timestamps
     end
   end
