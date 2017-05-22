@@ -1,6 +1,7 @@
 class ScoutSiteSalesController < ApplicationController
   before_action :set_scout_site_sale, only: [:show, :edit, :update, :destroy]
   before_action :set_site_sale
+  before_action :authorize_site_sales_admin
 
   def index
     @scout_site_sales = @active_event.scout_site_sales.order('site_sales.name')

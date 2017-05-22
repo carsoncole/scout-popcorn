@@ -1,5 +1,6 @@
 class PurchaseOrdersController < ApplicationController
   before_action :set_purchase_order, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_unit_admin
 
   def index
     @purchase_orders = PurchaseOrder.order(created_at: :desc)

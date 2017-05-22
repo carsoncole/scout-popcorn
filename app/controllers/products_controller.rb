@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_unit_admin, except: :index
 
   def index
     if params[:collection_name]

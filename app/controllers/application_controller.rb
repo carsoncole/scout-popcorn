@@ -53,6 +53,18 @@ class ApplicationController < ActionController::Base
     redirect_to home_path unless current_scout.is_take_orders_admin?
   end
 
+  def authorize_prizes_admin
+    redirect_to home_path unless current_scout.is_prizes_admin?
+  end
+
+  def authorize_warehouse_admin
+    redirect_to home_path unless current_scout.is_warehouse_admin?
+  end
+
+  def authorize_financial_admin
+    redirect_to home_path unless current_scout.is_financial_admin?
+  end
+
   private
 
   def logged_in?

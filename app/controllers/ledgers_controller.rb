@@ -1,6 +1,7 @@
 class LedgersController < ApplicationController
   before_action :set_ledger, only: [:show, :edit, :update, :destroy]
   before_action :authorize_admin
+  before_action :authorize_financial_admin,  only: [:update, :destroy, :create, :new]
 
   def index
     @ledgers = Ledger.joins(account: :event).where("events.id = ?", @active_event).order(date: :desc, created_at: :desc).page(params[:page]).per(50)

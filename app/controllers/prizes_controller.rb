@@ -1,6 +1,6 @@
 class PrizesController < ApplicationController
   before_action :set_prize, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin, except: :index
+  before_action :authorize_prizes_admin, except: :index
 
   def index
   end

@@ -1,5 +1,6 @@
 class SiteSalePaymentMethodsController < ApplicationController
   before_action :set_site_sale
+  before_action :authorize_site_sales_admin
   
   def new
     @site_sale_payment_method = @site_sale.site_sale_payment_methods.build

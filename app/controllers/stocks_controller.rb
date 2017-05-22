@@ -1,6 +1,7 @@
 class StocksController < ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
   before_action :authorize_admin
+  before_action :authorize_warehouse_admin,  only: [:update, :destroy, :create, :new]
 
   def index
     @stocks_query = @active_event.stocks.joins(:product).order('products.name')
