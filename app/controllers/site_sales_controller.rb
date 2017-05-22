@@ -1,6 +1,6 @@
 class SiteSalesController < ApplicationController
-  before_action :authorize_admin, except: :index
   before_action :set_site_sale, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin, except: :index
   before_action :authorize_site_sales_admin,  only: [:update, :destroy, :create, :new]
 
   def index

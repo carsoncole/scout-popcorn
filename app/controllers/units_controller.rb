@@ -4,8 +4,6 @@ class UnitsController < ApplicationController
   skip_before_action :authorize, only: [:new, :create]
   before_action :authorize_unit_admin, only: [:edit, :update, :destroy]
 
-  # layout 'sessions', only: [:new, :create]
-
   def show
     cookies[:unit_id] = @unit.id
   end

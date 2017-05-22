@@ -64,7 +64,7 @@ Rails.application.routes.draw do
   resources :scouts do
     get 'update-password' => 'scouts#update_password', as: 'update_password'
   end
-  resources :site_sales do
+  resources :site_sales, path: 'site-sales' do
     get "tracking_sheet" => "site_sales#tracking_sheet", as: 'tracking_sheet'
     resources :site_sale_payment_methods
     resources :site_sale_line_items
@@ -73,7 +73,7 @@ Rails.application.routes.draw do
   resources :online_sales
 
   # get "take-orders/pick-sheet" => 'take_orders#pick_sheet' as: :print_take_order_pick_sheet
-  resources :take_orders do
+  resources :take_orders, path: 'take-orders' do
     resources :take_order_line_items
   end
   resources :scout_site_sales
