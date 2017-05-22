@@ -2,10 +2,13 @@
   .col-md-12
     .card
       .card-block
+        .pull-right
+          = link_to "#", onclick: 'window.print();return false;' do
+            %i.fa.fa-print.fa-lg 
         .card-title
-          %h3
-            Warehouse Stock Movement
-        %table.table.table-sm
+          %h5
+            Popcorn Transfer
+        %table.table.table-sm.table-striped.small
           %thead
             %tr
               %th Product
@@ -14,6 +17,9 @@
 
           %tbody
             - total = 0
+            %tr
+              %td(colspan=3)
+
             - @products.each do |product|
               %tr
                 %td= product.name
@@ -22,13 +28,17 @@
 
         .row
           .col-md-12
-            %table.table
+            %table.table.table-sm.small
               %tr
+                %th From:
+                %td
                 %th Date/Time:
                 %td
                 %th Note:
                 %td
               %tr
+                %th To:
+                %td
                 %th Received by:
                 %td
                 %th Signature:
