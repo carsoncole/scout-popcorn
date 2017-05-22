@@ -16,7 +16,7 @@ class BankDepositMailer < ApplicationMailer
       to = @scout.email
       mail(to: to, subject: "Thank you for making a #{@scout.unit.name} deposit")
     else
-      logger.warn("WARNING:  ActionMailer settings must be configured in environment.rb ***")
+      logger.warn('WARNING:  ActionMailer settings must be configured in environment.rb ***')
     end
   end
 
@@ -38,7 +38,7 @@ class BankDepositMailer < ApplicationMailer
       end
 
     else
-      logger.warn("WARNING: ActionMailer settings must be configured in environment.rb")
+      logger.warn('WARNING: ActionMailer settings must be configured in environment.rb')
     end
   end
 end
