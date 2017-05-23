@@ -32,7 +32,7 @@ class StocksController < ApplicationController
     @products = @active_event.products.order(:name)
   end
 
-  def stock_movement
+  def stock_transfer_form
     @products = @active_event.products.physical.order(:name)
   end
 

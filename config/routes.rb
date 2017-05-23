@@ -68,7 +68,7 @@ Rails.application.routes.draw do
   end
   get "stocks/ledger" => "stocks#ledger", as: 'stocks_ledger'
   get "stocks/inventory-returns" => "stocks#inventory_returns", as: 'inventory_returns'
-  get "stocks/stock-movement" => "stocks#stock_movement", as: 'stock_movement'
+  get "stocks/stock-transfer-form" => "stocks#stock_transfer_form", as: 'stock_transfer_form'
 
   resources :stocks
   resources :events do

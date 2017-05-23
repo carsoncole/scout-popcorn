@@ -6,7 +6,7 @@
           %h2 Transfers
         - if current_scout.is_warehouse_admin?
           .pull-right
-            = link_to stock_movement_path do
+            = link_to stock_transfer_form_path do
               %i.fa.fa-print
               Popcorn Transfer form
           %p.card-text
