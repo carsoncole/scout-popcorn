@@ -21,4 +21,4 @@
 # Ignore Byebug command history file.
 .byebug_history
 
-/config/environment.rb
+**/config/environment.rb
