@@ -11,6 +11,7 @@ class CreateLedgers < ActiveRecord::Migration[5.0]
       t.integer :take_order_id
       t.integer :site_sale_id
       t.integer :stock_id
+      t.integer :online_sale_id
       t.integer :prize_cart_id
       t.boolean :is_take_order_product_related
       t.datetime :bank_deposit_notification_sent_at

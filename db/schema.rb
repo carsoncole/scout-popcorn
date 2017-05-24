@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20170513015256) do
     t.integer  "take_order_id"
     t.integer  "site_sale_id"
     t.integer  "stock_id"
+    t.integer  "online_sale_id"
     t.integer  "prize_cart_id"
     t.boolean  "is_take_order_product_related"
     t.datetime "bank_deposit_notification_sent_at"

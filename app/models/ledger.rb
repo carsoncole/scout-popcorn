@@ -3,6 +3,7 @@ class Ledger < ApplicationRecord
   belongs_to :take_order, optional: true
   belongs_to :take_order_line_item, optional: true
   belongs_to :stock, optional: true
+  belongs_to :online_sale, optional: true
   belongs_to :double_entry, optional: true
 
   validates :account_id, presence: true

@@ -104,8 +104,9 @@ class Account < ApplicationRecord
   def self.create_expenses!(event)
     create(event_id: event.id, name: 'Popcorn', account_type: 'Expense', rank: 1)
     create(event_id: event.id, name: 'Unit prizes', account_type: 'Expense', rank: 2)
-    create(event_id: event.id, name: 'Misc', account_type: 'Expense', rank: 2)
-    create(event_id: event.id, name: 'Processor fees', account_type: 'Expense', rank: 2)
+    create(event_id: event.id, name: 'Misc', account_type: 'Expense', rank: 5)
+    create(event_id: event.id, name: 'Processor fees', account_type: 'Expense', rank: 3)
+    create(event_id: event.id, name: 'Online costs', account_type: 'Expense', rank: 4)
   end
 
   def self.create_product_due_to_customers!(event)
@@ -114,6 +115,10 @@ class Account < ApplicationRecord
 
   def self.create_money_due_to_bsa!(event)
     create(event_id: event.id, name: 'Due to BSA', is_cash: false, is_due_to_bsa: true, account_type: 'Liability')
+  end
+
+  def self.create_money_due_from_bsa_for_online_sales!(event)
+    create(event_id: event.id, name: 'Due from BSA - Online sales', is_cash: false, account_type: 'Asset')
   end
 
   def self.create_money_due_to_unit!(event)

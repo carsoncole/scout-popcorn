@@ -108,6 +108,10 @@ class Event < ApplicationRecord
     1 - unit_commission_percentage / 100
   end
   
+  def online_wholesale_percentage
+    1 - online_commission_percentage / 100
+  end
+
   def allow_prize_cart_ordering?
     prize_cart_ordering_starts_at.blank? || prize_cart_ordering_starts_at < Time.now
   end
@@ -208,6 +212,7 @@ class Event < ApplicationRecord
     Account.create_bank_accounts!(self)
     Account.create_inventory!(self)
     Account.create_expenses!(self)
+    Account.create_money_due_from_bsa_for_online_sales!(self)
   end
 
   def reset_scouts_event!
