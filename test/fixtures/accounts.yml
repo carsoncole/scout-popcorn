@@ -34,6 +34,16 @@ due_to_bsa:
   is_due_to_bsa: true
   name: Due to BSA
 
+online_costs:
+  event: one
+  name: Online costs
+  account_type: Expense
+
+due_from_bsa_online:
+  event: one
+  name: Due from BSA - Online sales
+  account_type: Asset
+
 due_to_unit:
   event: one
   account_type: Liability

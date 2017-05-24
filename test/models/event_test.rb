@@ -65,7 +65,9 @@ class EventTest < ActiveSupport::TestCase
         'Popcorn',
         'Unit prizes',
         'Misc',
-        'Processor fees'
+        'Processor fees',
+        'Online costs',
+        'Due from BSA - Online sales'
        ].sort
   end
 
