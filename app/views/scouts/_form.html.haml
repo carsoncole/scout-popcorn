@@ -72,6 +72,10 @@
                 = f.label :is_prizes_admin
                 = f.check_box :is_prizes_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
 
+              .form-group
+                = f.label :is_warehouse_admin
+                = f.check_box :is_warehouse_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
+
           .actions
             = f.submit 'Save', class: 'btn btn-success'
 

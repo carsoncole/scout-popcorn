@@ -77,6 +77,6 @@ class ScoutsController < ApplicationController
     end
 
     def scout_params
-      params.require(:scout).permit(:first_name, :last_name, :email, :password, :password_confirmation, :event_id, :is_active, :is_site_sales_admin, :is_take_orders_admin, :is_online_sales_admin, :is_admin, :is_unit_admin, :is_financial_admin, :is_prizes_admin, :password_digest, :unit_id)
+      params.require(:scout).permit(:first_name, :last_name, :email, :password, :password_confirmation, :event_id, :is_active, :is_site_sales_admin, :is_take_orders_admin, :is_online_sales_admin, :is_admin, :is_unit_admin, :is_financial_admin, :is_prizes_admin, :is_warehouse_admin, :password_digest, :unit_id)
     end
 end

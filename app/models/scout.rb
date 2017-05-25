@@ -131,6 +131,7 @@ class Scout < ApplicationRecord
     self.is_online_sales_admin = true
     self.is_prizes_admin = true
     self.is_financial_admin = true
+    self.is_warehouse_admin = true
     self.save
   end
 
