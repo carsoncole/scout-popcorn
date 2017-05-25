@@ -16,13 +16,11 @@ class SiteSalePaymentMethodsController < ApplicationController
   def update
     @site_sale_payment_method = @site_sale.site_sale_payment_methods.find(params[:id])
 
-    respond_to do |format|
-      if @site_sale_payment_method.update(site_sale_payment_method_params)
-        format.html { redirect_to @site_sale  }
-      else
-        @accounts = @active_event.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
-        format.html { render :edit }
-      end
+    if @site_sale_payment_method.update(site_sale_payment_method_params)
+      redirect_to @site_sale
+    else
+      @accounts = @active_event.accounts.is_site_sale_eligible.where.not(id: used_method_ids).order(:name)
+      render :edit
     end
   end
 

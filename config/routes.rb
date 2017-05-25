@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   end
   resources :site_sales, path: 'site-sales' do
     get "tracking_sheet" => "site_sales#tracking_sheet", as: 'tracking_sheet'
-    resources :site_sale_payment_methods
+    resources :site_sale_payment_methods, except: :index
     resources :site_sale_line_items
     resources :scout_site_sales
   end

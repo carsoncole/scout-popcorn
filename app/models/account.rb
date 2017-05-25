@@ -19,7 +19,7 @@ class Account < ApplicationRecord
   end
 
   def self.money_due_from_customer(event)
-    Account.where(event_id: event.id).where(name: 'Money due from Customer').first
+    Account.where(event_id: event.id).where(name: 'Due from customers').first
   end
 
   def self.due_to_bsa(event)
