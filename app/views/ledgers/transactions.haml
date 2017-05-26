@@ -41,13 +41,15 @@
         %p.card-text Use when reimbursing with cash from either Site Sales or Take Orders cash.
       .card-footer.text-center= button_to "Reimburse Expense", expense_reimbursement_2_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true  
 
-  / .col-md-3
-  /   .card.card-outline-primary
-  /     .card-header.text-muted Take Orders
-  /     .card-block
-  /       %h5.card-title Collect from customers.
-  /     .card-footer.text-center 
-  /       = button_to 'Collect fr/Customer', new_ledger_path(collect_from_customer: true), class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true
+  .col-md-3
+    .card.card-outline-primary
+      .card-header.text-muted Payment
+      .card-block
+        %h5.card-title Collect from customers
+        %p.card-text
+          Use when collecting money from customers who placed Take Orders but did not pay when ordering.
+      .card-footer.text-center 
+        = button_to 'Collect fr/Customer', collect_from_customer_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true
 
 %hr
 

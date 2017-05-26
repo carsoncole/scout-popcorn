@@ -1,0 +1,30 @@
+= render 'transaction'
+
+.row
+  .col-md-12
+    .card
+      .card-block
+        .card-title
+          %h2 Collect from Customer
+
+        = form_for @ledger, url: 'collect-from-customer' do |f|
+          - if @ledger.errors.any?
+            #error_explanation
+              %h2= "#{pluralize(@ledger.errors.count, "error")} prohibited this ledger from being saved:"
+              %ul
+                - @ledger.errors.full_messages.each do |msg|
+                  %li= msg
+
+          .col-md-4
+            .form-group
+              = f.label "Customer name"
+              %br
+              = f.text_field :description, class: 'form-control'
+
+            .form-group
+              = f.label 'Amount:'
+
+              = f.text_field :amount, class: 'form-control'
+
+            .actions
+              = f.submit 'Record Reciept', class: 'btn btn-success'

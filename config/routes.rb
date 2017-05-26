@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   post 'ledgers/expense-reimbursement-1' => 'ledgers#expense_reimbursement_1'
   get 'ledgers/expense-reimbursement-2' => "ledgers#expense_reimbursement_2", as: 'expense_reimbursement_2'
   post 'ledgers/expense-reimbursement-2' => 'ledgers#expense_reimbursement_2'
+  get 'ledgers/collect-from-customer' => "ledgers#collect_from_customer", as: 'collect_from_customer'
+  post 'ledgers/collect-from-customer' => 'ledgers#collect_from_customer'
+
   resources :ledgers
 
   resources :due_from_customers, only: :index

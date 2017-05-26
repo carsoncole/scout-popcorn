@@ -207,6 +207,37 @@ class LedgersController < ApplicationController
     end
   end
 
+  def collect_from_customer
+    if request.post?
+      @ledger = Ledger.new(ledger_params)
+      @ledger.created_by = current_scout.id
+      due_from_customers_account = Account.money_due_from_customer(@active_event)
+      @ledger.description = "Received payment from customer #{ @ledger.description }"
+      @ledger.account_id = due_from_customers_account.id
+      @ledger.amount = -@ledger.amount
+      
+      cash_account = Account.take_order(@active_event)
+      @contra_ledger = Ledger.new(ledger_params)
+      @contra_ledger.description = "Received payment from customer #{ @ledger.description }"
+      @contra_ledger.account_id = cash_account.id
+
+      @ledger.double_entry_id = DoubleEntry.create.id
+      @contra_ledger.double_entry_id = @ledger.double_entry_id
+
+      @ledger.date, @contra_ledger.date = Date.today, Date.today
+
+      if @ledger.save && @contra_ledger.save
+        flash[:notice] = 'Payment was recorded.'
+        redirect_to ledgers_path
+      else
+        @ledger = Ledger.new
+        @fund_site_sales = true  
+      end
+    else
+      @ledger = Ledger.new
+    end    
+  end
+
   private
     def set_ledger
       @ledger = Ledger.find(params[:id])
