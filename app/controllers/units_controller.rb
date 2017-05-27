@@ -10,7 +10,6 @@ class UnitsController < ApplicationController
 
   def new
     @unit = Unit.new
-    # @unit.scouts.build
     @scout = Scout.new
   end
 
@@ -25,12 +24,8 @@ class UnitsController < ApplicationController
     @scout.errors.delete(:unit)
     if !@scout.errors.any? && @unit.save
       @scout = @unit.scouts.new(first_name: scout_params[:first_name], last_name: scout_params[:last_name], unit_id: @unit.id, email: scout_params[:email], password:  scout_params[:password], password_confirmation: scout_params[:password_confirmation], is_unit_admin: true)
-      if @scout.save
-        @scout.assign_full_rights!
-        redirect_to root_path, notice: 'Unit was successfully created. Login to continue.'
-      else
-        render :new, notice: @scout.errors.full_messages
-      end
+      @scout.assign_full_rights!
+      redirect_to root_path, notice: 'Unit was successfully created. Login to continue.'
     else
       render :new, notice: @unit.errors.full_messages
     end
@@ -62,4 +57,3 @@ class UnitsController < ApplicationController
       params.require(:scout).permit( :password, :password_confirmation, :first_name, :last_name, :email )
     end
 end
-

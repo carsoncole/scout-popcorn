@@ -3,10 +3,8 @@ class ScoutsController < ApplicationController
   skip_before_action :authorize, only: [:new, :create, :forgot_password]
   before_action :authorize_unit_admin, only: :destroy
   before_action :authorize_admin, only: :index
-  # layout 'sessions', only: [:create, :forgot_password]
 
   def index
-    # @inactive_scouts = @unit.scouts.inactive
     @scouts = @unit.scouts.active.not_admin.order(:first_name)
     @administrators = @unit.scouts.active.admin
   end
@@ -69,11 +67,7 @@ class ScoutsController < ApplicationController
 
   private
     def set_scout
-      if @unit
-        @scout = @unit.scouts.find(params[:id])
-      else
-        @scout = Scout.find(params[:id])
-      end
+      @scout = @unit.scouts.find(params[:id])
     end
 
     def scout_params

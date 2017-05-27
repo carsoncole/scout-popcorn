@@ -1,17 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_scout!
-  before_action :set_event, if: Proc.new {|n| current_scout }
-  before_action :set_unit,if: Proc.new {|n| current_scout }
+  before_action :set_event, if: Proc.new { |n| current_scout }
+  before_action :set_unit, if: Proc.new { |n| current_scout }
   before_action :authorize
-  # before_action :add_admin_messages!, if:  Proc.new { |n| current_scout && current_scout.is_unit_admin? }
   before_action :create_an_event!, if: Proc.new { |n| current_scout && current_scout.is_unit_admin? && !@active_event }
   before_action :need_an_event!, if: Proc.new { |n| current_scout && !current_scout.is_admin? && current_scout.event_id.nil? }
-
-
-  def redirect_unless_admin!
-    redirect_to root_path unless current_scout.admin?
-  end
 
   def set_unit
     if current_scout
@@ -66,12 +60,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def logged_in?
-    @current_scout ||= Scout.find(session[:scout_id]) if session[:scout_id]
-  end
-
-  helper_method :logged_in?
 
   def need_an_event!
     flash[:alert] = "No Event is currently selected."

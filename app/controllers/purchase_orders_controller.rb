@@ -17,33 +17,23 @@ class PurchaseOrdersController < ApplicationController
     end
   end
 
-  # GET /purchase_orders/new
   def new
     @purchase_order = PurchaseOrder.new
   end
 
-  # GET /purchase_orders/1/edit
   def edit
   end
 
-  # POST /purchase_orders
-  # POST /purchase_orders.json
   def create
     @purchase_order = PurchaseOrder.new(purchase_order_params)
 
-    respond_to do |format|
-      if @purchase_order.save
-        format.html { redirect_to @purchase_order, notice: 'Purchase order was successfully created.' }
-        format.json { render :show, status: :created, location: @purchase_order }
-      else
-        format.html { render :new }
-        format.json { render json: @purchase_order.errors, status: :unprocessable_entity }
-      end
+    if @purchase_order.save
+      redirect_to @purchase_order, notice: 'Purchase order was successfully created.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /purchase_orders/1
-  # PATCH/PUT /purchase_orders/1.json
   def update
     if params[:ordered]
       @purchase_order.update(status: :ordered)
@@ -53,18 +43,12 @@ class PurchaseOrdersController < ApplicationController
     redirect_to @purchase_order, notice: 'Order was successfully updated.'
   end
 
-  # DELETE /purchase_orders/1
-  # DELETE /purchase_orders/1.json
   def destroy
     @purchase_order.destroy
-    respond_to do |format|
-      format.html { redirect_to purchase_orders_url, notice: 'Purchase order was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to purchase_orders_url, notice: 'Purchase order was successfully destroyed.'\
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_purchase_order
       if @active_event
         @purchase_order = @active_event.purchase_orders.find(params[:id])
@@ -73,7 +57,6 @@ class PurchaseOrdersController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_order_params
       params.require(:purchase_order).permit(:unit_id)
     end

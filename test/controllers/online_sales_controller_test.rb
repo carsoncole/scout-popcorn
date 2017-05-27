@@ -57,6 +57,15 @@ class OnlineSalesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to online_sales_path
   end
 
+  test "should not create online_sale without name" do
+    sign_in(scouts(:admin))
+    assert_difference('OnlineSale.count', 0) do
+      post online_sales_url, params: { online_sale: { amount: @online_sale.amount, customer_name: nil, description: @online_sale.description, event_id: @online_sale.event_id, order_date: @online_sale.order_date, scout_id: @online_sale.scout_id } }
+    end
+
+    assert_response :success
+  end
+
   test "should get edit" do
     sign_in(scouts(:admin))
     get edit_online_sale_url(@online_sale)
@@ -68,6 +77,13 @@ class OnlineSalesControllerTest < ActionDispatch::IntegrationTest
     patch online_sale_url(@online_sale), params: { online_sale: { amount: 120, customer_name: @online_sale.customer_name, description: @online_sale.description, event_id: @online_sale.event_id, order_date: @online_sale.order_date, scout_id: @online_sale.scout_id } }
     assert_redirected_to online_sales_path
   end
+
+  test "should not update online_sale without name" do
+    sign_in(scouts(:admin))
+    patch online_sale_url(@online_sale), params: { online_sale: { amount: 120, customer_name: nil, description: @online_sale.description, event_id: @online_sale.event_id, order_date: @online_sale.order_date, scout_id: @online_sale.scout_id } }
+    assert_response :success
+  end
+
 
   test "should destroy online_sale" do
     sign_in(scouts(:admin))

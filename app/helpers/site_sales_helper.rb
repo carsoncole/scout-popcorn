@@ -1,2 +1,0 @@
-module SiteSalesHelper
-end

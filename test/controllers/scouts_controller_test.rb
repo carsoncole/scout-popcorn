@@ -35,6 +35,15 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "should create scout as admin" do
+    sign_in(scouts(:unit_admin))
+    assert_difference('Scout.count') do
+      post scouts_url, params: { scout: { unit_id: units(:one).id, first_name: 'John', last_name: 'Example', email: 'test@example.com', password: 'password' } }
+    end
+    assert_redirected_to root_path
+  end
+
+
   test "should not allow scout signups without units" do
     Unit.delete_all
     get signup_path
@@ -85,6 +94,12 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get update password" do
+    sign_in(scouts(:one))
+    get scout_update_password_url(@scout)
+    assert_response :success
+  end  
+
   test "should not allow non-admins to #index" do
     sign_in(scouts(:one))
     get scouts_url
@@ -128,6 +143,14 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     sign_in(scouts(:unit_admin))
     scout = scouts(:one)
     assert_difference('Scout.count', 0) do
+      delete scout_url scout
+    end
+  end
+
+  test "should destroy another admin" do
+    sign_in(scouts(:unit_admin))
+    scout = scouts(:warehouse_admin)
+    assert_difference('Scout.count', -1) do
       delete scout_url scout
     end
   end
