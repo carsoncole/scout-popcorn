@@ -54,8 +54,6 @@
                   = nice_date_time_less(envelope.closed_at) if envelope.closed_at
                 %td= Scout.find(envelope.closed_by).name if envelope.closed_by
                 %td.text-right
-                  = link_to envelope do
-                    %i.fa.fa-folder-open
                   - unless envelope.closed?
                     = link_to  envelope, :method => :delete, :data => { :confirm => 'Are you sure?' } do
                       %i.fa.fa-trash

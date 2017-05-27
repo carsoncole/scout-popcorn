@@ -50,12 +50,7 @@
                           %h5
                             %span.badge.badge-success Open
                       %td.hidden-print.text-right.admin-links
-                        = link_to site_sale do
-                          %i.fa.fa-folder-open.fa-lg
                         - if current_scout.is_site_sales_admin? && site_sale.open? 
-                          / =link_to site_sale_tracking_sheet_path(site_sale) do
-                          /   %i.fa.fa-print.fa-lg
-
                           = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Site Sale and all entered information. This is NOT reversible.' } do
                             %i.fa.fa-trash.fa-lg
                 %tr

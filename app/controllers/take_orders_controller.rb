@@ -54,7 +54,7 @@ class TakeOrdersController < ApplicationController
     @take_order.status = 'in hand'
 
     if @take_order.save
-      redirect_to @take_order, notice: 'Customer details were entered.'
+      redirect_to take_order_path(@take_order), notice: 'Customer details were entered.'
     else
       @accounts = @active_event.accounts.is_take_order_eligible.order(name: :desc)
       render :new
@@ -67,7 +67,7 @@ class TakeOrdersController < ApplicationController
     else 
       @take_order.update(take_order_params)
     end
-    redirect_to @take_order, notice: 'Take Order was successfully updated.'
+    redirect_to take_order_path(@take_order), notice: 'Take Order was successfully updated.'
   end
 
   def destroy

@@ -39,7 +39,7 @@
 
               %td.text-right
                 = link_to resources_path do
-                  %i.fa.fa-eye.fa-lg
+                  View
 
             %tr
               %td Online is enabled?
@@ -92,7 +92,7 @@
             .text-center
               - unless event.is_active?
                 = link_to event_activate_path(event), class: 'btn btn-warning', :data => { :confirm => "WARNING - Activating an Event will change the event for your Unit's Scouts." } do
-                  %i.fa.fa-trash-o
+                  %i.fa.fa-check-circle-o
                   ACTIVATE
                 &nbsp;
               = link_to event, :method => :delete, class: 'btn btn-danger', :data => { :confirm => 'WARNING - Are you sure? This will result in all related event information to be destroyed. This action is NOT reversible.' } do

@@ -204,7 +204,8 @@ class LedgersController < ApplicationController
       redirect_to ledgers_path
     else
       @ledger = Ledger.new
-      @fund_site_sales = true  
+      @fund_site_sales = true 
+    end
   end
 
   def collect_from_customer
