@@ -1,0 +1,5 @@
+exclude_paths:
+- "test/*"
+- "spec/*"
+- "vendor/*"
+- "public/assets/*"
