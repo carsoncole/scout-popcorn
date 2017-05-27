@@ -43,38 +43,48 @@
           .form-group
             = f.label :email
             = f.text_field :email, class: 'form-control'
-                
+      
 
-            - if current_scout.is_unit_admin?
-              .form-group
-                = f.label :is_active
-                = f.check_box :is_active, class: 'form-control'   
-              .form-group
-                = f.label :is_unit_admin
-                = f.check_box :is_unit_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
-              .form-group
-                = f.label :is_financial_admin
-                = f.check_box :is_financial_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
-              
-              .form-group
-                = f.label :is_take_orders_admin
-                = f.check_box :is_take_orders_admin, class: 'form-control', disabled: current_scout.is_unit_admin? ? false : true
+          - if current_scout.is_unit_admin?
+            .form-check
+              .form-check-label
+                = f.check_box :is_active, class: 'form-check-input'   
+                = f.label :active
 
-              .form-group
-                = f.label :is_site_sales_admin
-                = f.check_box :is_site_sales_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
+            .form-check
+              .form-check-label
+                = f.check_box :is_unit_admin, class: 'form-check-input' , disabled: current_scout.is_unit_admin? ? false : true
+                = f.label :unit_admin
 
-              .form-group
-                = f.label :is_online_sales_admin
-                = f.check_box :is_online_sales_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
+            .form-check
+              .form-check-label
+                = f.check_box :is_financial_admin, class: 'form-check-input' , disabled: current_scout.is_unit_admin? ? false : true
+                = f.label :financial_admin
 
-              .form-group
-                = f.label :is_prizes_admin
-                = f.check_box :is_prizes_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
+            .form-check
+              .form-check-label
+                = f.check_box :is_take_orders_admin, class: 'form-check-input', disabled: current_scout.is_unit_admin? ? false : true
+                = f.label :take_orders_admin
 
-              .form-group
-                = f.label :is_warehouse_admin
-                = f.check_box :is_warehouse_admin, class: 'form-control' , disabled: current_scout.is_unit_admin? ? false : true
+            .form-check
+              .form-check-label
+                = f.check_box :is_site_sales_admin, class: 'form-check-input' , disabled: current_scout.is_unit_admin? ? false : true                
+                = f.label :site_sales_admin
+
+            .form-check
+              .form-check-label
+                = f.check_box :is_online_sales_admin, class: 'form-check-input' , disabled: current_scout.is_unit_admin? ? false : true
+                = f.label :online_sales_admin
+
+            .form-check
+              .form-check-label
+                = f.check_box :is_prizes_admin, class: 'form-check-input' , disabled: current_scout.is_unit_admin? ? false : true
+                = f.label :prizes_admin
+
+            .form-check
+              .form-check-label
+                = f.check_box :is_warehouse_admin, class: 'form-check-input' , disabled: current_scout.is_unit_admin? ? false : true
+                = f.label :warehouse_admin
 
           .actions
             = f.submit 'Save', class: 'btn btn-success'

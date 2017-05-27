@@ -23,13 +23,16 @@
             %i.fa.fa-info-circle
             Notifications can be enabled to send a confirmation email to Scouts, and a copy to the Unit administrator, when they register. You can also turn off e-mails altogether.
 
-          .form-group
-            = f.label :send_email_on_registration
-            = f.check_box :send_email_on_registration, class: 'form-control'
+          .form-check
+            .form-check-label
+              = f.check_box :send_email_on_registration, class: 'form-check-input'
+              = f.label :send_email_on_registration
 
-          .form-group
-            = f.label :send_emails
-            = f.check_box :send_emails, class: 'form-control'
+          .form-check
+            .form-check-label
+              = f.check_box :send_emails, class: 'form-check-input'
+              = f.label :send_emails
+
 
 
           %h4 Treasurer Notifications
