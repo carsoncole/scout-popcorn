@@ -176,35 +176,35 @@ class LedgersController < ApplicationController
     end
   end
 
-  def bank_deposit
-    if request.post?
-      @ledger = Ledger.new(ledger_params)
-      @ledger.created_by = current_scout.id
-      from_account = Account.find(ledger_params[:from_account_id])
-      @ledger.description = "Bank deposit from #{from_account.name}"
+  def new_bank_deposit
+    @ledger = Ledger.new
+    @ledger.is_bank_deposit = true
+    @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
+    @cash_accounts = @active_event.accounts.cash.order(:name)
+    if !current_scout.is_financial_admin? && !current_scout.is_take_orders_admin?
+      @cash_accounts = @cash_accounts.where(is_take_order_eligible: false)
+    end
+    if  !current_scout.is_financial_admin? && !current_scout.is_site_sales_admin?
+      @cash_accounts = @cash_accounts.where(is_site_sale_eligible: false)
+    end
+    @deposit = true
+  end
 
-      @ledger.double_entry_id = DoubleEntry.create.id
 
-      if @ledger.save
-        flash[:notice] = 'Your bank deposit has been recorded.'
-        redirect_to ledgers_path
-      else
-        @ledger = Ledger.new
-        @fund_site_sales = true  
-      end
+  def create_bank_deposit
+    @ledger = Ledger.new(ledger_params)
+    @ledger.created_by = current_scout.id
+    from_account = Account.find(ledger_params[:from_account_id])
+    @ledger.description = "Bank deposit from #{from_account.name}"
+
+    @ledger.double_entry_id = DoubleEntry.create.id
+
+    if @ledger.save
+      flash[:notice] = 'Your bank deposit has been recorded.'
+      redirect_to ledgers_path
     else
       @ledger = Ledger.new
-      @ledger.is_bank_deposit = true
-      @bank_accounts = @active_event.accounts.is_bank_account_depositable.order(:name)
-      @cash_accounts = @active_event.accounts.cash.order(:name)
-      if !current_scout.is_financial_admin? && !current_scout.is_take_orders_admin?
-        @cash_accounts = @cash_accounts.where(is_take_order_eligible: false)
-      end
-      if  !current_scout.is_financial_admin? && !current_scout.is_site_sales_admin?
-        @cash_accounts = @cash_accounts.where(is_site_sale_eligible: false)
-      end
-      @deposit = true
-    end
+      @fund_site_sales = true  
   end
 
   def collect_from_customer

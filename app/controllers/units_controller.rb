@@ -1,5 +1,4 @@
 class UnitsController < ApplicationController
-  helper StatesHelper
   before_action :set_unit, only: [:show, :edit, :update, :destroy]
   skip_before_action :authorize, only: [:new, :create]
   before_action :authorize_unit_admin, only: [:edit, :update, :destroy]

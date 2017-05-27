@@ -17,7 +17,7 @@
             Notification will be sent to
             = succeed(".") do
               %b= @active_event.unit.treasurer_name
-      .card-footer.text-center= button_to "Make a Bank deposit", bank_deposit_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_take_orders_admin? || current_scout.is_site_sales_admin? || current_scout.is_financial_admin? ? false : true
+      .card-footer.text-center= button_to "Make a Bank deposit", new_bank_deposit_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_take_orders_admin? || current_scout.is_site_sales_admin? || current_scout.is_financial_admin? ? false : true
 
   .col-md-3
     .card.card-outline-primary

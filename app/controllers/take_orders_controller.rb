@@ -21,14 +21,14 @@ class TakeOrdersController < ApplicationController
       @envelopes = @envelopes.picked_up
     end
 
-    if params[:scout_id]
-      @envelopes = @envelopes.where(scout_id: params[:scout_id])
-    end
+    # if params[:scout_id]
+    #   @envelopes = @envelopes.where(scout_id: params[:scout_id])
+    # end
 
-    if params[:pick_sheet]
-      @envelopes = @active_event.envelopes.includes(take_orders: [take_order_line_items: :product]).closed
-      render :pick_sheet
-    end
+    # if params[:pick_sheet]
+    #   @envelopes = @active_event.envelopes.includes(take_orders: [take_order_line_items: :product]).closed
+    #   render :pick_sheet
+    # end
   end
 
   def show

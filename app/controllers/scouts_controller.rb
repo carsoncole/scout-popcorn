@@ -42,7 +42,7 @@ class ScoutsController < ApplicationController
 
   def update
     if ( current_scout.is_unit_admin || current_scout == @scout ) && @scout.update(scout_params)
-      redirect_to @scout, notice: 'Scout was successfully updated.'
+      redirect_to scout_path(@scout), notice: 'Scout was successfully updated.'
     else
       render :edit, notice: 'Scout was not updated.'
     end

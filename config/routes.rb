@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get 'ledgers/transactions' => 'ledgers#transactions', as: :ledger_transactions
   get 'ledgers/fund-site-sales' => 'ledgers#fund_site_sales', as: :fund_site_sales
   post 'ledgers/fund-site-sales' => 'ledgers#fund_site_sales'
-  get 'ledgers/bank-deposit' => "ledgers#bank_deposit", as: 'bank_deposit'
-  post 'ledgers/bank-deposit' => 'ledgers#bank_deposit'
+  get 'ledgers/bank-deposit' => "ledgers#bank_deposit", as: 'new_bank_deposit'
+  post 'ledgers/bank-deposit' => 'ledgers#create_bank_deposit'
   get 'ledgers/expense-reimbursement-1' => "ledgers#expense_reimbursement_1", as: 'expense_reimbursement_1'
   post 'ledgers/expense-reimbursement-1' => 'ledgers#expense_reimbursement_1'
   get 'ledgers/expense-reimbursement-2' => "ledgers#expense_reimbursement_2", as: 'expense_reimbursement_2'
