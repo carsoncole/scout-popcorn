@@ -44,6 +44,9 @@
                 = link_to "Take Orders", take_orders_path, class: "dropdown-item #{'active' if controller_name == 'take_orders'}"
 
                 = link_to "Envelopes", envelopes_path(status: 'open'), class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
+
+                = link_to "Purchase Order", take_orders_order_path, class: "dropdown-item #{'active' if controller_name == 'take_orders_order'}"
+
           - if @active_event.is_take_orders_enabled? && !current_scout.is_admin?
             %li.nav-item
               = link_to "Take Orders", take_orders_path, class: "nav-link #{'active' if controller_name == 'take_orders'}"
@@ -107,7 +110,6 @@
 
                 / = link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger' && action_name == 'index'}"
 
-                .dropdown-divider
                 %h6.dropdown-header
                   Financials
                 = link_to "Transactions", ledger_transactions_path, class: "dropdown-item #{'active' if controller_name == 'ledgers' && action_name == 'transactions'}"

@@ -1,7 +1,7 @@
 .row
   - @events.each do |event|
     .col-md-6
-      .card
+      .card{ class: event.is_active? ? 'active' : 'inactive' }
         .card-block
           .card-title 
             - if current_scout.is_unit_admin?
@@ -17,24 +17,24 @@
           %table.table.card-text.card-text.table-sm
 
             %tr
-              %th Contact:
+              %td Contact:
               %td.text-right= event.admin_email
 
 
 
 
             %tr
-              %th Commission %:
+              %td Commission %:
               %td.text-right= number_to_percentage(event.unit_commission_percentage, precision: 2)
 
 
             %tr
-              %th Online commission %:
+              %td Online commission %:
               %td.text-right= number_to_percentage(event.online_commission_percentage, precision: 2)
 
 
             %tr
-              %th
+              %td
                 Resources
 
               %td.text-right
@@ -42,49 +42,49 @@
                   %i.fa.fa-eye.fa-lg
 
             %tr
-              %th Online is enabled?
+              %td Online is enabled?
               %td.text-right
                 - if event.is_online_enabled
                   %i.fa.fa-check
 
             %tr
-              %th Prizes
+              %td Prizes
               %td.text-right
                 - if event.is_prizes_enabled?
                   %i.fa.fa-check
             %tr
-              %th Prize ordering starts:
+              %td Prize ordering starts:
               %td.text-right= nice_date_compact(event.prize_cart_ordering_starts_at) if event.prize_cart_ordering_starts_at
 
             %tr
-              %th Prize ordering ends:
+              %td Prize ordering ends:
               %td.text-right= nice_date_compact(event.prize_cart_ordering_ends_at) if event.prize_cart_ordering_ends_at
 
             %tr
-              %th Site Sales enabled?
+              %td Site Sales enabled?
               %td.text-right
                 - if event.is_site_sales_enabled
                   %i.fa.fa-check
               
 
             %tr
-              %th Take Orders is enabled?
+              %td Take Orders is enabled?
               %td.text-right
                 - if event.is_take_orders_enabled
                   %i.fa.fa-check
               
             %tr
-              %th Take Orders deadline:
+              %td Take Orders deadline:
               %td.text-right= nice_date_compact(event.take_orders_deadline_at) if event.take_orders_deadline_at
 
             %tr
-              %th Show Top Sellers:
+              %td Show Top Sellers:
               %td.text-right
                 - if event.show_top_sellers
                   %i.fa.fa-check
 
             %tr
-              %th Number of Top Sellers:
+              %td Number of Top Sellers:
               %td.text-right= event.number_of_top_sellers
 
           - if current_scout.is_unit_admin?

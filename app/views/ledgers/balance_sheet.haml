@@ -1,7 +1,7 @@
 .row
   .col-md-12
     %br
-    %h2
+    %h1
       .visible-print-inline= @active_event.name
       Balance Sheet
 
@@ -33,8 +33,8 @@
                       = number_to_currency(amount)
 
               %tr
-                %th.top.bottom(colspan=2) Total assets
-                %th.top.bottom.text-right= number_to_currency(total_assets)
+                %td.top.bottom(colspan=2) Total assets
+                %td.top.bottom.text-right= number_to_currency(total_assets)
 
       .col-md-6
         .card
@@ -56,8 +56,8 @@
                     = number_to_currency(amount)
 
               %tr
-                %th.top.bottom(colspan=2) Total liabilities
-                %th.top.bottom.text-right= number_to_currency(total_liabilities)
+                %td.top.bottom(colspan=2) Total liabilities
+                %td.top.bottom.text-right= number_to_currency(total_liabilities)
 
         %br
         .card
@@ -67,8 +67,8 @@
 
             %table.table.card-text
               %tr
-                %th.top.bottom-double Retained earnings
-                %th.top.bottom-double.text-right= number_to_currency(total_assets - total_liabilities)
+                %td.top.bottom-double Retained earnings
+                %td.top.bottom-double.text-right= number_to_currency(total_assets - total_liabilities)
               / %tr
               /   %th.top.bottom-double Equity
               /   %th.top.bottom-double.text-right= number_to_currency(@total_equity - @other_expenses)

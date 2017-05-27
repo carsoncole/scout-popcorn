@@ -14,14 +14,29 @@ body {
   color: $yellow;
 }
 
+h1 {
+  font-size: 1.8em;
+}
+
 h5 {
   color: $blue;
+}
+
+th {
+  font-weight: 300;
+  color: #999;
 }
 
 .navbar-brand {
   a { color: $yellow;}
   a:hover { text-decoration: none; }
 }
+
+.card.inactive {
+  background-color: #eee;
+  color: #999;
+}
+
 
 .product-image {
   font-size: 3em;

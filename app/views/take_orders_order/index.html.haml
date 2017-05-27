@@ -1,38 +1,39 @@
-%h3
-  = @unit.name
-  = "-"
-  = @active_event.name
-  Take Orders Order
+.row
+  .col-md-12
+    .card
+      .card-block
 
-%table.table.table-sm
-  %tr
-    %th Product
-    %th Orders
-    %th Inventory
-    %th Order
-    %th Price
-    %th Amount
-  - @grand_total = 0
-  - @products_to_order.each do |product_id, quantity|
-    - product = @active_event.products.find(product_id)
-    - next unless product.is_sourced_from_bsa
-    %tr
-      %td= product.name
-      %td= quantity
-      %td
-        - inventory = product.stocks.sum(:quantity)
-        = inventory
-      %td
-        - order_quantity = quantity - inventory
-        - order_quantity = 0 if order_quantity < 0
-        = order_quantity
-      %td= number_to_currency(product.retail_price)
-      %td
-        = number_to_currency(order_quantity * product.retail_price)
-        - @grand_total += order_quantity * product.retail_price
+        %h1.card-title Take Orders Order
 
-  %tr
-    %td(colspan=5)
-    %td= number_to_currency(@grand_total)
+        %table.table.table-sm.card-text
+          %tr
+            %th Product
+            %th Orders
+            %th Inventory
+            %th Order
+            %th Price
+            %th.text-right Amount
+          - @grand_total = 0
+          - @products_to_order.each do |product_id, quantity|
+            - product = @active_event.products.find(product_id)
+            - next unless product.is_sourced_from_bsa
+            %tr
+              %td= product.name
+              %td= quantity
+              %td
+                - inventory = product.stocks.sum(:quantity)
+                = inventory
+              %td
+                - order_quantity = quantity - inventory
+                - order_quantity = 0 if order_quantity < 0
+                = order_quantity
+              %td= number_to_currency(product.retail_price)
+              %td.text-right
+                = number_to_currency(order_quantity * product.retail_price)
+                - @grand_total += order_quantity * product.retail_price
 
-%p= nice_date_time(Time.now)
+          %tr
+            %td(colspan=5)
+            %td.text-right= number_to_currency(@grand_total)
+
+        %p.card-text= nice_date_time(Time.now)

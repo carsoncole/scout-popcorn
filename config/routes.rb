@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'forgot_password', to: 'scouts#forgot_password', as: 'forgot_password'
 
-  get 'take_orders_order/index'
+  get 'take-orders-order' => 'take_orders_order#index', as: 'take_orders_order'
 
   get 'ledgers/transactions' => 'ledgers#transactions', as: :ledger_transactions
   get 'ledgers/fund-site-sales' => 'ledgers#fund_site_sales', as: :fund_site_sales

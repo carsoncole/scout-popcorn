@@ -1,7 +1,7 @@
 .row
   .col-md-12
     %br
-    %h2
+    %h1
       .visible-print-inline= @active_event.name
       Income Statement
 
@@ -55,8 +55,8 @@
                   - total_income += @take_order_donations
 
               %tr
-                %th.top.bottom(colspan=2) Total income
-                %th.top.bottom.text-right= number_to_currency(total_income)
+                %td.top.bottom(colspan=2) Total income
+                %td.top.bottom.text-right= number_to_currency(total_income)
 
       .col-md-6
         .card
@@ -80,8 +80,8 @@
                     = number_to_currency(amount)
 
               %tr
-                %th.top.bottom(colspan=2) Total expenses
-                %th.top.bottom.text-right= number_to_currency(total_expenses)
+                %td.top.bottom(colspan=2) Total expenses
+                %td.top.bottom.text-right= number_to_currency(total_expenses)
 
         %br
 
@@ -93,7 +93,7 @@
 
             %table.table.card-text
               %tr
-                %th.top.bottom-double Net Income
-                %th.top.bottom-double.text-right= number_to_currency(total_income - total_expenses)
+                %td.top.bottom-double Net Income
+                %td.top.bottom-double.text-right= number_to_currency(total_income - total_expenses)
 
     .small.text-muted.visible-print-block= nice_date_time(Time.now)

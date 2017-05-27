@@ -5,7 +5,7 @@
     .card
       .card-block
         .card-title
-          %h2 Collect from Customer
+          %h1 Collect from Customer
 
         = form_for @ledger, url: 'collect-from-customer' do |f|
           - if @ledger.errors.any?

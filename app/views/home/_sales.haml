@@ -1,7 +1,7 @@
 - if @active_event
   .card
     .card-block
-      %h2.card-title.my-sales
+      %h1.card-title.my-sales
         - if current_scout.is_admin?
           Sales
         - else
@@ -37,6 +37,6 @@
               = number_to_currency(@site_sale_sales, precision: 0)      
     
         %tr
-          %th(colspan=2) Total Sales
+          %td(colspan=2) Total Sales
           %td.text-right
             = number_to_currency(@total_sales, precision: 0)

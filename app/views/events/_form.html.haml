@@ -2,9 +2,7 @@
   .col-md-6
     .card
       .card-block
-        .card-title
-          %h2
-            Event
+        %h2.card-title Event
 
         = form_for @event do |f|
           - if @event.errors.any?

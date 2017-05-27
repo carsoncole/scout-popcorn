@@ -13,8 +13,8 @@
             - @top_sellers.each do |top_seller|
               - scout = Scout.find(top_seller[0].id)
               %tr
-                %th= scout.name
-                %th.text-right= number_to_currency(top_seller[1], precision: 0)
+                %td= scout.name
+                %td.text-right= number_to_currency(top_seller[1], precision: 0)
       - else
         %p.card-text.alert.alert-info.text-muted.text-center
           %i.fa.fa-info-circle

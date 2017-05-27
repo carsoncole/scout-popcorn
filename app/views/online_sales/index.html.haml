@@ -2,7 +2,7 @@
   .col-md-12
     .card
       .card-block 
-        %h2.card-title Online Sales
+        %h1.card-title Online Sales
 
         - unless current_scout.admin?
           %p.card-text.alert.alert-info.text-muted
@@ -11,7 +11,7 @@
 
         - if @online_sales.any?
           .table-responsive
-            %table.table.card-text
+            %table.table.card-text.table-sm
               %thead
                 %tr
                   %th Order date
