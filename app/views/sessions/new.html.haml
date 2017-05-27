@@ -28,11 +28,10 @@
             %p
               Not registered?
               = link_to "Sign Up", signup_path, class: 'sign_up_link'
-
+              %br
+              = link_to "Forget password?", forgot_password_path
 
           - if Rails.configuration.allow_for_multiple_units || Unit.all.empty?
+
             %hr
-          - if Unit.active.any?
-            = link_to "Forget password?", forgot_password_path
-            %br
             = link_to "Sign Up Your Unit", new_unit_path, class: 'sign-up-your-unit'
