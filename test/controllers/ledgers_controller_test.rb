@@ -18,7 +18,7 @@ class LedgersControllerTest < ActionDispatch::IntegrationTest
 
   test "should get bank deposit" do
     sign_in(scouts(:financial_admin))
-    get bank_deposit_url
+    get new_bank_deposit_url
     assert_response :success
   end
 
