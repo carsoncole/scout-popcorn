@@ -1,6 +1,6 @@
 # Scout Corn Cub for Popcorn Fundraising
 
-[![CircleCI](https://circleci.com/gh/carsoncole/corncub/tree/master.svg?style=svg)](https://circleci.com/gh/carsoncole/corncub/tree/master)
+[![CircleCI](https://circleci.com/gh/carsoncole/corncub/tree/master.svg?style=shield)](https://circleci.com/gh/carsoncole/corncub/tree/master)
 
 Corn Cub is a multi-Scout Unit or single Unit application for managing and for promoting involvement in a Scout popcorn fundraiser. 
 
