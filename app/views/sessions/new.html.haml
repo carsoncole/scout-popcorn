@@ -21,14 +21,18 @@
 
               .actions
                 = submit_tag "Log in", class: 'btn btn-success'
-                - if Unit.active.any?
-                  , or
-                  = link_to "Sign Up", signup_path, class: 'sign_up_link'
 
           %br
 
-          - if Rails.configuration.allow_for_multiple_units || Unit.all.empty?
-            = link_to "Sign Up Your Unit", new_unit_path, class: 'sign-up-your-unit'
-            %br
           - if Unit.active.any?
-            = link_to "Forget your password?", forgot_password_path
+            %p
+              Not registered?
+              = link_to "Sign Up", signup_path, class: 'sign_up_link'
+
+
+          - if Rails.configuration.allow_for_multiple_units || Unit.all.empty?
+            %hr
+          - if Unit.active.any?
+            = link_to "Forget password?", forgot_password_path
+            %br
+            = link_to "Sign Up Your Unit", new_unit_path, class: 'sign-up-your-unit'
