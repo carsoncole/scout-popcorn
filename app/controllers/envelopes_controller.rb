@@ -48,7 +48,7 @@ class EnvelopesController < ApplicationController
 
   def picked_up
     @envelope = Envelope.find(params[:id])
-    @envelope.update(product_picked_up_at: Time.now, status: 'Picked Up')#,money_received_by_id: nil, money_received_at: nil, closed_at: nil)
+    @envelope.update(product_picked_up_at: Time.now, status: 'Picked Up')
     redirect_to envelope_path(@envelope)
   end
 
@@ -74,14 +74,10 @@ class EnvelopesController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @envelope.update(envelope_params)
-        format.html { redirect_to @envelope, notice: 'Envelope was successfully updated.' }
-        format.json { render :show, status: :ok, location: @envelope }
-      else
-        format.html { render :edit }
-        format.json { render json: @envelope.errors, status: :unprocessable_entity }
-      end
+    if @envelope.update(envelope_params)
+      redirect_to @envelope, notice: 'Envelope was successfully updated.'
+    else
+      render :edit
     end
   end
 
