@@ -24,23 +24,31 @@
 
 
           = f.hidden_field :is_bank_deposit, value: 1
-          .col-md-4
-            .form-group
-              = f.label "From:"
+          .row
+            .col-md-5
+              .form-group
+                = f.label "From:"
+                %br
+                = f.collection_select :from_account_id, @cash_accounts, :id, :name, {}, class: 'form-control'
+            .col-md-2.text-center
               %br
-              = f.collection_select :from_account_id, @cash_accounts, :id, :name, {}, class: 'form-control'
+              %i.fa.fa-arrow-right.fa-lg
 
-            .form-group
-              = f.label "Deposit to:"
-              %br
-              = f.collection_select :account_id, @bank_accounts, :id, :name, {}, class: 'form-control'
-            .form-group
-              = f.label 'Amount:'
+            .col-md-5
+              .form-group
+                = f.label "Deposit to:"
+                %br
+                = f.collection_select :account_id, @bank_accounts, :id, :name, {}, class: 'form-control'
+          .row
+            .col-md-4
+            .col-md-4
+              .form-group
+                = f.label 'Amount:'
 
-              = f.text_field :amount, class: 'form-control'
-            .form-group
-              = f.label "Date of deposit:"
-              %br
-              = f.date_select :date, { start_year: 2017 }, class: 'form-control'
-            .actions
-              = f.submit 'Record Deposit', class: 'btn btn-success'
+                = f.text_field :amount, class: 'form-control'
+              .form-group
+                = f.label "Date of deposit:"
+                %br
+                = f.date_select :date, { start_year: 2017 }, class: 'form-control'
+              .actions.text-center
+                = f.submit 'Record Deposit', class: 'btn btn-success'
