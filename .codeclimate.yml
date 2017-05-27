@@ -1,4 +1,6 @@
 engines:
+  brakeman:
+    enabled: true
   rubocop:
     enabled: true
     #checks:
@@ -17,13 +19,17 @@ engines:
       - ruby:
           mass_threshold: 30
       - javascript
+  bundler-audit:
+    enabled: true
+  fixme:
+    enabled: true
 ratings:
   paths:
   - app/**
   - lib/**
   - "**.rb"
 exclude_paths:
-- "test/*"
-- "spec/*"
-- "vendor/*"
-- "public/assets/*"
+- test/**
+- spec/**
+- vendor/**
+- "public/assets/**/*"
