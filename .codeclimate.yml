@@ -1,6 +1,9 @@
 engines:
   brakeman:
     enabled: true
+    checks:
+      validation_regex:
+        enabled: false
   rubocop:
     enabled: true
   csslint:

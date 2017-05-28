@@ -68,10 +68,15 @@ class Scout < ApplicationRecord
   end
 
   def admin?
-    is_financial_admin || is_take_orders_admin ||
-    is_site_sales_admin || is_prizes_admin ||
-    is_warehouse_admin || is_unit_admin ||
-    is_online_sales_admin
+    [
+      is_financial_admin, 
+      is_take_orders_admin, 
+      is_site_sales_admin,
+      is_prizes_admin,
+      is_warehouse_admin,
+      is_unit_admin,
+      is_online_sales_admin
+    ].include? true
   end
 
   def activity?

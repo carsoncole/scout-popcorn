@@ -172,12 +172,6 @@ class Event < ApplicationRecord
     end  
   end
 
-  def has_default_products
-    Product.default.each do |product|
-      return true if products
-    end
-  end
-
   def sales_by_scout_ordered
     hash_of_scouts = {}
 

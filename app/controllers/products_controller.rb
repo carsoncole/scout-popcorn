@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
     products_to_add = Product.default.where(sourced_from: params[:collection_name])
     initial_product_count = @active_event.products.size
     products_to_add.each do |product|
-      new_product = @active_event.products.create(product.attributes.except("id", "created_at", "updated_at"))
+      @active_event.products.create(product.attributes.except("id", "created_at", "updated_at"))
     end
     post_product_count = @active_event.reload.products.size
     products_added_count = post_product_count - initial_product_count

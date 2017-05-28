@@ -40,14 +40,12 @@ class SiteSalesController < ApplicationController
       else
         redirect_to @site_sale, alert: 'Payment methods do not balance with sales receipts.'
       end
-    elsif params[:open] && current_scout.is_site_sales_admin?
+    elsif params[:open]
       @site_sale.update(closed_at: nil, closed_by: nil)
       redirect_to @site_sale, notice: 'The Site Sale was re-opened.'
-    elsif current_scout.is_site_sales_admin?
+    else
       @site_sale.update(site_sale_params)
       redirect_to @site_sale, notice: 'The Site Sale was successfully updated.'
-    else
-      redirect_to @site_sale, alert: 'You do not have permission to modify this Site Sale.'
     end 
   end
 

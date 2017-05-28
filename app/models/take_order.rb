@@ -130,10 +130,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def credit_stock!
-    take_order_line_items.each do |line_item|
-      existing_stock_entry = Stock.where(take_order_id: self.id).first
-      existing_stock_entry.destroy if existing_stock_entry
-    end
+    Stock.where(take_order_id: self.id).destroy_all
   end
 
   def send_receipt!
