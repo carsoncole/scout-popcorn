@@ -141,8 +141,7 @@ class TakeOrder < ApplicationRecord
   def register_money_received_and_product_due!
     # date = self.money_received_at.blank? ? self.created_at : self.money_received_at
     date = self.envelope.money_received_at.blank? ? self.envelope.created_at : self.envelope.money_received_at
-    take_order_line_items.each do |line_item|
-      unit = self.envelope.event.unit      
+    take_order_line_items.each do |line_item|     
       Ledger.create(take_order_id: self.id, account_id: payment_account_id, amount: line_item.value, date: date, description: "Take Order submitted", is_take_order_product_related: true)
       
       if line_item.product.physical?
@@ -153,7 +152,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def reverse_money_received_and_product_due!
-    existing_ledger = Ledger.where(take_order_id: self.id, is_take_order_product_related: true).destroy_all
+    Ledger.where(take_order_id: self.id, is_take_order_product_related: true).destroy_all
   end
 
   def assign_to_envelope!
@@ -166,12 +165,6 @@ class TakeOrder < ApplicationRecord
     end
   end
 
-  # def check_scout_id_matches_envelope_scout_id
-  #   if envelope && scout_id != envelope.scout_id
-  #     errors.add(:scout_id, "must match the Scout on the Envelope.")
-  #   end
-  # end
-
   def credit_product_due!
     product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
     product_due_ledgers = Ledger.where(take_order_id: self.id, is_take_order_product_related: true, account_id: product_due_to_customers_account.id)
@@ -181,7 +174,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def debit_stock_for_pickup!
-    product_due_to_customers_account = event.accounts.where(name: 'Product due to Customers').first
+    event.accounts.where(name: 'Product due to Customers').first
     take_order_line_items.each do |line_item|
       new_stock_entry = Stock.create(unit_id: self.event.unit_id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: Date.today, created_by: 999, is_pickup: true)
     end
