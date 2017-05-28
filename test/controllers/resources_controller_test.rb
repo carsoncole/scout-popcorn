@@ -53,6 +53,15 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to resources_path
   end
 
+  test "should not create resource" do
+    sign_in(scouts(:unit_admin))
+    assert_difference('Resource.count', 0) do
+      post resources_url, params: { resource: { event_id: @resource.event_id, name: nil, url: @resource.url } }
+    end
+
+    assert_response :success
+  end
+
   test "should get edit" do
     sign_in(scouts(:unit_admin))
     get edit_resource_url(@resource)
@@ -63,6 +72,12 @@ class ResourcesControllerTest < ActionDispatch::IntegrationTest
     sign_in(scouts(:unit_admin))
     patch resource_url(@resource), params: { resource: { event_id: @resource.event_id, name: 'New name', url: @resource.url } }
     assert_redirected_to resources_path
+  end
+
+  test "should not update resource" do
+    sign_in(scouts(:unit_admin))
+    patch resource_url(@resource), params: { resource: { event_id: @resource.event_id, name: nil, url: @resource.url } }
+    assert_response :success
   end
 
   test "should destroy resource" do
