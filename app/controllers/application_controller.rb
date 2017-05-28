@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_event
-    if @active_event = current_scout.event
+    if current_scout && current_scout.event
+      @active_event = current_scout.event
       cookies[:event_id] = current_scout.event_id
     end
   end
