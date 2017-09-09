@@ -3,12 +3,12 @@ class Scout < ApplicationRecord
 
   belongs_to :unit
   belongs_to :event, optional: true
+  has_many :envelopes
   has_many :take_orders, through: :envelopes
   has_many :events, through: :unit
   has_many :site_sales, through: :scout_site_sales
   has_many :scout_site_sales
   has_many :online_sales
-  has_many :envelopes
   has_many :prize_carts
 
   validates :first_name, :last_name, :unit_id, presence: true

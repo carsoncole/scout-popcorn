@@ -1,7 +1,7 @@
 .row
   .col-md-12
     .card
-      .card-block
+      .card-body
         %h3.card-title Scouts / Administrators
 
         %ul.nav.nav-tabs.card-text
@@ -143,7 +143,7 @@
   .row
     .col-md-3
       .card
-        .card-block.hidden-print
+        .card-body.hidden-print
           - if params[:administrators].present?
             = link_to new_scout_path(administrator: true, unit_id: current_scout.unit_id) do
               %i.fa.fa-plus.fa-lg

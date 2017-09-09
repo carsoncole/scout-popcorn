@@ -1,7 +1,7 @@
 .row
   .col-md-6
     .card
-      .card-block
+      .card-body
         %h3.card-title Commission %
 
         %table.table.card-text
@@ -15,7 +15,7 @@
 
   .col-md-6
     .card
-      .card-block
+      .card-body
         %p.card-text
           Changing your Unit percentages will result in a recalculation of your Unit's
           %strong= @active_event.name
@@ -25,7 +25,7 @@
 .row
   .col-md-6
     .card
-      .card-block
+      .card-body
         %h3.card-title New Commission %
 
         = form_for @event do |f|

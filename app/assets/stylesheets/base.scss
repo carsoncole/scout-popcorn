@@ -1,10 +1,23 @@
 $blue: #003F87;
 $yellow: #FCD116;
 
+$font-family-sans-serif:
+  // Safari for OS X and iOS (San Francisco)
+  -apple-system,
+  // Chrome >= 56 for OS X (San Francisco), Windows, Linux and Android
+  system-ui,
+  // Chrome < 56 for OS X (San Francisco)
+  BlinkMacSystemFont,
+  // Windows
+  "Segoe UI",
+  // Android
+  "Roboto",
+  // Basic web fallback
+  "Helvetica Neue", Arial, sans-serif !default;
+
+
 body {
   margin-top: 3em;
-  font-family:  sans-serif;
-  background-color: #efefef;
 }
 .page-title {
   margin-bottom: 1.5em;
@@ -12,10 +25,6 @@ body {
 
 .fa-shopping-cart {
   color: $yellow;
-}
-
-h1 {
-  font-size: 1.8em;
 }
 
 h5 {

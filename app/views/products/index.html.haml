@@ -3,7 +3,7 @@
 
     - if current_scout.is_unit_admin?
       .card.card-inverse.card-warning
-        .card-block
+        .card-body
           - if @products.empty?
             %p There are no products for this Event. Add products individually or add a collection from preset collections.
             
@@ -34,7 +34,7 @@
             - batch.each do |product|
               .col-md-3
                 .card.product
-                  .card-block
+                  .card-body
                     .card-title
                       %h5.text-center= product.name
 
@@ -58,7 +58,7 @@
 
       %br
       .text-center
-        = link_to add_presets_path(collection_name: params[:collection_name]), class: 'btn btn-warning', method: :post, :data => { :confirm => 'This will put all these products into your Event catalog. Your catalog should currently be empty or you may end up with multiple listings of the same product. Are you sure you want to proceed?' } do
+        = button_to add_presets_path(collection_name: params[:collection_name]), class: 'btn btn-warning', method: :post, :data => { :confirm => 'This will put all these products into your Event catalog. Your catalog should currently be empty or you may end up with multiple listings of the same product. Are you sure you want to proceed?' } do
           Add these products to your Event >>>
 
 
@@ -79,17 +79,17 @@
   .row
     .col-md-12
       .card
-        .card-block
+        .card-body
           %table.table.card-text
             %tr
               %th Product
-              %td ID
+              / %td ID
               %td Price
-              %td Image
+              %td
             - @products.each do |product|
               %tr
                 %th= link_to product.name, product_path(product)
-                %td= product.id
+                / %td= product.id
                 %td= number_to_currency(product.retail_price)
                 %td
                   - if product.url.present?

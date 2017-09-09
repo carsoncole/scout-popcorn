@@ -9,7 +9,7 @@
   .col-md-3
     .card.card-outline-primary
       .card-header.text-muted Cash
-      .card-block
+      .card-body
         %h5.card-title Bank deposit
         %p.card-text
           Use when making a bank deposit from either Take Order or Site Sale cash.
@@ -22,21 +22,21 @@
   .col-md-3
     .card.card-outline-primary
       .card-header.text-muted Setup
-      .card-block
+      .card-body
         %h5.card-title Cash for Site Sales
         %p.card-text Use when providing initial cash for Site Sale's cash box. Money should be provided by Unit Treasurer.
       .card-footer.text-center= button_to "Get Cash for Site Sales", fund_site_sales_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true
   .col-md-3
     .card.card-outline-primary
       .card-header.text-muted Expense
-      .card-block
+      .card-body
         %h5.card-title Reimbursement: Unit
         %p.card-text Use when reimbursing with cash from your Unit (not money received from popcorn sales). 
       .card-footer.text-center= button_to "Reimburse expense", expense_reimbursement_1_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true  
   .col-md-3
     .card.card-outline-primary
       .card-header.text-muted Expense
-      .card-block
+      .card-body
         %h5.card-title Reimbursement: Site Sales/Take Orders
         %p.card-text Use when reimbursing with cash from either Site Sales or Take Orders cash.
       .card-footer.text-center= button_to "Reimburse Expense", expense_reimbursement_2_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true  
@@ -44,7 +44,7 @@
   .col-md-3
     .card.card-outline-primary
       .card-header.text-muted Payment
-      .card-block
+      .card-body
         %h5.card-title Collect from customers
         %p.card-text
           Use when collecting money from customers who placed Take Orders but did not pay when ordering.
@@ -61,7 +61,7 @@
   .col-md-3
     .card.card-outline-primary
       .card-header.text-muted Misc
-      .card-block
+      .card-body
         %h5.card-title General Transaction
         %p.card-text Use this to make double-entry transactions. This should only be used by advanced users.
       .card-footer.text-center= button_to "Misc transactions", new_ledger_path, method: :get, class: 'btn btn-primary btn-sm', disabled: current_scout.is_financial_admin? ? false : true

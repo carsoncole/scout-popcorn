@@ -2,7 +2,7 @@
   - @events.each do |event|
     .col-md-6
       .card{ class: event.is_active? ? 'active' : 'inactive' }
-        .card-block
+        .card-body
           .card-title 
             - if current_scout.is_unit_admin?
               .pull-right
@@ -103,7 +103,7 @@
   .row
     .col-md-6
       .card
-        .card-block
+        .card-body
           %p.card-text
             = link_to new_event_path do
               %i.fa.fa-plus.fa-lg

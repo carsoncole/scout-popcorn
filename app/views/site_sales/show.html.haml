@@ -1,7 +1,7 @@
 .row
   .col-md-12
     .card
-      .card-block
+      .card-body
         .row
           .col-md-8
             .card-title
@@ -77,7 +77,7 @@
 .row    
   .col-md-12
     .card
-      .card-block
+      .card-body
         .card-title
           %h4 Scout Volunteers
         - total_credited_sales = 0
@@ -117,7 +117,7 @@
 .row
   .col-md-6
     .card
-      .card-block
+      .card-body
         .card-title
           %h4 Payment Methods
 
@@ -152,7 +152,7 @@
   - if current_scout.is_site_sales_admin?  
     .col-md-6
       .card
-        .card-block
+        .card-body
 
           %table.table.card-text.table-sm
             %tr
@@ -176,7 +176,7 @@
     .col-md-1
     .col-md-10
       .card
-        .card-block
+        .card-body
           - if @site_sale.open?  
             .row
               .col-md-9

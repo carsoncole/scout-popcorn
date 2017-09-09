@@ -5,7 +5,7 @@
       .col-md-12
         = render 'set_up_products'
 
-  - if ( current_scout.is_unit_admin? || current_scout.is_prizes_admin? ) && !@active_event.prizes?
+  - if ( current_scout.is_unit_admin? || current_scout.is_prizes_admin? ) && !@active_event.prizes? && @active_event.is_prizes_enabled?
     .row
       .col-md-12
         = render 'set_up_prizes'

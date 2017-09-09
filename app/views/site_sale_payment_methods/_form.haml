@@ -1,7 +1,7 @@
 .row
   .col-md-5
     .card
-      .card-block
+      .card-body
         = form_for [@site_sale, @site_sale_payment_method] do |f|
           - if @site_sale_payment_method.errors.any?
             #error_explanation
