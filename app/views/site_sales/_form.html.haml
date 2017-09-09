@@ -1,10 +1,10 @@
 .row
-  .col-md-12
+  .col-md-6
     .card
       .card-body
         .card-title
           %h1 Site Sales
-        = form_for @site_sale do |f|
+        = form_for @site_sale, class: 'card-text' do |f|
           - if @site_sale.errors.any?
             #error_explanation
               %h2= "#{pluralize(@site_sale.errors.count, "error")} prohibited this site_sale from being saved:"
@@ -16,14 +16,17 @@
           /   = f.label :event
           /   %br
           /   = f.collection_select :event_id, @unit.events.order(:name), :id, :name, {}, class: 'form-control'
-          .form-group
-            = f.label :location_name
-            = f.text_field :name, placeholder: 'Name of location', class: 'form-control'
-
-          .form-group
-            = f.label :date
-            %br
-            = f.date_select :date, {}, class: 'form-control'
+          .row
+            .col-md-12
+              .form-group
+                = f.label :location_name
+                = f.text_field :name, placeholder: 'Name of location', class: 'form-control'
+          .row
+            .col-md-8
+              .form-group
+                = f.label :date
+                %br
+                = f.date_select :date, {start_year: 2017 }, class: 'form-control'
 
           / .form-group
           /   = f.label :total_sales
