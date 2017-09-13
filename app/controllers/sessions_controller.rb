@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
         last_sign_in_at:    Time.now,
         last_sign_in_ip:    request.remote_ip,
       )
-      redirect_to home_path, notice: 'Logged in!'
+      redirect_to home_path
     else
       @scout = Scout.new
       flash.now.alert = 'Email or password is invalid'
@@ -25,6 +25,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:scout_id] = nil
-    redirect_to root_url, notice: 'Logged out!'
+    redirect_to root_url
   end
 end
