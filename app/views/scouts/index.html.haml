@@ -85,7 +85,7 @@
                   %th.role.text-center Prizes
                   
                   - if current_scout.is_unit_admin?
-                    %th.text-center Logins
+                    / %th.text-center Logins
                     %th.hidden-print
 
               %tbody
@@ -131,7 +131,7 @@
                         %i.fa.fa-square-o.text-muted
                     
                     - if current_scout.is_unit_admin?
-                      %td.text-center= scout.sign_in_count
+                      / %td.text-center= scout.sign_in_count
                       %td.hidden-print
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg

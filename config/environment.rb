@@ -12,6 +12,6 @@ ActionMailer::Base.smtp_settings = {
   domain: "gmail.com",
   authentication: :login,
   enable_starttls_auto: true,
-  user_name: "user@gmail.com",
-  password: "password"
+  user_name: Rails.application.secrets.email_user_name,
+  password: Rails.application.secrets.email_password
  }
