@@ -20,7 +20,7 @@
       .col-md-3
         .card
           .card-body.card-text.text-center
-            %p
+            %p.small
               Your remaining sales credits that can be applied towards
               = source
               prizes:
@@ -32,7 +32,7 @@
       .col-md-3
         .card
           .card-body.card-text.text-center
-            %p
+            %p.small
               Sales value of
               = source
               prizes in your cart:
@@ -48,7 +48,7 @@
         .col-md-3
           .card.text-center
             .card-header
-              %h5.card-text= prize.name
+              %h6.card-text= prize.name
               - if current_scout.is_prizes_admin?
                 %p.card-text
                   = link_to prize_path(prize) do

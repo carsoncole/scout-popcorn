@@ -2,17 +2,18 @@
   .card
     .card-body
       .card-title
-        %h5 
+        = image_tag 'despic_me_happy.gif', class: "img-fluid"
+        %br
+        %br
+        %h5.text-center
           Prizes to Earn
-          %i.fa.fa-bullhorn
-          %i.fa.fa-soccer-ball-o
-          %i.fa.fa-rocket
-          %i.fa.fa-gamepad
-          %i.fa.fa-gift
 
-      %p.card-text.small.text-muted Earn prizes based on the sales you achieve.
+
 
       %table.table.table-sm.card-text
+        %tr.small
+          %td Prize
+          %td.text-right Sales level
         - @prizes.each do |prize|
           %tr
             %td= prize.name
