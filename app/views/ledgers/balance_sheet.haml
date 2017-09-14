@@ -2,8 +2,9 @@
   .col-md-12
     %br
     %h1
-      .visible-print-inline= @active_event.name
-      Balance Sheet
+      .visible-print-inline
+        = Rails.configuration.application_name || 'Corn Cub'
+        Balance Sheet
 
     %br
     .row

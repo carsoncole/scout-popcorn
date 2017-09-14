@@ -16,6 +16,11 @@ $font-family-sans-serif:
   "Helvetica Neue", Arial, sans-serif !default;
 
 
+.collapse.show {
+  background-color: #efefef;
+  padding: 1em;
+}
+
 body {
   margin-top: 3em;
 }
