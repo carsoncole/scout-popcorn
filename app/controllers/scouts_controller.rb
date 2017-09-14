@@ -1,6 +1,6 @@
 class ScoutsController < ApplicationController
   before_action :set_scout, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authorize, only: [:new, :create, :forgot_password]
+  skip_before_action :authorize, only: [:new, :create, :forgot_password, :forget_password_send]
   before_action :authorize_unit_admin, only: :destroy
   before_action :authorize_admin, only: :index
 
@@ -63,6 +63,16 @@ class ScoutsController < ApplicationController
   end
 
   def forgot_password
+  end
+
+  def forget_password_send
+    @scout = Scout.find_by_email(params[:email])
+    if @scout
+      ForgetPasswordMailer.forget(@scout.id).deliver_now!
+      redirect_to root_path, notice: "We sent you a password reset email."
+    else
+      redirect_to root_path, alert: "We don't seem to recognize that email address."
+    end
   end
 
   private

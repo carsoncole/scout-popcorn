@@ -12,6 +12,7 @@ module Popcorn
 
     # email notifications
     config.from_email = 'Pack4496@gmail.com'
+    config.bcc_email = ''
     config.development_email = ''
   end
 end

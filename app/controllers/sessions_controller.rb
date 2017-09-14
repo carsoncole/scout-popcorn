@@ -4,6 +4,16 @@ class SessionsController < ApplicationController
   def new
     redirect_to home_path if current_scout
     @scout = Scout.new
+    if params[:reset_token]
+      scout = Scout.find_by_password_reset_token(params[:reset_token])
+      if scout
+        scout.update(password_reset_token: nil)
+        session[:scout_id] = scout.id
+        redirect_to scout_update_password_path(scout), alert: 'Please change your password'
+      else
+        redirect_to root_path, alert: 'Something is wrong with your reset request link. Please try again and only use the most recent email reset link.'
+      end
+    end
   end
 
   def create

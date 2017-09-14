@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'forgot_password', to: 'scouts#forgot_password', as: 'forgot_password'
+  post 'reset_password', to: 'scouts#forget_password_send', as: 'reset_password'
 
   get 'take-orders-order' => 'take_orders_order#index', as: 'take_orders_order'
 
