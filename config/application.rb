@@ -11,8 +11,8 @@ module Popcorn
     config.allow_for_multiple_units = true
 
     # email notifications
-    config.from_email = 'from_email@example.com'
-    config.bcc_email = 'carson.cole+dev@gmail.com'
+    config.from_email = 'Pack4496@gmail.com'
+    config.bcc_email = 'carson.cole+popcorn@gmail.com'
     config.development_email = ''
   end
 end
