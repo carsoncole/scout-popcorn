@@ -2,7 +2,7 @@
   .col-md-12
     %br
     %h1
-      .visible-print-inline
+      .d-print-inline
         = Rails.configuration.application_name || 'Corn Cub'
         Income Statement
 
@@ -97,4 +97,4 @@
                 %td.top.bottom-double Net Income
                 %td.top.bottom-double.text-right= number_to_currency(total_income - total_expenses)
 
-    .small.text-muted.visible-print-block= nice_date_time(Time.now)
+    .small.text-muted.d-print-block= nice_date_time(Time.now)

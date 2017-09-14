@@ -69,7 +69,7 @@
 
                         - if current_scout.admin?
                           %th
-                          %th.visible-print-block Delivered
+                          %th.d-print-block Delivered
                           %th.hidden-print
 
                     %tbody
@@ -98,7 +98,7 @@
                             %td.hidden-print
                               / - if take_order.received? && take_order.take_order_line_items.any?
                               /   = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
-                            %td.visible-print-block
+                            %td.d-print-block
                               %i.fa.fa-square-o.fa-2x
                             %td.hidden-print
                               - if take_order.in_hand? && @active_event.take_orders_allowed?
@@ -117,7 +117,7 @@
                         %td
                         - if current_scout.admin?
                           %th.hidden-print
-                          / %td.visible-print-block
+                          / %td.d-print-block
                           %td.hidden-print
                           %td.hidden-print
 

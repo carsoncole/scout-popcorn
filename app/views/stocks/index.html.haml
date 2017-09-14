@@ -6,7 +6,7 @@
           %h2
             Inventory
 
-            .visible-print-inline
+            .d-print-inline
               = "-"
               = params[:location].titleize if params[:location]
                     
@@ -76,4 +76,7 @@
         = link_to new_stock_path, class: 'hidden-print' do
           %i.fa.fa-plus.fa-lg
           Add a transfer
-          .visible-print-block= nice_date_time(Time.current)
+
+        .d-print-block
+          %br
+          = nice_date_time(Time.current)

@@ -4,7 +4,7 @@ class StocksController < ApplicationController
   before_action :authorize_warehouse_admin,  only: [:update, :destroy, :create, :new]
 
   def index
-    @stocks_query = @active_event.stocks.joins(:product).order('products.name')
+    @stocks_query = @active_event.stocks.joins(:product)
     @stocks = @active_event.stocks.joins(:product).order('products.name')
     @locations = @active_event.stocks.order(location: :desc).group(:location)
     if params[:location]
@@ -16,8 +16,9 @@ class StocksController < ApplicationController
       @stocks_query = @stocks_query.where("stocks.date <= ?", @date)
     end
 
-    @stocks_hash = @stocks_query.select(:product_id,:quantity, 'products.name').group(:product_id, 'products.name').sum(:quantity)
-    @locations = @active_event.stocks.order(location: :desc).group(:location)
+    @stocks_hash = @stocks_query.select(:product_id,:quantity).group(:product_id).sum(:quantity)
+    @stocks_query = @stocks_query.order('products.name')
+    @locations = @active_event.stocks.select("location").order(location: :desc).group(:location)
   end
 
   def show
@@ -41,7 +42,7 @@ class StocksController < ApplicationController
     @stocks = @stocks.where(location: params[:location]) if params[:location]
     @stocks = @stocks.where(product_id: params[:product_id]) if params[:product_id]
     @stocks = @stocks.where(take_order_id: params[:take_order_id]) if params[:take_order_id]
-    @locations = @active_event.stocks.group(:location)
+    @locations = @active_event.stocks.group(:location, "stocks.id")
   end
 
   def inventory_returns

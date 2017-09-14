@@ -2,7 +2,7 @@
   .col-md-12
     %br
     %h1
-      .visible-print-inline
+      .d-print-inline
         = Rails.configuration.application_name || 'Corn Cub'
         Balance Sheet
 
@@ -75,4 +75,4 @@
               /   %th.top.bottom-double.text-right= number_to_currency(@total_equity - @other_expenses)
 
 
-    %p.small.text-muted.visible-print-block= nice_date_time(Time.now)
+    %p.small.text-muted.d-print-block= nice_date_time(Time.now)
