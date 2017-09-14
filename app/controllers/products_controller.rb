@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
     else
       @products = @products.active
     end
-    @presets = Product.default.group(:sourced_from)
+    @presets = Product.default.select(:sourced_from).group(:sourced_from)
   end
 
   def show
