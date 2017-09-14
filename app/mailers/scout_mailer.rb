@@ -1,11 +1,12 @@
 class ScoutMailer < ApplicationMailer
-  default from: Rails.configuration.from_email
+  default from: "Pack 4496 <#{ Rails.configuration.from_email }>"
   
   if Rails.configuration.bcc_email.present?
     default bcc: Rails.configuration.bcc_email
   end
 
-  def registration(scout)
+  def registration(scout_id)
+    scout = Scout.find(scout_id)
     if scout.unit.send_emails && scout.unit.send_email_on_registration
       @scout = scout
       @title = Rails.configuration.application_name + ' Registration'
@@ -13,7 +14,8 @@ class ScoutMailer < ApplicationMailer
     end
   end
 
-  def you_are_registered(scout)
+  def you_are_registered(scout_id)
+    scout = Scout.find(scout_id)
     if scout.unit.send_emails && scout.unit.send_email_on_registration
       @scout = scout
       @title = 'Welcome to ' + Rails.configuration.application_name
