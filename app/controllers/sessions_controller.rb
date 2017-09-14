@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       scout = Scout.find_by_password_reset_token(params[:reset_token])
       if scout
         scout.update(
-          password_reset_token: nil
+          password_reset_token: nil,
           sign_in_count:      scout.sign_in_count += 1, 
           last_sign_in_at:    Time.now,
           last_sign_in_ip:    request.remote_ip,
