@@ -5,7 +5,7 @@ class SiteSale < ApplicationRecord
   has_many :products, through: :site_sale_line_items
   has_many :site_sale_payment_methods, dependent: :destroy
 
-  scope :closed, -> { where('closed_at NOT NULL') }
+  scope :closed, -> { where('closed_at IS NOT NULL') }
   scope :open, -> { where(closed_at: nil) }
 
   validates :name, :date, :event_id, presence: true
