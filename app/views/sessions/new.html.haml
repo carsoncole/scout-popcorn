@@ -3,8 +3,8 @@
   .col-md-4
     .card
       .card-body
-        %h1.display-6.text-center= Rails.configuration.application_name || 'Corn Cub'
-        .text-center= image_tag "kettle-corn-microwave.jpg", width: 250,class: 'img-fluid m-x-auto'
+        %h1.display-4.text-center= Rails.configuration.application_name || 'Corn Cub'
+        .text-center= image_tag "kettle-corn-microwave.jpg", width: 200,class: 'img-fluid m-x-auto'
         .card-text
           - unless Unit.all.empty?
             = form_tag '/sessions' do
