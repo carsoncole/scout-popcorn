@@ -7,7 +7,7 @@ Bundler.require(*Rails.groups)
 module Popcorn
   class Application < Rails::Application
     config.time_zone = "Pacific Time (US & Canada)"
-    config.application_name = 'Corn Cub'
+    config.application_name = 'Pack 4496 Corn Cub'
     config.allow_for_multiple_units = false
 
     # email notifications
