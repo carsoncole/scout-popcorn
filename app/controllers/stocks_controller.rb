@@ -16,7 +16,7 @@ class StocksController < ApplicationController
       @stocks_query = @stocks_query.where("stocks.date <= ?", @date)
     end
 
-    @stocks_hash = @stocks_query.select(:product_id,:quantity, 'products.name').group(:product_id).sum(:quantity)
+    @stocks_hash = @stocks_query.select(:product_id,:quantity, 'products.name').group(:product_id, 'products.name').sum(:quantity)
     @locations = @active_event.stocks.order(location: :desc).group(:location)
   end
 
