@@ -149,13 +149,13 @@ class Scout < ApplicationRecord
 
   def send_registration_email!
     Thread.new do
-      ScoutMailer.registration(self).deliver_now
+      ScoutMailer.registration(self).deliver_now!
     end
   end
 
   def send_you_are_registered_email!
     Thread.new do
-      ScoutMailer.you_are_registered(self).deliver_now
+      ScoutMailer.you_are_registered(self).deliver_now!
     end
   end
 

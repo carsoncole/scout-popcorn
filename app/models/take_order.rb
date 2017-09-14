@@ -134,7 +134,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def send_receipt!
-    TakeOrderMailer.receipt(self).deliver_now
+    TakeOrderMailer.receipt(self).deliver_now!
     self.receipt_sent_at =  Time.current
   end
 
