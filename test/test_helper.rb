@@ -29,8 +29,8 @@ class ActiveSupport::TestCase
 
   def capybara_login(scout)
     visit root_path
-    fill_in '_email', with: scout.email
-    fill_in '_password', with: 'password'
+    fill_in 'email', with: scout.email
+    fill_in 'password', with: 'password'
     click_button 'Log in'
   end
 end

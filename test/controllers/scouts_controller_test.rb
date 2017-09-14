@@ -112,7 +112,7 @@ class ScoutsControllerTest < ActionDispatch::IntegrationTest
     sign_in(scouts(:two))
     patch scout_url(@scout), params: { scout: { first_name: 'new name'  } }
     assert_response :success
-    assert flash[:notice], 'Scout was not updated.'
+    assert_not_equal @scout.reload.first_name, 'new name'
   end  
 
   # Admin

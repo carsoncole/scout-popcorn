@@ -2,8 +2,8 @@ class TakeOrder < ApplicationRecord
   belongs_to :purchase_order, optional: true
   belongs_to :account, foreign_key: :payment_account_id
   belongs_to :envelope
-  has_many :products, through: :take_order_line_items
   has_many :take_order_line_items, dependent: :destroy
+  has_many :products, through: :take_order_line_items
   has_many :ledgers
   
   validates :customer_name, :payment_account_id, presence: true

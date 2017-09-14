@@ -15,7 +15,7 @@ class Product < ApplicationRecord
   validates :url, format: {with: /\.(png|jpg)\Z/i}, if: Proc.new {|p| p.url.present? }
 
   before_destroy :disallow_if_used!
-  after_update :remove_from_take_orders!, if: Proc.new { |p| p.is_active_changed? && p.is_active == false }
+  after_update :remove_from_take_orders!, if: Proc.new { |p| p.saved_change_to_is_active? && p.is_active == false }
   before_update :disallow_if_used!, if: Proc.new { |p| p.retail_price_changed? }
 
   scope :active, -> { where(is_active: true )}

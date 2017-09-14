@@ -3,6 +3,7 @@ class Event < ApplicationRecord
   has_many :purchase_orders, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :stocks, dependent: :destroy
+  has_many :envelopes, dependent: :destroy
   has_many :take_orders, through: :envelopes
   has_many :site_sales, dependent: :destroy
   has_many :take_order_line_items, through: :take_orders
@@ -10,7 +11,6 @@ class Event < ApplicationRecord
   has_many :take_order_purchase_orders
   has_many :purchase_orders, dependent: :destroy
   has_many :online_sales, dependent: :destroy
-  has_many :envelopes, dependent: :destroy
   has_many :accounts, dependent: :destroy
   has_many :prize_carts, dependent: :destroy
   has_many :resources, dependent: :destroy
@@ -18,19 +18,19 @@ class Event < ApplicationRecord
 
   validates :name, :unit_id, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
   validates :number_of_top_sellers, numericality: { integer_only: true }
-  validates :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100, }
+  validates :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
   scope :active, -> { where(is_active: true) }
 
-  after_update :set_event_for_scouts!, if: Proc.new {|e| e.is_active_changed? && e.is_active }
+  after_update :set_event_for_scouts!, if: Proc.new {|e| e.saved_change_to_is_active? && e.is_active }
   #after_create :create_default_products!
   #after_create :create_default_prizes!
   # before_destroy :disallow_destroy, prepend: true
   after_create :create_default_accounts!
-  after_save :update_take_orders!, if: Proc.new {|e| e.unit_commission_percentage_changed? }
+  after_save :update_take_orders!, if: Proc.new {|e| e.saved_change_to_unit_commission_percentage? }
   after_save :reset_scouts_event!, if: Proc.new {|e| e.is_active == true }
   before_save :reset_is_active!, if: Proc.new {|e| e.is_active && ( e.is_active_changed? || e.new_record? )}
-  after_update :reprocess_all!, if: Proc.new { |e| e.unit_commission_percentage_changed? }
+  after_update :reprocess_all!, if: Proc.new { |e| e.saved_change_to_unit_commission_percentage? }
   after_destroy :remove_event_from_scouts!
 
   def open_take_order_purchase_order

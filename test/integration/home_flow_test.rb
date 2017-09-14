@@ -6,8 +6,8 @@ class HomeFlowTest < Capybara::Rails::TestCase
 
     assert page.has_content?('Corn Cub')
 
-    fill_in '_email', with: 'two@example.com'
-    fill_in '_password', with: 'password'
+    fill_in 'email', with: 'two@example.com'
+    fill_in 'password', with: 'password'
     click_button 'Log in'
 
     assert_current_path home_path

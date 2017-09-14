@@ -12,11 +12,11 @@ class SiteSale < ApplicationRecord
 
   #TODO add before_save callback to check that payment methods have been added.
 
-  after_save :debit_stock!, if: Proc.new { |to| to.closed_at_changed? && to.closed?}
-  after_save :do_ledgers!, if: Proc.new { |to| to.closed_at_changed? && to.closed? }
+  after_save :debit_stock!, if: Proc.new { |to| to.saved_change_to_closed_at? && to.closed?}
+  after_save :do_ledgers!, if: Proc.new { |to| to.saved_change_to_closed_at? && to.closed? }
 
-  after_save :credit_stock!, if: Proc.new { |to| to.closed_at_changed? && to.open? }
-  after_save :reverse_ledgers!, if: Proc.new { |to| to.closed_at_changed? && to.open? }
+  after_save :credit_stock!, if: Proc.new { |to| to.saved_change_to_closed_at? && to.open? }
+  after_save :reverse_ledgers!, if: Proc.new { |to| to.saved_change_to_closed_at? && to.open? }
 
   def open?
     closed_at.nil?

@@ -6,9 +6,9 @@ class PrizeCart < ApplicationRecord
 
   validates :scout_id, :event_id, presence: true
 
-  after_save :add_prize_costs_to_expenses!, if: Proc.new {|pc| pc.is_approved_at_changed? && pc.approved? }
+  after_save :add_prize_costs_to_expenses!, if: Proc.new {|pc| pc.saved_change_to_is_approved_at? && pc.approved? }
 
-  after_save :remove_prize_costs_from_expenses!, if: Proc.new {|pc| pc.is_approved_at_changed? && !pc.approved? }
+  after_save :remove_prize_costs_from_expenses!, if: Proc.new {|pc| pc.saved_change_to_is_approved_at? && !pc.approved? }
 
   def self.approved
     where("is_approved_at IS NOT NULL")
