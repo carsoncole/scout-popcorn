@@ -1,7 +1,10 @@
 %p= 'Hello ' + @scout.first_name.capitalize + ','
 
 
-%p Welcome to our Popcorn website, where we've made it fun for you to track your progress toward's your own goal.
+%p 
+  Welcome to our
+  = link_to "Corn Cub", "http://corncub.fun"
+  website, where we've made it fun for Scout's to track their own Popcorn sales progress.
 
 %p
   This is the email you will log in with:
@@ -9,7 +12,10 @@
   Email:
   = @scout.email
 
-%p If you forgot your password, there is a link on our website where you can request a new password.
+%p
+  If you did not register yourself, this signup may have been done for you by your Unit. Simply go to
+  = link_to "Corn Cub", "http://corncub.fun"
+  and do a password reset to create new credentials for logging in.
 
 %p
   If you have any questions, you can contact:

@@ -7,7 +7,12 @@ class SessionsController < ApplicationController
     if params[:reset_token]
       scout = Scout.find_by_password_reset_token(params[:reset_token])
       if scout
-        scout.update(password_reset_token: nil)
+        scout.update(
+          password_reset_token: nil
+          sign_in_count:      scout.sign_in_count += 1, 
+          last_sign_in_at:    Time.now,
+          last_sign_in_ip:    request.remote_ip,
+          )
         session[:scout_id] = scout.id
         redirect_to scout_update_password_path(scout), alert: 'Please change your password'
       else
