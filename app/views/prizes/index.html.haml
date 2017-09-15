@@ -54,10 +54,12 @@
                   = link_to prize_path(prize) do
                     %i.fa.fa-pencil
             .card-body
-              - if prize.description.present?
-                %p.card-text= prize.description
-
               %p.card-text
+                - if prize.description.present?
+                  = prize.description
+                = image_tag(@prize.url, class: 'img-fluid img-rounded m-x-auto') if @prize.url
+
+
                 - unless prize.reduces_sales_credits
                   Achieve sales of:
                   %br
