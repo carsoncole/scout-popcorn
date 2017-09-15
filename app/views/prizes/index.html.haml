@@ -47,23 +47,23 @@
       - prizes.each do |prize|
         .col-md-3
           .card.text-center
-            .card-header
-              %h6.card-text= prize.name
-              - if current_scout.is_prizes_admin?
-                %p.card-text
-                  = link_to prize_path(prize) do
-                    %i.fa.fa-pencil
             .card-body
+              %h5.card-text= prize.name
+
               %p.card-text
                 - if prize.description.present?
-                  = prize.description
-                = image_tag(@prize.url, class: 'img-fluid img-rounded m-x-auto') if @prize.url
-
+                  .small= prize.description
+                = image_tag(prize.url, class: 'img-fluid img-rounded m-x-auto') if prize.url
 
                 - unless prize.reduces_sales_credits
                   Achieve sales of:
                   %br
                 = number_to_currency(prize.sales_amount)
+
+              - if current_scout.is_prizes_admin?
+                .card-text
+                  = link_to prize_path(prize) do
+                    %i.fa.fa-pencil
 
             - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).sales_credits_available(source) >= prize.sales_amount
               .card-footer
