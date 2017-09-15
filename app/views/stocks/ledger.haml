@@ -43,7 +43,7 @@
               - @stocks.each do |stock|
                 %tr
                   %td= nice_date_compact(stock.date) if stock.date
-                  %td= link_to stock.product.name_with_id, stocks_ledger_path(product_id: stock.product_id)
+                  %td= link_to stock.product.name, stocks_ledger_path(product_id: stock.product_id)
                   %td= stock.description
                   %td= link_to("Take Order #{stock.take_order_id}", take_order_path(stock.take_order_id)) if stock.take_order_id
                   %td
