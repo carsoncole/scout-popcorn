@@ -48,6 +48,6 @@ class PrizesController < ApplicationController
     end
 
     def prize_params
-      params.require(:prize).permit(:name, :sales_amount, :event_id, :source, :source_id, :source_description, :is_by_level, :url, :description, :group, :cost)
+      params.require(:prize).permit(:name, :sales_amount, :event_id, :source, :source_id, :source_description, :is_by_level, :url, :description, :group, :cost, :reduces_sales_credits, )
     end
 end
