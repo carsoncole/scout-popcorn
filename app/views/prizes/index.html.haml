@@ -54,7 +54,7 @@
                 - if prize.description.present?
                   .small= prize.description
                 = image_tag(prize.url, class: 'img-fluid img-rounded m-x-auto') if prize.url
-
+                %br
                 - unless prize.reduces_sales_credits
                   Achieve sales of:
                   %br
