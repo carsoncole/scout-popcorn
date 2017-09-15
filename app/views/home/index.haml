@@ -15,6 +15,7 @@
     - if current_scout.admin?
       = render 'get_started' unless @active_event && @active_event.set_up?
     = render 'sales'
+    = image_tag "scout-sales-script.jpg", class: 'img-fluid img-rounded m-x-auto'
   .col-md-4
 
     - if @active_event
@@ -27,5 +28,6 @@
       - if @active_event.is_site_sales_enabled?
         = render 'site_sales'
       = render 'important_dates'
-      = render 'quick_links'
+      / = render 'quick_links'
+      = render 'selling-tips'
       = render 'resources'
