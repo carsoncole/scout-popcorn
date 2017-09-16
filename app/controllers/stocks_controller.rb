@@ -42,7 +42,7 @@ class StocksController < ApplicationController
     @stocks = @stocks.where(location: params[:location]) if params[:location]
     @stocks = @stocks.where(product_id: params[:product_id]) if params[:product_id]
     @stocks = @stocks.where(take_order_id: params[:take_order_id]) if params[:take_order_id]
-    @locations = @active_event.stocks.group(:location, "stocks.id")
+    @locations = @active_event.stocks.select(:location).group(:location)
   end
 
   def inventory_returns
