@@ -74,7 +74,7 @@
           - if @prize_cart.approved? && current_scout.is_admin?
             = '– Approved:'
             = nice_date_time(@prize_cart.is_approved_at)
-        .hidden-print
+        .d-print-none
           - if @prize_cart.ordered? && !@prize_cart.approved?
             %p.card-text.text-center= button_to 'Reopen Order', unorder_prize_cart_path(@prize_cart.id), class: 'btn btn-success', disabled: false
             %p.small.text-muted This prize order can be reopend since your Unit has not ordered prizes yet. 

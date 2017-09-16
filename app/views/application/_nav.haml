@@ -2,7 +2,7 @@
   %nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-white.d-print-none
     %button.navbar-toggler.navbar-toggler-right(type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation")
       %span.navbar-toggler-icon
-    .navbar-brand.hidden-print
+    .navbar-brand
       = link_to root_path do
         = Rails.configuration.application_name || "Corn Cub"
         - if @active_event

@@ -11,7 +11,7 @@
             %h3
               %span.badge.badge-info= @purchase_order.status.capitalize 
 
-        %p.hidden-print= link_to "Final Purchase Order", purchase_order_path(@purchase_order, final: true)
+        %p.d-print-none= link_to "Final Purchase Order", purchase_order_path(@purchase_order, final: true)
 
         %table.table.table-sm
           %thead

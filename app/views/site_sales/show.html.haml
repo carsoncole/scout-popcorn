@@ -10,7 +10,7 @@
                 - if current_scout.is_site_sales_admin?
                   %span.lead
                     = link_to edit_site_sale_path(@site_sale) do
-                      %i.fa.fa-pencil.hidden-print
+                      %i.fa.fa-pencil.d-print-none
 
           .col-md-4
             %h3.text-right
@@ -57,7 +57,7 @@
                 %td
                   - if @site_sale.open? && current_scout.is_site_sales_admin?
                     = link_to site_sale_site_sale_line_item_path(@site_sale, line_item), method: :delete do
-                      %i.fa.fa-trash.fa-lg.hidden-print  
+                      %i.fa.fa-trash.fa-lg.d-print-none  
 
             
             %tr
@@ -102,12 +102,12 @@
                 - if current_scout.is_site_sales_admin?
                   %td
                     = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do
-                      %i.fa.fa-trash.fa-lg.hidden-print
+                      %i.fa.fa-trash.fa-lg.d-print-none
             %tr
               %td
                 - if current_scout.is_site_sales_admin?
                   = link_to new_site_sale_scout_site_sale_path(@site_sale) do
-                    %i.fa.fa-plus.fa-lg.hidden-print
+                    %i.fa.fa-plus.fa-lg.d-print-none
                     Add a Scout volunteer
               %td.total-credited-hours= @total_hours
               %td.total-credited-sales= number_to_currency(total_credited_sales, precision: 0)
@@ -136,13 +136,13 @@
                     = link_to edit_site_sale_site_sale_payment_method_path(@site_sale, payment_method) do
                       %i.fa.fa-pencil.fa-lg
                     = link_to site_sale_site_sale_payment_method_path(@site_sale, payment_method), method: :delete do
-                      %i.fa.fa-trash.fa-lg.hidden-print
+                      %i.fa.fa-trash.fa-lg.d-print-none
 
             %tr
               %td
                 - if @site_sale.open? && current_scout.is_site_sales_admin?
                   = link_to new_site_sale_site_sale_payment_method_path(@site_sale) do
-                    %i.fa.fa-plus.fa-lg.hidden-print
+                    %i.fa.fa-plus.fa-lg.d-print-none
                     Add a form of payment
               %td
                 = number_to_currency(@site_sale_payment_methods.sum(:amount))
@@ -196,7 +196,7 @@
 .row
   .col-md-4
     %br
-    .hidden-print
+    .d-print-none
       = link_to site_sales_path do
         %i.fa.fa-arrow-left.fa-lg
         Back to Site Sales

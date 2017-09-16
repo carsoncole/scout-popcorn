@@ -30,7 +30,7 @@
                   
                   - if current_scout.is_unit_admin?
                     %th.text-center Logins
-                    %th.hidden-print
+                    %th.d-print-none
 
               %tbody
                 - @scouts.each do |scout|
@@ -54,7 +54,7 @@
                     
                     - if current_scout.is_unit_admin?
                       %td.text-center= scout.sign_in_count
-                      %td.hidden-print
+                      %td.d-print-none
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
                         - unless scout.activity?
@@ -73,7 +73,7 @@
 
                   - if current_scout.is_unit_admin?
                     %th
-                    %th.hidden-print
+                    %th.d-print-none
                 %tr
                   %th
                   %th.role.text-center Unit
@@ -86,7 +86,7 @@
                   
                   - if current_scout.is_unit_admin?
                     / %th.text-center Logins
-                    %th.hidden-print
+                    %th.d-print-none
 
               %tbody
                 - @administrators.each do |scout|
@@ -132,7 +132,7 @@
                     
                     - if current_scout.is_unit_admin?
                       / %td.text-center= scout.sign_in_count
-                      %td.hidden-print
+                      %td.d-print-none
                         = link_to edit_scout_path(scout) do
                           %span.fa.fa-pencil.fa-lg
                         - unless scout.activity?
@@ -143,7 +143,7 @@
   .row
     .col-md-3
       .card
-        .card-body.hidden-print
+        .card-body.d-print-none
           - if params[:administrators].present?
             = link_to new_scout_path(administrator: true, unit_id: current_scout.unit_id) do
               %i.fa.fa-plus.fa-lg

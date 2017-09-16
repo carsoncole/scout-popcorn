@@ -10,7 +10,7 @@
               = "-"
               = params[:location].titleize if params[:location]
                     
-        .pull-right.hidden-print
+        .pull-right.d-print-none
           = form_tag stocks_path(location: params[:location]), method: :get do
             = date_select "", :date, default: @date
             = hidden_field "", :location, value: params[:location]
@@ -19,7 +19,7 @@
         %br
 
 
-        %ul.nav.nav-tabs.hidden-print
+        %ul.nav.nav-tabs.d-print-none
           %li.nav-item= link_to "All", stocks_path(all: true), class: "nav-link #{!params[:location] ? 'active' : nil}"
 
           - @locations.each do |location|

@@ -25,7 +25,7 @@
                     %th.text-center Your credited Sales
                   - if current_scout.is_site_sales_admin?
                     %th.text-center Status
-                    %th.hidden-print
+                    %th.d-print-none
 
               %tbody
                 - total = 0
@@ -49,7 +49,7 @@
                         - else
                           %h5
                             %span.badge.badge-success Open
-                      %td.hidden-print.text-right.admin-links
+                      %td.d-print-none.text-right.admin-links
                         - if current_scout.is_site_sales_admin? && site_sale.open? 
                           = link_to site_sale, :method => :delete, :data => { :confirm => 'Are you sure? This will destroy the Site Sale and all entered information. This is NOT reversible.' } do
                             %i.fa.fa-trash.fa-lg
@@ -60,11 +60,11 @@
                   %td.text-center
                     = number_to_currency(@active_event.total_site_sale_sales(current_scout.admin? ? nil : current_scout, true), precision: 0)
                   - if current_scout.is_site_sales_admin?
-                    %td.hidden-print
+                    %td.d-print-none
 
           = paginate @site_sales
 
 
         - if current_scout.is_site_sales_admin?
           = link_to new_site_sale_path, class: 'card-text new-site-sale-link' do
-            %i.fa.fa-plus.fa-lg.hidden-print 
+            %i.fa.fa-plus.fa-lg.d-print-none 

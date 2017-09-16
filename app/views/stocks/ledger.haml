@@ -16,7 +16,7 @@
                 Add a transfer
 
 
-        %ul.nav.nav-tabs.hidden-print
+        %ul.nav.nav-tabs.d-print-none
           %li.nav-item
             = link_to "All", stocks_ledger_path, class: "nav-link #{!params[:location] ? 'active' : nil}"          
           - @locations.each do |location|
