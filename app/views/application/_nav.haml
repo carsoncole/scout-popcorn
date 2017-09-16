@@ -1,8 +1,8 @@
 - if current_scout
-  %nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-white.hidden-print
+  %nav.navbar.navbar-expand-lg.fixed-top.navbar-light.bg-white.d-print-none
     %button.navbar-toggler.navbar-toggler-right(type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation")
       %span.navbar-toggler-icon
-    .navbar-brand
+    .navbar-brand.hidden-print
       = link_to root_path do
         = Rails.configuration.application_name || "Corn Cub"
         - if @active_event
@@ -92,8 +92,9 @@
               
                   = link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
                   = link_to "Transfers", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+                  = link_to "Transfers Report", stock_transfers_report_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
                   = link_to "Take Order Purchase Orders", take_order_purchase_orders_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
-
+                  = link_to "Popcorn Transfers Form", stock_transfer_form_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
 
 
           - if current_scout.admin?

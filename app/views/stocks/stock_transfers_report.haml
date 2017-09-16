@@ -1,0 +1,23 @@
+= form_tag stock_transfers_report_date_path, class: 'd-print-none' do
+  = select_date(date = Date.current)
+  = submit_tag 'Submit', class: 'btn btn-sm'
+  %br
+  %br
+
+%h2 Popcorn Inventory Transfer to Site Sales
+%p= @new_date if @new_date
+
+%table.table.table-sm.table-transfers.borderless
+  %tr
+    %td Product
+    %td Quantity
+    %td
+  - @transfers.each do |t|
+    %tr
+      %td= t.product.name
+      %td= t.quantity
+      %td.outline-cell
+    %tr
+      %td
+      %td
+      %td

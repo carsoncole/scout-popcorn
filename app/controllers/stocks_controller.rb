@@ -37,6 +37,17 @@ class StocksController < ApplicationController
     @products = @active_event.products.physical.order(:name)
   end
 
+  def stock_transfers_report
+    date_param = params[:date]
+    if date_param
+      @new_date = Date.new date_param['year'].to_i, date_param['month'].to_i, date_param['day'].to_i
+      @stocks = @active_event.stocks.joins(:product).order('products.name').page(params[:page]).per(50)
+      @transfers = @stocks = @stocks.where(location: 'site sales').where(date: @new_date)
+    else
+      @transfers = []
+    end
+  end
+
   def ledger
     @stocks = @active_event.stocks.order(date: :desc, id: :desc).page(params[:page]).per(50)
     @stocks = @stocks.where(location: params[:location]) if params[:location]
