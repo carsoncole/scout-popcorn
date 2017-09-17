@@ -16,8 +16,8 @@
     %tr
       %td= t[0][0]
       %td= t[1]
-      %td= Stock.where(product_id: t[0][1], location: 'site sales').sum(:quantity)
       %td.outline-cell
+      %td= Stock.where(product_id: t[0][1], location: 'site sales').sum(:quantity)
     %tr
       %td
       %td
