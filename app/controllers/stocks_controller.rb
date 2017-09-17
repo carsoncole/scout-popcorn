@@ -42,7 +42,7 @@ class StocksController < ApplicationController
     if date_param
       @new_date = Date.new date_param['year'].to_i, date_param['month'].to_i, date_param['day'].to_i
       @stocks = @active_event.stocks.joins(:product).order('products.name').page(params[:page]).per(50)
-      @transfers = @stocks = @stocks.where(location: 'site sales').where(date: @new_date).group('products.name').sum(:quantity)
+      @transfers = @stocks = @stocks.where(location: 'site sales').where(date: @new_date).group('products.name', 'products.id').sum(:quantity)
     else
       @transfers = []
     end

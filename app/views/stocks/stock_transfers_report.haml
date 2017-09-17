@@ -4,18 +4,19 @@
   %br
   %br
 
-%h2 Popcorn Inventory Transfer to Site Sales
+%h2 Site Sale Transfer and Balance
 %p= @new_date if @new_date
 
 %table.table.table-sm.table-transfers.borderless
   %tr
     %td Product
-    %td Quantity
-    %td
+    %td Transfer
+    %td Balance
   - @transfers.each do |t|
     %tr
-      %td= t[0]
+      %td= t[0][0]
       %td= t[1]
+      %td= Stock.where(product_id: t[0][1], location: 'site sales').sum(:quantity)
       %td.outline-cell
     %tr
       %td
