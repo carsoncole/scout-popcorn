@@ -98,7 +98,7 @@
                 %td
                   - credited_sales = @active_event.total_site_sales_per_hour_worked(false) * scout_site_sale.hours_worked
                   - total_credited_sales += credited_sales
-                  = number_to_currency(credited_sales, precision: 0)
+                  = number_to_currency(credited_sales, precision: 2)
                 - if current_scout.is_site_sales_admin?
                   %td
                     = link_to site_sale_scout_site_sale_path(@site_sale.event_id, scout_site_sale), method: :delete do
@@ -110,7 +110,7 @@
                     %i.fa.fa-plus.fa-lg.d-print-none
                     Add a Scout volunteer
               %td.total-credited-hours= @total_hours
-              %td.total-credited-sales= number_to_currency(total_credited_sales, precision: 0)
+              %td.total-credited-sales= number_to_currency(total_credited_sales, precision: 2)
               %td
 
 
