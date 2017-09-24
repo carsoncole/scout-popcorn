@@ -74,14 +74,12 @@
 
      
             - if current_scout.admin?
-              %li.nav-item.btn-group
-                = link_to "#",class: "dropdown-toggle nav-link #{'active' if controller_name == 'stocks'}", "data-toggle": "dropdown", 'role': "button" do
-                  Popcorn
-                .dropdown-menu
-
-                  = link_to "Popcorn", products_path, class: "dropdown-item #{'active' if controller_name == 'products'}"
+              %li.nav-item
+                / = link_to "#",class: "dropdown-toggle nav-link #{'active' if controller_name == 'stocks'}", "data-toggle": "dropdown", 'role': "button" do
+                /   Inventory
+                / .dropdown-menu
               
-                  = link_to "Inventory", stocks_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && !['ledger', 'inventory_returns'].include?(action_name) }"
+                = link_to "Inventory", stocks_path, class: "nav-link #{'active' if controller_name == 'stocks'}"
 
             - if current_scout.admin?
               %li.nav-item.btn-group
@@ -100,13 +98,13 @@
 
                     = link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
                     = link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
-                    = link_to "Transfers Report", stock_transfers_report_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+                    = link_to "Transfers", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
                     = link_to "Due from Customers", due_from_customers_path, class: "dropdown-item #{'active' if controller_name == 'due_from_customers'}"
                     = link_to prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'index'}" do
                       Prize Carts
                     = link_to "Approved Prizes", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
                     = link_to "Take Order Purchase Orders", take_order_purchase_orders_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
-                    = link_to "Popcorn Transfers Form", stock_transfer_form_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
+                    / # = link_to "Popcorn Transfers Form", stock_transfer_form_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
 
 
           - if current_scout.admin?
@@ -124,7 +122,9 @@
 
                   / = link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger' && action_name == 'index'}"
 
-                  = link_to "Transactions", ledger_transactions_path, class: "dropdown-item #{'active' if controller_name == 'ledgers' && action_name == 'transactions'}"
+                  = link_to "Popcorn", products_path, class: "dropdown-item #{'active' if controller_name == 'products'}"
+
+                  = link_to "Financial Transactions", ledger_transactions_path, class: "dropdown-item #{'active' if controller_name == 'ledgers' && action_name == 'transactions'}"
 
                   / = link_to "Inventory Returns", inventory_returns_path, class: "dropdown-item #{'active' if controller_name =='stocks' && action_name == 'inventory_returns'}"
                   / = link_to "Final Unit Settlement Form", final_unit_settlement_form_path, class: "dropdown-item #{'active' if controller_name =='ledgers' && action_name == 'final_unit_settlement_form'}"
