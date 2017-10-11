@@ -23,7 +23,7 @@ class EnvelopesController < ApplicationController
 
   def show
     @take_orders = @envelope.take_orders.order(:created_at)
-    @payment_methods = @take_orders.joins(:account).group('accounts.name', 'accounts.id')
+    @payment_methods = @take_orders.uniq.pluck(:payment_account_id)
   end
 
   def new
