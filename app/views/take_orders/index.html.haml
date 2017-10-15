@@ -2,7 +2,12 @@
   .col-md-12
     .card.card-body
       %h1.card-title
-        Take Orders
+        Take Orders (Door-to-Door)
+
+      - if current_scout.admin?
+        %p.card-text
+          = link_to new_envelope_path do
+            New Envelope
         
       - unless current_scout.admin?
         %p.card-text.alert.alert-info.text-muted
@@ -29,39 +34,42 @@
             - if current_scout.admin?
               = surround("(", ")") do
                 = @active_event.envelopes.closed.count
-        %li.nav-item
-          = link_to take_orders_path(envelopes: 'picked-up'), class: "nav-link #{'active' if params[:envelopes] == 'picked-up'}" do
-            %i.fa.fa-check
-            Picked Up
-            - if current_scout.admin?
-              = surround("(", ")") do
-                = @active_event.envelopes.picked_up.count
+        / %li.nav-item
+        /   = link_to take_orders_path(envelopes: 'picked-up'), class: "nav-link #{'active' if params[:envelopes] == 'picked-up'}" do
+        /     %i.fa.fa-check
+        /     Picked Up
+        /     - if current_scout.admin?
+        /       = surround("(", ")") do
+        /         = @active_event.envelopes.picked_up.count
  
       .row
         .col-md-12
           %br
           - @envelopes.each do |envelope|
-            .card.card-outline-secondary
+            .card.border-0
+              %h4.card-title 
+                = link_to envelope_path(envelope) do 
+                  - if current_scout.is_admin?
+                    = envelope.scout.name
+                    = '/'
+
+                  - if envelope.open?
+                    %i.fa.fa-envelope-open-o
+                  - else
+                    %i.fa.fa-envelope-o
+                  Payment envelope
+                  - if current_scout.admin?
+                    = precede("#") do
+                      = envelope.id
               .card-body
                 .table-responsive
                   %table.table.table-sm.card-text.take-orders
-                    %thead.thead-default
-                      %tr
-                        %th.customer(colspan=2)
 
-                          
-                          = link_to envelope_path(envelope) do 
-                            - if current_scout.is_admin?
-                              = envelope.scout.name
-                              = '/'
+                    %tr
+                      %th.customer(colspan=2)
 
-                            - if envelope.open?
-                              %i.fa.fa-envelope-open-o
-                            - else
-                              %i.fa.fa-envelope-o
-                            Envelope
-                            = precede("#") do
-                              = envelope.id
+                        
+
                         
                         %th.amount.text-right Amount
                         %th.payment Payment
@@ -120,7 +128,3 @@
                           / %td.d-print-block
                           %td.hidden-print
                           %td.hidden-print
-
-          %p.card-text
-            = link_to new_take_order_path do
-              Add a Take Order

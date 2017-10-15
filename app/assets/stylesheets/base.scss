@@ -1,6 +1,11 @@
 $blue: #003F87;
 $yellow: #FCD116;
 
+* {
+   font-size: 14px;
+   line-height: 1.428;
+}
+
 $font-family-sans-serif:
   // Safari for OS X and iOS (San Francisco)
   -apple-system,
@@ -168,7 +173,7 @@ div.envelope {
    page-break-after: always !important;
    h1 {
     margin-top: 0;
-    font-size: 1.3em;
+    font-size: 1.2em;
    } 
    table {
     font-size: 0.9em;

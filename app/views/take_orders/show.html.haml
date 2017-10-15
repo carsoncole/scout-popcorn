@@ -45,19 +45,6 @@
                   / - if @take_order.envelope
                   / = link_to @take_order.envelope.name, envelope_path(@take_order.envelope) 
 
-              - unless @take_order.note.blank?
-                %tr
-                  %th Note:
-                  %td.text-right= @take_order.note
-
-
-              - if @take_order.square_reciept_url?
-                %tr
-                  %th Square reciept:
-                  %td.text-right
-                    = link_to "Square reciept", @take_order.square_reciept_url, target: '_blank'
-                    %i.fa.fa-credit-card
-
               - if @take_order.purchase_order && current_scout.admin?
                 %tr
                   %th Purchase order

@@ -15,7 +15,7 @@
           = render 'errors', target: @take_order
 
           .form-group
-            = f.label :customer_name
+            = f.label 'Customer name (optional)'
             = f.text_field :customer_name, class: 'form-control', placeholder: 'Name'
           .form-group
             = f.label 'Customer address (optional)'
@@ -27,19 +27,7 @@
             = f.text_field :customer_email, class: 'form-control', placeholder: 'Email'
           .form-group
             = f.label 'How are they paying?'
-            = f.collection_select :payment_account_id, @accounts, :id, :simple_name,{}, class: 'form-control'
-          .form-group
-            = f.label 'Note (for your own reference)'
-            = f.text_field :note, class: 'form-control'
-
-          - if current_scout.admin?
-            .form-group
-
-              = f.label :square_reciept_url
-              %br
-              %em.small Use if payment is by Square
-              %br
-              = f.text_field :square_reciept_url, class: 'form-control'          
+            = f.collection_select :payment_account_id, @accounts, :id, :simple_name,{}, class: 'form-control' 
 
           - if f.object.new_record?
             = f.hidden_field :envelope_id, value: f.object.envelope_id
