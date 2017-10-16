@@ -43,7 +43,7 @@
               - total_wholesale = 0
               - @stocks_hash.each do |key, value, wholesale|
                 - product = Product.find(key)
-                - next if product.is_pack_donation? || !product.is_physical_inventory
+                - next if product.is_pack_donation?
                 - quantity = value
                 %tr
                   %td
