@@ -2,7 +2,7 @@ class TakeOrderMailer < ApplicationMailer
   default from: Rails.configuration.from_email
 
   def receipt(take_order)
-    @scout = take_order.scout
+    @scout = take_order.envelope.scout
     return unless @scout.unit.send_emails
     @take_order = take_order
     @title = 'Thank you'
