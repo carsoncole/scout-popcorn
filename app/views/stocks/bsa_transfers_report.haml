@@ -1,0 +1,37 @@
+.row
+  .col-md-12
+    %br
+    %h2
+      = Rails.configuration.application_name || 'Corn Cub'
+      = @active_event.name
+      BSA Transfers Report
+
+    %br
+
+
+    - @dates.each do |date|
+      - grand_total = 0
+      %h4= date.date.strftime('%B %d, %Y')
+      %table.table.table-sm
+        %tr
+          %th Product
+          %th.text-right Quantity
+          %th
+          %th.text-left Price
+          %td.text-right Total
+        - stocks = @active_event.stocks.where(date: date.date).where("stocks.is_transfer_to_bsa = ? OR stocks.is_transfer_from_bsa = ?", true, true)
+        
+        - stocks.each do |stock|
+          %tr 
+            %td.product= stock.product.name
+            %td.text-right= stock.quantity
+            %td.text-center
+              %i.fa.fa-times
+            %td.text-left= number_to_currency(stock.product.retail_price)
+            %td.total.text-right
+              - total = stock.product.retail_price * stock.quantity
+              = number_to_currency(total)
+              - grand_total += total
+        %tr
+          %td(colspan=4)
+          %td.text-right= number_to_currency(grand_total)

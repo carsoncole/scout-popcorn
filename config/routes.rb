@@ -72,11 +72,12 @@ Rails.application.routes.draw do
   resources :take_orders, path: 'take-orders' do
     resources :take_order_line_items
   end
-  get "stocks/ledger" => "stocks#ledger", as: 'stocks_ledger'
-  get "stocks/inventory-returns" => "stocks#inventory_returns", as: 'inventory_returns'
+  get "sstocks/inventory-returnstocks/ledger" => "stocks#ledger", as: 'stocks_ledger'
   get "stocks/stock-transfer-form" => "stocks#stock_transfer_form", as: 'stock_transfer_form'
   get "stocks/stock-transfers-report" => "stocks#stock_transfers_report", as: 'stock_transfers_report'
   post "stocks/stock-transfers-report" => "stocks#stock_transfers_report", as: 'stock_transfers_report_date'
+  get "stocks/bsa-transfers-report" => "stocks#bsa_transfers_report", as: 'bsa_transfers_report'
+
 
   resources :stocks
   resources :events do

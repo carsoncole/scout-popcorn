@@ -49,6 +49,10 @@ class StocksController < ApplicationController
     @products = @active_event.products.is_sourced_from_bsa.physical.order(:name)
   end
 
+  def bsa_transfers_report
+    @dates = @active_event.stocks.where("stocks.is_transfer_to_bsa = ? OR stocks.is_transfer_from_bsa = ?", true, true).select(:date).group(:date)
+  end
+
   def create
     if stock_params[:is_transfer_from_warehouse] == true && stock_params[:location] == 'warehouse'
       redirect_to stocks_ledger_path, notice: "Location needs to be different than -warehouse-"
@@ -93,6 +97,6 @@ class StocksController < ApplicationController
     end
 
     def stock_params
-      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :is_transfer_from_warehouse, :is_transfer_from_bsa, :is_transfer_to_bsa, :date, :created_by)
+      params.require(:stock).permit(:unit_id, :product_id, :quantity, :location, :description, :is_transfer_from_warehouse, :is_transfer_from_bsa, :is_transfer_to_bsa,:date, :created_by)
     end
 end

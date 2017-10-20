@@ -1,9 +1,10 @@
 .row
   .col-md-12
     %br
-    %h1
+    %h2
       .d-print-inline
         = Rails.configuration.application_name || 'Corn Cub'
+        = @active_event.name
         Balance Sheet
 
     %br
