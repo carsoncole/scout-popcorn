@@ -49,7 +49,11 @@ class TakeOrdersController < ApplicationController
   end
 
   def create
-    @envelope = current_scout.open_envelope(@active_event)
+    if params[:take_order][:envelope_id]
+      @envelope = Envelope.find(params[:take_order][:envelope_id]) 
+    else
+      @envelope = current_scout.open_envelope(@active_event)
+    end
     @take_order = @envelope.take_orders.new(take_order_params)
     @take_order.status = 'in hand'
 
