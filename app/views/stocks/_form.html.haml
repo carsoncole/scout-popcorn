@@ -44,5 +44,9 @@
             = f.label :is_transfer_from_bsa
             %p.small Check her if this is a transfer of product from the BSA
             = f.check_box :is_transfer_from_bsa,  class: 'form-control'
+          .form-group
+            = f.label :is_transfer_to_bsa
+            %p.small Check her if this is a transfer of product to the BSA. Amount above should be negative.
+            = f.check_box :is_transfer_to_bsa,  class: 'form-control'
           .actions
             = f.submit 'Create stock transfer', class: 'btn btn-green'

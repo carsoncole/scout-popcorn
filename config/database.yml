@@ -11,7 +11,9 @@ default: &default
 
 development:
   <<: *default
-  database: db/production-corncub-data.sqlite3.sqlite3
+  adapter: postgresql
+  database: popcorn-development
+  user: postgres
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

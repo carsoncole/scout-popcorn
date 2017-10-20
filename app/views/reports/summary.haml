@@ -1,0 +1,39 @@
+.row
+  .col-md-3
+  .col-md-6
+    .card
+      .card-body
+        .card-title
+          %h2
+            Summary
+
+        %h4.card-text Sales
+        %table.table.card-text.table-sm
+          - if @active_event.is_take_orders_enabled?
+       
+            %tr
+              %th.take_orders(colspan=2)= link_to "Take Orders", take_orders_path
+              %td.text-right
+                = number_to_currency(@take_order_sales_turned_in, precision: 0)
+
+          - if @active_event.is_online_enabled?
+            %tr
+              %th.online_sales(colspan=2)
+                = link_to "Online Sales", online_sales_path
+              %td.text-right.online_sales_amount
+                = number_to_currency(@online_sales, precision: 0)  
+
+          - if @active_event.is_site_sales_enabled?
+            %tr
+            %th.site_sales(colspan=2)
+              = link_to "Site Sales", site_sales_path
+            %td.text-right.site-sales-amount
+              = number_to_currency(@site_sale_sales, precision: 0)      
+      
+          %tr
+            %td(colspan=2) Total Sales
+            %td.text-right
+              = number_to_currency(@total_sales, precision: 0)
+
+        %hr
+        %h4.card-text Income

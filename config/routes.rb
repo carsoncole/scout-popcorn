@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   get "product-preset-collections" => 'products#preset_collections', as: 'preset_product_collections'
   post "product-preset-collections" => 'products#add_preset_collection', as: 'add_presets'
 
+  get "reports/summary" => 'reports#summary', as: 'summary_report'
+
   resources :prize_carts, only: [:index, :show], path: 'prize-carts'
   post 'prize-cart/order' => 'prize_carts#order', as: 'prize_cart_order'
   post 'prize-carts/:id' => 'prize_carts#order_prizes', as: 'order_prizes'

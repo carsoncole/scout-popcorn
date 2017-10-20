@@ -21,6 +21,7 @@ class Stock < ApplicationRecord
   before_save :update_wholesale_value!, if: Proc.new { |s| s.quantity_changed? || s.product_id_changed? }
   before_create :debit_warehouse!, if: Proc.new { |s| s.is_transfer_from_warehouse }
   after_create :create_due_to_bsa!, if: Proc.new { |s| s.is_transfer_from_bsa }
+  after_create :reduce_due_to_bsa!, if: Proc.new { |s| s.is_transfer_to_bsa }
 
   def self.warehouse
     where(location: 'warehouse')
@@ -85,6 +86,12 @@ class Stock < ApplicationRecord
   def create_due_to_bsa!
     account = Account.due_to_bsa(event)
     ledger = account.ledgers.create(description: 'BSA inventory transfer', amount: wholesale_value, date: date, stock_id: id)
+    self.update(ledger_id: ledger.id)
+  end
+
+  def reduce_due_to_bsa!
+    account = Account.due_to_bsa(event)
+    ledger = account.ledgers.create(description: 'BSA inventory return', amount: wholesale_value, date: date, stock_id: id)
     self.update(ledger_id: ledger.id)
   end
 end
