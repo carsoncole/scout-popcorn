@@ -100,11 +100,11 @@
                     = link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
                     = link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
                     = link_to "Transfers", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
-                    = link_to "BSA Transfers", bsa_transfers_report_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
+                    = link_to "BSA Transfers", bsa_transfers_report_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'bsa_transfers_report'}"
                     = link_to "Due from Customers", due_from_customers_path, class: "dropdown-item #{'active' if controller_name == 'due_from_customers'}"
                     = link_to prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'index'}" do
                       Prize Carts
-                    = link_to "Approved Prizes", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
+                    / # = link_to "Approved Prizes", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
                     = link_to "Take Order Purchase Orders", take_order_purchase_orders_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
                     / # = link_to "Popcorn Transfers Form", stock_transfer_form_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
 

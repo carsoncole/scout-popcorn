@@ -8,9 +8,9 @@
 
     %br
 
-
+    - grand_total = 0
     - @dates.each do |date|
-      - grand_total = 0
+      - gross_total = 0
       %h4= date.date.strftime('%B %d, %Y')
       %table.table.table-sm
         %tr
@@ -19,7 +19,7 @@
           %th
           %th.text-left Price
           %td.text-right Total
-        - stocks = @active_event.stocks.where(date: date.date).where("stocks.is_transfer_to_bsa = ? OR stocks.is_transfer_from_bsa = ?", true, true)
+        - stocks = @active_event.stocks.includes(:product).where(date: date.date).where("stocks.is_transfer_to_bsa = ? OR stocks.is_transfer_from_bsa = ?", true, true).order('products.name')
         
         - stocks.each do |stock|
           %tr 
@@ -32,6 +32,12 @@
               - total = stock.product.retail_price * stock.quantity
               = number_to_currency(total)
               - grand_total += total
+              - gross_total += total
         %tr
           %td(colspan=4)
-          %td.text-right= number_to_currency(grand_total)
+          %td.text-right= number_to_currency(gross_total)
+
+    .text-right
+      %strong
+        Total due to BSA
+        = number_to_currency(grand_total)

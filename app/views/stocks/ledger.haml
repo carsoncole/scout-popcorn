@@ -1,79 +1,77 @@
 .row
   .col-md-12
-    .card
-      .card-body
-        .card-title
-          %h2 Transfers
-        - if current_scout.is_warehouse_admin?
-          .pull-right
-            = link_to stock_transfer_form_path do
-              %i.fa.fa-print
-              Popcorn Transfer form
-          %p.card-text
-            %span
-              = link_to new_stock_path, class: 'hidden-print', id: 'new_transfer_link' do
-                %i.fa.fa-plus.fa-lg
-                Add a transfer
+
+    %h2 Transfers
+    - if current_scout.is_warehouse_admin?
+      .pull-right
+        = link_to stock_transfer_form_path do
+          %i.fa.fa-print
+          Popcorn Transfer form
+      %p.card-text
+        %span
+          = link_to new_stock_path, class: 'hidden-print', id: 'new_transfer_link' do
+            %i.fa.fa-plus.fa-lg
+            Add a transfer
 
 
-        %ul.nav.nav-tabs.d-print-none
-          %li.nav-item
-            = link_to "All", stocks_ledger_path, class: "nav-link #{!params[:location] ? 'active' : nil}"          
-          - @locations.each do |location|
-            %li.nav-item
-              = link_to location.location.titleize, stocks_ledger_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
-        %br
-        .table-responsive
-          %table.table.table-sm
-            %thead
-              %tr
-                %th Date
-                %th Product
-                %th Desc
-                %th 
-                %th
-                %th Qty
-                %th Location
-                %th Wholesale
-                %th By
-                %th Created
-                %th
+    %ul.nav.nav-tabs.d-print-none
+      %li.nav-item
+        = link_to "All", stocks_ledger_path, class: "nav-link #{!params[:location] ? 'active' : nil}"          
+      - @locations.each do |location|
+        %li.nav-item
+          = link_to location.location.titleize, stocks_ledger_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
+    %br
+    .table-responsive
+      %table.table.table-sm
+        %thead
+          %tr
+            %th Date
+            %th Product
+            %th Desc
+            %th 
+            %th
+            %th Qty
+            %th Location
+            %th Wholesale
+            %th By
+            %th Created
+            %th
 
-            %tbody
-              - @stocks.each do |stock|
-                %tr
-                  %td= nice_date_compact(stock.date) if stock.date
-                  %td= link_to stock.product.name, stocks_ledger_path(product_id: stock.product_id)
-                  %td= stock.description
-                  %td= link_to("Take Order #{stock.take_order_id}", take_order_path(stock.take_order_id)) if stock.take_order_id
-                  %td
-                    - if stock.take_order_id
-                      = link_to "Take Order", stocks_ledger_path(take_order_id: stock.take_order_id)
-                    - elsif stock.site_sale_id
-                      = link_to "Site Sale", site_sale_path(stock.site_sale_id)
-                  %td= stock.quantity
-                  %td
-                    - if stock.location
-                      = link_to stock.location.titleize, stocks_ledger_path(location: stock.location)
-                  %td= number_to_currency(stock.wholesale_value)
-                  %td= Scout.find(stock.created_by).name if stock.created_by
-                  %td= nice_date_time_compact(stock.created_at)
-                  / %td
-                  /   - if stock.created_by == 999
-                  /     System
-                  /   - elsif stock.created_by.blank?
-                  /     =""
-                  /   - else
-                  /     = Scout.find(stock.created_by).name
-                  / %td
-                  /   - if stock.is_transfer_from_bsa
-                  /     %i.fa.fa-check
-                  %td
-                    - if current_scout.is_warehouse_admin?
-                      = link_to edit_stock_path(stock) do
-                        %i.fa.fa-pencil.fa-lg
-                      = link_to stock_path(stock), method: :delete, :data => { :confirm => 'Are you sure? Ensure that any other related transactions are also destroyed or it could result in financial figures that are not balanced.' } do
-                        %i.fa.fa-trash.fa-lg
+        %tbody
+          - @stocks.each do |stock|
+            %tr
+              %td= nice_date_compact(stock.date) if stock.date
+              %td= link_to stock.product.name, stocks_ledger_path(product_id: stock.product_id)
+              %td= stock.description
+              %td= link_to("Take Order #{stock.take_order_id}", take_order_path(stock.take_order_id)) if stock.take_order_id
+              %td
+                - if stock.take_order_id
+                  = link_to "Take Order", stocks_ledger_path(take_order_id: stock.take_order_id)
+                - elsif stock.site_sale_id
+                  = link_to "Site Sale", site_sale_path(stock.site_sale_id)
+              %td= stock.quantity
+              %td
+                - if stock.location
+                  = link_to stock.location.titleize, stocks_ledger_path(location: stock.location)
+              %td= number_to_currency(stock.wholesale_value)
+              %td= Scout.find(stock.created_by).name if stock.created_by
+              %td= nice_date_time_compact(stock.created_at)
+              / %td
+              /   - if stock.created_by == 999
+              /     System
+              /   - elsif stock.created_by.blank?
+              /     =""
+              /   - else
+              /     = Scout.find(stock.created_by).name
+              / %td
+              /   - if stock.is_transfer_from_bsa
+              /     %i.fa.fa-check
+              %td
+                - if current_scout.is_warehouse_admin?
+                  = link_to edit_stock_path(stock) do
+                    %i.fa.fa-pencil.fa-lg
+                  = link_to stock_path(stock), method: :delete, :data => { :confirm => 'Are you sure? Ensure that any other related transactions are also destroyed or it could result in financial figures that are not balanced.' } do
+                    %i.fa.fa-trash.fa-lg
 
 
         = paginate @stocks

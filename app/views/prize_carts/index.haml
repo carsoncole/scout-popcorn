@@ -1,24 +1,23 @@
 
 .row
   .col-md-12
-    .card
-      .card-body
-        %h1.card-title Prize Carts
-        %table.table.table-sm.card-text
-          %tr
-            %th Scout
-            %th Items
-            %th Sales credits used
-            %th Sales credits available
-            %th Status
-          - @prize_carts.each do |cart|
 
-            %tr
-              %td= cart.scout.name
-              %td= cart.cart_prizes.count
-              %td= number_to_currency(cart.sales_credits_used('Council'))
-              %td= number_to_currency(cart.sales_credits_available('Council'))
-              %td
-                = cart.status
-                = link_to '(View)', prize_cart_path(cart.scout.prize_cart(@active_event))
-        = paginate @prize_carts
+    %h2.card-title Prize Carts
+    %table.table.table-sm
+      %tr
+        %th Scout
+        %th Items
+        %th Sales credits used
+        %th Sales credits available
+        %th Status
+      - @prize_carts.each do |cart|
+
+        %tr
+          %td= cart.scout.name
+          %td= cart.cart_prizes.count
+          %td= number_to_currency(cart.sales_credits_used('Council'))
+          %td= number_to_currency(cart.sales_credits_available('Council'))
+          %td
+            = cart.status
+            = link_to '(View)', prize_cart_path(cart.scout.prize_cart(@active_event))
+    = paginate @prize_carts
