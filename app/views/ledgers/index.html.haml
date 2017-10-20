@@ -2,67 +2,66 @@
 
 .row
   .col-md-12
-    .card
-      .card-body
-        - if current_scout.is_financial_admin?
-          .pull-right
-            = button_to ledger_transactions_path, method: :get, class: 'nav-link btn-default' do
-              %i.fa.fa-plus.fa-lg
-              New Transaction    
-        %h1.card-title
-          Financial Ledger
+
+    - if current_scout.is_financial_admin?
+      .pull-right
+        = button_to ledger_transactions_path, method: :get, class: 'nav-link btn btn-default' do
+          %i.fa.fa-plus.fa-lg
+          New Transaction    
+    %h1
+      Financial Ledger
+          
+
+    %br
+    - total = 0
+    %table.table.table-sm.table-striped.table-bordered
+      %thead
+        %tr
+          %th Account
+          %th Description
+          %th.text-right Amount
+          %th.text-center Date
+          %th
+          %th Stock
+          %th.text-center Created
+          %th.text-center DE ID
+          %th
+
+      %tbody
+        - @ledgers.each do |ledger|
+          %tr
+            %td= link_to ledger.account.name, ledgers_path(account_id: ledger.account_id)
+            %td= ledger.description
+            %td.text-right
+              = number_to_currency(ledger.amount)
+              - total += ledger.amount
+            %td.text-center= nice_date_less(ledger.date) if ledger.date
+            %td
+              - if ledger.take_order_id
+                =link_to "Take Order", take_order_path(ledger.take_order_id)
+              - elsif ledger.site_sale_id
+                =link_to "Site Sale", site_sale_path(ledger.site_sale_id)
+            %td
+              - if ledger.stock_id && ledger.stock
+                = link_to ledger.stock.product.name, stock_path(ledger.stock_id)
+            %td.text-center= nice_date_time_compact(ledger.created_at)
+            %td.text-center= ledger.double_entry_id
+            %td.text-center
+              - unless ledger.stock_id || !current_scout.is_financial_admin?
+                = link_to edit_ledger_path(ledger) do
+                  %i.fa.fa-pencil.fa-lg
               
+                = link_to ledger, :method => :delete, :data => { :confirm => 'Destroying a transaction will also destroy any related double-entry transactions (sharing the same double-entry ID)' } do
+                  %i.fa.fa-trash.fa-lg
 
-        %br
-        - total = 0
-        %table.table.table-sm.table-striped.table-bordered
-          %thead
-            %tr
-              %th Account
-              %th Description
-              %th.text-right Amount
-              %th.text-center Date
-              %th
-              %th Stock
-              %th.text-center Created
-              %th.text-center DE ID
-              %th
-
-          %tbody
-            - @ledgers.each do |ledger|
-              %tr
-                %td= link_to ledger.account.name, ledgers_path(account_id: ledger.account_id)
-                %td= ledger.description
-                %td.text-right
-                  = number_to_currency(ledger.amount)
-                  - total += ledger.amount
-                %td.text-center= nice_date_less(ledger.date) if ledger.date
-                %td
-                  - if ledger.take_order_id
-                    =link_to "Take Order", take_order_path(ledger.take_order_id)
-                  - elsif ledger.site_sale_id
-                    =link_to "Site Sale", site_sale_path(ledger.site_sale_id)
-                %td
-                  - if ledger.stock_id && ledger.stock
-                    = link_to ledger.stock.product.name, stock_path(ledger.stock_id)
-                %td.text-center= nice_date_time_compact(ledger.created_at)
-                %td.text-center= ledger.double_entry_id
-                %td.text-center
-                  - unless ledger.stock_id || !current_scout.is_financial_admin?
-                    = link_to edit_ledger_path(ledger) do
-                      %i.fa.fa-pencil.fa-lg
-                  
-                    = link_to ledger, :method => :delete, :data => { :confirm => 'Destroying a transaction will also destroy any related double-entry transactions (sharing the same double-entry ID)' } do
-                      %i.fa.fa-trash.fa-lg
-
-            %tr
-              %td
-              %td
-              %td= number_to_currency(total, precision: 2)
-              %td
-              %td
-              %td
-              %td
-              %td
-              %td
-        = paginate @ledgers
+        %tr
+          %td
+          %td
+          %td.text-right= number_to_currency(total, precision: 2)
+          %td
+          %td
+          %td
+          %td
+          %td
+          %td
+    = paginate @ledgers

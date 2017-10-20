@@ -1,82 +1,80 @@
 .row
   .col-md-12
-    .card
-      .card-body
-        .card-title
-          %h2
-            Inventory
 
-            .d-print-inline
-              = "-"
-              = params[:location].titleize if params[:location]
-                    
-        .pull-right.d-print-none
-          = form_tag stocks_path(location: params[:location]), method: :get do
-            = date_select "", :date, default: @date
-            = hidden_field "", :location, value: params[:location]
-            = submit_tag "Reload", class: 'btn btn-success'
+    %h2
+      Inventory
 
-        %br
+      .d-print-inline
+        = "-"
+        = params[:location].titleize if params[:location]
+                
+    .pull-right.d-print-none
+      = form_tag stocks_path(location: params[:location]), method: :get do
+        = date_select "", :date, default: @date
+        = hidden_field "", :location, value: params[:location]
+        = submit_tag "Reload", class: 'btn btn-success'
+
+    %br
 
 
-        %ul.nav.nav-tabs.d-print-none
-          %li.nav-item= link_to "All", stocks_path(all: true), class: "nav-link #{!params[:location] ? 'active' : nil}"
+    %ul.nav.nav-tabs.d-print-none
+      %li.nav-item= link_to "All", stocks_path(all: true), class: "nav-link #{!params[:location] ? 'active' : nil}"
 
-          - @locations.each do |location|
-            %li.nav-item
-              = link_to location.location.titleize, stocks_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
+      - @locations.each do |location|
+        %li.nav-item
+          = link_to location.location.titleize, stocks_path(location: location.location), class: "nav-link #{params[:location] == location.location ? 'active' : nil}"
 
-        %br
-        .table-responsive
-          %table.table.table-sm.card-text
-            %thead
-              %tr
-                %th
-                %th.text-center Quantity
-                %th.text-right Retail Price
-                %th.text-right Retail
-                %th.text-right Wholesale
+    %br
+    .table-responsive
+      %table.table.table-sm.card-text
+        %thead
+          %tr
+            %th
+            %th.text-center Quantity
+            %th.text-right Retail Price
+            %th.text-right Retail
+            %th.text-right Wholesale
 
 
-            %tbody
-              - total_retail = 0
-              - total_wholesale = 0
-              - @stocks_hash.each do |key, value, wholesale|
-                - product = Product.find(key)
-                - next if product.is_pack_donation?
-                - quantity = value
-                %tr
-                  %td
-                    - name = product.name + (product.is_active? ? "" : ' (INACTIVE)')
-                    = link_to name, product_path(product)
-                    - if quantity <= 0 && product.is_physical_inventory
-                      .badge.badge-danger SOLD OUT
-                  %td.text-center{class: "#{product.name.parameterize} quantity"}= quantity
-                  %td.text-right= number_to_currency(product.retail_price)
-                  %td.text-right
-                    - total_retail += quantity * product.retail_price
-                    = number_to_currency(quantity * product.retail_price)
-                  %td.text-right{class: "#{product.name.parameterize} wholesale-value"}
-                    - if params[:location]
-                      = number_to_currency(Stock.wholesale_value(@active_event, product, params[:location]), precision: 2)
-                    - else
-                      = number_to_currency(Stock.wholesale_value(@active_event, product), precision: 2)
-                    
-              %tr
-                %td
-                %td
-                %td
-                %td.text-right= number_to_currency(total_retail)
-                %td.text-right.total-wholesale-value
-                  - if params[:location]
-                    = number_to_currency(Stock.wholesale_value(@active_event, nil, params[:location]))
-                  - else
-                    = number_to_currency(Stock.wholesale_value(@active_event))
+        %tbody
+          - total_retail = 0
+          - total_wholesale = 0
+          - @stocks_hash.each do |key, value, wholesale|
+            - product = Product.find(key)
+            - next if product.is_pack_donation?
+            - quantity = value
+            %tr
+              %td
+                - name = product.name + (product.is_active? ? "" : ' (INACTIVE)')
+                = link_to name, product_path(product)
+                - if quantity <= 0 && product.is_physical_inventory
+                  .badge.badge-danger SOLD OUT
+              %td.text-center{class: "#{product.name.parameterize} quantity"}= quantity
+              %td.text-right= number_to_currency(product.retail_price)
+              %td.text-right
+                - total_retail += quantity * product.retail_price
+                = number_to_currency(quantity * product.retail_price)
+              %td.text-right{class: "#{product.name.parameterize} wholesale-value"}
+                - if params[:location]
+                  = number_to_currency(Stock.wholesale_value(@active_event, product, params[:location]), precision: 2)
+                - else
+                  = number_to_currency(Stock.wholesale_value(@active_event, product), precision: 2)
+                
+          %tr
+            %td
+            %td
+            %td
+            %td.text-right= number_to_currency(total_retail)
+            %td.text-right.total-wholesale-value
+              - if params[:location]
+                = number_to_currency(Stock.wholesale_value(@active_event, nil, params[:location]))
+              - else
+                = number_to_currency(Stock.wholesale_value(@active_event))
 
-        / = link_to new_stock_path, class: 'hidden-print' do
-        /   %i.fa.fa-plus.fa-lg
-        /   Add a transfer
+    / = link_to new_stock_path, class: 'hidden-print' do
+    /   %i.fa.fa-plus.fa-lg
+    /   Add a transfer
 
-        .d-print-block
-          %br
-          = nice_date_time(Time.current)
+    .d-print-block
+      %br
+      = nice_date_time(Time.current)

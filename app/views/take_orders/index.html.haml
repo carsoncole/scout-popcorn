@@ -1,130 +1,129 @@
 .row
   .col-md-12
-    .card.card-body
-      %h1.card-title
-        Take Orders (Door-to-Door)
+    %h1
+      Take Orders (Door-to-Door)
 
-      - if current_scout.admin?
-        %p.card-text
-          = link_to new_envelope_path do
-            New Envelope
-        
-      - unless current_scout.admin?
-        %p.card-text.alert.alert-info.text-muted
-          %i.fa.fa-info-circle
-          Entering your own Take Orders here is optional. Once you submit a Take Orders envelope (with money), it will be entered for you if not already entered by you.
-
-
-      - unless @active_event.take_orders_allowed?
-        .alert.alert-warning
-          Take Orders are currently closed.
-
-      %ul.nav.nav-tabs.card-text
-        %li.nav-item
-          = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
-            %i.fa.fa-envelope-open-o
-            Not turned in
-            - if current_scout.admin?
-              = surround("(", ")") do
-                = @active_event.envelopes.open.count
-        %li.nav-item
-          = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
-            %i.fa.fa-envelope-o
-            Turned in
-            - if current_scout.admin?
-              = surround("(", ")") do
-                = @active_event.envelopes.closed.count
-        / %li.nav-item
-        /   = link_to take_orders_path(envelopes: 'picked-up'), class: "nav-link #{'active' if params[:envelopes] == 'picked-up'}" do
-        /     %i.fa.fa-check
-        /     Picked Up
-        /     - if current_scout.admin?
-        /       = surround("(", ")") do
-        /         = @active_event.envelopes.picked_up.count
- 
-      .row
-        .col-md-12
-          %br
-          - @envelopes.each do |envelope|
-            .card.border-0
-              %h4.card-title 
-                = link_to envelope_path(envelope) do 
-                  - if current_scout.is_admin?
-                    = envelope.scout.name
-                    = '/'
-
-                  - if envelope.open?
-                    %i.fa.fa-envelope-open-o
-                  - else
-                    %i.fa.fa-envelope-o
-                  Payment envelope
-                  - if current_scout.admin?
-                    = precede("#") do
-                      = envelope.id
-              .card-body
-                .table-responsive
-                  %table.table.table-sm.card-text.take-orders
-
-                    %tr
-                      %th.customer(colspan=2)
-
-                        
-
-                        
-                        %th.amount.text-right Amount
-                        %th.payment Payment
-                        %th.product Product
-
-                        - if current_scout.admin?
-                          %th
-                          %th.d-print-block Delivered
-                          %th.hidden-print
-
-                    %tbody
-                      - total = 0
-                      - envelope.take_orders.each do |take_order|
-                        %tr
-                          %td(colspan=2)= link_to take_order.customer_name, take_order_path(take_order)
-                          %td.text-right
-                            - total += take_order.value
-                            = number_to_currency(take_order.value, precision: 0)
-                          %td
-                            = take_order.payment
-                            / - if take_order.account && take_order.account.is_credit_card?
-                            /   %i.fa.fa-credit-card
-                            / - elsif take_order.account && take_order.account.is_cash?
-                            /   %i.fa.fa-money
-                          %td
-                            - take_order.take_order_line_items.each do |line_item|
-                              = line_item.product.name
-                              = surround("(", ")") do
-                                = line_item.quantity
-                              %br
+    - if current_scout.admin?
+      %p.card-text
+        = link_to new_envelope_path do
+          New Envelope
+      
+    - unless current_scout.admin?
+      %p.card-text.alert.alert-info.text-muted
+        %i.fa.fa-info-circle
+        Entering your own Take Orders here is optional. Once you submit a Take Orders envelope (with money), it will be entered for you if not already entered by you.
 
 
-                          - if current_scout.admin?
-                            %td.hidden-print
-                              / - if take_order.received? && take_order.take_order_line_items.any?
-                              /   = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
-                            %td.d-print-block
-                              %i.fa.fa-square-o.fa-2x
-                            %td.hidden-print
-                              - if take_order.in_hand? && @active_event.take_orders_allowed?
-                                = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure? '  } do
-                                  %i.fa.fa-trash-o.fa-lg
+    - unless @active_event.take_orders_allowed?
+      .alert.alert-warning
+        Take Orders are currently closed.
+
+    %ul.nav.nav-tabs.card-text
+      %li.nav-item
+        = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
+          %i.fa.fa-envelope-open-o
+          Not turned in
+          - if current_scout.admin?
+            = surround("(", ")") do
+              = @active_event.envelopes.open.count
+      %li.nav-item
+        = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
+          %i.fa.fa-envelope-o
+          Turned in
+          - if current_scout.admin?
+            = surround("(", ")") do
+              = @active_event.envelopes.closed.count
+      / %li.nav-item
+      /   = link_to take_orders_path(envelopes: 'picked-up'), class: "nav-link #{'active' if params[:envelopes] == 'picked-up'}" do
+      /     %i.fa.fa-check
+      /     Picked Up
+      /     - if current_scout.admin?
+      /       = surround("(", ")") do
+      /         = @active_event.envelopes.picked_up.count
+
+    .row
+      .col-md-12
+        %br
+        - @envelopes.each do |envelope|
+          .card.border-0
+            %h4.card-title 
+              = link_to envelope_path(envelope) do 
+                - if current_scout.is_admin?
+                  = envelope.scout.name
+                  = '/'
+
+                - if envelope.open?
+                  %i.fa.fa-envelope-open-o
+                - else
+                  %i.fa.fa-envelope-o
+                Payment envelope
+                - if current_scout.admin?
+                  = precede("#") do
+                    = envelope.id
+            .card-body
+              .table-responsive
+                %table.table.table-sm.card-text.take-orders
+
+                  %tr
+                    %th.customer(colspan=2)
+
                       
-                      %tr.hidden-print       
-                        / - if current_scout.admin?
-                        %td
-                        %td
-                        %td.text-right= number_to_currency(total, precision: 0)
-                        - if current_scout.admin?
 
-                          %td
+                      
+                      %th.amount.text-right Amount
+                      %th.payment Payment
+                      %th.product Product
+
+                      - if current_scout.admin?
+                        %th
+                        %th.d-print-block Delivered
+                        %th.hidden-print
+
+                  %tbody
+                    - total = 0
+                    - envelope.take_orders.each do |take_order|
+                      %tr
+                        %td(colspan=2)= link_to take_order.customer_name, take_order_path(take_order)
+                        %td.text-right
+                          - total += take_order.value
+                          = number_to_currency(take_order.value, precision: 0)
                         %td
+                          = take_order.payment
+                          / - if take_order.account && take_order.account.is_credit_card?
+                          /   %i.fa.fa-credit-card
+                          / - elsif take_order.account && take_order.account.is_cash?
+                          /   %i.fa.fa-money
                         %td
+                          - take_order.take_order_line_items.each do |line_item|
+                            = line_item.product.name
+                            = surround("(", ")") do
+                              = line_item.quantity
+                            %br
+
+
                         - if current_scout.admin?
-                          %th.hidden-print
-                          / %td.d-print-block
                           %td.hidden-print
+                            / - if take_order.received? && take_order.take_order_line_items.any?
+                            /   = button_to 'SUBMITTED', take_order_path(take_order, submitted: true), method: :patch, :data => { :confirm => 'Are you sure? This will close this Take Order to any further changes.' }, class: 'btn btn-danger btn-sm'
+                          %td.d-print-block
+                            %i.fa.fa-square-o.fa-2x
                           %td.hidden-print
+                            - if take_order.in_hand? && @active_event.take_orders_allowed?
+                              = link_to take_order, :method => :delete, :data => { :confirm => 'Are you sure? '  } do
+                                %i.fa.fa-trash-o.fa-lg
+                    
+                    %tr.hidden-print       
+                      / - if current_scout.admin?
+                      %td
+                      %td
+                      %td.text-right= number_to_currency(total, precision: 0)
+                      - if current_scout.admin?
+
+                        %td
+                      %td
+                      %td
+                      - if current_scout.admin?
+                        %th.hidden-print
+                        / %td.d-print-block
+                        %td.hidden-print
+                        %td.hidden-print

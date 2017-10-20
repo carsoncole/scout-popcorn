@@ -96,9 +96,10 @@
 
                     / = link_to "Financial Ledger", ledgers_path, class: "dropdown-item #{'active' if controller_name == 'ledger' && action_name == 'index'}"
 
-                    = link_to "Summary", summary_report_path, class: "dropdown-item #{'active' if action_name =='summary'}"
+                    / = link_to "Summary", summary_report_path, class: "dropdown-item #{'active' if action_name =='summary'}"
                     = link_to "Income Statement", income_statement_path, class: "dropdown-item #{'active' if action_name =='income_statement'}"
                     = link_to "Balance Sheet", balance_sheet_path, class: "dropdown-item #{'active' if action_name =='balance_sheet'}"
+                    %hr
                     = link_to "Transfers", stocks_ledger_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'ledger'}"
                     = link_to "BSA Transfers", bsa_transfers_report_path, class: "dropdown-item #{'active' if controller_name == 'stocks' && action_name == 'bsa_transfers_report'}"
                     = link_to "Due from Customers", due_from_customers_path, class: "dropdown-item #{'active' if controller_name == 'due_from_customers'}"
