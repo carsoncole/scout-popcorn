@@ -23,5 +23,10 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: something
+  pool: 5
+  username: something
+  password: something
