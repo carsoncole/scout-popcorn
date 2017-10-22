@@ -1,115 +1,111 @@
 .row
   .col-md-12
-    .card
-      .card-body
-        .card-title
-          %h2
-            = @active_event.name
-            Take Orders - Purchase Order
 
+    %h2
+      = @active_event.name
+      Take Orders - Purchase Order
+
+    - unless params[:final]
+      %h3
+        %span.badge.badge-info= @purchase_order.status.capitalize 
+
+    %p.d-print-none= link_to "Final Purchase Order", purchase_order_path(@purchase_order, final: true)
+
+    %table.table.table-sm
+      %thead
+        %tr
+          %th Product
           - unless params[:final]
-            %h3
-              %span.badge.badge-info= @purchase_order.status.capitalize 
-
-        %p.d-print-none= link_to "Final Purchase Order", purchase_order_path(@purchase_order, final: true)
-
-        %table.table.table-sm
-          %thead
+            %th Quantity
+            %th Unit Inventory
+          %th
+            - if params[:final]
+              Quantity
+            - else
+              New Order Quantity
+          %th Price
+          %th Value
+      %tbody
+        - total_value = 0
+        - @products.each do |product|
+          - quantity = TakeOrderPurchaseOrder.joins(take_orders: [:take_order_line_items]).where("purchase_orders.id = ? AND take_order_line_items.product_id = ?", @purchase_order.id, product.id).sum("take_order_line_items.quantity")
+          - if quantity != 0
             %tr
-              %th Product
-              - unless params[:final]
-                %th Quantity
-                %th Unit Inventory
-              %th
-                - if params[:final]
-                  Quantity
-                - else
-                  New Order Quantity
-              %th Price
-              %th Value
-          %tbody
-            - total_value = 0
-            - @products.each do |product|
-              - quantity = TakeOrderPurchaseOrder.joins(take_orders: [:take_order_line_items]).where("purchase_orders.id = ? AND take_order_line_items.product_id = ?", @purchase_order.id, product.id).sum("take_order_line_items.quantity")
-              - if quantity != 0
-                %tr
-                  %td= product.name
-                  - event_inventory = @active_event.inventory(product)
+              %td= product.name
+              - event_inventory = @active_event.inventory(product)
 
-                  - unless params[:final]
-                    %td= quantity
-                    %td
-                      = event_inventory
-                  %td
-                    - net_quantity = event_inventory - quantity
-                    - net_quantity = nil if net_quantity >= 0
-                    = net_quantity
-                  %td
-                    = number_to_currency(product.retail_price) if net_quantity
-                  %td
-                    - if net_quantity
-                      - value = product.retail_price * net_quantity
-                      - total_value += value
-                      = number_to_currency( value )
-            %tr
-              %td
               - unless params[:final]
+                %td= quantity
                 %td
-                %td
+                  = event_inventory
               %td
+                - net_quantity = event_inventory - quantity
+                - net_quantity = nil if net_quantity >= 0
+                = net_quantity
               %td
-              %td= number_to_currency( total_value )
+                = number_to_currency(product.retail_price) if net_quantity
+              %td
+                - if net_quantity
+                  - value = product.retail_price * net_quantity
+                  - total_value += value
+                  = number_to_currency( value )
+        %tr
+          %td
+          - unless params[:final]
+            %td
+            %td
+          %td
+          %td
+          %td= number_to_currency( total_value )
 
-        - unless params[:final]
-          - if @purchase_order.status == 'open'
-            = button_to 'Ordered', purchase_order_path(@purchase_order, ordered: true), method: :patch, class: 'btn btn-danger'
+    - unless params[:final]
+      - if @purchase_order.status == 'open'
+        = button_to 'Ordered', purchase_order_path(@purchase_order, ordered: true), method: :patch, class: 'btn btn-danger'
 
 
 - unless params[:final]
-
+  %hr
   .row
     .col-md-12
-      .card
-        .card-body
-          .card-title
-            %h3 Take Orders
-          %table.table
-            %thead
-              %tr
-                %th Scout
-                %th 
-                %td
-                %td Envelope #
-                %td Value
-                %td
-                  Value
-                  %br
-                  (Excl Donations)
-                %td Added
-            - total_value = 0
-            - total_value_wo_donations = 0
-            - @take_orders.each do |to|
-              %tr
-                %td= to.envelope.scout.name
-                %td
-                  = link_to take_order_path(to) do
-                    %i.fa.fa-folder-open.fa-lg
-                %td= to.products_and_quantities
-                %td= link_to to.envelope_id, envelope_path(to.envelope_id)
-                %td
-                  - total_value += to.value
-                  = number_to_currency(to.value)
-                %td
-                  - total_value_wo_donations += to.value_without_pack_donations
-                  
-                  = number_to_currency(to.value_without_pack_donations)
-                %td= to.updated_at
 
-            %tr
-              %td
-              %td
-              %td
-              %td
-              %td= number_to_currency(total_value)
-              %td= number_to_currency(total_value_wo_donations)
-              %td
+      %h3 Take Orders
+      %table.table
+        %thead
+          %tr
+            %th Scout
+            %th 
+            %td
+            %td Envelope #
+            %td Value
+            %td
+              Value
+              %br
+              (Excl Donations)
+            %td Added
+        - total_value = 0
+        - total_value_wo_donations = 0
+        - @take_orders.each do |to|
+          %tr
+            %td= to.envelope.scout.name
+            %td
+              = link_to take_order_path(to) do
+                %i.fa.fa-folder-open.fa-lg
+            %td= to.products_and_quantities
+            %td= link_to to.envelope_id, envelope_path(to.envelope_id)
+            %td
+              - total_value += to.value
+              = number_to_currency(to.value)
+            %td
+              - total_value_wo_donations += to.value_without_pack_donations
+              
+              = number_to_currency(to.value_without_pack_donations)
+            %td= to.updated_at
+
+        %tr
+          %td
+          %td
+          %td
+          %td
+          %td= number_to_currency(total_value)
+          %td= number_to_currency(total_value_wo_donations)
+          %td

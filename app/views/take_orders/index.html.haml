@@ -8,31 +8,32 @@
         = link_to new_envelope_path do
           New Envelope
       
-    - unless current_scout.admin?
-      %p.card-text.alert.alert-info.text-muted
-        %i.fa.fa-info-circle
-        Entering your own Take Orders here is optional. Once you submit a Take Orders envelope (with money), it will be entered for you if not already entered by you.
+    / - unless current_scout.admin?
+    /   %p.card-text.alert.alert-info.text-muted
+    /     %i.fa.fa-info-circle
+    /     Entering your own Take Orders here is optional. Once you submit a Take Orders envelope (with money), it will be entered for you if not already entered by you.
 
 
-    - unless @active_event.take_orders_allowed?
-      .alert.alert-warning
-        Take Orders are currently closed.
+    / - unless @active_event.take_orders_allowed?
+    /   .alert.alert-warning
+    /     Take Orders are currently closed.
 
-    %ul.nav.nav-tabs.card-text
-      %li.nav-item
-        = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
-          %i.fa.fa-envelope-open-o
-          Not turned in
-          - if current_scout.admin?
-            = surround("(", ")") do
-              = @active_event.envelopes.open.count
-      %li.nav-item
-        = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
-          %i.fa.fa-envelope-o
-          Turned in
-          - if current_scout.admin?
-            = surround("(", ")") do
-              = @active_event.envelopes.closed.count
+    - if current_scout.admin?
+      %ul.nav.nav-tabs.card-text
+        %li.nav-item
+          = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
+            %i.fa.fa-envelope-open-o
+            Not turned in
+            - if current_scout.admin?
+              = surround("(", ")") do
+                = @active_event.envelopes.open.count
+        %li.nav-item
+          = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
+            %i.fa.fa-envelope-o
+            Turned in
+            - if current_scout.admin?
+              = surround("(", ")") do
+                = @active_event.envelopes.closed.count
       / %li.nav-item
       /   = link_to take_orders_path(envelopes: 'picked-up'), class: "nav-link #{'active' if params[:envelopes] == 'picked-up'}" do
       /     %i.fa.fa-check

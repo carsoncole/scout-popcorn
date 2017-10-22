@@ -13,9 +13,9 @@ class TakeOrdersController < ApplicationController
     @closed_envelopes = @envelopes.closed
     @picked_up_envelopes = @envelopes.picked_up
 
-    if params[:envelopes] == 'open' || params[:envelopes].blank?
+    if params[:envelopes] == 'open' 
       @envelopes = @envelopes.open
-    elsif params[:envelopes]  == 'closed'
+    elsif params[:envelopes]  == 'closed'|| params[:envelopes].blank?
       @envelopes = @envelopes.closed
     elsif params[:envelopes]  == 'picked-up'
       @envelopes = @envelopes.picked_up

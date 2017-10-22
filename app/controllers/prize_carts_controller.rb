@@ -12,7 +12,7 @@ class PrizeCartsController < ApplicationController
       @prize_cart = current_scout.prize_cart(@active_event)
     end
     @prize_cart.process_automatic_prizes!
-    @cart_prize_sources = @prize_cart.cart_prizes.joins(:prize).group('prizes.source').map{|s| s.prize.source }
+    @cart_prize_sources = @prize_cart.cart_prizes.joins(:prize).group('prizes.source, cart_prizes.id').map{|s| s.prize.source }
   end
 
   def approved_prizes

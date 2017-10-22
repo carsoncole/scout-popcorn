@@ -36,7 +36,7 @@
               /     = link_to "Site Sales", site_sales_path, class: "dropdown-item #{'active' if controller_name == 'site_sales'}"
               /   - if @active_event.is_online_enabled?
               /     = link_to "Online Sales", online_sales_path, class: "dropdown-item #{'active' if controller_name == 'online_sales'}"
-            - if @active_event.is_take_orders_enabled? && current_scout.is_admin?
+            - if @active_event.is_take_orders_enabled?
               %li.nav-item.dropdown
                 = link_to "#",class: "nav-link dropdown-toggle #{'active' if ['take_orders'].include?(controller_name)}", "data-toggle": "dropdown", 'role': "button" do
                   Sales
@@ -48,8 +48,8 @@
                   / = link_to "Envelopes", envelopes_path(status: 'open'), class: "dropdown-item #{'active' if controller_name == 'envelopes'}"
                   /= link_to "Purchase Order", take_orders_order_path, class: "dropdown-item #{'active' if controller_name == 'take_orders_order'}"
 
-                  - if @active_event.is_take_orders_enabled? && !current_scout.is_admin?
-                    = link_to "Take Orders", take_orders_path, class: "dropdown-item #{'active' if controller_name == 'take_orders'}"
+                  / - if @active_event.is_take_orders_enabled? && !current_scout.is_admin?
+                  /   = link_to "Take Orders", take_orders_path, class: "dropdown-item #{'active' if controller_name == 'take_orders'}"
                   - if @active_event.is_site_sales_enabled?
                     = link_to "Site Sales", site_sales_path, class: "dropdown-item #{'active' if controller_name == 'site_sales'}"
                   - if @active_event.is_online_enabled?

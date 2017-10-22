@@ -1,46 +1,44 @@
 .row
   .col-md-12
-    .card
-      .card-body 
-        %h1.card-title Online Sales
+    %h1 Online Sales
 
-        - unless current_scout.admin?
-          %p.card-text.alert.alert-info.text-muted
-            %i.fa.fa-info-circle
-            Any of your friends/family purchases of popcorn online will appear here. If any sales are missing, please let us know.
+    - unless current_scout.admin?
+      %p.card-text.alert.alert-info.text-muted
+        %i.fa.fa-info-circle
+        Any of your friends/family purchases of popcorn online will appear here. If any sales are missing, please let us know.
 
-        - if @online_sales.any?
-          .table-responsive
-            %table.table.card-text.table-sm
-              %thead
-                %tr
-                  %th Order date
-                  - if current_scout.admin?
-                    %th Scout
-                  %th Customer name
-                  %th Description
-                  %th.text-right Amount
-                  - if current_scout.admin?
-                    %th.text-right
+    - if @online_sales.any?
+      .table-responsive
+        %table.table.card-text.table-sm
+          %thead
+            %tr
+              %th Order date
+              - if current_scout.admin?
+                %th Scout
+              %th Customer name
+              %th Description
+              %th.text-right Amount
+              - if current_scout.admin?
+                %th.text-right
 
-              %tbody
-                - @online_sales.each do |online_sale|
-                  %tr
-                    %td= online_sale.order_date
-                    - if current_scout.admin?
-                      %td= online_sale.scout.name
-                    %td= online_sale.customer_name
-                    %td= online_sale.description
-                    %td.text-right= number_to_currency(online_sale.amount)
-                    - if current_scout.admin?
-                      %td
-                        = link_to edit_online_sale_path(online_sale) do
-                          %i.fa.fa-pencil.fa-lg
-                        = link_to online_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
-                          %i.fa.fa-trash.fa-lg
+          %tbody
+            - @online_sales.each do |online_sale|
+              %tr
+                %td= online_sale.order_date
+                - if current_scout.admin?
+                  %td= online_sale.scout.name
+                %td= online_sale.customer_name
+                %td= online_sale.description
+                %td.text-right= number_to_currency(online_sale.amount)
+                - if current_scout.admin?
+                  %td
+                    = link_to edit_online_sale_path(online_sale) do
+                      %i.fa.fa-pencil.fa-lg
+                    = link_to online_sale, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                      %i.fa.fa-trash.fa-lg
 
-        - if current_scout.admin?
-          %br
-          = link_to new_online_sale_path, class: 'card-text new-online-sale-link' do
-            %i.fa.fa-plus.fa-lg
-            Add an online sale
+    - if current_scout.admin?
+      %br
+      = link_to new_online_sale_path, class: 'card-text new-online-sale-link' do
+        %i.fa.fa-plus.fa-lg
+        Add an online sale
