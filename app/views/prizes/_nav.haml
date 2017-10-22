@@ -1,0 +1,6 @@
+%p
+  = link_to "Prize Cart", prize_cart_path(current_scout.prize_cart(@active_event))
+  = ' | '
+  = link_to "Prizes", prizes_path
+
+= render 'shared/prize_ordering_starts_at'

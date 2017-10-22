@@ -1,15 +1,10 @@
+= render 'nav'
+
 .row
   .col-md-12
     %h2 Prizes
-    %p= link_to "Prize Cart", prize_cart_path(current_scout.prize_cart(@active_event))
-
+    
 %br
-
-- if  !@active_event.allow_prize_cart_ordering? && @active_event.prize_cart_ordering_starts_at
-  %h2.text-center
-    Prize cart ordering opens on 
-    = succeed "." do
-      = nice_date(@active_event.prize_cart_ordering_starts_at)
 
 - Prize::SOURCES.each do |source|
 

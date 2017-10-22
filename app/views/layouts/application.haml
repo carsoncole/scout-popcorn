@@ -3,7 +3,7 @@
   = render 'head'
   
   %body
-    .hidden_print=render 'nav'
+    .hidden_print=render 'application/nav'
     - if controller_name == 'ledgers' && action_name == 'index'
       .container-fluid
         .hidden_print= render 'flash'

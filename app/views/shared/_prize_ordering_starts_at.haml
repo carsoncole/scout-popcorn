@@ -1,0 +1,5 @@
+- if !@active_event.allow_prize_cart_ordering? && @active_event.prize_cart_ordering_starts_at
+  .alert.alert-info
+    Prize cart ordering opens on 
+    = succeed "." do
+      = nice_date(@active_event.prize_cart_ordering_starts_at)
