@@ -75,10 +75,10 @@
             = '– Approved:'
             = nice_date_time(@prize_cart.is_approved_at)
         .d-print-none
-          - if @prize_cart.ordered? && !@prize_cart.approved?
+          - if @prize_cart.ordered? && !@prize_cart.approved? && allow_prize_cart_ordering?
             %p.card-text.text-center= button_to 'Reopen Order', unorder_prize_cart_path(@prize_cart.id), class: 'btn btn-success', disabled: false
             %p.small.text-muted This prize order can be reopend since your Unit has not ordered prizes yet. 
-          - elsif !@prize_cart.ordered?
+          - elsif !@prize_cart.ordered? && @active_event.allow_prize_cart_ordering?
             %p.card-text.text-center= button_to 'Order Prizes', order_prizes_path(@prize_cart.id), class: 'btn btn-success', disabled: false
           - if current_scout.is_prizes_admin?
             - if @prize_cart.ordered? && !@prize_cart.approved?
