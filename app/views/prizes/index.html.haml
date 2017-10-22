@@ -5,6 +5,12 @@
 
 %br
 
+- if  !@active_event.allow_prize_cart_ordering? && @active_event.prize_cart_ordering_starts_at
+  %h2.text-center
+    Prize cart ordering opens on 
+    = succeed "." do
+      = nice_date(@active_event.prize_cart_ordering_starts_at)
+
 - Prize::SOURCES.each do |source|
 
   - prizes = @active_event.prizes.where(source: source).order(sales_amount: :asc)
@@ -65,7 +71,7 @@
                   = link_to prize_path(prize) do
                     %i.fa.fa-pencil
 
-            - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).sales_credits_available(source) >= prize.sales_amount
+            - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).sales_credits_available(source) >= prize.sales_amount && @active_event.allow_prize_cart_ordering?
               .card-footer
                 = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: "btn btn-primary btn-sm #{prize.name.parameterize}"
 
