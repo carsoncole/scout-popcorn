@@ -8,13 +8,18 @@
       %tr
         %th Scout
         %th Items
+        %th Event sales credits
+        %th Unit used
+        %th Coucil used
         %th Status
       - @prize_carts.each do |cart|
 
         %tr
-          %td= cart.scout.name
+          %td= link_to cart.scout.name, prize_cart_path(cart.scout.prize_cart(@active_event))
           %td= cart.cart_prizes.count
-          %td
-            = cart.status
-            = link_to '(View)', prize_cart_path(cart.scout.prize_cart(@active_event))
+          %td= number_to_currency(cart.scout.event_sales_credits(@active_event))
+          %td= number_to_currency(cart.sales_credits_used("Unit"))
+          %td= number_to_currency(cart.sales_credits_used("Council"))
+          %td= cart.status
+            
     = paginate @prize_carts

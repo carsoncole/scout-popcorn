@@ -80,13 +80,23 @@ class PrizeCart < ApplicationRecord
   end
 
   def deduct_from_sales_credits!
-    sales_credits = cart_prizes.joins(:prize).sum("prizes.sales_amount * cart_prizes.quantity")
-    scout.sales_credits.create(event_id: self.event_id, amount: -sales_credits, description: 'Used for prizes')
+    credits = 0
+    cart_prizes.each do |cp|
+      if cp.prize.reduces_sales_credits
+        credits += cp.prize.sales_amount * cp.quantity
+      end
+    end
+    scout.sales_credits.create(event_id: self.event_id, amount: -credits, description: 'Used for prizes')
   end
 
   def credit_sales_credits!
-    sales_credits = cart_prizes.joins(:prize).sum("prizes.sales_amount * cart_prizes.quantity")   
-    scout.sales_credits.create(event_id: self.event_id, amount: sales_credits, description: 'Reopend. Credited back sales credits used for prizes')     
+    credits = 0
+    cart_prizes.each do |cp|
+      if cp.prize.reduces_sales_credits
+        credits += cp.prize.sales_amount * cp.quantity if cp.prize.reduces_sales_credits
+      end
+    end
+    scout.sales_credits.create(event_id: self.event_id, amount: credits, description: 'Reopend. Credited back sales credits used for prizes')     
   end
 
   def process_automatic_prizes!
