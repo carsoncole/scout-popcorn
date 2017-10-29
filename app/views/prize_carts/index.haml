@@ -16,7 +16,7 @@
 
         %tr
           %td
-            - if cart.scount.present?
+            - if cart.scout.present?
               = link_to cart.scout.name, prize_cart_path(cart.scout.prize_cart(@active_event))
             - else
               = cart.id
