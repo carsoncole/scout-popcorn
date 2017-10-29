@@ -1,0 +1,43 @@
+= render 'prizes/nav'
+
+.row
+  .col-md-8
+    %h3 Sales Credits
+    %table.table.table-sm
+      %tr
+        %th Scout
+        %th Description
+        %th.text-right Amount
+
+      - @sales_credits.each do |credit|
+        %tr
+          %td= credit.scout.name
+          %td= credit.description
+          %td.text-right= number_to_currency(credit.amount)
+
+  .col-md-4
+    %h3 Scout Balances
+    %table.table.table-sm
+      %tr
+        %th Scout
+        %th.text-right Balance
+      - @scout_balances.each do |balance|
+        - scout = Scout.find(balance[0])
+        %tr
+          %td= scout.name
+          %td.text-right= number_to_currency(balance[1])
+
+
+    .card
+      .card-body
+        %h4 Balance Assignment
+        %p.small Assign the available balance to a particular Scout. Often used for aggregating balances of siblings. This will not transfer any credits previously used.
+
+        = form_tag sales_credit_assignment_path, class: 'form' do
+          .form-group
+            .label From
+            = select_tag :from, options_for_select(@unit.scouts.map{|s| [s.name, s.id]}),class: 'form-control'
+          .form-group
+            .label To
+            = select_tag :to, options_for_select(@unit.scouts.map{|s| [s.name, s.id]}),class: 'form-control'
+          = submit_tag "Assign", class: 'btn btn-sm btn-info'

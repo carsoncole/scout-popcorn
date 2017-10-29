@@ -10,6 +10,10 @@ class PrizeCart < ApplicationRecord
 
   after_save :remove_prize_costs_from_expenses!, if: Proc.new {|pc| pc.saved_change_to_is_approved_at? && !pc.approved? }
 
+  after_save :deduct_from_sales_credits!, if: Proc.new {|pc| pc.saved_change_to_is_ordered_at? && pc.is_ordered_at }
+
+  after_save :credit_sales_credits!, if: Proc.new {|pc| pc.saved_change_to_is_ordered_at? && pc.is_ordered_at.nil? }
+
   def self.approved
     where("is_approved_at IS NOT NULL")
   end
@@ -35,7 +39,8 @@ class PrizeCart < ApplicationRecord
   end
 
   def sales_credits_available(source)
-    scout.sales(event) - sales_credits_used(source)
+    # scout.sales(event) - sales_credits_used(source)
+    scout.sales_credit_balance(event) - sales_credits_used(source)
   end
 
   def ordered?
@@ -74,9 +79,21 @@ class PrizeCart < ApplicationRecord
     end
   end
 
+  def deduct_from_sales_credits!
+    sales_credits = cart_prizes.joins(:prize).sum("prizes.sales_amount * cart_prizes.quantity")
+    scout.sales_credits.create(event_id: self.event_id, amount: -sales_credits, description: 'Used for prizes')
+  end
+
+  def credit_sales_credits!
+    sales_credits = cart_prizes.joins(:prize).sum("prizes.sales_amount * cart_prizes.quantity")   
+    scout.sales_credits.create(event_id: self.event_id, amount: sales_credits, description: 'Reopend. Credited back sales credits used for prizes')     
+  end
+
   def process_automatic_prizes!
     cart_prizes.where(is_automatic: true).destroy_all
-    eligible_prizes = event.prizes.does_not_reduce_sales_credits.where("sales_amount < ?", scout.sales(event))
+    sales_credits = scout.sales_credit_totals.where(event_id: event.id)
+    sales_credits = sales_credits.any? ? sales_credits.first.amount : 0
+    eligible_prizes = event.prizes.does_not_reduce_sales_credits.where("sales_amount < ?", sales_credits)
     eligible_prizes.each do |prize|
       cart_prizes.create(prize: prize, quantity: 1, is_automatic: true) unless cart_prizes.where(prize: prize).any?
     end

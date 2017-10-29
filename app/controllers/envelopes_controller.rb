@@ -90,7 +90,9 @@ class EnvelopesController < ApplicationController
   end
 
   def destroy
-    @envelope.destroy
+    if current_scout.is_take_orders_admin?
+      @envelope.destroy
+    end
     redirect_to take_orders_path
   end
 

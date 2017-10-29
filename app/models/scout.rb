@@ -10,6 +10,8 @@ class Scout < ApplicationRecord
   has_many :scout_site_sales
   has_many :online_sales
   has_many :prize_carts
+  has_many :sales_credits
+  has_many :sales_credit_totals
 
   validates :first_name, :last_name, :unit_id, presence: true
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
@@ -65,6 +67,10 @@ class Scout < ApplicationRecord
 
   def sales(event=nil)
     total_sales(event)
+  end
+
+  def sales_credit_balance(event)
+    sales_credits.where(event_id: event.id).sum(:amount)
   end
 
   def admin?
@@ -138,6 +144,15 @@ class Scout < ApplicationRecord
     self.is_financial_admin = true
     self.is_warehouse_admin = true
     self.save
+  end
+
+  def event_sales_credits(event)
+    totals = sales_credit_totals.where(event_id: event.id)
+    if totals.any?
+      totals.first.amount
+    else
+      0
+    end
   end
 
   private

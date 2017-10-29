@@ -9,7 +9,7 @@
         .row
           .col-md-12
 
-            - if @envelope.open?
+            - if current_scout.is_take_orders_admin? && @envelope.open?
               .pull-right
                 = link_to envelope_path(@envelope), method: :delete, data: { confirm: 'Are you sure? This will delete all Take Orders that are grouped within this envelope.'} do
                   %i.fa.fa-trash.fa-lg
@@ -25,7 +25,7 @@
             %br
             %br
             %h5 Take Orders
-            - if @envelope.open? && @active_event.take_orders_allowed?
+            - if @envelope.open? && current_scout.is_take_orders_admin?
               %p= link_to "Add a New Take Order", new_envelope_take_order_path(@envelope.id)
             %table.table.table-sm.card-text
               %tr

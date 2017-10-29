@@ -1,10 +1,5 @@
 = render 'nav'
 
-.row
-  .col-md-12
-    %h2 Prizes
-    
-%br
 
 - Prize::SOURCES.each do |source|
 
@@ -12,10 +7,13 @@
   - if prizes.any?
     .row
       .col-md-12
-        %h4
+        %hr
+        %h3
           = source
           Prizes
-
+        %hr
+  %br
+  - unless current_scout.is_admin?
     .row
 
       .col-md-3
@@ -41,34 +39,33 @@
               %span.badge.badge-success{class: "#{source.parameterize} used-credits" }
                 = number_to_currency(@current_scout.prize_cart(@active_event).sales_credits_used(source))
 
-    %br
 
 
-    .row
-      - prizes.each do |prize|
-        .col-md-3
-          .card.text-center
-            .card-body
-              %h5.card-text= prize.name
+  .row
+    - prizes.each do |prize|
+      .col-md-3
+        .card.text-center
+          .card-body
+            %h5.card-text= prize.name
 
-              %p.card-text
-                - if prize.description.present?
-                  .small= prize.description
-                = image_tag(prize.url, class: 'img-fluid img-rounded m-x-auto') if prize.url
+            %p.card-text
+              - if prize.description.present?
+                .small= prize.description
+              = image_tag(prize.url, class: 'img-fluid img-rounded m-x-auto') if prize.url
+              %br
+              - unless prize.reduces_sales_credits
+                Achieve sales of:
                 %br
-                - unless prize.reduces_sales_credits
-                  Achieve sales of:
-                  %br
-                = number_to_currency(prize.sales_amount)
+              = number_to_currency(prize.sales_amount)
 
-              - if current_scout.is_prizes_admin?
-                .card-text
-                  = link_to prize_path(prize) do
-                    %i.fa.fa-pencil
+            - if current_scout.is_prizes_admin?
+              .card-text
+                = link_to prize_path(prize) do
+                  %i.fa.fa-pencil
 
-            - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).sales_credits_available(source) >= prize.sales_amount && @active_event.allow_prize_cart_ordering?
-              .card-footer
-                = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: "btn btn-primary btn-sm #{prize.name.parameterize}"
+          - if prize.reduces_sales_credits && current_scout.prize_cart(@active_event).sales_credits_available(source) >= prize.sales_amount && @active_event.allow_prize_cart_ordering? && !current_scout.is_admin?
+            .card-footer
+              = button_to "Add to Cart", prize_cart_order_path(prize_id: prize.id) , class: "btn btn-primary btn-sm #{prize.name.parameterize}"
 
 
-    %br
+  %br

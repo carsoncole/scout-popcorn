@@ -12,7 +12,7 @@ class PrizeCartsController < ApplicationController
       @prize_cart = current_scout.prize_cart(@active_event)
     end
     @prize_cart.process_automatic_prizes!
-    @cart_prize_sources = @prize_cart.cart_prizes.joins(:prize).group('prizes.source, cart_prizes.id').map{|s| s.prize.source }
+    @cart_prize_sources = @prize_cart.cart_prizes.joins(:prize).pluck('prizes.source').uniq
   end
 
   def approved_prizes
@@ -60,7 +60,7 @@ class PrizeCartsController < ApplicationController
   end
 
   def removal
-    current_scout.prize_cart(@active_event).cart_prizes.find(params[:id]).destroy
-    redirect_to prize_cart_path
+    c = CartPrize.find(params[:id]).destroy
+    redirect_to prize_cart_path(c.prize_cart)
   end
 end

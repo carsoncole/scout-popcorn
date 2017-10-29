@@ -1,6 +1,18 @@
 %p
-  = link_to "Prize Cart", prize_cart_path(current_scout.prize_cart(@active_event))
-  = ' | '
   = link_to "Prizes", prizes_path
+  - unless current_scout.is_admin?
+    = ' | '
+    = link_to prize_cart_path(current_scout.prize_cart(@active_event)) do
+      Your Prize Cart
+      %i.fa.fa-shopping-cart.fa-lg
+  - if current_scout.is_prizes_admin?
+    = '|'
+    = link_to "Sales Credits", sales_credits_path
+    = '|'
+    = link_to "Prize Carts", prize_carts_path
+    = '|'
+    = link_to "New Prize", new_prize_path
 
 = render 'shared/prize_ordering_starts_at'
+
+%br

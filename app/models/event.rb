@@ -15,6 +15,7 @@ class Event < ApplicationRecord
   has_many :prize_carts, dependent: :destroy
   has_many :resources, dependent: :destroy
   has_many :prizes, dependent: :destroy
+  has_many :sales_credits, dependent: :destroy
 
   validates :name, :unit_id, :unit_commission_percentage, :online_commission_percentage, :number_of_top_sellers, presence: true
   validates :number_of_top_sellers, numericality: { integer_only: true }

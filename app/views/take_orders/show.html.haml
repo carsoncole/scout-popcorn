@@ -15,7 +15,7 @@
                 /     In Hand
                 /   - else
                 /     = @take_order.status.capitalize
-                - if !@take_order.submitted? && @active_event.take_orders_allowed?
+                - if !@take_order.submitted? && current_scout.is_take_orders_admin?
                   %span
                     = link_to edit_take_order_path(@take_order) do
                       %i.fa.fa-pencil
@@ -120,6 +120,12 @@
 .row
   .col-md-4
     %br
+    = link_to envelope_path(@take_order.envelope) do
+      %i.fa.fa-arrow-left.fa-lg 
+      Back to 
+      = @take_order.envelope.scout.name
+      Envelope 
+    %br
     = link_to take_orders_path do
       %i.fa.fa-arrow-left.fa-lg
-      Back to Take Orders
+      Back to All Take Orders

@@ -21,14 +21,14 @@
     - if current_scout.admin?
       %ul.nav.nav-tabs.card-text
         %li.nav-item
-          = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open' || params[:envelopes].blank?}" do
+          = link_to take_orders_path(envelopes: 'open'), class: "nav-link #{'active' if params[:envelopes] == 'open'}" do
             %i.fa.fa-envelope-open-o
             Not turned in
             - if current_scout.admin?
               = surround("(", ")") do
                 = @active_event.envelopes.open.count
         %li.nav-item
-          = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed'}" do
+          = link_to take_orders_path(envelopes: 'closed'), class: "nav-link #{'active' if params[:envelopes] == 'closed' || params[:envelopes].blank?}" do
             %i.fa.fa-envelope-o
             Turned in
             - if current_scout.admin?

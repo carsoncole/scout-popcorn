@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   get 'approved-prizes' => 'prize_carts#approved_prizes', as: 'approved_prizes'
   post "approve-prize-cart/:id" => "prize_carts#approve", as: 'approve_prize_cart'
   post "unapprove-prize-cart/:id" => "prize_carts#unapprove", as: 'unapprove_prize_cart'
-    post "prize-cart/removal/:id" => "prize_carts#removal", as: 'prize_removal'
+  post "prize-cart/removal/:id" => "prize_carts#removal", as: 'prize_removal'
   post "unorder-prize-cart/:id" => "prize_carts#unorder", as: 'unorder_prize_cart'
   patch "envelopes/assign" => "envelopes#assign", as: 'assign_to_envelope'
   post "envelopes/:id/close" => "envelopes#close", as: 'close_envelope'
@@ -88,5 +88,7 @@ Rails.application.routes.draw do
 
   resources :top_sellers, only: :index
   resources :purchase_orders, :take_order_purchase_orders
-  resources :summary_orders
+  resources :summary_orders, :sales_credits
+  post "sales-credits-assignment" => "sales_credits#assignment", as: :sales_credit_assignment
+
 end
