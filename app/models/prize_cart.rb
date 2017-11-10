@@ -10,9 +10,9 @@ class PrizeCart < ApplicationRecord
 
   after_save :remove_prize_costs_from_expenses!, if: Proc.new {|pc| pc.saved_change_to_is_approved_at? && !pc.approved? }
 
-  after_save :deduct_from_sales_credits!, if: Proc.new {|pc| pc.saved_change_to_is_ordered_at? && pc.is_ordered_at }
+  # after_save :deduct_from_sales_credits!, if: Proc.new {|pc| pc.saved_change_to_is_ordered_at? && pc.is_ordered_at }
 
-  after_save :credit_sales_credits!, if: Proc.new {|pc| pc.saved_change_to_is_ordered_at? && pc.is_ordered_at.nil? }
+  # after_save :credit_sales_credits!, if: Proc.new {|pc| pc.saved_change_to_is_ordered_at? && pc.is_ordered_at.nil? }
 
   def self.approved
     where("is_approved_at IS NOT NULL")

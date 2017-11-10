@@ -9,7 +9,7 @@ class Scout < ApplicationRecord
   has_many :site_sales, through: :scout_site_sales
   has_many :scout_site_sales
   has_many :online_sales
-  has_many :prize_carts
+  has_many :prize_carts, dependent: :destroy
   has_many :sales_credits
   has_many :sales_credit_totals
 
