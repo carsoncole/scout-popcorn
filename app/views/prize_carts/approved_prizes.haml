@@ -23,7 +23,7 @@
                 - if source == 'Unit'
                   Unit Cost
 
-            - @approved_prizes.each do |prize_id, source, quantity|
+            - @approved_prizes.each do |prize_id, quantity|
               - prize = Prize.find(prize_id)
               - next unless prize.source == source
               %tr
