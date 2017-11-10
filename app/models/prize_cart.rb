@@ -101,8 +101,7 @@ class PrizeCart < ApplicationRecord
 
   def process_automatic_prizes!
     cart_prizes.where(is_automatic: true).destroy_all
-    sales_credits = scout.sales_credit_totals.where(event_id: event.id)
-    sales_credits = sales_credits.any? ? sales_credits.first.amount : 0
+    sales_credits = scout.sales_credits.where(event_id: event.id).sum(:amount)
     eligible_prizes = event.prizes.does_not_reduce_sales_credits.where("sales_amount < ?", sales_credits)
     eligible_prizes.each do |prize|
       cart_prizes.create(prize: prize, quantity: 1, is_automatic: true) unless cart_prizes.where(prize: prize).any?

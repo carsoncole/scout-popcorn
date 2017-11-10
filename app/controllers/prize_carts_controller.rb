@@ -11,7 +11,7 @@ class PrizeCartsController < ApplicationController
     else
       @prize_cart = current_scout.prize_cart(@active_event)
     end
-    @prize_cart.process_automatic_prizes!
+    @prize_cart.process_automatic_prizes! unless @prize_cart.ordered?
     @cart_prize_sources = @prize_cart.cart_prizes.joins(:prize).pluck('prizes.source').uniq
   end
 
