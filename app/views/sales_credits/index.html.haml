@@ -2,7 +2,7 @@
 
 .row
   .col-md-8
-    %h3 Sales Credits
+    %h3 Sales Credit Transactions
     %table.table.table-sm
       %tr
         %th Scout
@@ -16,7 +16,7 @@
           %td.text-right= number_to_currency(credit.amount)
 
   .col-md-4
-    %h3 Scout Balances
+    %h3 Event Total Credits for Prizes
     %table.table.table-sm
       %tr
         %th Scout
@@ -25,7 +25,7 @@
         - scout = Scout.find(balance[0])
         - next if scout.is_admin?
         %tr
-          %td= scout.name
+          %td= link_to scout.name, prize_cart_path(scout.prize_cart(@active_event))
           %td.text-right= number_to_currency(balance[1])
 
 

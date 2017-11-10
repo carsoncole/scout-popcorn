@@ -26,6 +26,12 @@
               = number_to_currency(cart.scout.event_sales_credits(@active_event))
           %td= number_to_currency(cart.sales_credits_used("Unit"))
           %td= number_to_currency(cart.sales_credits_used("Council"))
-          %td= cart.status
+          %td
+            - if cart.ordered?
+              .badge.badge-success
+                = cart.status
+            - else
+              .badge.badge-default
+              = cart.status
             
     = paginate @prize_carts
