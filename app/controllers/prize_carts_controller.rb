@@ -17,7 +17,6 @@ class PrizeCartsController < ApplicationController
 
   def approved_prizes
     @approved_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).group('cart_prizes.prize_id','cart_prizes.quantity').sum('cart_prizes.quantity')
-    puts @approved_prizes
   end
 
   def order_prizes
