@@ -37,8 +37,8 @@
             - else
               = cart.status
           %td
-            = cart.ordered_at
+            = cart.is_ordered_at
           %td
-            = cart.approved_at
+            = cart.is_approved_at
             
     = paginate @prize_carts
