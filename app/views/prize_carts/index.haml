@@ -28,13 +28,11 @@
           %td= number_to_currency(cart.sales_credits_used("Council"))
           %td
             - if cart.ordered?
-              .badge.badge-warning
-                = cart.status
+              = cart.status
             - elsif cart.approved?
               .badge.badge-success
                 = cart.status
             - else
-              .badge.badge-default
-                = cart.status
+              = cart.status
             
     = paginate @prize_carts
