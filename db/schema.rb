@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020031735) do
+ActiveRecord::Schema.define(version: 20171029171708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,23 @@ ActiveRecord::Schema.define(version: 20171020031735) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sales_credit_totals", force: :cascade do |t|
+    t.integer "scout_id"
+    t.decimal "amount", precision: 7, scale: 2, default: "0.0", null: false
+    t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sales_credits", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "scout_id"
+    t.string "description"
+    t.decimal "amount", precision: 9, scale: 2, default: "0.0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "scout_site_sales", id: :serial, force: :cascade do |t|
     t.integer "scout_id"
     t.integer "site_sale_id"
@@ -208,7 +225,7 @@ ActiveRecord::Schema.define(version: 20171020031735) do
     t.integer "site_sale_id"
     t.integer "product_id"
     t.integer "quantity"
-    t.decimal "value", precision: 5, scale: 2
+    t.decimal "value", precision: 9, scale: 5, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -255,7 +272,7 @@ ActiveRecord::Schema.define(version: 20171020031735) do
     t.integer "take_order_id"
     t.integer "product_id"
     t.integer "quantity", default: 0, null: false
-    t.decimal "value", precision: 5, scale: 2, default: "0.0", null: false
+    t.decimal "value", precision: 9, scale: 5, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -268,7 +285,7 @@ ActiveRecord::Schema.define(version: 20171020031735) do
     t.string "customer_address"
     t.string "customer_email"
     t.integer "payment_account_id"
-    t.decimal "total_value", precision: 5, scale: 2
+    t.decimal "total_value", precision: 9, scale: 5
     t.integer "money_received_by_id"
     t.datetime "money_received_at"
     t.boolean "is_paid_by_credit_card", default: false

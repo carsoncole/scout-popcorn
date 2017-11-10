@@ -2,7 +2,7 @@ class PrizeCartsController < ApplicationController
   before_action :authorize_prizes_admin, except: [:show, :order, :order_prizes, :unorder, :removal]
 
   def index
-    @prize_carts = @active_event.prize_carts.includes(:scout).order("scouts.last_name ASC").page(params[:page]).per(40)
+    @prize_carts = @active_event.prize_carts.includes(:scout).where("scouts.is_admin = ?", true).order("scouts.last_name ASC").page(params[:page]).per(40)
   end
 
   def show
