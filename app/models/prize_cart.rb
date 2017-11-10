@@ -44,11 +44,11 @@ class PrizeCart < ApplicationRecord
   end
 
   def ordered?
-    !is_ordered_at.blank?
+    is_ordered_at.present?
   end
 
   def approved?
-    !is_approved_at.blank?
+    is_approved_at.present?
   end
 
   def status
