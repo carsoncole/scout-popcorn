@@ -23,6 +23,7 @@
         %th.text-right Balance
       - @scout_balances.each do |balance|
         - scout = Scout.find(balance[0])
+        - next if scout.is_admin?
         %tr
           %td= scout.name
           %td.text-right= number_to_currency(balance[1])
