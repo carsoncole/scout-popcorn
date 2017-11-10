@@ -29,13 +29,15 @@
           %td= number_to_currency(cart.sales_credits_used("Unit"))
           %td= number_to_currency(cart.sales_credits_used("Council"))
           %td
-            - if cart.ordered?
-              = cart.status
-            - elsif cart.approved?
+            - if cart.approved?
               .badge.badge-success
                 = cart.status
+            - elsif cart.ordered?
+              .badge.badge-warning
+                = cart.status
             - else
-              = cart.status
+              .badge.badge-default
+                = cart.status
           %td
             = cart.is_ordered_at
           %td
