@@ -147,7 +147,7 @@ class Scout < ApplicationRecord
   end
 
   def event_sales_credits(event)
-    totals = sales_credit_totals.where(event_id: event.id).sum(:amount)
+    totals = sales_credits.where(event_id: event.id).sum(:amount)
   end
 
   private
