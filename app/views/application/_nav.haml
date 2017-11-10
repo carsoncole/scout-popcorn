@@ -106,6 +106,7 @@
                     = link_to prize_carts_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'index'}" do
                       Prize Carts
                     / # = link_to "Approved Prizes", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
+                    = link_to "Approved prizes", approved_prizes_path, class: "dropdown-item #{'active' if controller_name == 'prize_carts' && action_name == 'approved_prizes'}"
                     = link_to "Take Order Purchase Orders", take_order_purchase_orders_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
                     / # = link_to "Popcorn Transfers Form", stock_transfer_form_path, class: "dropdown-item #{'active' if controller_name == 'purchase_orders'}"
 
