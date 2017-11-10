@@ -12,6 +12,8 @@
         %th Unit used
         %th Council used
         %th Status
+        %th Ordered
+        %th Approved
       - @prize_carts.each do |cart|
 
         %tr
@@ -34,5 +36,9 @@
                 = cart.status
             - else
               = cart.status
+          %td
+            = cart.ordered_at
+          %td
+            = cart.approved_at
             
     = paginate @prize_carts
