@@ -1,52 +1,52 @@
 .row
   = @approved_prizes
-  / .col-md-12
-  /   .card
-  /     .card-header
-  /       = @unit.name
-  /       = @active_event.name
-  /     .card-body
-  /       .card-title
-  /         %h1         
-  /           Prizes Approved
+  .col-md-12
+    .card
+      .card-header
+        = @unit.name
+        = @active_event.name
+      .card-body
+        .card-title
+          %h1         
+            Prizes Approved
 
-  /       - Prize::SOURCES.each do |source|
+        - Prize::SOURCES.each do |source|
 
-  /         %h4= source
-  /         - grand_total = 0
-  /         %table.table.table-sm
-  /           %tr.small
-  /             %td Prize
-  /             %td.sales-level Sales Level
-  /             %td.prize-quantity.text-center Quantity
-  /             %td.sales-accounted Sales Used
-  /             %td.unit-cost.text-right
-  /               - if source == 'Unit'
-  /                 Unit Cost
+          %h4= source
+          - grand_total = 0
+          %table.table.table-sm
+            %tr.small
+              %td Prize
+              %td.sales-level Sales Level
+              %td.prize-quantity.text-center Quantity
+              %td.sales-accounted Sales Used
+              %td.unit-cost.text-right
+                - if source == 'Unit'
+                  Unit Cost
 
-  /           - @approved_prizes.each do |prize_id, quantity|
-  /             - prize = Prize.find(prize_id)
-  /             - next unless prize.source == source
-  /             %tr
-  /               %td.prize= prize.name
-  /               %td= number_to_currency(prize.sales_amount)
-  /               %td.text-center= quantity
-  /               - total = prize.sales_amount * quantity
-  /               - grand_total += total
-  /               %td= number_to_currency(total)
-  /               %td.text-right
-  /                 - if source == 'Unit'
-  /                   = number_to_currency(prize.cost * quantity)
-  /             %tr
-  /               %td(colspan=5)
-  /                 %i
-  /                   = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).joins(:scout).where("cart_prizes.prize_id = ?", prize.id).order('scouts.last_name').map {|cp| cp.scout.name }.join(", ")
+            - @approved_prizes.each do |prize_id, quantity|
+              - prize = Prize.find(prize_id)
+              - next unless prize.source == source
+              %tr
+                %td.prize= prize.name
+                %td= number_to_currency(prize.sales_amount)
+                %td.text-center= quantity
+                - total = prize.sales_amount * quantity
+                - grand_total += total
+                %td= number_to_currency(total)
+                %td.text-right
+                  - if source == 'Unit'
+                    = number_to_currency(prize.cost * quantity)
+              %tr
+                %td(colspan=5)
+                  %i
+                    = cart_prizes = @active_event.prize_carts.approved.joins(cart_prizes: :prize).joins(:scout).where("cart_prizes.prize_id = ?", prize.id).order('scouts.last_name').map {|cp| cp.scout.name }.join(", ")
 
-  /           %tr
-  /             %td.prize
-  /             %td
-  /             %td
-  /             %td= number_to_currency(grand_total)
-  /             %td.text-right
-  /               - if source == 'Unit'
-  /                 = number_to_currency(PrizeCart.total_unit_cost(@active_event))
+            %tr
+              %td.prize
+              %td
+              %td
+              %td= number_to_currency(grand_total)
+              %td.text-right
+                - if source == 'Unit'
+                  = number_to_currency(PrizeCart.total_unit_cost(@active_event))
