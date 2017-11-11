@@ -1,122 +1,120 @@
 .row
   .col-md-12
-    .card
-      .card-body
-        .row
-          .col-md-6
-            .card-title
-              %h3
-                Take Order -
-                = @take_order.envelope.scout.name  
-                / %span.badge.badge-primary
-                /   - if @take_order.status == 'submitted'
-                /     Turned In
-                /   - elsif @take_order.status == 'in hand'
-                /     In Hand
-                /   - else
-                /     = @take_order.status.capitalize
-                - if !@take_order.submitted? && current_scout.is_take_orders_admin?
-                  %span
-                    = link_to edit_take_order_path(@take_order) do
-                      %i.fa.fa-pencil
+    .row
+      .col-md-6
+        .card-title
+          %h3
+            Take Order -
+            = @take_order.envelope.scout.name  
+            / %span.badge.badge-primary
+            /   - if @take_order.status == 'submitted'
+            /     Turned In
+            /   - elsif @take_order.status == 'in hand'
+            /     In Hand
+            /   - else
+            /     = @take_order.status.capitalize
+            - if !@take_order.submitted? && current_scout.is_take_orders_admin?
+              %span
+                = link_to edit_take_order_path(@take_order) do
+                  %i.fa.fa-pencil
 
-        .row
-          .col-md-5
-            %table.table.table-sm
+    .row
+      .col-md-5
+        %table.table.table-sm
+          %tr
+            %th Customer:
+            %td.text-right
+              = @take_order.customer_name
+              %br
+              = @take_order.customer_address
+              %br
+              = @take_order.customer_email                  
+
+          %tr
+            %th Payment by:
+            %td.text-right
+              = @take_order.payment
+
+          %tr
+            %th Envelope:
+            %td.text-right
+              = precede("#") do
+                = @take_order.envelope.id
+              / - if @take_order.envelope
+              / = link_to @take_order.envelope.name, envelope_path(@take_order.envelope) 
+
+          - if @take_order.purchase_order && current_scout.admin?
+            %tr
+              %th Purchase order
+              %td.text-right
+                = link_to @take_order.purchase_order.id, purchase_order_path(@take_order.purchase_order_id)
+        %br
+        %br
+
+    .row
+      .col-md-12
+        %table.table
+          %thead
+            %tr
+              %th Product
+              %th Quantity
+              %th
+              %th Price
+              %th Total
+              %th
+          %tbody
+            - @line_items.each do |line_item|
+
               %tr
-                %th Customer:
-                %td.text-right
-                  = @take_order.customer_name
-                  %br
-                  = @take_order.customer_address
-                  %br
-                  = @take_order.customer_email                  
-
-              %tr
-                %th Payment by:
-                %td.text-right
-                  = @take_order.payment
-
-              %tr
-                %th Envelope:
-                %td.text-right
-                  = precede("#") do
-                    = @take_order.envelope.id
-                  / - if @take_order.envelope
-                  / = link_to @take_order.envelope.name, envelope_path(@take_order.envelope) 
-
-              - if @take_order.purchase_order && current_scout.admin?
-                %tr
-                  %th Purchase order
-                  %td.text-right
-                    = link_to @take_order.purchase_order.id, purchase_order_path(@take_order.purchase_order_id)
-            %br
-            %br
-
-        .row
-          .col-md-12
-            %table.table
-              %thead
-                %tr
-                  %th Product
-                  %th Quantity
-                  %th
-                  %th Price
-                  %th Total
-                  %th
-              %tbody
-                - @line_items.each do |line_item|
-
-                  %tr
-                    %td= link_to line_item.product.name, product_path(line_item.product)
-                    - if @take_order.in_hand?
-                      = form_for [@take_order, line_item] do |f|
-                        .form-group
-                          %td
-                            = f.select :quantity, options_for_select((1..100), selected: f.object.quantity),{}, disabled: @active_event.take_orders_allowed? ? false: true, class: 'form-control'
-                          %td
-                            - if @active_event.take_orders_allowed?
-                              = f.submit 'Update', class: 'btn btn-success'
-                    - else
-                      %td= line_item.quantity
+                %td= link_to line_item.product.name, product_path(line_item.product)
+                - if @take_order.in_hand?
+                  = form_for [@take_order, line_item] do |f|
+                    .form-group
                       %td
-                    %td= number_to_currency( line_item.product.retail_price, precision: 0 )
-                    %td
-                      = number_to_currency( line_item.value, precision: 0 )
-                    %td
-                      - if @take_order.in_hand? && @active_event.take_orders_allowed?
-                        = link_to take_order_take_order_line_item_path(@take_order, line_item), method: :delete do
-                          %i.fa.fa-trash.fa-lg
+                        = f.select :quantity, options_for_select((1..100), selected: f.object.quantity),{}, disabled: @active_event.take_orders_allowed? ? false: true, class: 'form-control'
+                      %td
+                        - if @active_event.take_orders_allowed?
+                          = f.submit 'Update', class: 'btn btn-success'
+                - else
+                  %td= line_item.quantity
+                  %td
+                %td= number_to_currency( line_item.product.retail_price, precision: 0 )
+                %td
+                  = number_to_currency( line_item.value, precision: 0 )
+                %td
+                  - if @take_order.in_hand? && @active_event.take_orders_allowed?
+                    = link_to take_order_take_order_line_item_path(@take_order, line_item), method: :delete do
+                      %i.fa.fa-trash.fa-lg
 
-                - if @take_order.in_hand? && @active_event.take_orders_allowed?
-                  %tr
-                    %td
-                      = link_to new_take_order_take_order_line_item_path(@take_order) do
-                        %i.fa.fa-plus.fa-lg
-                        Add a product sold
+            - if @take_order.in_hand? && @active_event.take_orders_allowed?
+              %tr
+                %td
+                  = link_to new_take_order_take_order_line_item_path(@take_order) do
+                    %i.fa.fa-plus.fa-lg
+                    Add a product sold
 
-                    %td
-                    %td
-                    %td
-                    %td= number_to_currency( @take_order.value, precision: 0 )
-                    %td
+                %td
+                %td
+                %td
+                %td= number_to_currency( @take_order.value, precision: 0 )
+                %td
 
 
-            / - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
-            /   = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
-            %br
-            Created at:
-            = nice_date_time(@take_order.created_at)
-            - if @take_order.money_received_by  
-              %br
-              Money received by:
-              = @take_order.money_received_by
-              = surround("(",")") do
-                = nice_date_time(@take_order.money_received_at)
-            - if @take_order.receipt_sent_at
-              %br
-              Receipt emailed at:
-              = nice_date_time(@take_order.receipt_sent_at)
+        / - if current_scout.is_admin? && @take_order.received? && @take_order.take_order_line_items.any?
+        /   = button_to 'SUBMITTED', take_order_path(@take_order, submitted: true), method: :patch, class: 'btn btn-default'
+        %br
+        Created at:
+        = nice_date_time(@take_order.created_at)
+        - if @take_order.money_received_by  
+          %br
+          Money received by:
+          = @take_order.money_received_by
+          = surround("(",")") do
+            = nice_date_time(@take_order.money_received_at)
+        - if @take_order.receipt_sent_at
+          %br
+          Receipt emailed at:
+          = nice_date_time(@take_order.receipt_sent_at)
 .row
   .col-md-4
     %br

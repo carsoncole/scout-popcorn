@@ -1,144 +1,143 @@
-.row
+.row.d-print-none
   .col-md-12
     %p= link_to "Take Orders", take_orders_path
 
 .row
   .col-md-12
-    .card
-      .card-body
-        .row
-          .col-md-12
 
-            - if current_scout.is_take_orders_admin? && @envelope.open?
-              .pull-right
-                = link_to envelope_path(@envelope), method: :delete, data: { confirm: 'Are you sure? This will delete all Take Orders that are grouped within this envelope.'} do
-                  %i.fa.fa-trash.fa-lg
-            %h3.card-title
-              - if @envelope.open?
-                %i.fa.fa-envelope-open-o
-              - elsif @envelope.picked_up?
-                Picked Up
-              - else
-                %i.fa.fa-envelope.fa-lg
-              = @envelope.name   
+    - if current_scout.is_take_orders_admin? && @envelope.open?
+      .pull-right.d-print-none
+        = link_to envelope_path(@envelope), method: :delete, data: { confirm: 'Are you sure? This will delete all Take Orders that are grouped within this envelope.'} do
+          %i.fa.fa-trash.fa-lg
+    %h3.card-title
+      - if @envelope.open?
+        %i.fa.fa-envelope-open-o
+      - elsif @envelope.picked_up?
+        Picked Up
+      - else
+        %i.fa.fa-envelope.fa-lg
+      = @envelope.name   
 
-            %br
-            %br
-            %h5 Take Orders
-            - if @envelope.open? && current_scout.is_take_orders_admin?
-              %p= link_to "Add a New Take Order", new_envelope_take_order_path(@envelope.id)
-            %table.table.table-sm.card-text
-              %tr
-                - if current_scout.admin?
-                  %th Scout
-                %th Customer
-                %th Items
-                %th.text-right Amount
-                %th Payment
-                %th Receipt emailed
-                %th
-                %th
-              - @take_orders.each do |take_order|              
+    %br
+    %br
+    %h5.d-print-none Take Orders
+    - if @envelope.open? && current_scout.is_take_orders_admin?
+      %p.d-print-none= link_to "Add a New Take Order", new_envelope_take_order_path(@envelope.id)
+    %table.table.table-sm.card-text
+      %tr
+        - if current_scout.admin?
+          %th.d-print-none Scout
+        %th Customer
+        %th
+        %th Items
+        %th.text-right Amount
+        %th.d-print-none Payment
+        %th.d-print-none Receipt emailed
+        %th.d-print-none
+        %th.d-print-none
+      - @take_orders.each do |take_order|              
+        %tr
+          - if current_scout.admin?
+            %td.d-print-none= take_order.envelope.scout.name
+          %td= take_order.customer_name
+          %td= take_order.customer_address
+          %td
+            - take_order.take_order_line_items.each do |line_item|
+              = line_item.product.name
+              = surround("(", ")") do
+                = line_item.quantity
+              %br
+          %td.text-right= number_to_currency(take_order.value, precision: 0)
+          %td.d-print-none= take_order.payment
+          %td.d-print-none= nice_date_time_compact(take_order.receipt_sent_at) if take_order.receipt_sent_at
+          %td.d-print-none
+            = link_to take_order_path(take_order) do
+              %i.fa.fa-folder-open
+          %td.d-print-none
+            - if @envelope.open? && @active_event.take_orders_allowed?
+              = link_to envelope_remove_take_order_path(@envelope.id, take_order.id), method: :put do
+                %i.fa.fa-trash
+      %tr
+        - if current_scout.admin?
+          %td
+        %td
+        %td
+        %td.text-right.envelope-total= number_to_currency(@envelope.value, precision: 0)
+        %td
+        %td
+        %td
+
+    %hr
+    %br
+    .row.d-print-none
+      .col-md-4
+        .card.card-outline-secondary
+          .card-body
+            %h5 Payment Methods
+            %table.table.table-sm
+              - @payment_methods.each do |payment_account_id|
+                - payment_account = Account.find(payment_account_id)
                 %tr
-                  - if current_scout.admin?
-                    %td= take_order.envelope.scout.name
-                  %td= take_order.customer_name
-                  %td
-                    - take_order.take_order_line_items.each do |line_item|
-                      = line_item.product.name
-                      = surround("(", ")") do
-                        = line_item.quantity
-                      %br
-                  %td.text-right= number_to_currency(take_order.value, precision: 0)
-                  %td= take_order.payment
-                  %td= nice_date_time_compact(take_order.receipt_sent_at) if take_order.receipt_sent_at
-                  %td
-                    = link_to take_order_path(take_order) do
-                      %i.fa.fa-folder-open
-                  %td
-                    - if @envelope.open? && @active_event.take_orders_allowed?
-                      = link_to envelope_remove_take_order_path(@envelope.id, take_order.id), method: :put do
-                        %i.fa.fa-trash
+                  %th
+                    - if payment_account.name == 'Take Orders cash'
+                      Cash/Check
+                    - else
+                      = payment_account.name
+                  %td.text-right
+                    = number_to_currency(@take_orders.where(payment_account_id: payment_account.id).joins(:take_order_line_items).sum('take_order_line_items.value'), precision: 0)
               %tr
-                - if current_scout.admin?
-                  %td
-                %td
-                %td
-                %td.text-right.envelope-total= number_to_currency(@envelope.value, precision: 0)
-                %td
-                %td
-                %td
+                %th Total
+                %td.text-right= number_to_currency(@envelope.value, precision: 0 )
 
-        %hr
+
+- if @envelope.open? && current_scout.admin?
+  .row.d-print-none
+    .col-md-3
+    .col-md-6
+      .text-center
+        = button_to "Close Envelope", close_envelope_path(@envelope.id), {disabled: (current_scout.is_take_orders_admin? ? false : true), class: 'btn btn-lg btn-danger form-control'}
+      %br
+
+
+- if ( @envelope.closed? || @envelope.picked_up? ) && current_scout.admin?
+  .row.d-print-none
+    .col-md-3
+    .col-md-6
+      .text-center
+        = button_to "Re-Open", open_envelope_path(@envelope.id), {disabled: (current_scout.is_take_orders_admin? ? false : true), class: 'btn btn-lg btn-success form-control'}
+
+      - unless @envelope.picked_up? && current_scout.admin?
         %br
-        .row
-          .col-md-4
-            .card.card-outline-secondary
-              .card-body
-                %h5 Payment Methods
-                %table.table.table-sm
-                  - @payment_methods.each do |payment_account_id|
-                    - payment_account = Account.find(payment_account_id)
-                    %tr
-                      %th
-                        - if payment_account.name == 'Take Orders cash'
-                          Cash/Check
-                        - else
-                          = payment_account.name
-                      %td.text-right
-                        = number_to_currency(@take_orders.where(payment_account_id: payment_account.id).joins(:take_order_line_items).sum('take_order_line_items.value'), precision: 0)
-                  %tr
-                    %th Total
-                    %td.text-right= number_to_currency(@envelope.value, precision: 0 )
+        .text-center
+          = button_to "Picked Up", picked_up_envelope_path(@envelope.id), {disabled: (current_scout.is_take_orders_admin? ? false : true), class: 'btn btn-lg btn-success form-control'}
 
-      - if @envelope.open? && current_scout.admin?
-        .row
-          .col-md-3
-          .col-md-6
-            .text-center
-              = button_to "Close Envelope", close_envelope_path(@envelope.id), {disabled: (current_scout.is_take_orders_admin? ? false : true), class: 'btn btn-lg btn-danger form-control'}
+        %br
+        .text-center
+          - if @envelope.closed_at
+            Closed at:
+            = nice_date_time(@envelope.closed_at)
             %br
 
+          - if @envelope.money_received_at
+            Enveloped received at:
+            = nice_date_time(@envelope.money_received_at)
+            %br
 
-      - if ( @envelope.closed? || @envelope.picked_up? ) && current_scout.admin?
-        .row
-          .col-md-3
-          .col-md-6
-            .text-center
-              = button_to "Re-Open", open_envelope_path(@envelope.id), {disabled: (current_scout.is_take_orders_admin? ? false : true), class: 'btn btn-lg btn-success form-control'}
+          - if @envelope.money_received_by_id
+            Envelope received by:
+            - scout = Scout.find(@envelope.money_received_by_id)
+            = scout.name
+            %br
 
-            - unless @envelope.picked_up? && current_scout.admin?
-              %br
-              .text-center
-                = button_to "Picked Up", picked_up_envelope_path(@envelope.id), {disabled: (current_scout.is_take_orders_admin? ? false : true), class: 'btn btn-lg btn-success form-control'}
+          - if @envelope.product_picked_up_at
+            Product picked up:
+            = nice_date_time(@envelope.product_picked_up_at)
+            %br
 
-              %br
-              .text-center
-                - if @envelope.closed_at
-                  Closed at:
-                  = nice_date_time(@envelope.closed_at)
-                  %br
-
-                - if @envelope.money_received_at
-                  Enveloped received at:
-                  = nice_date_time(@envelope.money_received_at)
-                  %br
-
-                - if @envelope.money_received_by_id
-                  Envelope received by:
-                  - scout = Scout.find(@envelope.money_received_by_id)
-                  = scout.name
-                  %br
-
-                - if @envelope.product_picked_up_at
-                  Product picked up:
-                  = nice_date_time(@envelope.product_picked_up_at)
-                  %br
-
-                - if current_scout.admin?
-                  Envelope created at:
-                  = nice_date_time(@envelope.created_at)
-                  %br
-                  Envelope updated at:
-                  = nice_date_time(@envelope.updated_at)
-              %br
+          - if current_scout.admin?
+            Envelope created at:
+            = nice_date_time(@envelope.created_at)
+            %br
+            Envelope updated at:
+            = nice_date_time(@envelope.updated_at)
+        %br
