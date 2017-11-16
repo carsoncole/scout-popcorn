@@ -5,6 +5,7 @@ class TakeOrder < ApplicationRecord
   has_many :take_order_line_items, dependent: :destroy
   has_many :products, through: :take_order_line_items
   has_many :ledgers
+  belongs_to :event, through: :envelope
   
   validates :payment_account_id, presence: true
   validates :customer_email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }, if: Proc.new {|to| to.customer_email.present? }
