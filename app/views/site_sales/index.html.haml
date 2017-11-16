@@ -23,7 +23,7 @@
               - else
                 %th.text-center Your credited Sales
               - if current_scout.is_site_sales_admin?
-                %th.text-center Status
+                %th.text-center.d-print-none Status
                 %th.d-print-none
 
           %tbody
@@ -41,7 +41,7 @@
                 %td.text-center{class: site_sale.closed? ? nil : 'text-muted' }
                   = number_to_currency(site_sale.sales(current_scout.admin? ? nil : current_scout), precision: 0)
                 - if current_scout.is_site_sales_admin?
-                  %td.admin-info.text-center
+                  %td.admin-info.text-center.d-print-none
                     - if site_sale.closed?
                       %h5
                         %span.badge.badge-danger.badge-lg Closed

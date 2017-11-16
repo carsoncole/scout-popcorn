@@ -1,4 +1,5 @@
-= render 'prizes/nav'
+
+.d-print-none= render 'prizes/nav'
 
 .row
   .col-md-12
@@ -12,8 +13,8 @@
         %th Unit used
         %th Council used
         %th Status
-        %th Ordered
-        %th Approved
+        %th.d-print-none Ordered
+        %th.d-print-none Approved
       - @prize_carts.each do |cart|
 
         %tr
@@ -37,9 +38,9 @@
                 = cart.status
             - else
               = cart.status
-          %td
+          %td.d-print-none
             = cart.is_ordered_at
-          %td
+          %td.d-print-none
             = cart.is_approved_at
             
     = paginate @prize_carts
