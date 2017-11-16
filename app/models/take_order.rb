@@ -174,7 +174,7 @@ class TakeOrder < ApplicationRecord
   end
 
   def debit_stock_for_pickup!
-    envelope.event.accounts.where(name: 'Product due to customers').first
+    # envelope.event.accounts.where(name: 'Product due to customers').first
     take_order_line_items.each do |line_item|
       new_stock_entry = Stock.create(event_id: envelope.event.id, product_id: line_item.product_id, location: 'take orders', quantity: -line_item.quantity, take_order_id: self.id, description: "Take order ##{line_item.take_order_id}", date: Date.today, created_by: 999, is_pickup: true)
     end
