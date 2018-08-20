@@ -31,7 +31,7 @@ class EventsController < ApplicationController
       current_scout.update(event_id: @event.id)
       redirect_to events_path, notice: 'Event was successfully created.'
     else
-      frender :new
+      render :new
     end
   end
 
