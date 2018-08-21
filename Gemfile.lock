@@ -140,7 +140,6 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
-    pg (0.21.0)
     popper_js (1.11.1)
     public_suffix (3.0.0)
     puma (3.10.0)
@@ -232,7 +231,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt (~> 3.1.11)
+  bcrypt
   bootstrap (~> 4.0.0.beta)
   byebug
   coffee-rails (~> 4.2)
@@ -243,7 +242,6 @@ DEPENDENCIES
   launchy
   listen (~> 3.0.5)
   minitest-rails-capybara
-  pg
   puma (~> 3.0)
   rails (~> 5.1.0)
   sass-rails (~> 5.0)

@@ -12,6 +12,7 @@ gem 'haml-rails'
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'font-awesome-sass'
 gem 'kaminari'
+gem 'bcrypt'
  
 
 group :development, :test do
