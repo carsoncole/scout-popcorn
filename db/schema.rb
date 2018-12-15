@@ -12,10 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20171029171708) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "accounts", id: :serial, force: :cascade do |t|
+  create_table "accounts", force: :cascade do |t|
     t.integer "event_id"
     t.string "name"
     t.string "simple_name"
@@ -32,7 +29,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "cart_prizes", id: :serial, force: :cascade do |t|
+  create_table "cart_prizes", force: :cascade do |t|
     t.integer "prize_cart_id"
     t.integer "prize_id"
     t.integer "prize_amount"
@@ -42,12 +39,12 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "double_entries", id: :serial, force: :cascade do |t|
+  create_table "double_entries", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "envelopes", id: :serial, force: :cascade do |t|
+  create_table "envelopes", force: :cascade do |t|
     t.integer "scout_id"
     t.integer "event_id"
     t.string "status"
@@ -61,7 +58,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "product_picked_up_at"
   end
 
-  create_table "events", id: :serial, force: :cascade do |t|
+  create_table "events", force: :cascade do |t|
     t.integer "unit_id"
     t.string "name"
     t.boolean "is_active", default: true, null: false
@@ -81,7 +78,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.date "prize_cart_ordering_ends_at"
   end
 
-  create_table "ledgers", id: :serial, force: :cascade do |t|
+  create_table "ledgers", force: :cascade do |t|
     t.integer "double_entry_id"
     t.integer "account_id"
     t.string "description"
@@ -101,7 +98,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "online_sales", id: :serial, force: :cascade do |t|
+  create_table "online_sales", force: :cascade do |t|
     t.integer "scout_id"
     t.integer "event_id"
     t.date "order_date"
@@ -112,7 +109,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "prize_carts", id: :serial, force: :cascade do |t|
+  create_table "prize_carts", force: :cascade do |t|
     t.integer "event_id"
     t.integer "scout_id"
     t.datetime "is_ordered_at"
@@ -121,7 +118,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "prizes", id: :serial, force: :cascade do |t|
+  create_table "prizes", force: :cascade do |t|
     t.integer "event_id"
     t.string "name"
     t.decimal "sales_amount", precision: 10, scale: 2
@@ -139,7 +136,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "products", id: :serial, force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.integer "event_id"
     t.string "name"
     t.decimal "retail_price", precision: 5, scale: 2
@@ -153,7 +150,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "purchase_orders", id: :serial, force: :cascade do |t|
+  create_table "purchase_orders", force: :cascade do |t|
     t.integer "event_id"
     t.string "type", null: false
     t.string "status", default: "open", null: false
@@ -162,7 +159,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "resources", id: :serial, force: :cascade do |t|
+  create_table "resources", force: :cascade do |t|
     t.integer "event_id"
     t.string "name"
     t.string "url"
@@ -187,7 +184,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "scout_site_sales", id: :serial, force: :cascade do |t|
+  create_table "scout_site_sales", force: :cascade do |t|
     t.integer "scout_id"
     t.integer "site_sale_id"
     t.decimal "hours_worked", precision: 5, scale: 2, default: "0.0", null: false
@@ -195,7 +192,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "scouts", id: :serial, force: :cascade do |t|
+  create_table "scouts", force: :cascade do |t|
     t.integer "unit_id"
     t.string "first_name"
     t.string "last_name"
@@ -221,7 +218,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.string "password_reset_token"
   end
 
-  create_table "site_sale_line_items", id: :serial, force: :cascade do |t|
+  create_table "site_sale_line_items", force: :cascade do |t|
     t.integer "site_sale_id"
     t.integer "product_id"
     t.integer "quantity"
@@ -230,7 +227,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "site_sale_payment_methods", id: :serial, force: :cascade do |t|
+  create_table "site_sale_payment_methods", force: :cascade do |t|
     t.integer "site_sale_id"
     t.integer "account_id"
     t.decimal "amount", precision: 8, scale: 2, default: "0.0", null: false
@@ -238,7 +235,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "site_sales", id: :serial, force: :cascade do |t|
+  create_table "site_sales", force: :cascade do |t|
     t.integer "event_id"
     t.string "name"
     t.date "date"
@@ -248,7 +245,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "stocks", id: :serial, force: :cascade do |t|
+  create_table "stocks", force: :cascade do |t|
     t.integer "event_id"
     t.integer "product_id"
     t.integer "quantity"
@@ -268,7 +265,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.boolean "is_transfer_to_bsa"
   end
 
-  create_table "take_order_line_items", id: :serial, force: :cascade do |t|
+  create_table "take_order_line_items", force: :cascade do |t|
     t.integer "take_order_id"
     t.integer "product_id"
     t.integer "quantity", default: 0, null: false
@@ -277,7 +274,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "take_orders", id: :serial, force: :cascade do |t|
+  create_table "take_orders", force: :cascade do |t|
     t.integer "envelope_id"
     t.integer "purchase_order_id"
     t.string "status", default: "received", null: false
@@ -295,7 +292,7 @@ ActiveRecord::Schema.define(version: 20171029171708) do
     t.datetime "receipt_sent_at"
   end
 
-  create_table "units", id: :serial, force: :cascade do |t|
+  create_table "units", force: :cascade do |t|
     t.string "name"
     t.string "street_address_1"
     t.string "street_address_2"
